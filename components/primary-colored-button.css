@@ -16,7 +16,7 @@
   padding-right: var(--dl-space-space-unitandahalfunit);
   padding-bottom: var(--dl-space-space-triplequarterunit);
   background-size: cover;
-  background-image: linear-gradient(90deg, rgb(22, 160, 255) 1.00%,rgb(13, 0, 170) 100.00%);
+  background-image: radial-gradient(circle at left top, rgb(204, 204, 204) 2.00%,rgb(25, 25, 25) 84.00%,rgb(0, 0, 0) 100.00%);
 }
  
 .primary-colored-button-button:hover {

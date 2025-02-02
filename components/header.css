@@ -61,6 +61,12 @@
 .secondary-colored-buttonroot-class-name6 {
   margin-bottom: 5vh;
 }
+ 
+@media(max-width: 768px) {
+  .secondary-colored-button-button {
+    box-shadow: rgba(0, 0, 0, 0.11) 0px 4px 7px -1px, rgba(0, 0, 0, 0.07) 0px 2px 4px -1px;
+  }
+}
 
 .header-header {
   width: 100%;
@@ -198,7 +204,17 @@
  
 @media(max-width: 768px) {
   .header-header {
+    height: 75px;
     background-color: #ffffff;
+  }
+  .header-nav {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .header-link1 {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-decoration: none;
   }
   .header-menu {
     display: none;

@@ -17,10 +17,11 @@
 .tm-title-text2 {
   fill: var(--dl-color-gray-700);
   color: var(--dl-color-gray-700);
-  font-size: 1.875rem;
+  font-size: 2rem;
+  font-style: normal;
   text-align: center;
   font-family: Open Sans;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.375;
   text-transform: none;
   text-decoration: none;
@@ -32,7 +33,6 @@
  
 .tm-title-text3 {
   display: inline-block;
-  font-weight: 500;
 }
  
 .tm-title-fragment2 {
@@ -45,7 +45,10 @@
  
 
  
-
+.tm-titleroot-class-name1 {
+  fill: var(--dl-color-secondary-400);
+  color: var(--dl-color-secondary-400);
+}
  
 @media(max-width: 990px) {
   .tm-title-container {
@@ -55,13 +58,8 @@
     font-size: 2.2em;
     background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%);
   }
-  .tm-title-text3 {
-    font-size: 1.6rem;
-    font-family: Open Sans;
-    font-weight: 700;
-    line-height: 1.375;
-    text-transform: none;
-    text-decoration: none;
+  .tm-title-text2 {
+    font-size: 1.5rem;
   }
 }
  
@@ -71,12 +69,7 @@
     text-align: center;
     background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%);
   }
-  .tm-title-text3 {
-    font-size: 1.4rem;
-    font-family: Open Sans;
-    font-weight: 700;
-    line-height: 1.375;
-    text-transform: none;
-    text-decoration: none;
+  .tm-title-text2 {
+    font-size: 1rem;
   }
 }

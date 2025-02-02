@@ -1,7 +1,7 @@
 .how-to-use-card-left-container1 {
   width: 100%;
   height: auto;
-  margin: var(--dl-space-space-doubleunit);
+  margin: var(--dl-space-space-unit);
   display: flex;
   position: relative;
   flex-wrap: wrap;
@@ -73,11 +73,15 @@
     height: 100%;
   }
   .how-to-use-card-left-image {
-    width: 100%;
+    width: 90%;
     height: 100%;
+    align-self: center;
   }
   .how-to-use-card-left-container3 {
     width: 100%;
+  }
+  .how-to-use-card-left-text11 {
+    text-align: justify;
   }
   .how-to-use-card-left-text12 {
     width: auto;
@@ -90,11 +94,13 @@
     height: 100%;
   }
   .how-to-use-card-left-image {
-    width: 100%;
+    width: 90%;
     height: 100%;
+    align-self: center;
   }
   .how-to-use-card-left-container3 {
     width: 100%;
+    padding: var(--dl-space-space-doubleunit);
   }
   .how-to-use-card-left-text11 {
     margin-right: 0px;
