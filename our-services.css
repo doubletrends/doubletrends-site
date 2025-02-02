@@ -258,19 +258,19 @@
   text-decoration: none;
 }
  
-.our-services-fragment1 {
-  display: contents;
-}
- 
-.our-services-text10 {
-  display: inline-block;
-}
- 
 .our-services-fragment2 {
   display: contents;
 }
  
 .our-services-text11 {
+  display: inline-block;
+}
+ 
+.our-services-fragment1 {
+  display: contents;
+}
+ 
+.our-services-text10 {
   display: inline-block;
 }
  
@@ -305,7 +305,7 @@
   }
 }
 
-.secondary-colored-button-wrapper-7o1g {
+.secondary-colored-button-wrapper-qbd8 {
   display: contents;
 }
  
@@ -483,7 +483,7 @@
   }
 }
 
-.service-card-wrapper-132q {
+.service-card-wrapper-vn3n {
   display: contents;
 }
  
@@ -591,7 +591,7 @@
   }
 }
 
-.service-card-wrapper-q1eo {
+.service-card-wrapper-vwxo {
   display: contents;
 }
  

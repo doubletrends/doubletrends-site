@@ -22,10 +22,7 @@
 }
  
 .featureroot-class-name {
-  fill: var(--dl-color-secondary-400);
-  color: var(--dl-color-secondary-400);
   width: 33%;
-  align-self: flex-start;
 }
  
 .featureroot-class-name1 {
@@ -113,6 +110,15 @@
  
 @media(max-width: 768px) {
   .feature-container {
+    width: 100%;
+  }
+  .featureroot-class-name {
+    width: 100%;
+  }
+  .featureroot-class-name1 {
+    width: 100%;
+  }
+  .featureroot-class-name2 {
     width: 100%;
   }
 }
