@@ -1,0 +1,118 @@
+.feature-container {
+  flex: 0 0 auto;
+  width: 25%;
+  display: flex;
+  margin-top: var(--dl-space-space-triplequarterunit);
+  align-items: center;
+  padding-left: var(--dl-space-space-triplequarterunit);
+  padding-right: var(--dl-space-space-triplequarterunit);
+  flex-direction: column;
+}
+ 
+.feature-text1 {
+  color: var(--dl-color-secondary-600);
+  margin-top: var(--dl-space-space-halfunit);
+  text-align: center;
+  margin-bottom: var(--dl-space-space-halfunit);
+}
+ 
+.feature-text2 {
+  text-align: center;
+  margin-bottom: var(--dl-space-space-unit);
+}
+ 
+.featureroot-class-name {
+  fill: var(--dl-color-secondary-400);
+  color: var(--dl-color-secondary-400);
+  width: 33%;
+  align-self: flex-start;
+}
+ 
+.featureroot-class-name1 {
+  width: 33%;
+}
+ 
+.featureroot-class-name2 {
+  width: 33%;
+}
+ 
+.featureroot-class-name3 {
+  width: 33%;
+}
+ 
+.featureroot-class-name4 {
+  width: 33%;
+}
+ 
+.featureroot-class-name5 {
+  fill: var(--dl-color-secondary-400);
+  color: var(--dl-color-secondary-400);
+  width: 33%;
+  align-self: flex-start;
+}
+ 
+.featureroot-class-name6 {
+  width: 33%;
+}
+ 
+.featureroot-class-name7 {
+  width: 33%;
+}
+ 
+.featureroot-class-name8 {
+  fill: var(--dl-color-secondary-400);
+  color: var(--dl-color-secondary-400);
+  width: 33%;
+  align-self: flex-start;
+}
+ 
+.featureroot-class-name9 {
+  width: 33%;
+}
+ 
+.featureroot-class-name10 {
+  width: 33%;
+}
+ 
+.featureroot-class-name11 {
+  fill: var(--dl-color-secondary-400);
+  color: var(--dl-color-secondary-400);
+  width: 33%;
+  align-self: flex-start;
+}
+ 
+.featureroot-class-name12 {
+  width: 33%;
+}
+ 
+.featureroot-class-name13 {
+  width: 33%;
+}
+ 
+.featureroot-class-name14 {
+  fill: var(--dl-color-secondary-400);
+  color: var(--dl-color-secondary-400);
+  width: 33%;
+  align-self: flex-start;
+}
+ 
+.featureroot-class-name15 {
+  width: 33%;
+}
+ 
+.featureroot-class-name16 {
+  width: 33%;
+}
+ 
+.featureroot-class-name17 {
+  fill: var(--dl-color-secondary-400);
+  color: var(--dl-color-secondary-400);
+  width: 33%;
+  align-self: flex-start;
+}
+ 
+@media(max-width: 768px) {
+  .feature-container {
+    width: 100%;
+  }
+}

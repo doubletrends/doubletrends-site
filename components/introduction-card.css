@@ -1,0 +1,287 @@
+.introduction-card-container1 {
+  width: 100%;
+  margin: var(--dl-space-space-unit);
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  flex-direction: row;
+}
+ 
+.introduction-card-container2 {
+  flex: 0 0 auto;
+  width: 50%;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  flex-direction: column;
+}
+ 
+.introduction-card-container3 {
+  width: 100%;
+  display: flex;
+  margin-bottom: var(--dl-space-space-tripleunit);
+  flex-direction: column;
+}
+ 
+.introduction-card-image1 {
+  width: 110%;
+  height: 100%;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  object-fit: cover;
+  border-radius: var(--dl-radius-radius-radius40);
+}
+ 
+.introduction-card-container4 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+ 
+.introduction-card-text10 {
+  color: rgb(103, 116, 142);
+  width: 45%;
+  height: 100%;
+  padding: var(--dl-space-space-unit);
+  align-self: flex-end;
+  text-align: left;
+  border-color: var(--dl-color-secondary-400);
+  border-style: outset;
+  border-width: 3px;
+  border-radius: var(--dl-radius-radius-radius40);
+}
+ 
+.introduction-card-container5 {
+  width: 90%;
+  display: flex;
+  align-self: flex-end;
+  margin-top: var(--dl-space-space-doubleunit);
+  margin-bottom: var(--dl-space-space-doubleunit);
+  flex-direction: column;
+}
+ 
+.introduction-card-image2 {
+  width: 100%;
+  height: 100%;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  object-fit: cover;
+  border-radius: var(--dl-radius-radius-radius40);
+}
+ 
+.introduction-card-container6 {
+  flex: 0 0 auto;
+  width: 50%;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  flex-direction: column;
+}
+ 
+.introduction-card-container7 {
+  width: 90%;
+  display: flex;
+  align-self: center;
+  margin-top: var(--dl-space-space-twelveunits);
+  margin-bottom: var(--dl-space-space-unit);
+  flex-direction: column;
+}
+ 
+.introduction-card-image3 {
+  width: 100%;
+  height: 100%;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  object-fit: cover;
+  border-radius: var(--dl-radius-radius-radius40);
+}
+ 
+.introduction-card-container8 {
+  width: 90%;
+  display: flex;
+  padding: var(--dl-space-space-unit);
+  align-self: center;
+  margin-top: var(--dl-space-space-unit);
+  align-items: flex-start;
+  margin-bottom: var(--dl-space-space-twelveunits);
+  flex-direction: column;
+}
+ 
+.introduction-card-text18 {
+  color: var(--dl-color-secondary-700);
+  font-size: 1.875rem;
+  font-family: "Open Sans";
+  font-weight: 700;
+  line-height: 1.375;
+  text-transform: none;
+  text-decoration: none;
+}
+ 
+.introduction-card-text19 {
+  color: rgb(103, 116, 142);
+  width: 100%;
+}
+ 
+.introduction-card-text25 {
+  font-style: normal;
+  font-weight: 700;
+}
+ 
+.introduction-card-text28 {
+  font-weight: 400;
+}
+ 
+.introduction-card-text29 {
+  font-weight: 400;
+}
+ 
+.introduction-card-text30 {
+  font-style: normal;
+  font-weight: 700;
+}
+ 
+.introduction-card-text33 {
+  font-style: normal;
+  font-weight: 400;
+}
+ 
+.introduction-card-text34 {
+  font-style: normal;
+  font-weight: 400;
+}
+ 
+.introduction-card-fragment {
+  display: contents;
+}
+ 
+.introduction-card-text37 {
+  display: inline-block;
+}
+ 
+@media(max-width: 990px) {
+  .introduction-card-container2 {
+    width: 100%;
+  }
+  .introduction-card-container3 {
+    width: 90%;
+    align-self: center;
+  }
+  .introduction-card-image1 {
+    width: 100%;
+  }
+  .introduction-card-container4 {
+    align-self: center;
+  }
+  .introduction-card-text10 {
+    width: 90%;
+    align-self: center;
+    text-align: center;
+  }
+  .introduction-card-container5 {
+    align-self: center;
+  }
+  .introduction-card-container6 {
+    width: 100%;
+  }
+  .introduction-card-container7 {
+    align-self: center;
+    margin-top: var(--dl-space-space-tripleunit);
+  }
+  .introduction-card-image3 {
+    height: auto;
+  }
+  .introduction-card-container8 {
+    align-self: center;
+  }
+  .introduction-card-text18 {
+    align-self: center;
+  }
+  .introduction-card-text19 {
+    width: 100%;
+    text-align: justify;
+  }
+}
+ 
+@media(max-width: 768px) {
+  .introduction-card-container2 {
+    width: 100%;
+  }
+  .introduction-card-container3 {
+    margin-bottom: var(--dl-space-space-doubleunit);
+  }
+  .introduction-card-text10 {
+    width: 90%;
+    margin-right: 0px;
+  }
+  .introduction-card-container6 {
+    width: 100%;
+  }
+  .introduction-card-container7 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  .introduction-card-text19 {
+    width: 100%;
+    text-align: justify;
+    margin-right: 0px;
+  }
+  .introduction-card-text20 {
+    color: var(--dl-color-secondary-400);
+  }
+  .introduction-card-text21 {
+    color: var(--dl-color-secondary-400);
+  }
+  .introduction-card-text22 {
+    color: var(--dl-color-secondary-400);
+  }
+  .introduction-card-text23 {
+    color: var(--dl-color-secondary-400);
+  }
+  .introduction-card-text24 {
+    color: var(--dl-color-secondary-400);
+  }
+  .introduction-card-text25 {
+    color: var(--dl-color-secondary-500);
+    font-style: normal;
+    font-weight: 700;
+  }
+  .introduction-card-text26 {
+    color: var(--dl-color-secondary-400);
+  }
+  .introduction-card-text27 {
+    color: var(--dl-color-secondary-400);
+  }
+  .introduction-card-text28 {
+    color: var(--dl-color-secondary-400);
+    font-weight: 400;
+  }
+  .introduction-card-text29 {
+    color: var(--dl-color-secondary-400);
+    font-weight: 400;
+  }
+  .introduction-card-text30 {
+    color: var(--dl-color-secondary-500);
+    font-style: normal;
+    font-weight: 700;
+  }
+  .introduction-card-text31 {
+    color: var(--dl-color-secondary-400);
+  }
+  .introduction-card-text32 {
+    color: var(--dl-color-secondary-400);
+  }
+  .introduction-card-text33 {
+    color: var(--dl-color-secondary-400);
+    font-style: normal;
+    font-weight: 400;
+  }
+  .introduction-card-text34 {
+    color: var(--dl-color-secondary-400);
+    font-style: normal;
+    font-weight: 400;
+  }
+  .introduction-card-text35 {
+    color: var(--dl-color-secondary-400);
+  }
+  .introduction-card-text36 {
+    color: var(--dl-color-secondary-400);
+  }
+}

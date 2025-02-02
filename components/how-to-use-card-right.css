@@ -1,0 +1,113 @@
+.how-to-use-card-right-container2 {
+  width: 100%;
+  height: auto;
+  margin: var(--dl-space-space-unit);
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  flex-direction: row;
+}
+ 
+.how-to-use-card-right-container1 {
+  width: 50%;
+  display: flex;
+  position: relative;
+  align-self: center;
+  padding-top: var(--dl-space-space-tripleunit);
+  padding-left: var(--dl-space-space-tripleunit);
+  padding-right: var(--dl-space-space-tripleunit);
+  flex-direction: column;
+  padding-bottom: var(--dl-space-space-tripleunit);
+}
+ 
+.how-to-use-card-right-text10 {
+  color: var(--dl-color-secondary-700);
+}
+ 
+.how-to-use-card-right-container3 {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  position: relative;
+  align-self: center;
+  flex-direction: column;
+}
+ 
+.how-to-use-card-right-image {
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 8px 26px -4px hsla(0,0%,8%,.15),0 8px 9px -5px hsla(0,0%,8%,.06)!important;
+  object-fit: cover;
+  margin-left: 0rem;
+  margin-right: 0px;
+  border-radius: var(--dl-radius-radius-radius75);
+}
+ 
+.how-to-use-card-right-fragment1 {
+  display: contents;
+}
+ 
+.how-to-use-card-right-text12 {
+  width: auto;
+  display: inline-block;
+}
+ 
+.how-to-use-card-right-text18 {
+  color: var(--dl-color-secondary-400);
+}
+ 
+.how-to-use-card-right-fragment2 {
+  display: contents;
+}
+ 
+.how-to-use-card-right-text19 {
+  display: inline-block;
+}
+ 
+
+ 
+@media(max-width: 990px) {
+  .how-to-use-card-right-container2 {
+    height: auto;
+  }
+  .how-to-use-card-right-container1 {
+    width: 100%;
+  }
+  .how-to-use-card-right-text11 {
+    text-align: justify;
+  }
+  .how-to-use-card-right-container3 {
+    width: 100%;
+  }
+  .how-to-use-card-right-image {
+    width: 90%;
+    height: 100%;
+    align-self: center;
+  }
+  .how-to-use-card-right-text12 {
+    width: auto;
+  }
+}
+ 
+@media(max-width: 768px) {
+  .how-to-use-card-right-container1 {
+    width: 100%;
+    padding: var(--dl-space-space-doubleunit);
+  }
+  .how-to-use-card-right-text11 {
+    margin-right: 0px;
+  }
+  .how-to-use-card-right-container3 {
+    width: 100%;
+    height: 100%;
+  }
+  .how-to-use-card-right-image {
+    width: 90%;
+    align-self: center;
+  }
+  .how-to-use-card-right-text12 {
+    width: 100%;
+    margin-right: 0px;
+  }
+}
