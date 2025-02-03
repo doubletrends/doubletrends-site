@@ -1,8 +1,8 @@
 .how-to-use-card-right-container2 {
   width: 100%;
   height: auto;
-  margin: var(--dl-space-space-unit);
   display: flex;
+  padding: var(--dl-space-space-unit);
   position: relative;
   flex-wrap: wrap;
   align-items: flex-start;

@@ -312,8 +312,8 @@
 .how-to-use-card-left-container1 {
   width: 100%;
   height: auto;
-  margin: var(--dl-space-space-unit);
   display: flex;
+  padding: var(--dl-space-space-unit);
   position: relative;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -428,8 +428,8 @@
 .how-to-use-card-right-container2 {
   width: 100%;
   height: auto;
-  margin: var(--dl-space-space-unit);
   display: flex;
+  padding: var(--dl-space-space-unit);
   position: relative;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -538,15 +538,15 @@
   }
 }
 
-.how-to-use-card-left-wrapper-jkhn {
+.how-to-use-card-left-wrapper-wxkf {
   display: contents;
 }
  
 .how-to-use-card-left-container11 {
   width: 100%;
   height: auto;
-  margin: var(--dl-space-space-unit);
   display: flex;
+  padding: var(--dl-space-space-unit);
   position: relative;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -654,15 +654,15 @@
   }
 }
 
-.how-to-use-card-right-wrapper-is3z {
+.how-to-use-card-right-wrapper-a8xy {
   display: contents;
 }
  
 .how-to-use-card-right-container21 {
   width: 100%;
   height: auto;
-  margin: var(--dl-space-space-unit);
   display: flex;
+  padding: var(--dl-space-space-unit);
   position: relative;
   flex-wrap: wrap;
   align-items: flex-start;
