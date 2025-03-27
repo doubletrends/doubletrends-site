@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Volume Weighted Average Price (VWAP)</title>
+    <meta name="description" content="Volume Weighted Average Price (VWAP)" />
+    <meta property="og:title" content="Volume Weighted Average Price (VWAP)" />
+    <meta property="og:description" content="Volume Weighted Average Price (VWAP)" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="../public/cds logo black-200h.png">
+
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;  -webkit-font-smoothing: antialiased;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;  color: inherit;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}details {  display: block;  margin: 0;  padding: 0;}summary::-webkit-details-marker {  display: none;}[data-thq="accordion"] [data-thq="accordion-content"] {  max-height: 0;  overflow: hidden;  transition: max-height 0.3s ease-in-out;  padding: 0;}[data-thq="accordion"] details[data-thq="accordion-trigger"][open] + [data-thq="accordion-content"] {  max-height: 1000vh;}details[data-thq="accordion-trigger"][open] summary [data-thq="accordion-icon"] {  transform: rotate(180deg);}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: "Merriweather";
+        font-size: 0.85rem;
+      }
+
+      body {
+        font-weight: 300;
+        font-style:normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.625;
+        color: var(--dl-color-secondary-400);
+        background: var(--dl-color-gray-white);
+
+        fill: var(--dl-color-secondary-400);
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/animate.css@4.1.1/animate.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
+    />
+    <style>
+      html * {
+          -webkit-font-smoothing: antialiased;
+      }
+      input::placeholder, textarea::placeholder {
+         color: #d2d6da;
+      }
+    </style>
+  </head>
+  <body>
+    <link rel="stylesheet" href="../style.css" />
+    <div>
+      <link href="../indicator-list.css" rel="stylesheet" />
+
+      <div class="indicator-list-container">
+        <header-wrapper class="header-wrapper" rootclassname="headerundefined">
+          <!--Header component-->
+          <div class="header-header headerroot-class-name">
+            <nav class="header-nav">
+              <div class="header-container1">
+                <div class="header-container2">
+                  <img
+                    alt="image"
+                    src="../public/cds%20logo%20black-200h.png"
+                    class="header-image1"
+                  />
+                </div>
+                <a href="../index.html" class="header-link1">
+                  Double Trend Exhaustion™
+                </a>
+                <div class="header-desktop-menu1">
+                  <a href="../index.html" class="header-link2">Home</a>
+                  <a href="../indicator-list.html" class="header-link3">Indicator List</a>
+                  <a href="../setup-guide.html" class="header-link4">Setup Guide</a>
+                  <a href="../services.html" class="header-link5">Services</a>
+                  <a href="../contact.html" class="header-link6">Contact</a>
+                </div>
+                <div class="header-desktop-menu2">
+                  <a href="../index.html"><img
+                    alt="image"
+                    src="../public/nav-icons/home.svg"
+                    class="header-image2"
+                  /></a>
+                  <a href="../indicator-list.html"><img
+                    alt="image"
+                    src="../public/nav-icons/list.svg"
+                    class="header-image3"
+                  /></a>
+                  <a href="../setup-guide.html"><img
+                    alt="image"
+                    src="../public/nav-icons/help-circle.svg"
+                    class="header-image4"
+                  /></a>
+                  <a href="../services.html"><img
+                    alt="image"
+                    src="../public/nav-icons/user.svg"
+                    class="header-image5"
+                  /></a>
+                  <a href="../contact.html"><img
+                    alt="image"
+                    src="../public/nav-icons/message-circle.svg"
+                    class="header-image6"
+                  /></a>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </header-wrapper>
+        <section class="indicator-list-info4">
+          <tm-title-left-wrapper-5biq
+            class="tm-title-left-wrapper-5biq"
+            rootclassname="tm-title-leftundefined"
+          >
+            <!--TMTitleLeft component-->
+            <div class="tm-title-left-container2 tm-title-leftroot-class-name4">
+              <h1 class="tm-title-left-text5">
+                <fragment class="indicator-list-fragment39">
+                  <span class="indicator-list-text205">
+                    Volume Weighted Average Price (VWAP)
+                  </span>
+                </fragment>
+              </h1>
+              <span class="tm-title-left-text6">
+                <fragment class="indicator-list-fragment38">
+                  <span class="indicator-list-text204">
+                    Volatility &amp; Volume Analysis Series
+                  </span>
+                </fragment>
+              </span>
+            </div>
+          </tm-title-left-wrapper-5biq>
+          <key-takeaways-wrapper-6hwr
+            class="key-takeaways-wrapper-6hwr"
+            rootclassname="key-takeawaysundefined"
+          >
+            <!--KeyTakeaways component-->
+            <div
+              class="key-takeaways-container22 key-takeawaysroot-class-name4"
+            >
+              <div class="key-takeaways-container6">
+                <span class="key-takeaways-text14">
+                  <fragment class="indicator-list-fragment41">
+                    <span class="indicator-list-text218">Key takeaways</span>
+                  </fragment>
+                </span>
+                <p class="HeadingThree">
+                  <fragment class="indicator-list-fragment40">
+                    <span class="indicator-list-text206">
+                      <span>Williams %R is a momentum chart indicator.</span>
+                      <br />
+                      <span>
+                        It can be used to generate short-term buy and sell
+                        signals.
+                      </span>
+                      <br />
+                      <span>
+                        This indicator may suggest stocks could run into
+                        resistance.
+                      </span>
+                      <br />
+                      <br />
+                      <span>Mostly used by: Fidelity Investements</span>
+                      <br class="Body" />
+                      <span class="Body">
+                        https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/williams-r
+                      </span>
+                      <br class="Body" />
+                    </span>
+                  </fragment>
+                </p>
+                <div class="key-takeaways-container7">
+                  <button-dark-wrapper-dxtr
+                    class="button-dark-wrapper-dxtr"
+                    rootclassname="button-darkundefined"
+                  >
+                    <!--ButtonDark component-->
+                    <div
+                      class="button-dark-container7 button-darkroot-class-name4"
+                    >
+                      <a href="checkout-vwap.html"><button class="button-dark-button7 ButtonSmall button">
+                        <span>Source Code (CAD $299)</span>
+                      </button></a>
+                    </div>
+                  </button-dark-wrapper-dxtr>
+                </div>
+              </div>
+            </div>
+          </key-takeaways-wrapper-6hwr>
+          <details-card-wrapper-ohjk
+            class="details-card-wrapper-ohjk"
+            rootclassname="details-cardundefined"
+          >
+            <!--DetailsCard component-->
+            <div class="details-card-container24 details-cardroot-class-name8">
+              <div class="details-card-container10">
+                <img
+                  alt="image"
+                  src="public/how-to-use/2_setup-1500h.png"
+                  class="details-card-image4"
+                />
+              </div>
+              <div class="details-card-container11">
+                <p class="details-card-text5">
+                  <fragment class="indicator-list-fragment42">
+                    <span class="indicator-list-text219">
+                      <br />
+                      <span>
+                        When a buy or sell signal is triggered, evaluate if the
+                        corresponding candlestick breaks through the -3 and -2
+                        levels. If it does, the setup aligns with optimal trend
+                        exhaustion parameters, signaling a high-probability
+                        reversal. If not, the market may sustain its directional
+                        momentum, indicating the possibility of continued trend
+                        progression before a potential reversal.
+                      </span>
+                      <br />
+                      <br />
+                      <span>
+                        As demonstrated in the graph, this represents an optimal
+                        setup, where the candlestick breaks through the -3 and
+                        -2 levels, confirming a high-probability reversal under
+                        current market conditions.
+                      </span>
+                      <br class="indicator-list-text225" />
+                    </span>
+                  </fragment>
+                </p>
+              </div>
+            </div>
+          </details-card-wrapper-ohjk>
+          <details-card-wrapper-xtyu
+            class="details-card-wrapper-xtyu"
+            rootclassname="details-cardundefined"
+          >
+            <!--DetailsCard component-->
+            <div class="details-card-container25 details-cardroot-class-name9">
+              <div class="details-card-container12">
+                <img
+                  alt="image"
+                  src="public/how-to-use/2_setup-1500h.png"
+                  class="details-card-image5"
+                />
+              </div>
+              <div class="details-card-container13">
+                <p class="details-card-text6">
+                  <fragment class="indicator-list-fragment43">
+                    <span class="indicator-list-text226">
+                      <br />
+                      <span>
+                        When a buy or sell signal is triggered, evaluate if the
+                        corresponding candlestick breaks through the -3 and -2
+                        levels. If it does, the setup aligns with optimal trend
+                        exhaustion parameters, signaling a high-probability
+                        reversal. If not, the market may sustain its directional
+                        momentum, indicating the possibility of continued trend
+                        progression before a potential reversal.
+                      </span>
+                      <br />
+                      <br />
+                      <span>
+                        As demonstrated in the graph, this represents an optimal
+                        setup, where the candlestick breaks through the -3 and
+                        -2 levels, confirming a high-probability reversal under
+                        current market conditions.
+                      </span>
+                      <br class="indicator-list-text232" />
+                    </span>
+                  </fragment>
+                </p>
+              </div>
+            </div>
+          </details-card-wrapper-xtyu>
+        </section>
+        <footer-wrapper class="footer-wrapper">
+          <!--Footer component-->
+          <footer class="footer-footer">
+            <div class="footer-container1">
+              <div class="footer-container2">
+                <span class="footer-text10">
+                  Copyright © 2025 CDS Sole Prop.
+                </span>
+                <span class="footer-text11">
+                  <span class="footer-text12">
+                    Legal Disclaimer ⚠ : The information, tools, and indicators
+                    provided on this platform are for educational and
+                    informational purposes only and should not be considered as
+                    financial, investment, or trading advice. We are not a
+                    registered financial advisor, broker, or dealer.&nbsp;
+                  </span>
+                  <span>
+                    Trading and investing in financial markets involve
+                    significant risk of loss. Past performance is not indicative
+                    of future results. There is no guarantee that the use of our
+                    indicators, strategies, or any information provided will
+                    result in profits or prevent losses.
+                  </span>
+                  <br />
+                  <br />
+                  <span>
+                    Under no circumstances shall we be held liable for any
+                    direct, indirect, incidental, consequential, or special
+                    damages, including but not limited to financial losses, data
+                    loss, or other damages arising from the use or inability to
+                    use our tools, indicators, or services. By using our
+                    indicators, you agree to indemnify and hold us harmless from
+                    any claims, damages, or legal fees resulting from your use
+                    of the information or tools provided.
+                  </span>
+                  <br />
+                </span>
+              </div>
+              <div class="footer-container3">
+                <div class="footer-container4">
+                  <span class="footer-text18">Navigation</span>
+                  <a href="../index.html" class="footer-navlink1 Large">
+                    Home
+                  </a>
+                  <a href="../indicator-list.html" class="footer-navlink2 Large">
+                    Indicator List
+                  </a>
+                  <a href="../setup-guide.html" class="footer-navlink3 Large">
+                    Setup Guide
+                  </a>
+                  <a href="../services.html" class="footer-navlink4 Large">
+                    Services
+                  </a>
+                  <a href="../contact.html" class="footer-link Large">Contact</a>
+                </div>
+                <div class="footer-container5">
+                  <span class="footer-text19">Indicator List</span>
+                  <a href="./indicator-dte.html" class="footer-navlink5 Large">Double Trend</a>
+                  <a href="./indicator-%r.html" class="footer-navlink6 Large">Double Trend %R</a>
+                  <a href="./indicator-vwap.html" class="footer-navlink7 Large">VWAP</a>
+                  <a href="./indicator-svp.html" class="footer-navlink8 Large">Volume Profile</a>
+                  <a href="./indicator-mdd.html" class="footer-navlink9 Large">Escape-The-Top</a>
+                </div>
+              </div>
+            </div>
+            <img
+              alt="image"
+              src="../public/waves-white.svg"
+              class="footer-image"
+            />
+          </footer>
+        </footer-wrapper>
+      </div>
+    </div>
+    <script
+      defer=""
+      src="https://unpkg.com/@teleporthq/teleport-custom-scripts"
+    ></script>
+  </body>
+</html>

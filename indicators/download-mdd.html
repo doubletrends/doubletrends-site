@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Download</title>
+    <meta name="description" content="Download" />
+    <meta property="og:title" content="Download" />
+    <meta property="og:description" content="Download" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="../public/cds logo black-200h.png">
+
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;  -webkit-font-smoothing: antialiased;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;  color: inherit;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}details {  display: block;  margin: 0;  padding: 0;}summary::-webkit-details-marker {  display: none;}[data-thq="accordion"] [data-thq="accordion-content"] {  max-height: 0;  overflow: hidden;  transition: max-height 0.3s ease-in-out;  padding: 0;}[data-thq="accordion"] details[data-thq="accordion-trigger"][open] + [data-thq="accordion-content"] {  max-height: 1000vh;}details[data-thq="accordion-trigger"][open] summary [data-thq="accordion-icon"] {  transform: rotate(180deg);}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: "Merriweather";
+        font-size: 0.85rem;
+      }
+
+      body {
+        font-weight: 300;
+        font-style:normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.625;
+        color: var(--dl-color-secondary-400);
+        background: var(--dl-color-gray-white);
+
+        fill: var(--dl-color-secondary-400);
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/animate.css@4.1.1/animate.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
+    />
+    <style>
+      html * {
+          -webkit-font-smoothing: antialiased;
+      }
+      input::placeholder, textarea::placeholder {
+         color: #d2d6da;
+      }
+    </style>
+  </head>
+  <body>
+    <link rel="stylesheet" href="../style.css" />
+    <div>
+      <link href="../services.css" rel="stylesheet" />
+
+      <div class="services-container1">
+        <header-wrapper class="header-wrapper" rootclassname="headerundefined">
+          <!--Header component-->
+          <div class="header-header headerroot-class-name">
+            <nav class="header-nav">
+              <div class="header-container1">
+                <div class="header-container2">
+                  <img
+                    alt="image"
+                    src="../public/cds%20logo%20black-200h.png"
+                    class="header-image1"
+                  />
+                </div>
+                <a href="../index.html" class="header-link1">
+                  Double Trend Exhaustion™
+                </a>
+                <div class="header-desktop-menu1">
+                  <a href="../index.html" class="header-link2">Home</a>
+                  <a href="../indicator-list.html" class="header-link3">Indicator List</a>
+                  <a href="../setup-guide.html" class="header-link4">Setup Guide</a>
+                  <a href="../services.html" class="header-link5">Services</a>
+                  <a href="../contact.html" class="header-link6">Contact</a>
+                </div>
+                <div class="header-desktop-menu2">
+                  <a href="../index.html"><img
+                    alt="image"
+                    src="../public/nav-icons/home.svg"
+                    class="header-image2"
+                  /></a>
+                  <a href="../indicator-list.html"><img
+                    alt="image"
+                    src="../public/nav-icons/list.svg"
+                    class="header-image3"
+                  /></a>
+                  <a href="../setup-guide.html"><img
+                    alt="image"
+                    src="../public/nav-icons/help-circle.svg"
+                    class="header-image4"
+                  /></a>
+                  <a href="../services.html"><img
+                    alt="image"
+                    src="../public/nav-icons/user.svg"
+                    class="header-image5"
+                  /></a>
+                  <a href="../contact.html"><img
+                    alt="image"
+                    src="../public/nav-icons/message-circle.svg"
+                    class="header-image6"
+                  /></a>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </header-wrapper>
+        <section class="services-info4">
+          <div class="services-container4">
+            <tm-title-wrapper-jyi3
+              class="tm-title-wrapper-jyi3"
+              rootclassname="tm-titleundefined"
+            >
+              <!--TMTitle component-->
+              <div class="tm-title-container3 tm-titleroot-class-name6">
+                <h1 class="tm-title-text7">
+                  <fragment class="services-fragment34">
+                    <br />
+                    <br />
+                    <span class="services-text87">
+                      Your Free Tools Await!
+                    </span>
+                  </fragment>
+                </h1>
+                <span class="tm-title-text8">
+                  <fragment class="services-fragment33">
+                    <span class="services-text82">
+                      <span>
+                        You now have access to Maximum Drawdown Threshold Indicator, a powerful tool designed for any assets — crypto, stocks, or forex, this indicator will help you stay ahead of market momentum and avoid FOMO-driven traps. 
+                      </span>
+                      <br />
+                      <br />
+                      <span>
+                        Click the download button below to get your files, then follow the setup guide to start using it. Happy trading! 📈 
+                      </span>
+                      <br />
+                      <br />
+                    </span>
+                  </fragment>
+                </span>
+              </div>
+            </tm-title-wrapper-jyi3>
+            <button-dark-wrapper
+              class="button-dark-wrapper"
+              rootclassname="button-darkundefined"
+            >
+              <!--ButtonDark component-->
+              <div class="button-dark-container button-darkroot-class-name7">
+                <a href="attachments/mdd.zip"><button class="button-dark-button ButtonSmall button">
+                  <span>Download Source Code</span>
+                </button></a>
+              </div>
+                <h1 class="tm-title-text8">
+                  <fragment class="services-fragment34">
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                  </fragment>
+                </h1>
+            </button-dark-wrapper>
+          </div>
+          <setup-card-wrapper
+            class="setup-card-wrapper"
+            rootclassname="setup-cardundefined"
+          >
+            <!--SetupCard component-->
+            <div class="setup-card-container2 setup-cardroot-class-name2">
+              <div class="setup-card-container1">
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      1. Legal Disclaimer
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        By accessing, using, or interacting with this platform, its content, tools, indicators, services, or any associated materials (collectively referred to as "Services"), you acknowledge and agree to the following terms and conditions in full. If you do not agree with any part of this disclaimer, you should cease use of our Services immediately. Your continued use constitutes full acceptance of these terms.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      2(a). No Financial Advice
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        The information provided on this platform, including but not limited to market indicators, charts, strategies, guides, educational content, and any accompanying materials, is strictly for informational and educational purposes. Nothing presented should be construed as personalized financial, investment, legal, or tax advice. We are not licensed financial advisors, brokers, or legal professionals. Any decisions made based on the use of our Services are made entirely at your own risk.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      2(b). Market Risk Acknowledgment
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        Trading and investing in financial markets, including but not limited to equities, cryptocurrencies, foreign exchange (Forex), commodities, and other financial instruments, involve inherent and substantial risks. These risks include but are not limited to significant financial loss, market volatility, liquidity risks, slippage, system failures, and unforeseen geopolitical or economic events. Markets are unpredictable, and no tool, indicator, or strategy can guarantee profits or eliminate the risk of loss. Users should never trade or invest money they cannot afford to lose. Historical performance is not indicative of future results.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      2(c). No Guarantees or Warranties
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        All Services provided are offered on an "as is" and "as available" basis without any guarantees, representations, or warranties of any kind, express or implied. This includes, but is not limited to, implied warranties of merchantability, fitness for a particular purpose, accuracy, reliability, or non-infringement. We make no representations that the Services will be uninterrupted, error-free, or free from viruses or other harmful components. Any reliance you place on the information provided is strictly at your own risk.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      3(a). Third-Party Platforms and Dependencies
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        Our indicators are made available on third-party platforms such as TradingView. We have no control over the functionality, stability, or performance of these platforms. Updates, changes, or technical issues on these platforms may impact the functionality of our indicators. We are not responsible for any downtime, errors, inaccuracies, or financial losses caused by such third-party services. Users acknowledge that platform performance may change without notice, and continued use is at their own discretion and risk.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      3(b). Source Code and Customization
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        We may provide source code for certain indicators to promote transparency and allow for user customization. By accessing or modifying the source code, you agree that we shall not be liable for any unintended behavior, coding errors, security vulnerabilities, or resulting financial losses. All modifications and implementations are done at your own risk, and we make no guarantee that the original or modified version will function as intended.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      4(a). Limitation of Liability
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        To the fullest extent permitted by law, we, along with our affiliates, partners, officers, employees, and agents, shall not be held liable for any direct, indirect, incidental, consequential, or special damages arising from or related to the use of our Services. This includes, but is not limited to, loss of profits, loss of data, trading losses, hardware or software damage, or any other financial or non-financial losses, regardless of whether such damages were foreseeable. This limitation of liability applies even if we have been advised of the possibility of such damages.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      4(b). User Responsibility
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        It is your sole responsibility to evaluate the risks and suitability of our Services for your financial situation and investment objectives. We recommend conducting thorough research and consulting with a qualified financial professional before making any trading or investment decisions. You acknowledge that no one strategy, indicator, or tool can consistently outperform the market, and all trading involves inherent risks.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      4(c). Indemnification
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        By using our Services, you agree to indemnify, defend, and hold harmless our company, affiliates, partners, officers, employees, contractors, and agents from and against any and all claims, damages, liabilities, costs, or expenses (including but not limited to legal fees) arising from your use or misuse of our Services, violation of these terms, or infringement of any third-party rights.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      5(a). No Partnership or Endorsement
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        Reference to any third-party platform, tool, or organization (including but not limited to TradingView, Bloomberg Terminal, Binance, OKX, or Coinbase) is for informational purposes only and does not imply endorsement, partnership, or affiliation. We do not claim to offer or replicate the full functionality of any third-party services.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      5(b). Forward-Looking Statements
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        Certain information provided may contain forward-looking statements that reflect our views on market trends or performance. Such statements are inherently uncertain and subject to various risks and uncertainties. Actual outcomes may differ materially from those expressed or implied in forward-looking statements. Users should not place undue reliance on such information.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      6. Modification of Services and Terms
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        We reserve the right to modify, suspend, or discontinue any part of our Services at any time without prior notice. We also reserve the right to update or change this legal disclaimer at any time. It is your responsibility to periodically review this disclaimer for any changes. Continued use of our Services after modifications constitutes your acceptance of the revised terms.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      7. Jurisdiction and Governing Law
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        This legal disclaimer shall be governed by and construed in accordance with the laws of the jurisdiction in which we operate. Any disputes arising from or related to this disclaimer or the use of our Services shall be subject to the exclusive jurisdiction of the courts in that jurisdiction.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+                <span class="setup-card-text1">
+                  <fragment class="services-fragment16">
+                    <span style="font-size: 0.75em" class="services-text32">
+                      8. Acceptance Agreement
+                    </span>
+                  </fragment>
+                </span>
+                <p class="setup-card-text2">
+                  <fragment class="services-fragment15">
+                    <span class="services-text26">
+                      <span>
+                        By accessing or using our platform and services, you confirm that you have read, understood, and agreed to all the terms stated above. If you do not agree, you must cease using our services immediately.
+                      </span>
+                      <br class="services-text31" />
+                    </span>
+                  </fragment>
+                </p>
+              </div>
+            </div>
+          </setup-card-wrapper>
+        </section>
+        <footer class="footer-footer">
+            <div class="footer-container1">
+              <div class="footer-container2">
+                <span class="footer-text10">
+                  Copyright © 2025 CDS Sole Prop.
+                </span>
+                <span class="footer-text11">
+                  <span class="footer-text12">
+                    Legal Disclaimer ⚠ : The information, tools, and indicators
+                    provided on this platform are for educational and
+                    informational purposes only and should not be considered as
+                    financial, investment, or trading advice. We are not a
+                    registered financial advisor, broker, or dealer.&nbsp;
+                  </span>
+                  <span>
+                    Trading and investing in financial markets involve
+                    significant risk of loss. Past performance is not indicative
+                    of future results. There is no guarantee that the use of our
+                    indicators, strategies, or any information provided will
+                    result in profits or prevent losses.
+                  </span>
+                  <br />
+                  <br />
+                  <span>
+                    Under no circumstances shall we be held liable for any
+                    direct, indirect, incidental, consequential, or special
+                    damages, including but not limited to financial losses, data
+                    loss, or other damages arising from the use or inability to
+                    use our tools, indicators, or services. By using our
+                    indicators, you agree to indemnify and hold us harmless from
+                    any claims, damages, or legal fees resulting from your use
+                    of the information or tools provided.
+                  </span>
+                  <br />
+                </span>
+              </div>
+              <div class="footer-container3">
+                <div class="footer-container4">
+                  <span class="footer-text18">Navigation</span>
+                  <a href="../index.html" class="footer-navlink1 Large">
+                    Home
+                  </a>
+                  <a href="../indicator-list.html" class="footer-navlink2 Large">
+                    Indicator List
+                  </a>
+                  <a href="../setup-guide.html" class="footer-navlink3 Large">
+                    Setup Guide
+                  </a>
+                  <a href="../services.html" class="footer-navlink4 Large">
+                    Services
+                  </a>
+                  <a href="../contact.html" class="footer-link Large">Contact</a>
+                </div>
+                <div class="footer-container5">
+                  <span class="footer-text19">Indicator List</span>
+                  <a href="./indicator-dte.html" class="footer-navlink5 Large">Double Trend</a>
+                  <a href="./indicator-%r.html" class="footer-navlink6 Large">Double Trend %R</a>
+                  <a href="./indicator-vwap.html" class="footer-navlink7 Large">VWAP</a>
+                  <a href="./indicator-svp.html" class="footer-navlink8 Large">Volume Profile</a>
+                  <a href="./indicator-mdd.html" class="footer-navlink9 Large">Escape-The-Top</a>
+                </div>
+              </div>
+            </div>
+            <img
+              alt="image"
+              src="../public/waves-white.svg"
+              class="footer-image"
+            />
+          </footer>
+        </footer-wrapper>
+      </div>
+    </div>
+    <script
+      defer=""
+      src="https://unpkg.com/@teleporthq/teleport-custom-scripts"
+    ></script>
+  </body>
+</html>

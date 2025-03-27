@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Double Trend Exhaustion™</title>
+    <meta
+      name="description"
+      content="Trade like the institutions that move the market. Our indicators give you access to the same professional-grade tools used by the biggest players, helping you stay ahead of the competition with precise market timing. "
+    />
+    <meta property="og:title" content="Double Trend Exhaustion™" />
+    <meta
+      property="og:description"
+      content="Trade like the institutions that move the market. Our indicators give you access to the same professional-grade tools used by the biggest players, helping you stay ahead of the competition with precise market timing. "
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="./public/cds logo black-200h.png">
+
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;  -webkit-font-smoothing: antialiased;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;  color: inherit;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}details {  display: block;  margin: 0;  padding: 0;}summary::-webkit-details-marker {  display: none;}[data-thq="accordion"] [data-thq="accordion-content"] {  max-height: 0;  overflow: hidden;  transition: max-height 0.3s ease-in-out;  padding: 0;}[data-thq="accordion"] details[data-thq="accordion-trigger"][open] + [data-thq="accordion-content"] {  max-height: 1000vh;}details[data-thq="accordion-trigger"][open] summary [data-thq="accordion-icon"] {  transform: rotate(180deg);}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: "Merriweather";
+        font-size: 0.85rem;
+      }
+
+      body {
+        font-weight: 300;
+        font-style:normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.625;
+        color: var(--dl-color-secondary-400);
+        background: var(--dl-color-gray-white);
+
+        fill: var(--dl-color-secondary-400);
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/animate.css@4.1.1/animate.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
+    />
+    <style>
+      html * {
+          -webkit-font-smoothing: antialiased;
+      }
+      input::placeholder, textarea::placeholder {
+         color: #d2d6da;
+      }
+    </style>
+  </head>
+  <body>
+    <link rel="stylesheet" href="./style.css" />
+    <div>
+      <link href="./index.css" rel="stylesheet" />
+
+      <div class="home-container1">
+        <header-wrapper class="header-wrapper" rootclassname="headerundefined">
+          <!--Header component-->
+          <div class="header-header headerroot-class-name2">
+            <nav class="header-nav">
+              <div class="header-container1">
+                <div class="header-container2">
+                  <img
+                    alt="image"
+                    src="public/cds%20logo%20black-200h.png"
+                    class="header-image1"
+                  />
+                </div>
+                <a href="index.html" class="header-link1">
+                  Double Trend Exhaustion™
+                </a>
+                <div class="header-desktop-menu1">
+                  <a href="index.html" class="header-link2">Home</a>
+                  <a href="indicator-list.html" class="header-link3">Indicator List</a>
+                  <a href="setup-guide.html" class="header-link4">Setup Guide</a>
+                  <a href="services.html" class="header-link5">Services</a>
+                  <a href="contact.html" class="header-link6">Contact</a>
+                </div>
+                <div class="header-desktop-menu2">
+                  <a href="index.html"><img
+                    alt="image"
+                    src="public/nav-icons/home.svg"
+                    class="header-image2"
+                  /></a>
+                  <a href="indicator-list.html"><img
+                    alt="image"
+                    src="public/nav-icons/list.svg"
+                    class="header-image3"
+                  /></a>
+                  <a href="setup-guide.html"><img
+                    alt="image"
+                    src="public/nav-icons/help-circle.svg"
+                    class="header-image4"
+                  /></a>
+                  <a href="services.html"><img
+                    alt="image"
+                    src="public/nav-icons/user.svg"
+                    class="header-image5"
+                  /></a>
+                  <a href="contact.html"><img
+                    alt="image"
+                    src="public/nav-icons/message-circle.svg"
+                    class="header-image6"
+                  /></a>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </header-wrapper>
+        <div class="home-main">
+          <div class="home-container2">
+            <banner-wrapper
+              class="banner-wrapper"
+              rootclassname="bannerundefined"
+            >
+              <!--Banner component-->
+              <div class="banner-card bannerroot-class-name">
+                <div class="banner-container1">
+                  <h1 class="banner-heading">
+                    <fragment class="home-fragment2">
+                      <span class="home-text2">Precision Where It Counts</span>
+                    </fragment>
+                  </h1>
+                  <h1 class="banner-text1">
+                    <fragment class="home-fragment3">
+                      <span class="home-text3">
+                        Don’t Chase the Market, Ride It.
+                      </span>
+                    </fragment>
+                  </h1>
+                  <span class="banner-text2">
+                    <fragment class="home-fragment1">
+                      <span class="home-text1">
+                        Trade like the institutions that move the market. Our
+                        indicators give you access to the same
+                        professional-grade tools used by the biggest players,
+                        helping you stay ahead of the competition with precise
+                        market timing.
+                      </span>
+                    </fragment>
+                  </span>
+                  <text style="font-size: 0.65rem; color: gray">* Reference to any third-party platform, tool, or organization is for informational purposes only and does not imply endorsement, partnership, or affiliation.</text>
+                  <div class="banner-container2">
+                    <button-light-wrapper
+                      class="button-light-wrapper"
+                      rootclassname="button-lightundefined"
+                    >
+                      <!--ButtonLight component-->
+                      <a href="indicator-list.html">
+                      <div
+                        class="button-light-container button-lightroot-class-name2"
+                      >
+                        <button class="button-light-button button ButtonSmall">
+                          <span>Explore Indicators</span>
+                        </button>
+                      </div>
+                      </a>
+                    </button-light-wrapper>
+                    <button-dark-wrapper
+                        class="banner-component2"
+                        rootclassname="button-darkundefined"
+                      >
+                        <!--ButtonDark component-->
+                        <a href="setup-guide.html">
+                        <div
+                          class="button-dark-container button-darkroot-class-name"
+                        >
+                          <button class="button-dark-button ButtonSmall button">
+                            <span>Setup Guide</span>
+                          </button>
+                        </div>
+                        </a>
+                      </button-dark-wrapper>
+                  </div>
+                  <div class="banner-container3">
+                    <img
+                      alt="image"
+                      src="public/logos/tradingview-200h.webp"
+                      class="banner-image1"
+                    />
+                    <img
+                      alt="image"
+                      src="public/logos/binance.svg"
+                      class="banner-image2"
+                    />
+                    <img
+                      alt="image"
+                      src="public/logos/okx.svg"
+                      class="banner-image4"
+                    />
+                    <img
+                      alt="image"
+                      src="public/logos/coinbase.svg"
+                      class="banner-image3"
+                    />
+                  </div>
+                </div>
+              </div>
+            </banner-wrapper>
+          </div>
+        </div>
+        <img alt="image" src="public/bg-1500h.png" class="home-image" />
+        <section class="home-features">
+          <feature-wrapper
+            class="feature-wrapper"
+            rootclassname="featureundefined"
+          >
+            <!--Feature component-->
+            <div class="feature-container featureroot-class-name2">
+              <h5 class="feature-text1 HeadingThree"><span>Any Asset</span></h5>
+              <span class="feature-text2">
+                <span>
+                  Stocks, crypto, forex—wherever there's price action, this tool
+                  adapts.
+                </span>
+              </span>
+            </div>
+          </feature-wrapper>
+          <feature-wrapper-fbsp
+            class="feature-wrapper-fbsp"
+            rootclassname="featureundefined"
+          >
+            <!--Feature component-->
+            <div class="feature-container1 featureroot-class-name1">
+              <h5 class="feature-text3 HeadingThree">
+                <span>Any Timeframe</span>
+              </h5>
+              <span class="feature-text4">
+                <span>
+                  Suitable for scalping, swing trading, and long-term analysis.
+                </span>
+              </span>
+            </div>
+          </feature-wrapper-fbsp>
+          <feature-wrapper-1b5b
+            class="feature-wrapper-1b5b"
+            rootclassname="featureundefined"
+          >
+            <!--Feature component-->
+            <div class="feature-container2 featureroot-class-name">
+              <h5 class="feature-text5 HeadingThree">
+                <span>Easy to Use</span>
+              </h5>
+              <span class="feature-text6">
+                <span>Simple, clear signals with no complex setup needed.</span>
+              </span>
+            </div>
+          </feature-wrapper-1b5b>
+        </section>
+        <section class="home-info">
+          <tm-title-wrapper
+            class="tm-title-wrapper"
+            rootclassname="tm-titleundefined"
+          >
+            <!--TMTitle component-->
+            <div class="tm-title-container tm-titleroot-class-name">
+              <h1 class="tm-title-text1">
+                <fragment class="home-fragment5">
+                  <span class="home-text8">Real Market Performance</span>
+                </fragment>
+              </h1>
+              <span class="tm-title-text2">
+                <fragment class="home-fragment4">
+                  <span class="home-text4">
+                    <span>Backtests don't pay the bills.</span>
+                    <br />
+                    <span>
+                      See how our indicators perform in the wild — where it
+                      actually matters.
+                    </span>
+                  </span>
+                </fragment>
+              </span>
+            </div>
+          </tm-title-wrapper>
+          <introduction-card-wrapper class="introduction-card-wrapper">
+            <!--IntroductionCard component-->
+            <div class="introduction-card-container1">
+              <div class="introduction-card-container2">
+                <div class="introduction-card-container3">
+                  <img
+                    alt="image"
+                    src="public/profit2.png"
+                    class="introduction-card-image1"
+                  />
+                </div>
+                <div class="introduction-card-container4">
+                  <p class="introduction-card-text10">
+                    <span>
+                      Outperformed Dollar-Cost Averaging (DCA) strategy on VOO and VTI
+                    </span>
+                    <br />
+                    <br />
+                    <span>
+                      Outperformed Hold on for Dear Life (HODL) strategy on BTC
+                    </span>
+                    <br />
+                    <br />
+                    <span>Over 80% win rate on Binance Futures</span>
+                  </p>
+                </div>
+                <div class="introduction-card-container5">
+                  <img
+                    alt="image"
+                    src="public/profit1.png"
+                    class="introduction-card-image2"
+                  />
+                </div>
+              </div>
+              <div class="introduction-card-container6">
+                <div class="introduction-card-container7">
+                  <img
+                    alt="image"
+                    src="public/piechart.png"
+                    class="introduction-card-image3"
+                  />
+                </div>
+                <div class="introduction-card-container8">
+                  <h3 class="introduction-card-text18">
+                    <fragment class="home-fragment6">
+                      <span class="home-text9">See the power in action</span>
+                    </fragment>
+                  </h3>
+                  <p class="introduction-card-text19">
+                    <br class="introduction-card-text23" />
+                    <span class="introduction-card-text24">
+                      Successful trading isn’t about guessing; it’s about making informed, strategic decisions based on solid data. Our premium indicators are designed to provide you with the same powerful insights that institutional traders rely on, offering you a distinct advantage in the markets. These tools are effective because they focus on volume action, market exhaustion, and emotional market dynamics — key elements that are often overlooked by traditional price action analysis.
+                    </span>
+                    <br>
+                    <br>
+                    <span class="introduction-card-text24">
+                      These indicators are rooted in real, market-tested strategies that focus on critical elements like volume-driven price movements, thresholds of market exhaustion, and areas of significant institutional activity.
+                    </span>
+                    <br>
+                    <br>
+                    <span class="introduction-card-text25">
+                      "The market is filled with individuals who know the price of everything, but the value of nothing." — Philip Fisher
+                    </span>
+                    <br>
+                    <br>
+                    <span class="introduction-card-text32">
+                      This is why our indicators work. They empower you to make decisions based on the most relevant market factors, ensuring you’re not merely following the crowd but positioning yourself with the market’s key forces. With these tools, you can trade with the same precision and strategy as the most successful institutional traders.
+                    </span>
+                    <br class="introduction-card-text36" />
+                  </p>
+                </div>
+              </div>
+            </div>
+          </introduction-card-wrapper>
+        </section>
+        <footer-wrapper class="footer-wrapper">
+          <!--Footer component-->
+          <footer class="footer-footer">
+            <div class="footer-container1">
+              <div class="footer-container2">
+                <span class="footer-text10">
+                  Copyright © 2025 CDS Sole Prop.
+                </span>
+                <span class="footer-text11">
+                  <span class="footer-text12">	
+                    Legal Disclaimer ⚠ : The information, tools, and indicators
+                    provided on this platform are for educational and
+                    informational purposes only and should not be considered as
+                    financial, investment, or trading advice. We are not a
+                    registered financial advisor, broker, or dealer.&nbsp;
+                  </span>
+                  <span>
+                    Trading and investing in financial markets involve
+                    significant risk of loss. Past performance is not indicative
+                    of future results. There is no guarantee that the use of our
+                    indicators, strategies, or any information provided will
+                    result in profits or prevent losses.
+                  </span>
+                  <br />
+                  <br />
+                  <span>
+                    Under no circumstances shall we be held liable for any
+                    direct, indirect, incidental, consequential, or special
+                    damages, including but not limited to financial losses, data
+                    loss, or other damages arising from the use or inability to
+                    use our tools, indicators, or services. By using our
+                    indicators, you agree to indemnify and hold us harmless from
+                    any claims, damages, or legal fees resulting from your use
+                    of the information or tools provided.
+                  </span>
+                  <br />
+                </span>
+              </div>
+              <div class="footer-container3">
+                <div class="footer-container4">
+                  <span class="footer-text18">Navigation</span>
+                  <a href="index.html" class="footer-navlink1 Large">
+                    Home
+                  </a>
+                  <a href="indicator-list.html" class="footer-navlink2 Large">
+                    Indicator List
+                  </a>
+                  <a href="setup-guide.html" class="footer-navlink3 Large">
+                    Setup Guide
+                  </a>
+                  <a href="services.html" class="footer-navlink4 Large">
+                    Services
+                  </a>
+                  <a href="contact.html" class="footer-link Large">Contact</a>
+                </div>
+                <div class="footer-container5">
+                  <span class="footer-text19">Indicator List</span>
+                  <a href="indicators/indicator-dte.html" class="footer-navlink5 Large">Double Trend</a>
+                  <a href="indicators/indicator-%r.html" class="footer-navlink6 Large">Double Trend %R</a>
+                  <a href="indicators/indicator-vwap.html" class="footer-navlink7 Large">VWAP</a>
+                  <a href="indicators/indicator-svp.html" class="footer-navlink8 Large">Volume Profile</a>
+                  <a href="indicators/indicator-mdd.html" class="footer-navlink9 Large">Escape-The-Top</a>
+                </div>
+              </div>
+            </div>
+            <img
+              alt="image"
+              src="public/waves-white.svg"
+              class="footer-image"
+            />
+          </footer>
+        </footer-wrapper>
+      </div>
+    </div>
+    <script
+      defer=""
+      src="https://unpkg.com/@teleporthq/teleport-custom-scripts"
+    ></script>
+  </body>
+</html>

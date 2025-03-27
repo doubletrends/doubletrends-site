@@ -1,0 +1,98 @@
+.service-card-container1 {
+  width: 100%;
+  display: flex;
+  padding: var(--dl-layout-space-unit);
+  position: relative;
+  flex-wrap: wrap;
+}
+ 
+.service-card-container2 {
+  width: 30%;
+  display: flex;
+  position: relative;
+  align-self: center;
+  box-shadow: 5px 5px 10px #000000;
+  flex-direction: column;
+}
+ 
+.service-card-image {
+  box-shadow: 0 8px 26px -4px hsla(0,0%,8%,.15),0 8px 9px -5px hsla(0,0%,8%,.06)!important;
+  object-fit: cover;
+}
+ 
+.service-card-container3 {
+  width: 70%;
+  display: flex;
+  padding: var(--dl-layout-space-tripleunit);
+  position: relative;
+  align-self: center;
+  flex-direction: column;
+}
+ 
+.service-card-text1 {
+  color: var(--dl-color-secondary-700);
+  font-size: 1.875rem;
+  font-family: "Noto Sans";
+  font-weight: 500;
+  line-height: 1.375;
+  text-transform: none;
+  text-decoration: none;
+}
+ 
+.service-card-text2 {
+  font-size: 0.85rem;
+  font-family: "Merriweather";
+  font-weight: 300;
+  line-height: 1.625;
+  text-transform: none;
+  text-decoration: none;
+}
+ 
+.service-card-fragment1 {
+  display: contents;
+}
+ 
+.service-card-text3 {
+  display: inline-block;
+}
+ 
+.service-card-fragment2 {
+  display: contents;
+}
+ 
+.service-card-text4 {
+  width: auto;
+  display: inline-block;
+}
+ 
+
+ 
+
+ 
+.service-cardroot-class-name2 {
+  width: 100%;
+}
+ 
+@media(max-width: 768px) {
+  .service-card-container2 {
+    width: 100%;
+    height: 100%;
+  }
+  .service-card-container3 {
+    width: 100%;
+    padding: 0px;
+  }
+  .service-card-text1 {
+    font-size: 1.75rem;
+  }
+  .service-card-text4 {
+    width: 100%;
+    font-size: 0.8rem;
+    font-family: Merriweather;
+    font-weight: 300;
+    line-height: 1.625;
+    margin-right: 0px;
+    text-transform: none;
+    text-decoration: none;
+  }
+}
