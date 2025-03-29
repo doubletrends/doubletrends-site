@@ -206,23 +206,18 @@
                 <p class="HeadingThree">
                   <fragment class="indicator-list-fragment28">
                     <span class="indicator-list-text148">
-                      <span>Williams %R is a momentum chart indicator.</span>
-                      <br />
                       <span>
-                        It can be used to generate short-term buy and sell
-                        signals.
-                      </span>
-                      <br />
-                      <span>
-                        This indicator may suggest stocks could run into
-                        resistance.
+                        Double Trend Exhaustion is a momentum-based oscillator inspired by TD Sequential, best suited for long-term assets on daily or weekly timeframes. 
                       </span>
                       <br />
                       <br />
-                      <span>Mostly used by: Fidelity Investements</span>
-                      <br class="Body" />
+                      <span>
+                        It helps technical traders time market entry and exit points by identifying periods of trend exhaustion and potential reversals. By tracking shifts in intraday highs and lows, it offers early signals for short-term price action, making it a powerful tool for predicting market turning points.
+                      </span>
+                      <br />
+                      <br />
                       <span class="Body">
-                        https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/williams-r
+                        Mostly used on: MQL5, QuantConnect
                       </span>
                       <br class="Body" />
                     </span>
@@ -255,7 +250,7 @@
               <div class="details-card-container1">
                 <img
                   alt="image"
-                  src="public/how-to-use/2_setup-1500h.png"
+                  src="../public/indicator-details/dte1.png"
                   class="details-card-image"
                 />
               </div>
@@ -265,22 +260,24 @@
                     <span class="indicator-list-text161">
                       <br />
                       <span>
-                        When a buy or sell signal is triggered, evaluate if the
-                        corresponding candlestick breaks through the -3 and -2
-                        levels. If it does, the setup aligns with optimal trend
-                        exhaustion parameters, signaling a high-probability
-                        reversal. If not, the market may sustain its directional
-                        momentum, indicating the possibility of continued trend
-                        progression before a potential reversal.
+                        As momentum begins to build, a dynamic countdown -3, -2, -1 starts to appear, signaling that the market is shifting. This early-stage indicator tracks sustained directional pressure, and as the trend intensifies over nine consecutive periods, it reaches a critical exhaustion point, ready to trigger a powerful reversal signal.
                       </span>
                       <br />
                       <br />
                       <span>
-                        As demonstrated in the graph, this represents an optimal
-                        setup, where the candlestick breaks through the -3 and
-                        -2 levels, confirming a high-probability reversal under
-                        current market conditions.
+                        As shown in the graph, the -3, -2, -1 countdown progressively builds up, leading to a signal trigger as momentum exhaustion is confirmed. 
                       </span>
+                      <br />
+                      <br />
+                      <span>
+                        When a buy or sell signal is triggered, evaluate if the corresponding candlestick breaks through the -3 and -2 levels. If it does, the setup aligns with optimal trend exhaustion parameters, signaling a high-probability reversal. If not, the market may sustain its directional momentum, indicating the possibility of continued trend progression before a potential reversal. 
+                      </span>
+                      <br />
+                      <br />
+                      <span>
+                        As demonstrated in the graph, the second buy signal represents an optimal setup, where the candlestick breaks through the -3 and -2 levels, confirming a high-probability reversal under current market conditions. While the first buy signal is not optimal, since the candlestick did not break through the -2 level.
+                      </span>
+                      <br />
                       <br class="indicator-list-text167" />
                     </span>
                   </fragment>
@@ -297,7 +294,7 @@
               <div class="details-card-container4">
                 <img
                   alt="image"
-                  src="public/how-to-use/2_setup-1500h.png"
+                  src="../public/indicator-details/dte2.png"
                   class="details-card-image1"
                 />
               </div>
@@ -307,21 +304,12 @@
                     <span class="indicator-list-text168">
                       <br />
                       <span>
-                        When a buy or sell signal is triggered, evaluate if the
-                        corresponding candlestick breaks through the -3 and -2
-                        levels. If it does, the setup aligns with optimal trend
-                        exhaustion parameters, signaling a high-probability
-                        reversal. If not, the market may sustain its directional
-                        momentum, indicating the possibility of continued trend
-                        progression before a potential reversal.
+                        The third step involves validating the trend reversal signal by analyzing the three subsequent candlesticks. If 1, 2, or 3 appear, it signifies residual momentum persistence, suggesting the trend may extend before exhaustion. However, if no continuation markers emerge, it confirms a definitive momentum shift, reinforcing the reversal signal with high statistical confidence.  
                       </span>
                       <br />
                       <br />
                       <span>
-                        As demonstrated in the graph, this represents an optimal
-                        setup, where the candlestick breaks through the -3 and
-                        -2 levels, confirming a high-probability reversal under
-                        current market conditions.
+                        The graph illustrates a sell signal followed by the absence of 1, 2, or 3, confirming an immediate trend reversal upon signal activation. 
                       </span>
                       <br class="indicator-list-text174" />
                     </span>
@@ -330,6 +318,35 @@
               </div>
             </div>
           </details-card-wrapper-vckm>
+          <!--DetailsCard component-->
+            <div class="details-card-container2 details-cardroot-class-name">
+              <div class="details-card-container1">
+                <img
+                  alt="image"
+                  src="../public/indicator-details/dte3.png"
+                  class="details-card-image"
+                />
+              </div>
+              <div class="details-card-container3">
+                <p class="details-card-text1">
+                  <fragment class="indicator-list-fragment30">
+                    <span class="indicator-list-text161">
+                      <br />
+                      <span>
+                        Sometimes, the trend persists despite a signal, especially in high-volatility, emotion-driven markets like crypto. To counter this, a small exclamation mark appears after 1, 2, 3, marking a chase-back phase. The counter then continues, and if the trend sustains for 2×9 = 18 consecutive periods, the reversal signal re-triggers. Hence, the name Double Trend Exhaustion. 
+                      </span>
+                      <br />
+                      <br />
+                      <span>
+                        The graph shows an exmaple of the chase-back signal. After an initial false alert, the 1, 2, 3 markers confirm momentum persistence, and the exclamation mark highlights the moment to re-engage with the trend.
+                      </span>
+                      <br class="indicator-list-text167" />
+                    </span>
+                  </fragment>
+                </p>
+              </div>
+            </div>
+          </details-card-wrapper>
         </section>
         <footer-wrapper class="footer-wrapper">
           <!--Footer component-->
