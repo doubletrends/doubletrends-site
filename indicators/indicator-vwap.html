@@ -208,25 +208,33 @@
                 <p class="HeadingThree">
                   <fragment class="indicator-list-fragment40">
                     <span class="indicator-list-text206">
-                      <span>Williams %R is a momentum chart indicator.</span>
+                      <span>
+                        VWAP is a lagging, volume-weighted indicator, used primarily for intraday trading to assess whether prices are above or below a fair value benchmark.
+                      </span>
+                      <br />
                       <br />
                       <span>
-                        It can be used to generate short-term buy and sell
-                        signals.
-                      </span>
-                      <br />
-                      <span>
-                        This indicator may suggest stocks could run into
-                        resistance.
+                        Institutional firms rely on VWAP to execute large orders (millions or billions in value). They break down orders into smaller pieces and use VWAP to ensure executions occur at a fair price without significantly impacting the market.
                       </span>
                       <br />
                       <br />
-                      <span>Mostly used by: Fidelity Investements</span>
-                      <br class="Body" />
-                      <span class="Body">
-                        https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/williams-r
+                      <span class="Body" style="display: block;">
+                        Used by: J.P. Morgan, Morgan Stanley, RBC Capital Market, Jane Street, BlackRock
+                        <br />
+                        <a href="
+https://www.jpmorgan.com/content/dam/jpm/cib/complex/content/markets/jpm-x-jpb-x-us-monthly-summary/JPB-X%20Quarterly%20Doc%20-%20Q42021.pdf">[1] J.P. Morgan U.S. Quarterly Summary</a>
+                        <br />
+                        <a href="https://www.morganstanley.com/content/dam/msdotcom/en/assets/pdfs/sales_and_trading_disclosures/MS_US_Cash_Equity_Order_Handling_and_Routing_FAQs.pdf">[2] Morgan Stanley’s U.S. Cash Equity Order Handling & Routing Practice</a>
+                        <br />
+                        <a href="
+https://www.rbc.com/newsroom/news/article.html?article=125749">[3] RBC Capital Markets Aiden® Arrival Announcement</a>
+                        <br />
+                        <a href="
+https://medium.com/@andrew_zori/part-1-2-etf-execution-strategies-a-study-note-on-jane-streets-report-c2085eca0204">[4] ETF Execution Strategies — A study note on Jane Street’s Report</a>
+                        <br />
+                        <a href="
+https://www.blackrock.com/corporate/literature/whitepaper/viewpoint-a-global-perspective-on-market-on-close-activity-july-2020.pdf">[5] BlackRock Global Perspective White Paper</a>
                       </span>
-                      <br class="Body" />
                     </span>
                   </fragment>
                 </p>
@@ -257,7 +265,7 @@
               <div class="details-card-container10">
                 <img
                   alt="image"
-                  src="public/how-to-use/2_setup-1500h.png"
+                  src="../public/indicator-details/vwap1.png"
                   class="details-card-image4"
                 />
               </div>
@@ -267,21 +275,12 @@
                     <span class="indicator-list-text219">
                       <br />
                       <span>
-                        When a buy or sell signal is triggered, evaluate if the
-                        corresponding candlestick breaks through the -3 and -2
-                        levels. If it does, the setup aligns with optimal trend
-                        exhaustion parameters, signaling a high-probability
-                        reversal. If not, the market may sustain its directional
-                        momentum, indicating the possibility of continued trend
-                        progression before a potential reversal.
+                        To understand why VWAP is useful, it helps to look at its connection to statistics, specifically the Central Limit Theorem (CLT). The CLT states that as more data points are collected, the average of those points becomes a reliable estimate of the true mean. In trading, this means that as the number of transactions increases throughout the day, the volume-weighted average price becomes a strong indicator of a fair market price.
                       </span>
                       <br />
                       <br />
                       <span>
-                        As demonstrated in the graph, this represents an optimal
-                        setup, where the candlestick breaks through the -3 and
-                        -2 levels, confirming a high-probability reversal under
-                        current market conditions.
+                        VWAP continuously updates from the market open, calculating an average price weighted by the volume of trades. Larger trades have a bigger impact on VWAP, while smaller trades influence it less. This makes VWAP a better measure of fair value than a simple moving average, which treats all prices equally regardless of volume. Since VWAP resets daily, it reflects the trading activity of the current session and does not carry over past data.
                       </span>
                       <br class="indicator-list-text225" />
                     </span>
@@ -299,7 +298,7 @@
               <div class="details-card-container12">
                 <img
                   alt="image"
-                  src="public/how-to-use/2_setup-1500h.png"
+                  src="../public/indicator-details/vwap2.png"
                   class="details-card-image5"
                 />
               </div>
@@ -309,22 +308,52 @@
                     <span class="indicator-list-text226">
                       <br />
                       <span>
-                        When a buy or sell signal is triggered, evaluate if the
-                        corresponding candlestick breaks through the -3 and -2
-                        levels. If it does, the setup aligns with optimal trend
-                        exhaustion parameters, signaling a high-probability
-                        reversal. If not, the market may sustain its directional
-                        momentum, indicating the possibility of continued trend
-                        progression before a potential reversal.
-                      </span>
+                      In trading, prices tend to revert to the mean over time, and VWAP serves as a dynamic reference point for this mean. This concept is rooted in statistical probability, particularly the normal distribution, often visualized as a bell curve. Throughout the trading session, short-term price fluctuations may push the market significantly above or below VWAP. However, much like how values in a normal distribution cluster around the mean, price movements often stabilize around VWAP as buying and selling pressures balance out.</span>
                       <br />
                       <br />
                       <span>
-                        As demonstrated in the graph, this represents an optimal
-                        setup, where the candlestick breaks through the -3 and
-                        -2 levels, confirming a high-probability reversal under
-                        current market conditions.
+                      When prices move too far from VWAP—especially beyond two or three standard deviations—it often signals an overextended market. Institutional traders and algorithms recognize this, leading to increased buying when prices are well below VWAP and selling when they are well above it. This behavior naturally pulls the price back toward VWAP, reinforcing its role as an anchor. While this mean-reverting tendency is strong, it is not absolute. In strong trending markets, price may stay above or below VWAP for extended periods. However, in range-bound conditions, VWAP serves as a powerful magnet, drawing prices back toward it as the day progresses.</span>
+                      <br class="indicator-list-text232" />
+                    </span>
+                  </fragment>
+                </p>
+              </div>
+            </div>
+          </details-card-wrapper-xtyu>
+          <details-card-wrapper-xtyu
+            class="details-card-wrapper-xtyu"
+            rootclassname="details-cardundefined"
+          >
+            <!--DetailsCard component-->
+            <div class="details-card-container25 details-cardroot-class-name9">
+              <div class="details-card-container12">
+                <img
+                  alt="image"
+                  src="../public/indicator-details/vwap3.png"
+                  class="details-card-image5"
+                />
+              </div>
+              <div class="details-card-container13">
+                <p class="details-card-text6">
+                  <fragment class="indicator-list-fragment43">
+                    <span class="indicator-list-text226">
+                      <br />
+                      <span>
+                        Traders often use standard deviation bands around VWAP to gauge price extremes. These bands act as dynamic support and resistance levels. As illustrated in the graph, the six bands represent distances of 1, 2, and 3 standard deviations from the Volume Weighted Average Price (VWAP).
                       </span>
+                      <br />
+                      <br />
+                      <span>1 Standard Deviation (68% Confidence Interval): Represents normal price fluctuations.</span>
+                      <br />
+                      <span>2 Standard Deviations (95% Confidence Interval): Indicates potential overbought/oversold conditions.</span>
+                      <br />
+                      <span>3 Standard Deviations (99.7% Confidence Interval): Signals extreme price movements, often leading to mean reversion.</span>
+                      <br />
+                      <br />
+					  <span>
+                      The chart above illustrates AMD's price action on NASDAQ on January 25, 2025. The price initially reversed after reaching the second standard deviation upper band, then bounced back after hitting the second standard deviation lower band, before reversing once more upon touching the upper band again.
+					  </span>
+                      <br />
                       <br class="indicator-list-text232" />
                     </span>
                   </fragment>
