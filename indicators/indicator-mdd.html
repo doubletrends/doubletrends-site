@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Escape-The-Top Threshold Indicator</title>
-    <meta name="description" content="Escape-The-Top Threshold Indicator" />
-    <meta property="og:title" content="Escape-The-Top Threshold Indicator" />
-    <meta property="og:description" content="Escape-The-Top Threshold Indicator" />
+    <title>Maximum Drawdown Threshold Indicator</title>
+    <meta name="description" content="Maximum Drawdown Threshold Indicator" />
+    <meta property="og:title" content="Maximum Drawdown Threshold Indicator" />
+    <meta property="og:description" content="Maximum Drawdown Threshold Indicator" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <meta property="twitter:card" content="summary_large_image" />
@@ -178,7 +178,7 @@
               <h1 class="tm-title-left-text9">
                 <fragment class="indicator-list-fragment51">
                   <span class="indicator-list-text263">
-                    Escape-The-Top Threshold Indicator
+                    Maximum Drawdown Threshold Indicator
                   </span>
                 </fragment>
               </h1>
@@ -208,25 +208,15 @@
                 <p class="HeadingThree">
                   <fragment class="indicator-list-fragment52">
                     <span class="indicator-list-text264">
-                      <span>Williams %R is a momentum chart indicator.</span>
-                      <br />
+                      <span>The Maximum Drawdown Threshold belongs to a group of risk indicators, meant to be analyzed on both daily and weekly timeframes.</span>
+                      <br /><br />
                       <span>
-                        It can be used to generate short-term buy and sell
-                        signals.
+                        It quantify uninterrupted price weakness across multiple timeframes, delivering a concise and layered view of market stress. This indicator is designed to identify periods of extreme undervaluation driven by panic, making it a powerful tool for spotting long-term entry opportunities.
                       </span>
-                      <br />
-                      <span>
-                        This indicator may suggest stocks could run into
-                        resistance.
-                      </span>
-                      <br />
-                      <br />
-                      <span>Mostly used by: Fidelity Investements</span>
-                      <br class="Body" />
+                      <br /><br />
                       <span class="Body">
-                        https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/williams-r
+                        Mostly used on: MQL5, QuantConnect
                       </span>
-                      <br class="Body" />
                     </span>
                   </fragment>
                 </p>
@@ -254,10 +244,10 @@
           >
             <!--DetailsCard component-->
             <div class="details-card-container28 details-cardroot-class-name4">
-              <div class="details-card-container18">
+              <div class="details-card-container18" style="height: auto">
                 <img
                   alt="image"
-                  src="public/how-to-use/2_setup-1500h.png"
+                  src="../public/indicator-details/mdd1.png"
                   class="details-card-image8"
                 />
               </div>
@@ -267,21 +257,12 @@
                     <span class="indicator-list-text277">
                       <br />
                       <span>
-                        When a buy or sell signal is triggered, evaluate if the
-                        corresponding candlestick breaks through the -3 and -2
-                        levels. If it does, the setup aligns with optimal trend
-                        exhaustion parameters, signaling a high-probability
-                        reversal. If not, the market may sustain its directional
-                        momentum, indicating the possibility of continued trend
-                        progression before a potential reversal.
+                        Traditional maximum drawdown is defined as the percentage loss from a local peak to its subsequent trough, calculated by ((Trough−Peak)/Peak)×100. While widely used in portfolio risk analytics, this method condenses complex price action into a single number, often missing the tempo and intensity of a selloff. For example, a decline in the S&P 500 from 3300 to 2400 is correctly captured as a -27% drawdown—but fails to express whether that drop was a slow bleed or a panicked capitulation, both of which carry vastly different implications for market sentiment.
                       </span>
                       <br />
                       <br />
                       <span>
-                        As demonstrated in the graph, this represents an optimal
-                        setup, where the candlestick breaks through the -3 and
-                        -2 levels, confirming a high-probability reversal under
-                        current market conditions.
+                        The chart above illustrates the traditional maximum drawdown indicator, which appears smoothed due to its reliance on percentage-based calculations, masking the persistence and behavioral intensity of the decline.
                       </span>
                       <br class="indicator-list-text283" />
                     </span>
@@ -296,10 +277,10 @@
           >
             <!--DetailsCard component-->
             <div class="details-card-container29 details-cardroot-class-name5">
-              <div class="details-card-container20">
+              <div class="details-card-container20" style="height: auto">
                 <img
                   alt="image"
-                  src="public/how-to-use/2_setup-1500h.png"
+                  src="../public/indicator-details/mdd2.png"
                   class="details-card-image9"
                 />
               </div>
@@ -309,21 +290,55 @@
                     <span class="indicator-list-text284">
                       <br />
                       <span>
-                        When a buy or sell signal is triggered, evaluate if the
-                        corresponding candlestick breaks through the -3 and -2
-                        levels. If it does, the setup aligns with optimal trend
-                        exhaustion parameters, signaling a high-probability
-                        reversal. If not, the market may sustain its directional
-                        momentum, indicating the possibility of continued trend
-                        progression before a potential reversal.
+                        Unlike the conventional MDD, the Maximum Drawdown Threshold Indicator shifts the focus from peak-to-trough amplitude to temporal persistence of downside movement. At its core, it calculates the number of consecutive trading days in which the closing price remains beneath all previous closes in a given lookback window. This persistence is computed across four rolling periods—14, 30, 52, and 208 days—and is then visualized as a stacked histogram. The result is a multi-resolutional readout of drawdown endurance, capable of exposing both shallow but relentless declines and abrupt collapse events. It captures the psychological depth of selloffs and the fragility of unchecked bullish trends that mask growing downside vulnerability.
                       </span>
                       <br />
                       <br />
                       <span>
-                        As demonstrated in the graph, this represents an optimal
-                        setup, where the candlestick breaks through the -3 and
-                        -2 levels, confirming a high-probability reversal under
-                        current market conditions.
+                        The chart above displays the price action of VOO from 2016 to 2022. The dark red spikes in the Maximum Drawdown Threshold Indicator highlight periods of extended structural weakness—marking historically favorable long-term entry points.
+                      </span>
+                      <br class="indicator-list-text290" />
+                    </span>
+                  </fragment>
+                </p>
+              </div>
+            </div>
+          </details-card-wrapper-sjcu>
+          <details-card-wrapper-sjcu
+            class="details-card-wrapper-sjcu"
+            rootclassname="details-cardundefined"
+          >
+            <!--DetailsCard component-->
+            <div class="details-card-container29 details-cardroot-class-name5">
+              <div class="details-card-container20" style="height: auto">
+                <img
+                  alt="image"
+                  src="../public/indicator-details/mdd3.png"
+                  class="details-card-image9"
+                />
+              </div>
+              <div class="details-card-container30">
+                <p class="details-card-text10">
+                  <fragment class="indicator-list-fragment55">
+                    <span class="indicator-list-text284">
+                      <br />
+                      <span>
+                        Shorter periods (14/30) are intended for analysis on the daily timeframe. The 14-period histogram (dark blue) reflects maximum drawdown behavior over two weeks, while the 30-period histogram (light blue) captures drawdown over a one-month window. 
+                      </span>
+                      <br />
+                      <br />
+                      <span>
+                        Longer periods (52/208) are optimized for the weekly timeframe:. The 52-period histogram (light red) represents annual drawdown persistence, and the 208-period histogram (dark red) tracks structural weakness over a four-year cycle.
+                      </span>
+                      <br />
+                      <br />
+                      <span>
+                        Short-term spikes in the 14/30 periods can signal tactical entry and exit points for swing trading, given that a broader trend is already established. These movements are useful for timing reversions or accelerations within an established directional bias. In contrast, sustained elevation in longer windows (52/208) often reflects deep, long-term undervaluation—ideal for entry.
+                      </span>
+                      <br />
+                      <br />
+                      <span>
+                        Simultaneous spikes across multiple timeframes suggest systemic panic, while fading histogram bars indicate stabilization or early-stage recovery. A full reset to zero implies fresh price discovery and a potential break of the all-time high. The Maximum Drawdown Threshold excels in long-term asset analysis, where oversold conditions driven by panic often precede asymmetric upside reversals.
                       </span>
                       <br class="indicator-list-text290" />
                     </span>
@@ -394,7 +409,7 @@
                   <a href="./indicator-dtep.html" class="footer-navlink6 Large">Double Trend Premium</a>
                   <a href="./indicator-vwap.html" class="footer-navlink7 Large">VWAP</a>
                   <a href="./indicator-svp.html" class="footer-navlink8 Large">Volume Profile</a>
-                  <a href="./indicator-mdd.html" class="footer-navlink9 Large">Escape-The-Top</a>
+                  <a href="./indicator-mdd.html" class="footer-navlink9 Large">Maximum Drawdown</a>
                 </div>
               </div>
             </div>
