@@ -1,5 +1,15 @@
 User-agent: *
-Allow: /
+
+# 1. 屏蔽敏感/低质量下载页 (修正后的路径)
 Disallow: /indicators/download-
+
+# 2. 屏蔽构建源码与配置文件 (防止直接访问 src)
+Disallow: /src/
+Disallow: /build.js
+Disallow: /package.json
+Disallow: /node_modules/
+
+# 3. 允许抓取其他内容
+Allow: /
 
 Sitemap: https://doubletrends.com/sitemap.xml
