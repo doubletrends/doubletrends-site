@@ -5,17 +5,16 @@
 <!-- ── Section: Double Trend Exhaustion Series ─────────────────────────── -->
 <section class="w-full max-w-[1320px] mx-auto px-6 md:px-12 pt-32 pb-12 flex flex-col items-center">
 
-  <!-- Series title -->
   <div class="flex flex-col items-center p-4 mb-8">
     <h2 class="text-[2.75em] font-noto font-bold text-center text-grad-section leading-tight">
       Double Trend Exhaustion™ Series
     </h2>
-    <p class="text-[#999] text-2xl font-noto text-center mt-2">
-      For retail investors — spotting trend reversals
+    <p class="text-[#B4C6D4] text-2xl font-noto text-center mt-2">
+      Reversal timing based on buyer and seller exhaustion
     </p>
   </div>
 
-  <!-- Product card: DTE (image left) -->
+  <!-- DTE -->
   <div class="w-full flex flex-col md:flex-row gap-8 mb-16">
     <div class="md:w-1/2">
       <img src="{{ROOT}}public/indicator-list/dte.png" alt="Double Trend Exhaustion indicator preview"
@@ -24,14 +23,12 @@
     <div class="md:w-1/2 flex flex-col justify-center">
       <span class="text-muted text-lg font-semibold font-noto mb-4">Double Trend Exhaustion™</span>
       <p class="text-muted text-sm leading-relaxed mb-6">
-        The Double Trend Exhaustion™ indicator is designed to identify critical turning points in
-        market trends by capturing nuanced signals of buyer and seller exhaustion. Drawing
-        inspiration from the DeMark Sequential framework, this advanced tool offers a sophisticated
-        approach to timing market reversals with greater precision.<br /><br />
-        By analyzing the progression of price action and detecting periods where trends show signs of
-        fatigue, the indicator provides traders with deeper insights into potential inflection points.
-        This makes it an essential instrument for those seeking to navigate complex market dynamics
-        with confidence.
+        Inspired by the DeMark Sequential framework, DTE counts price bar progressions to identify
+        points where a trend is likely running out of momentum. When buyers or sellers are exhausted
+        — still pushing price but with declining volume support — the indicator marks a potential
+        reversal zone.<br /><br />
+        This is the free, open-source version. The full Pine Script source is available for download
+        so you can read the logic, audit the signal conditions, or adapt it to your own strategy.
       </p>
       <div class="flex flex-wrap gap-4">
         <a href="{{ROOT}}indicators/indicator-dte.html"><button class="btn-light">Learn Details</button></a>
@@ -40,7 +37,7 @@
     </div>
   </div>
 
-  <!-- Product card: DTEP (image left) -->
+  <!-- DTEP -->
   <div class="w-full flex flex-col md:flex-row gap-8 mb-16">
     <div class="md:w-1/2">
       <img src="{{ROOT}}public/indicator-list/dtep.png" alt="Double Trend Exhaustion Premium preview"
@@ -49,32 +46,31 @@
     <div class="md:w-1/2 flex flex-col justify-center">
       <span class="text-muted text-lg font-semibold font-noto mb-4">Double Trend Exhaustion™ Premium</span>
       <p class="text-muted text-sm leading-relaxed mb-6">
-        The Double Trend Exhaustion™ Premium indicator is an upgraded evolution of the original,
-        built upon the framework of Williams %R — a momentum oscillator that measures overbought
-        and oversold conditions by comparing the current closing price to the highest and lowest
-        points over a specified period.<br /><br />
-        By integrating the concept of trend exhaustion with refined momentum analysis, this Premium
-        indicator enhances the ability to detect shifts in market sentiment before they become
-        evident in price action, offering a powerful edge for navigating market volatility.
+        The Premium variant adds a Williams %R filter on top of the base exhaustion logic. Williams
+        %R is a momentum oscillator that measures where the current close sits relative to the
+        high-low range over a lookback period — when it diverges from price direction, it tends to
+        indicate a shift in momentum before it appears in price.<br /><br />
+        In practice, the filter reduces false signals in choppy or sideways markets. Fewer signals
+        overall, but a higher proportion close in the intended direction.
       </p>
       <div class="flex flex-wrap gap-4">
         <a href="{{ROOT}}indicators/indicator-dtep.html"><button class="btn-light">Learn Details</button></a>
-        <a href="{{ROOT}}indicators/checkout-dtep.html"><button class="btn-dark">Source Code (USD $50)</button></a>
+        <a href="{{ROOT}}indicators/checkout-dtep.html"><button class="btn-dark">Source Code (USD $49)</button></a>
       </div>
     </div>
   </div>
 
-  <!-- Series title: Volatility & Volume -->
+  <!-- ── Section: Volatility & Volume ──────────────────────────────────── -->
   <div class="flex flex-col items-center p-4 mb-8 mt-8">
     <h2 class="text-[2.75em] font-noto font-bold text-center text-grad-section leading-tight">
       Volatility &amp; Volume Analysis Series
     </h2>
-    <p class="text-[#999] text-2xl font-noto text-center mt-2">
-      For institutional market makers — day trading and order flow
+    <p class="text-[#B4C6D4] text-2xl font-noto text-center mt-2">
+      Order flow and volume structure for active traders
     </p>
   </div>
 
-  <!-- Product card: VWAP (image right) -->
+  <!-- VWAP -->
   <div class="w-full flex flex-col md:flex-row-reverse gap-8 mb-16">
     <div class="md:w-1/2">
       <img src="{{ROOT}}public/indicator-list/vwap.png" alt="VWAP indicator preview"
@@ -83,22 +79,20 @@
     <div class="md:w-1/2 flex flex-col justify-center">
       <span class="text-muted text-lg font-semibold font-noto mb-4">Volume Weighted Average Price (VWAP)</span>
       <p class="text-muted text-sm leading-relaxed mb-6">
-        The VWAP is often regarded as the market maker's secret weapon — a powerful tool leveraged
-        by institutional traders to outmaneuver retail participants. By calculating the average price
-        of an asset weighted by trading volume, VWAP reveals where the "smart money" is positioning
-        itself throughout the trading session.<br /><br />
-        Institutions and high-frequency traders use VWAP to gauge fair value, manipulate market
-        sentiment, and execute large orders without alarming the market. By incorporating VWAP into
-        your strategy, you gain insight into the hidden dynamics of price action.
+        VWAP calculates the average price of an asset weighted by trading volume across a session.
+        It's widely used as a benchmark by traders executing large orders — price above VWAP
+        generally indicates bullish intraday sentiment; below suggests bearish.<br /><br />
+        This implementation is optimized for shorter timeframes and includes session-reset logic,
+        making it more useful for day trading and intraday setups than the default TradingView VWAP.
       </p>
       <div class="flex flex-wrap gap-4">
         <a href="{{ROOT}}indicators/indicator-vwap.html"><button class="btn-light">Learn Details</button></a>
-        <a href="{{ROOT}}indicators/checkout-vwap.html"><button class="btn-dark">Source Code (USD $299)</button></a>
+        <a href="{{ROOT}}indicators/checkout-vwap.html"><button class="btn-dark">Source Code (USD $79)</button></a>
       </div>
     </div>
   </div>
 
-  <!-- Product card: SVP (image right) -->
+  <!-- SVP -->
   <div class="w-full flex flex-col md:flex-row-reverse gap-8 mb-16">
     <div class="md:w-1/2">
       <img src="{{ROOT}}public/indicator-list/svp.png" alt="Session Volume Profile preview"
@@ -107,33 +101,30 @@
     <div class="md:w-1/2 flex flex-col justify-center">
       <span class="text-muted text-lg font-semibold font-noto mb-4">Session Volume Profile</span>
       <p class="text-muted text-sm leading-relaxed mb-6">
-        The Session Volume Profile provides access to the market's most crucial information —
-        volume action — something that retail traders are often blind to. While traditional price
-        action analysis relies solely on drawing lines on a price chart, it misses the most
-        important signal: where the real trading volume is happening.<br /><br />
-        Institutions and market makers know that volume, not just price, dictates market movement.
-        The Session Volume Profile reveals how volume is distributed across price levels, showing
-        where the market is truly in play. It identifies high-volume nodes (HVNs) and low-volume
-        nodes (LVNs) — critical levels where price is likely to reverse or consolidate.
+        Volume Profile shows how much volume traded at each price level — not just over time.
+        The output is a histogram overlaid on the chart, revealing high-volume nodes (HVNs) where
+        price consolidated, and low-volume nodes (LVNs) where price moved quickly through.<br /><br />
+        HVNs tend to act as support or resistance on revisits. LVNs are areas where price can
+        accelerate when re-entered, with little structural resistance to slow it down.
       </p>
       <div class="flex flex-wrap gap-4">
         <a href="{{ROOT}}indicators/indicator-svp.html"><button class="btn-light">Learn Details</button></a>
-        <a href="{{ROOT}}indicators/checkout-svp.html"><button class="btn-dark">Source Code (USD $199)</button></a>
+        <a href="{{ROOT}}indicators/checkout-svp.html"><button class="btn-dark">Source Code (USD $99)</button></a>
       </div>
     </div>
   </div>
 
-  <!-- Series title: Long-Term Entry-Exit -->
+  <!-- ── Section: Long-Term Entry-Exit ─────────────────────────────────── -->
   <div class="flex flex-col items-center p-4 mb-8 mt-8">
     <h2 class="text-[2.75em] font-noto font-bold text-center text-grad-section leading-tight">
       Long-Term Entry-Exit Signal Series
     </h2>
-    <p class="text-[#999] text-2xl font-noto text-center mt-2">
-      Identifies key entry and exit points during FUD and FOMO for long-term asset growth.
+    <p class="text-[#B4C6D4] text-2xl font-noto text-center mt-2">
+      Drawdown-based signals for position entries and exits
     </p>
   </div>
 
-  <!-- Product card: MDD (image left) -->
+  <!-- MDD -->
   <div class="w-full flex flex-col md:flex-row gap-8 mb-16">
     <div class="md:w-1/2">
       <img src="{{ROOT}}public/indicator-list/mdd.png" alt="Maximum Drawdown Threshold preview"
@@ -142,14 +133,12 @@
     <div class="md:w-1/2 flex flex-col justify-center">
       <span class="text-muted text-lg font-semibold font-noto mb-4">Maximum Drawdown Threshold Indicator</span>
       <p class="text-muted text-sm leading-relaxed mb-6">
-        The Maximum Drawdown Threshold Indicator is designed to help traders identify key entry and
-        exit points during periods of FUD (Fear, Uncertainty, and Doubt) and FOMO (Fear of Missing
-        Out), which are often the driving forces behind volatile market movements. By analyzing
-        market extremes, this indicator highlights critical thresholds where price action may be
-        unsustainable.<br /><br />
-        Whether you're looking to enter at market lows or exit at overbought conditions, the Maximum
-        Drawdown Threshold Indicator offers a precise way to navigate through the noise, ensuring
-        your decisions are driven by strategy rather than short-term emotions.
+        This indicator identifies when an asset's drawdown from its recent peak has reached a
+        historically significant threshold — conditions that have often, though not always,
+        marked durable lows worth entering. Similarly on the upside, it flags when price has
+        extended far enough above recent structure to warrant reducing exposure.<br /><br />
+        It's designed for longer holding periods where the goal is avoiding the worst entries
+        during panic selling and the worst exits during euphoria — not for timing short-term trades.
       </p>
       <div class="flex flex-wrap gap-4">
         <a href="{{ROOT}}indicators/indicator-mdd.html"><button class="btn-light">Learn Details</button></a>

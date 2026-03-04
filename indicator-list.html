@@ -24,32 +24,34 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="public/cds logo black-200h.png" />
 
-  <!-- Fonts (only what's actually used) -->
+  <!-- Fonts: Syne (display) + DM Sans (body) + JetBrains Mono (data) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Exo+2:wght@400;600;700&family=Merriweather:wght@300;400&display=swap" />
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;600&family=Merriweather:wght@300;400&display=swap" />
 
-  <!-- Tailwind Play CDN with custom config -->
+  <!-- Tailwind Play CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary:     '#BF4408',
-            'primary-h': '#E65103',
-            dark:        '#191818',
-            light:       '#FBFAF9',
-            muted:       '#9dafd3',
-            'muted-dim': '#8392ab',
-            bright:      '#d6e6ff',
-            'gray-d':    '#D9D9D9',
+            primary:     '#E05A00',
+            'primary-h': '#FF6A10',
+            dark:        '#080809',
+            light:       '#F5F3EF',
+            muted:       '#A8BCCC',
+            'muted-dim': '#7A8CA0',
+            bright:      '#C8DCFF',
+            'gray-d':    '#D0D0D0',
           },
           fontFamily: {
-            noto:  ['"Noto Sans"', 'sans-serif'],
-            open:  ['"Open Sans"', 'sans-serif'],
-            exo:   ['"Exo 2"', 'sans-serif'],
+            /* Remapped — existing class names preserved for all other pages */
+            noto:  ['"Syne"', 'sans-serif'],
+            open:  ['"DM Sans"', 'sans-serif'],
+            exo:   ['"DM Sans"', 'sans-serif'],
+            mono:  ['"JetBrains Mono"', 'monospace'],
             serif: ['Merriweather', 'Georgia', 'serif'],
           },
           maxWidth: {
@@ -61,115 +63,165 @@
     };
   </script>
 
-  <!-- Custom CSS: text-gradient helpers and button gradients -->
   <style>
     html { scroll-behavior: smooth; }
     * { box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; }
     a { color: inherit; text-decoration: none; }
     img { display: block; }
 
-    /* Text gradients */
+    /* ── Text gradients ─────────────────────────────────────────── */
     .text-grad-hero {
-      background-image: linear-gradient(180deg, #fff 0%, #b2b2b2 100%);
+      background-image: linear-gradient(160deg, #ffffff 10%, #909090 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .text-grad-section {
-      background-image: radial-gradient(circle at left top, #fff 0%, #7f7f7f 100%);
+      background-image: linear-gradient(140deg, #ffffff 0%, #5a5a5a 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    /* Buttons */
+    /* ── Buttons — sharp, precise, no radius ────────────────────── */
     .btn-light {
-      color: #fff;
-      font-family: 'Open Sans', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: -0.025rem;
-      padding: 0.75rem 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #080809;
+      background: #F5F3EF;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.75rem;
       border: none;
       cursor: pointer;
-      transition: transform 0.15s ease-in;
-      background-image: linear-gradient(180deg, #fff 0%, rgba(142,168,191,0.67) 98%);
-      box-shadow: 0 4px 7px -1px rgba(0,0,0,.11), 0 2px 4px -1px rgba(0,0,0,.07);
+      transition: background 0.15s ease, transform 0.1s ease;
     }
-    .btn-light:hover { transform: scale(1.02); }
+    .btn-light:hover { background: #ffffff; transform: translateY(-1px); }
 
     .btn-dark {
-      color: #fff;
-      font-family: 'Open Sans', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: -0.025rem;
-      padding: 0.75rem 1.5rem;
-      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #C8C8C8;
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.75rem;
+      border: 1px solid rgba(255,255,255,0.15);
       cursor: pointer;
-      transition: transform 0.15s ease-in;
-      background-image: linear-gradient(180deg, rgba(72,72,72,0.5) 0%, #0f0f0f 98%);
-      box-shadow: 0 4px 7px -1px rgba(0,0,0,.11), 0 2px 4px -1px rgba(0,0,0,.07);
+      transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
     }
-    .btn-dark:hover { transform: scale(1.02); }
+    .btn-dark:hover {
+      border-color: rgba(255,255,255,0.45);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
 
-    /* Accordion (replaces teleport-custom-scripts) */
+    /* ── Accordion ──────────────────────────────────────────────── */
     details[open] summary .acc-icon { transform: rotate(180deg); }
     .acc-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; }
     details[open] + .acc-content { max-height: 1000vh; }
 
-    /* Footer wave overlay */
+    /* ── Footer wave overlay ────────────────────────────────────── */
     .footer-wave {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.7;
+      opacity: 0.12;
       pointer-events: none;
     }
 
-    /* Code block in setup guide */
+    /* ── Code block ─────────────────────────────────────────────── */
     .code-block {
-      font-family: 'Courier New', monospace;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
       font-size: 0.75rem;
-      background: #111;
-      color: #aef;
-      padding: 1rem;
+      background: #0C0C0F;
+      color: #7BBFEF;
+      padding: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.06);
       overflow-x: auto;
       white-space: pre-wrap;
+    }
+
+    /* ── Data / terminal typography ─────────────────────────────── */
+    .data-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #7A8CA0;
+    }
+    .data-value {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 2.25rem;
+      color: #F5F3EF;
+      line-height: 1;
+    }
+
+    /* ── Structural utilities ───────────────────────────────────── */
+    .hairline   { border-top:  1px solid rgba(255,255,255,0.06); }
+    .hairline-v { border-left: 1px solid rgba(255,255,255,0.06); }
+    .card-border { border: 1px solid rgba(255,255,255,0.07); }
+
+    /* ── Dot-grid background ────────────────────────────────────── */
+    .dot-grid {
+      background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* ── Overline / category tag ─────────────────────────────────── */
+    .tag-overline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #E87030;
     }
   </style>
 </head>
 
 <body class="bg-[#191818] text-[#9dafd3] font-['Merriweather'] font-light leading-[1.625] antialiased">
-<header class="fixed top-0 left-0 right-0 h-20 z-30 flex justify-center px-2"
-        style="background-image: linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)">
-  <nav class="w-full max-w-site self-center flex items-center justify-between px-6 py-2">
+<header class="fixed top-0 left-0 right-0 z-30"
+        style="background: rgba(8,8,9,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
+  <nav class="w-full max-w-site mx-auto flex items-center justify-between px-6 h-16">
+
     <!-- Logo + brand -->
-    <div class="flex items-center shrink-0">
+    <div class="flex items-center gap-3 shrink-0">
       <img src="public/cds logo black-200h.png" alt="CDS Logo"
-           class="w-9 h-9" style="filter:invert()" />
+           class="w-7 h-7" style="filter: invert() opacity(0.85)" />
       <a href="index.html"
-         class="text-white font-semibold font-noto ml-[1vw] hidden md:block">
+         class="text-white font-noto font-semibold text-sm tracking-tight hidden md:block">
         Double Trend Exhaustion™
       </a>
     </div>
 
     <!-- Desktop text nav -->
-    <div class="hidden md:flex items-center">
-      <a href="index.html"        class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Home</a>
-      <a href="indicator-list.html" class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Indicator List</a>
-      <a href="setup-guide.html"  class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Setup Guide</a>
-      <a href="services.html"     class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Services</a>
-      <a href="contact.html"      class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Contact</a>
+    <div class="hidden md:flex items-center gap-1">
+      <a href="index.html"           class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Home</a>
+      <a href="indicator-list.html"  class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Indicators</a>
+      <a href="setup-guide.html"     class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Setup</a>
+      <a href="services.html"        class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Services</a>
+      <a href="contact.html"         class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Contact</a>
     </div>
 
     <!-- Mobile icon nav -->
-    <div class="flex md:hidden items-center mr-[2vw] gap-2">
-      <a href="index.html"><img src="public/nav-icons/home.svg"         alt="Home"           class="w-6 h-6 mx-2" /></a>
-      <a href="indicator-list.html"><img src="public/nav-icons/list.svg" alt="Indicator List" class="w-6 h-6 mx-2" /></a>
-      <a href="setup-guide.html"><img src="public/nav-icons/help-circle.svg" alt="Setup Guide" class="w-6 h-6 mx-2" /></a>
-      <a href="services.html"><img src="public/nav-icons/user.svg"       alt="Services"       class="w-6 h-6 mx-2" /></a>
-      <a href="contact.html"><img src="public/nav-icons/message-circle.svg" alt="Contact"     class="w-6 h-6 ml-2" /></a>
+    <div class="flex md:hidden items-center gap-1">
+      <a href="index.html"><img src="public/nav-icons/home.svg"               alt="Home"           class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+      <a href="indicator-list.html"><img src="public/nav-icons/list.svg"       alt="Indicator List" class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+      <a href="setup-guide.html"><img src="public/nav-icons/help-circle.svg"  alt="Setup Guide"    class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+      <a href="services.html"><img src="public/nav-icons/user.svg"             alt="Services"       class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+      <a href="contact.html"><img src="public/nav-icons/message-circle.svg"   alt="Contact"        class="w-5 h-5 ml-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
     </div>
   </nav>
 </header>
@@ -182,17 +234,16 @@
 <!-- ── Section: Double Trend Exhaustion Series ─────────────────────────── -->
 <section class="w-full max-w-[1320px] mx-auto px-6 md:px-12 pt-32 pb-12 flex flex-col items-center">
 
-  <!-- Series title -->
   <div class="flex flex-col items-center p-4 mb-8">
     <h2 class="text-[2.75em] font-noto font-bold text-center text-grad-section leading-tight">
       Double Trend Exhaustion™ Series
     </h2>
-    <p class="text-[#999] text-2xl font-noto text-center mt-2">
-      For retail investors — spotting trend reversals
+    <p class="text-[#B4C6D4] text-2xl font-noto text-center mt-2">
+      Reversal timing based on buyer and seller exhaustion
     </p>
   </div>
 
-  <!-- Product card: DTE (image left) -->
+  <!-- DTE -->
   <div class="w-full flex flex-col md:flex-row gap-8 mb-16">
     <div class="md:w-1/2">
       <img src="public/indicator-list/dte.png" alt="Double Trend Exhaustion indicator preview"
@@ -201,14 +252,12 @@
     <div class="md:w-1/2 flex flex-col justify-center">
       <span class="text-muted text-lg font-semibold font-noto mb-4">Double Trend Exhaustion™</span>
       <p class="text-muted text-sm leading-relaxed mb-6">
-        The Double Trend Exhaustion™ indicator is designed to identify critical turning points in
-        market trends by capturing nuanced signals of buyer and seller exhaustion. Drawing
-        inspiration from the DeMark Sequential framework, this advanced tool offers a sophisticated
-        approach to timing market reversals with greater precision.<br /><br />
-        By analyzing the progression of price action and detecting periods where trends show signs of
-        fatigue, the indicator provides traders with deeper insights into potential inflection points.
-        This makes it an essential instrument for those seeking to navigate complex market dynamics
-        with confidence.
+        Inspired by the DeMark Sequential framework, DTE counts price bar progressions to identify
+        points where a trend is likely running out of momentum. When buyers or sellers are exhausted
+        — still pushing price but with declining volume support — the indicator marks a potential
+        reversal zone.<br /><br />
+        This is the free, open-source version. The full Pine Script source is available for download
+        so you can read the logic, audit the signal conditions, or adapt it to your own strategy.
       </p>
       <div class="flex flex-wrap gap-4">
         <a href="indicators/indicator-dte.html"><button class="btn-light">Learn Details</button></a>
@@ -217,7 +266,7 @@
     </div>
   </div>
 
-  <!-- Product card: DTEP (image left) -->
+  <!-- DTEP -->
   <div class="w-full flex flex-col md:flex-row gap-8 mb-16">
     <div class="md:w-1/2">
       <img src="public/indicator-list/dtep.png" alt="Double Trend Exhaustion Premium preview"
@@ -226,32 +275,31 @@
     <div class="md:w-1/2 flex flex-col justify-center">
       <span class="text-muted text-lg font-semibold font-noto mb-4">Double Trend Exhaustion™ Premium</span>
       <p class="text-muted text-sm leading-relaxed mb-6">
-        The Double Trend Exhaustion™ Premium indicator is an upgraded evolution of the original,
-        built upon the framework of Williams %R — a momentum oscillator that measures overbought
-        and oversold conditions by comparing the current closing price to the highest and lowest
-        points over a specified period.<br /><br />
-        By integrating the concept of trend exhaustion with refined momentum analysis, this Premium
-        indicator enhances the ability to detect shifts in market sentiment before they become
-        evident in price action, offering a powerful edge for navigating market volatility.
+        The Premium variant adds a Williams %R filter on top of the base exhaustion logic. Williams
+        %R is a momentum oscillator that measures where the current close sits relative to the
+        high-low range over a lookback period — when it diverges from price direction, it tends to
+        indicate a shift in momentum before it appears in price.<br /><br />
+        In practice, the filter reduces false signals in choppy or sideways markets. Fewer signals
+        overall, but a higher proportion close in the intended direction.
       </p>
       <div class="flex flex-wrap gap-4">
         <a href="indicators/indicator-dtep.html"><button class="btn-light">Learn Details</button></a>
-        <a href="indicators/checkout-dtep.html"><button class="btn-dark">Source Code (USD $50)</button></a>
+        <a href="indicators/checkout-dtep.html"><button class="btn-dark">Source Code (USD $49)</button></a>
       </div>
     </div>
   </div>
 
-  <!-- Series title: Volatility & Volume -->
+  <!-- ── Section: Volatility & Volume ──────────────────────────────────── -->
   <div class="flex flex-col items-center p-4 mb-8 mt-8">
     <h2 class="text-[2.75em] font-noto font-bold text-center text-grad-section leading-tight">
       Volatility &amp; Volume Analysis Series
     </h2>
-    <p class="text-[#999] text-2xl font-noto text-center mt-2">
-      For institutional market makers — day trading and order flow
+    <p class="text-[#B4C6D4] text-2xl font-noto text-center mt-2">
+      Order flow and volume structure for active traders
     </p>
   </div>
 
-  <!-- Product card: VWAP (image right) -->
+  <!-- VWAP -->
   <div class="w-full flex flex-col md:flex-row-reverse gap-8 mb-16">
     <div class="md:w-1/2">
       <img src="public/indicator-list/vwap.png" alt="VWAP indicator preview"
@@ -260,22 +308,20 @@
     <div class="md:w-1/2 flex flex-col justify-center">
       <span class="text-muted text-lg font-semibold font-noto mb-4">Volume Weighted Average Price (VWAP)</span>
       <p class="text-muted text-sm leading-relaxed mb-6">
-        The VWAP is often regarded as the market maker's secret weapon — a powerful tool leveraged
-        by institutional traders to outmaneuver retail participants. By calculating the average price
-        of an asset weighted by trading volume, VWAP reveals where the "smart money" is positioning
-        itself throughout the trading session.<br /><br />
-        Institutions and high-frequency traders use VWAP to gauge fair value, manipulate market
-        sentiment, and execute large orders without alarming the market. By incorporating VWAP into
-        your strategy, you gain insight into the hidden dynamics of price action.
+        VWAP calculates the average price of an asset weighted by trading volume across a session.
+        It's widely used as a benchmark by traders executing large orders — price above VWAP
+        generally indicates bullish intraday sentiment; below suggests bearish.<br /><br />
+        This implementation is optimized for shorter timeframes and includes session-reset logic,
+        making it more useful for day trading and intraday setups than the default TradingView VWAP.
       </p>
       <div class="flex flex-wrap gap-4">
         <a href="indicators/indicator-vwap.html"><button class="btn-light">Learn Details</button></a>
-        <a href="indicators/checkout-vwap.html"><button class="btn-dark">Source Code (USD $299)</button></a>
+        <a href="indicators/checkout-vwap.html"><button class="btn-dark">Source Code (USD $79)</button></a>
       </div>
     </div>
   </div>
 
-  <!-- Product card: SVP (image right) -->
+  <!-- SVP -->
   <div class="w-full flex flex-col md:flex-row-reverse gap-8 mb-16">
     <div class="md:w-1/2">
       <img src="public/indicator-list/svp.png" alt="Session Volume Profile preview"
@@ -284,33 +330,30 @@
     <div class="md:w-1/2 flex flex-col justify-center">
       <span class="text-muted text-lg font-semibold font-noto mb-4">Session Volume Profile</span>
       <p class="text-muted text-sm leading-relaxed mb-6">
-        The Session Volume Profile provides access to the market's most crucial information —
-        volume action — something that retail traders are often blind to. While traditional price
-        action analysis relies solely on drawing lines on a price chart, it misses the most
-        important signal: where the real trading volume is happening.<br /><br />
-        Institutions and market makers know that volume, not just price, dictates market movement.
-        The Session Volume Profile reveals how volume is distributed across price levels, showing
-        where the market is truly in play. It identifies high-volume nodes (HVNs) and low-volume
-        nodes (LVNs) — critical levels where price is likely to reverse or consolidate.
+        Volume Profile shows how much volume traded at each price level — not just over time.
+        The output is a histogram overlaid on the chart, revealing high-volume nodes (HVNs) where
+        price consolidated, and low-volume nodes (LVNs) where price moved quickly through.<br /><br />
+        HVNs tend to act as support or resistance on revisits. LVNs are areas where price can
+        accelerate when re-entered, with little structural resistance to slow it down.
       </p>
       <div class="flex flex-wrap gap-4">
         <a href="indicators/indicator-svp.html"><button class="btn-light">Learn Details</button></a>
-        <a href="indicators/checkout-svp.html"><button class="btn-dark">Source Code (USD $199)</button></a>
+        <a href="indicators/checkout-svp.html"><button class="btn-dark">Source Code (USD $99)</button></a>
       </div>
     </div>
   </div>
 
-  <!-- Series title: Long-Term Entry-Exit -->
+  <!-- ── Section: Long-Term Entry-Exit ─────────────────────────────────── -->
   <div class="flex flex-col items-center p-4 mb-8 mt-8">
     <h2 class="text-[2.75em] font-noto font-bold text-center text-grad-section leading-tight">
       Long-Term Entry-Exit Signal Series
     </h2>
-    <p class="text-[#999] text-2xl font-noto text-center mt-2">
-      Identifies key entry and exit points during FUD and FOMO for long-term asset growth.
+    <p class="text-[#B4C6D4] text-2xl font-noto text-center mt-2">
+      Drawdown-based signals for position entries and exits
     </p>
   </div>
 
-  <!-- Product card: MDD (image left) -->
+  <!-- MDD -->
   <div class="w-full flex flex-col md:flex-row gap-8 mb-16">
     <div class="md:w-1/2">
       <img src="public/indicator-list/mdd.png" alt="Maximum Drawdown Threshold preview"
@@ -319,14 +362,12 @@
     <div class="md:w-1/2 flex flex-col justify-center">
       <span class="text-muted text-lg font-semibold font-noto mb-4">Maximum Drawdown Threshold Indicator</span>
       <p class="text-muted text-sm leading-relaxed mb-6">
-        The Maximum Drawdown Threshold Indicator is designed to help traders identify key entry and
-        exit points during periods of FUD (Fear, Uncertainty, and Doubt) and FOMO (Fear of Missing
-        Out), which are often the driving forces behind volatile market movements. By analyzing
-        market extremes, this indicator highlights critical thresholds where price action may be
-        unsustainable.<br /><br />
-        Whether you're looking to enter at market lows or exit at overbought conditions, the Maximum
-        Drawdown Threshold Indicator offers a precise way to navigate through the noise, ensuring
-        your decisions are driven by strategy rather than short-term emotions.
+        This indicator identifies when an asset's drawdown from its recent peak has reached a
+        historically significant threshold — conditions that have often, though not always,
+        marked durable lows worth entering. Similarly on the upside, it flags when price has
+        extended far enough above recent structure to warrant reducing exposure.<br /><br />
+        It's designed for longer holding periods where the goal is avoiding the worst entries
+        during panic selling and the worst exits during euphoria — not for timing short-term trades.
       </p>
       <div class="flex flex-wrap gap-4">
         <a href="indicators/indicator-mdd.html"><button class="btn-light">Learn Details</button></a>
@@ -338,50 +379,57 @@
 </section>
 
 </main>
-<footer class="relative w-full flex flex-col items-center"
-        style="background-image: linear-gradient(0deg, #000 0%, rgba(45,50,64,0.92) 100%)">
-  <!-- Content -->
-  <div class="relative z-10 w-full max-w-site flex flex-wrap justify-between p-12 text-white gap-8">
-    <!-- Left: copyright + disclaimer -->
-    <div class="flex flex-col max-w-lg">
-      <span class="font-exo text-base mb-2">Copyright © 2025 CDS Sole Prop.</span>
-      <p class="text-[0.7rem] text-[#d2d2d2] leading-relaxed">
-        <strong>Legal Disclaimer ⚠</strong> The information, tools, and indicators provided on this
-        platform are for educational and informational purposes only and should not be considered as
-        financial, investment, or trading advice. We are not a registered financial advisor, broker,
-        or dealer.&nbsp;Trading and investing in financial markets involve significant risk of loss.
-        Past performance is not indicative of future results. There is no guarantee that the use of
-        our indicators, strategies, or any information provided will result in profits or prevent
-        losses.<br /><br />
-        Under no circumstances shall we be held liable for any direct, indirect, incidental,
-        consequential, or special damages arising from the use or inability to use our tools,
-        indicators, or services. By using our indicators, you agree to indemnify and hold us harmless
-        from any claims, damages, or legal fees.
-      </p>
+<footer class="relative w-full" style="background: #080809; border-top: 1px solid rgba(255,255,255,0.06);">
+  <div class="relative z-10 w-full max-w-site mx-auto px-8 py-12">
+
+    <!-- Main row -->
+    <div class="flex flex-wrap justify-between gap-12 pb-10" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+
+      <!-- Left: brand + disclaimer -->
+      <div class="flex flex-col max-w-sm">
+        <div class="flex items-center gap-3 mb-5">
+          <img src="public/cds logo black-200h.png" alt="CDS Logo"
+               class="w-6 h-6" style="filter: invert() opacity(0.55)" />
+          <span class="font-noto text-sm text-white font-semibold tracking-tight">Double Trend Exhaustion™</span>
+        </div>
+        <p class="text-[0.65rem] leading-relaxed" style="color: #8A9CAC;">
+          The information, tools, and indicators provided are for educational and informational
+          purposes only and should not be considered financial, investment, or trading advice.
+          We are not a registered financial advisor, broker, or dealer. Trading involves
+          significant risk of loss. Past performance is not indicative of future results.
+          Under no circumstances shall we be held liable for any direct, indirect, incidental,
+          or consequential damages arising from the use of our tools or services.
+        </p>
+      </div>
+
+      <!-- Right: nav columns -->
+      <div class="flex gap-12 ml-auto shrink-0">
+        <div class="flex flex-col gap-3">
+          <span class="tag-overline mb-2">Navigation</span>
+          <a href="index.html"           class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Home</a>
+          <a href="indicator-list.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Indicator List</a>
+          <a href="setup-guide.html"     class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Setup Guide</a>
+          <a href="services.html"        class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Services</a>
+          <a href="contact.html"         class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Contact</a>
+        </div>
+        <div class="flex flex-col gap-3">
+          <span class="tag-overline mb-2">Indicators</span>
+          <a href="indicators/indicator-dte.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Double Trend</a>
+          <a href="indicators/indicator-dtep.html" class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Double Trend Premium</a>
+          <a href="indicators/indicator-vwap.html" class="text-[#8A9CAC] text-xs hover:text-white transition-colors">VWAP</a>
+          <a href="indicators/indicator-svp.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Volume Profile</a>
+          <a href="indicators/indicator-mdd.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Max Drawdown</a>
+        </div>
+      </div>
     </div>
 
-    <!-- Right: nav columns -->
-    <div class="flex gap-8 ml-auto shrink-0">
-      <div class="flex flex-col gap-2">
-        <span class="font-exo font-bold mb-1">Navigation</span>
-        <a href="index.html"           class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Home</a>
-        <a href="indicator-list.html"  class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Indicator List</a>
-        <a href="setup-guide.html"     class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Setup Guide</a>
-        <a href="services.html"        class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Services</a>
-        <a href="contact.html"         class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Contact</a>
-      </div>
-      <div class="flex flex-col gap-2">
-        <span class="font-exo font-bold mb-1">Indicator List</span>
-        <a href="indicators/indicator-dte.html"  class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Double Trend</a>
-        <a href="indicators/indicator-dtep.html" class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Double Trend Premium</a>
-        <a href="indicators/indicator-vwap.html" class="text-[#D9D9D9] text-sm hover:text-white transition-colors">VWAP</a>
-        <a href="indicators/indicator-svp.html"  class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Volume Profile</a>
-        <a href="indicators/indicator-mdd.html"  class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Maximum Drawdown</a>
-      </div>
+    <!-- Bottom row: copyright -->
+    <div class="pt-6">
+      <span class="data-label">© 2025 CDS Sole Prop. All rights reserved.</span>
     </div>
   </div>
 
-  <!-- Decorative wave -->
+  <!-- Decorative wave — very subtle -->
   <img src="public/waves-white.svg" alt="" class="footer-wave" aria-hidden="true" />
 </footer>
 

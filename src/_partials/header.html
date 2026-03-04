@@ -1,32 +1,33 @@
-<header class="fixed top-0 left-0 right-0 h-20 z-30 flex justify-center px-2"
-        style="background-image: linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)">
-  <nav class="w-full max-w-site self-center flex items-center justify-between px-6 py-2">
+<header class="fixed top-0 left-0 right-0 z-30"
+        style="background: rgba(8,8,9,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
+  <nav class="w-full max-w-site mx-auto flex items-center justify-between px-6 h-16">
+
     <!-- Logo + brand -->
-    <div class="flex items-center shrink-0">
+    <div class="flex items-center gap-3 shrink-0">
       <img src="{{ROOT}}public/cds logo black-200h.png" alt="CDS Logo"
-           class="w-9 h-9" style="filter:invert()" />
+           class="w-7 h-7" style="filter: invert() opacity(0.85)" />
       <a href="{{ROOT}}index.html"
-         class="text-white font-semibold font-noto ml-[1vw] hidden md:block">
+         class="text-white font-noto font-semibold text-sm tracking-tight hidden md:block">
         Double Trend Exhaustion™
       </a>
     </div>
 
     <!-- Desktop text nav -->
-    <div class="hidden md:flex items-center">
-      <a href="{{ROOT}}index.html"        class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Home</a>
-      <a href="{{ROOT}}indicator-list.html" class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Indicator List</a>
-      <a href="{{ROOT}}setup-guide.html"  class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Setup Guide</a>
-      <a href="{{ROOT}}services.html"     class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Services</a>
-      <a href="{{ROOT}}contact.html"      class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Contact</a>
+    <div class="hidden md:flex items-center gap-1">
+      <a href="{{ROOT}}index.html"           class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Home</a>
+      <a href="{{ROOT}}indicator-list.html"  class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Indicators</a>
+      <a href="{{ROOT}}setup-guide.html"     class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Setup</a>
+      <a href="{{ROOT}}services.html"        class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Services</a>
+      <a href="{{ROOT}}contact.html"         class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Contact</a>
     </div>
 
     <!-- Mobile icon nav -->
-    <div class="flex md:hidden items-center mr-[2vw] gap-2">
-      <a href="{{ROOT}}index.html"><img src="{{ROOT}}public/nav-icons/home.svg"         alt="Home"           class="w-6 h-6 mx-2" /></a>
-      <a href="{{ROOT}}indicator-list.html"><img src="{{ROOT}}public/nav-icons/list.svg" alt="Indicator List" class="w-6 h-6 mx-2" /></a>
-      <a href="{{ROOT}}setup-guide.html"><img src="{{ROOT}}public/nav-icons/help-circle.svg" alt="Setup Guide" class="w-6 h-6 mx-2" /></a>
-      <a href="{{ROOT}}services.html"><img src="{{ROOT}}public/nav-icons/user.svg"       alt="Services"       class="w-6 h-6 mx-2" /></a>
-      <a href="{{ROOT}}contact.html"><img src="{{ROOT}}public/nav-icons/message-circle.svg" alt="Contact"     class="w-6 h-6 ml-2" /></a>
+    <div class="flex md:hidden items-center gap-1">
+      <a href="{{ROOT}}index.html"><img src="{{ROOT}}public/nav-icons/home.svg"               alt="Home"           class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+      <a href="{{ROOT}}indicator-list.html"><img src="{{ROOT}}public/nav-icons/list.svg"       alt="Indicator List" class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+      <a href="{{ROOT}}setup-guide.html"><img src="{{ROOT}}public/nav-icons/help-circle.svg"  alt="Setup Guide"    class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+      <a href="{{ROOT}}services.html"><img src="{{ROOT}}public/nav-icons/user.svg"             alt="Services"       class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+      <a href="{{ROOT}}contact.html"><img src="{{ROOT}}public/nav-icons/message-circle.svg"   alt="Contact"        class="w-5 h-5 ml-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
     </div>
   </nav>
 </header>

@@ -24,32 +24,34 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="public/cds logo black-200h.png" />
 
-  <!-- Fonts (only what's actually used) -->
+  <!-- Fonts: Syne (display) + DM Sans (body) + JetBrains Mono (data) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Exo+2:wght@400;600;700&family=Merriweather:wght@300;400&display=swap" />
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;600&family=Merriweather:wght@300;400&display=swap" />
 
-  <!-- Tailwind Play CDN with custom config -->
+  <!-- Tailwind Play CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary:     '#BF4408',
-            'primary-h': '#E65103',
-            dark:        '#191818',
-            light:       '#FBFAF9',
-            muted:       '#9dafd3',
-            'muted-dim': '#8392ab',
-            bright:      '#d6e6ff',
-            'gray-d':    '#D9D9D9',
+            primary:     '#E05A00',
+            'primary-h': '#FF6A10',
+            dark:        '#080809',
+            light:       '#F5F3EF',
+            muted:       '#A8BCCC',
+            'muted-dim': '#7A8CA0',
+            bright:      '#C8DCFF',
+            'gray-d':    '#D0D0D0',
           },
           fontFamily: {
-            noto:  ['"Noto Sans"', 'sans-serif'],
-            open:  ['"Open Sans"', 'sans-serif'],
-            exo:   ['"Exo 2"', 'sans-serif'],
+            /* Remapped — existing class names preserved for all other pages */
+            noto:  ['"Syne"', 'sans-serif'],
+            open:  ['"DM Sans"', 'sans-serif'],
+            exo:   ['"DM Sans"', 'sans-serif'],
+            mono:  ['"JetBrains Mono"', 'monospace'],
             serif: ['Merriweather', 'Georgia', 'serif'],
           },
           maxWidth: {
@@ -61,115 +63,165 @@
     };
   </script>
 
-  <!-- Custom CSS: text-gradient helpers and button gradients -->
   <style>
     html { scroll-behavior: smooth; }
     * { box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; }
     a { color: inherit; text-decoration: none; }
     img { display: block; }
 
-    /* Text gradients */
+    /* ── Text gradients ─────────────────────────────────────────── */
     .text-grad-hero {
-      background-image: linear-gradient(180deg, #fff 0%, #b2b2b2 100%);
+      background-image: linear-gradient(160deg, #ffffff 10%, #909090 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .text-grad-section {
-      background-image: radial-gradient(circle at left top, #fff 0%, #7f7f7f 100%);
+      background-image: linear-gradient(140deg, #ffffff 0%, #5a5a5a 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    /* Buttons */
+    /* ── Buttons — sharp, precise, no radius ────────────────────── */
     .btn-light {
-      color: #fff;
-      font-family: 'Open Sans', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: -0.025rem;
-      padding: 0.75rem 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #080809;
+      background: #F5F3EF;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.75rem;
       border: none;
       cursor: pointer;
-      transition: transform 0.15s ease-in;
-      background-image: linear-gradient(180deg, #fff 0%, rgba(142,168,191,0.67) 98%);
-      box-shadow: 0 4px 7px -1px rgba(0,0,0,.11), 0 2px 4px -1px rgba(0,0,0,.07);
+      transition: background 0.15s ease, transform 0.1s ease;
     }
-    .btn-light:hover { transform: scale(1.02); }
+    .btn-light:hover { background: #ffffff; transform: translateY(-1px); }
 
     .btn-dark {
-      color: #fff;
-      font-family: 'Open Sans', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: -0.025rem;
-      padding: 0.75rem 1.5rem;
-      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #C8C8C8;
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.75rem;
+      border: 1px solid rgba(255,255,255,0.15);
       cursor: pointer;
-      transition: transform 0.15s ease-in;
-      background-image: linear-gradient(180deg, rgba(72,72,72,0.5) 0%, #0f0f0f 98%);
-      box-shadow: 0 4px 7px -1px rgba(0,0,0,.11), 0 2px 4px -1px rgba(0,0,0,.07);
+      transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
     }
-    .btn-dark:hover { transform: scale(1.02); }
+    .btn-dark:hover {
+      border-color: rgba(255,255,255,0.45);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
 
-    /* Accordion (replaces teleport-custom-scripts) */
+    /* ── Accordion ──────────────────────────────────────────────── */
     details[open] summary .acc-icon { transform: rotate(180deg); }
     .acc-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; }
     details[open] + .acc-content { max-height: 1000vh; }
 
-    /* Footer wave overlay */
+    /* ── Footer wave overlay ────────────────────────────────────── */
     .footer-wave {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.7;
+      opacity: 0.12;
       pointer-events: none;
     }
 
-    /* Code block in setup guide */
+    /* ── Code block ─────────────────────────────────────────────── */
     .code-block {
-      font-family: 'Courier New', monospace;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
       font-size: 0.75rem;
-      background: #111;
-      color: #aef;
-      padding: 1rem;
+      background: #0C0C0F;
+      color: #7BBFEF;
+      padding: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.06);
       overflow-x: auto;
       white-space: pre-wrap;
+    }
+
+    /* ── Data / terminal typography ─────────────────────────────── */
+    .data-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #7A8CA0;
+    }
+    .data-value {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 2.25rem;
+      color: #F5F3EF;
+      line-height: 1;
+    }
+
+    /* ── Structural utilities ───────────────────────────────────── */
+    .hairline   { border-top:  1px solid rgba(255,255,255,0.06); }
+    .hairline-v { border-left: 1px solid rgba(255,255,255,0.06); }
+    .card-border { border: 1px solid rgba(255,255,255,0.07); }
+
+    /* ── Dot-grid background ────────────────────────────────────── */
+    .dot-grid {
+      background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* ── Overline / category tag ─────────────────────────────────── */
+    .tag-overline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #E87030;
     }
   </style>
 </head>
 
 <body class="bg-[#191818] text-[#9dafd3] font-['Merriweather'] font-light leading-[1.625] antialiased">
-<header class="fixed top-0 left-0 right-0 h-20 z-30 flex justify-center px-2"
-        style="background-image: linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)">
-  <nav class="w-full max-w-site self-center flex items-center justify-between px-6 py-2">
+<header class="fixed top-0 left-0 right-0 z-30"
+        style="background: rgba(8,8,9,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
+  <nav class="w-full max-w-site mx-auto flex items-center justify-between px-6 h-16">
+
     <!-- Logo + brand -->
-    <div class="flex items-center shrink-0">
+    <div class="flex items-center gap-3 shrink-0">
       <img src="public/cds logo black-200h.png" alt="CDS Logo"
-           class="w-9 h-9" style="filter:invert()" />
+           class="w-7 h-7" style="filter: invert() opacity(0.85)" />
       <a href="index.html"
-         class="text-white font-semibold font-noto ml-[1vw] hidden md:block">
+         class="text-white font-noto font-semibold text-sm tracking-tight hidden md:block">
         Double Trend Exhaustion™
       </a>
     </div>
 
     <!-- Desktop text nav -->
-    <div class="hidden md:flex items-center">
-      <a href="index.html"        class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Home</a>
-      <a href="indicator-list.html" class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Indicator List</a>
-      <a href="setup-guide.html"  class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Setup Guide</a>
-      <a href="services.html"     class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Services</a>
-      <a href="contact.html"      class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Contact</a>
+    <div class="hidden md:flex items-center gap-1">
+      <a href="index.html"           class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Home</a>
+      <a href="indicator-list.html"  class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Indicators</a>
+      <a href="setup-guide.html"     class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Setup</a>
+      <a href="services.html"        class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Services</a>
+      <a href="contact.html"         class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Contact</a>
     </div>
 
     <!-- Mobile icon nav -->
-    <div class="flex md:hidden items-center mr-[2vw] gap-2">
-      <a href="index.html"><img src="public/nav-icons/home.svg"         alt="Home"           class="w-6 h-6 mx-2" /></a>
-      <a href="indicator-list.html"><img src="public/nav-icons/list.svg" alt="Indicator List" class="w-6 h-6 mx-2" /></a>
-      <a href="setup-guide.html"><img src="public/nav-icons/help-circle.svg" alt="Setup Guide" class="w-6 h-6 mx-2" /></a>
-      <a href="services.html"><img src="public/nav-icons/user.svg"       alt="Services"       class="w-6 h-6 mx-2" /></a>
-      <a href="contact.html"><img src="public/nav-icons/message-circle.svg" alt="Contact"     class="w-6 h-6 ml-2" /></a>
+    <div class="flex md:hidden items-center gap-1">
+      <a href="index.html"><img src="public/nav-icons/home.svg"               alt="Home"           class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+      <a href="indicator-list.html"><img src="public/nav-icons/list.svg"       alt="Indicator List" class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+      <a href="setup-guide.html"><img src="public/nav-icons/help-circle.svg"  alt="Setup Guide"    class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+      <a href="services.html"><img src="public/nav-icons/user.svg"             alt="Services"       class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+      <a href="contact.html"><img src="public/nav-icons/message-circle.svg"   alt="Contact"        class="w-5 h-5 ml-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
     </div>
   </nav>
 </header>
@@ -178,55 +230,102 @@
 <!-- ══════════════════════════════════════════════════════════════
      HERO
 ═══════════════════════════════════════════════════════════════ -->
-<section class="relative w-full min-h-screen flex items-center"
-         style="background-color: #191818;">
+<section class="relative w-full min-h-screen flex items-center" style="background-color: #080809;">
+
+  <!-- Dot grid background -->
+  <div class="absolute inset-0 dot-grid" style="opacity: 0.6;"></div>
+
   <!-- Background image -->
   <img src="public/bg-1500h.png" alt=""
        class="absolute inset-0 w-full h-full object-cover object-right"
-       style="filter: grayscale(40%)"
+       style="filter: grayscale(45%) brightness(1);
+              -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 30%, rgba(0,0,0,0.75) 100%);
+              mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 30%, rgba(0,0,0,0.75) 100%);"
        aria-hidden="true" />
 
-  <!-- Overlay + content -->
-  <div class="relative z-10 w-full px-8 py-8"
-       style="backdrop-filter: saturate(200%) blur(30px); background-color: rgba(0,0,0,0.5)">
-    <div class="max-w-hero mx-auto flex flex-col items-start pt-20">
-      <h1 class="text-[2.25rem] md:text-5xl font-bold font-noto leading-tight text-grad-hero">
-        Precision Where It Counts
-      </h1>
-      <h2 class="text-[2.25rem] md:text-4xl font-bold font-noto leading-tight text-bright mt-0 mb-6">
-        Don't Chase the Market, Ride It.
-      </h2>
-      <p class="text-muted font-semibold text-base mb-4 max-w-xl">
-        Trade like the institutions that move the market. Our indicators give you access to the same
-        professional-grade tools used by the biggest players, helping you stay ahead of the
-        competition with precise market timing.
-      </p>
-      <p class="text-[0.65rem] text-gray-400 mb-4">
-        * Reference to any third-party platform, tool, or organization is for informational purposes
-        only and does not imply endorsement, partnership, or affiliation.
-      </p>
+  <!-- Content -->
+  <div class="relative z-10 w-full px-8 pt-24 pb-16" style="background-color: rgba(0,0,0,0.25)">
+    <div class="max-w-site mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-20">
 
-      <!-- CTA buttons -->
-      <div class="flex flex-wrap gap-4 mt-2 mb-4">
-        <a href="indicator-list.html"><button class="btn-light">Explore Indicators</button></a>
-        <a href="setup-guide.html"><button class="btn-dark">Setup Guide</button></a>
+      <!-- Left: headline + CTA -->
+      <div class="flex-1 flex flex-col min-w-0">
+        <span class="tag-overline mb-6">TradingView Indicators</span>
+
+        <h1 class="text-5xl md:text-[3.75rem] font-bold font-noto leading-[1.05] text-grad-hero mb-5">
+          Precision<br/>Where It Counts
+        </h1>
+
+        <h2 class="text-lg md:text-xl font-noto font-semibold text-bright mb-6 leading-snug">
+          Don't Chase the Market. Ride It.
+        </h2>
+
+        <p class="text-muted font-open text-sm leading-relaxed mb-2 max-w-md">
+          Open-source Pine Script indicators built on volume exhaustion and momentum divergence —
+          signals that tend to precede reversals, not follow them. Free to inspect, free to modify.
+        </p>
+        <p class="text-[0.6rem] mb-9" style="color: #6A7E8E;">
+          * Third-party references are for informational purposes only and do not imply endorsement or affiliation.
+        </p>
+
+        <!-- CTA buttons -->
+        <div class="flex flex-wrap gap-3 mb-10">
+          <a href="indicator-list.html"><button class="btn-light">Explore Indicators</button></a>
+          <a href="setup-guide.html"><button class="btn-dark">Setup Guide</button></a>
+        </div>
+
+        <!-- Exchange logos -->
+        <div class="flex items-center gap-7 h-[22px] flex-wrap">
+          <img src="public/logos/tradingview-200h.webp" alt="TradingView"
+               class="h-full w-auto object-contain"
+               style="filter: grayscale(100%) brightness(5) opacity(0.35)" />
+          <img src="public/logos/binance.svg" alt="Binance"
+               class="h-full w-auto object-contain"
+               style="filter: grayscale(100%) brightness(0.6) opacity(0.35)" />
+          <img src="public/logos/okx.svg" alt="OKX"
+               class="h-full w-auto object-contain"
+               style="filter: invert(0.35) grayscale(100%) opacity(0.35)" />
+          <img src="public/logos/coinbase.svg" alt="Coinbase"
+               class="h-full w-auto object-contain"
+               style="filter: grayscale(100%) brightness(2) opacity(0.35)" />
+        </div>
       </div>
 
-      <!-- Exchange logos -->
-      <div class="flex items-center gap-8 h-[30px] mt-2 mb-2 flex-wrap">
-        <img src="public/logos/tradingview-200h.webp" alt="TradingView"
-             class="h-full w-auto object-contain"
-             style="filter: grayscale(100%) brightness(4)" />
-        <img src="public/logos/binance.svg"  alt="Binance"
-             class="h-full w-auto object-contain"
-             style="filter: grayscale(100%) brightness(0.5)" />
-        <img src="public/logos/okx.svg"      alt="OKX"
-             class="h-full w-auto object-contain"
-             style="filter: invert(0.4) grayscale(100%)" />
-        <img src="public/logos/coinbase.svg" alt="Coinbase"
-             class="h-full w-auto object-contain"
-             style="filter: grayscale(100%) brightness(1.5)" />
+      <!-- Right: terminal stats panel -->
+      <div class="shrink-0 w-full md:w-64 card-border"
+           style="background: rgba(16,14,12,0.92); backdrop-filter: blur(24px); border-top: 2px solid #E05A00;">
+
+        <div class="p-5" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+          <div class="data-label mb-3">Win Rate — USDT/Altcoin Pairs, 2024</div>
+          <div class="data-value" style="color: #E87030;">65<span style="font-size: 1.2rem;">%+</span></div>
+        </div>
+
+        <div class="p-5" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+          <div class="data-label mb-3">vs DCA — 2023–2024 backtest</div>
+          <div class="flex items-baseline gap-2">
+            <span class="data-value" style="font-size: 1.5rem;">VOO</span>
+            <span style="color: #2E3E4E; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">+</span>
+            <span class="data-value" style="font-size: 1.5rem;">VTI</span>
+          </div>
+        </div>
+
+        <div class="p-5" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+          <div class="data-label mb-3">BTC vs HODL — 2023–2024</div>
+          <div class="flex items-center gap-2">
+            <span style="font-size: 1.5rem; color: #E05A00; font-family: 'Syne', sans-serif; font-weight: 700; line-height: 1;">↑</span>
+            <span class="data-label" style="color: #7A8CA0;">Outperformed</span>
+          </div>
+        </div>
+
+        <div class="p-5">
+          <div class="data-label mb-3">Supported Assets</div>
+          <div class="flex gap-2 flex-wrap mt-1">
+            <span class="data-label px-2 py-1 card-border" style="color: #5A6878;">EQUITIES</span>
+            <span class="data-label px-2 py-1 card-border" style="color: #5A6878;">CRYPTO</span>
+            <span class="data-label px-2 py-1 card-border" style="color: #5A6878;">FOREX</span>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -234,147 +333,187 @@
 <!-- ══════════════════════════════════════════════════════════════
      FEATURES
 ═══════════════════════════════════════════════════════════════ -->
-<section class="w-full bg-dark">
-  <div class="max-w-[1320px] mx-auto flex flex-wrap px-24 py-[5vh] gap-0">
-    <div class="w-full md:w-1/3 flex flex-col items-center px-3 py-3">
-      <h5 class="text-bright font-noto font-medium text-xl text-center mb-2 mt-2">Any Asset</h5>
-      <p class="text-muted text-center text-sm mb-4">
-        Stocks, crypto, forex — wherever there's price action, this tool adapts.
-      </p>
-    </div>
-    <div class="w-full md:w-1/3 flex flex-col items-center px-3 py-3">
-      <h5 class="text-bright font-noto font-medium text-xl text-center mb-2 mt-2">Any Timeframe</h5>
-      <p class="text-muted text-center text-sm mb-4">
-        Suitable for scalping, swing trading, and long-term analysis.
-      </p>
-    </div>
-    <div class="w-full md:w-1/3 flex flex-col items-center px-3 py-3">
-      <h5 class="text-bright font-noto font-medium text-xl text-center mb-2 mt-2">Easy to Use</h5>
-      <p class="text-muted text-center text-sm mb-4">
-        Simple, clear signals with no complex setup needed.
-      </p>
+<section class="w-full" style="background: #0A0A0D; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06);">
+  <div class="max-w-site mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3">
+
+      <div class="flex flex-col px-10 py-12 card-border" style="border-top: none; border-left: none; border-bottom: none;">
+        <div class="data-label mb-8">01</div>
+        <h5 class="text-white font-noto font-semibold text-lg mb-3">Any Asset</h5>
+        <p class="font-open text-sm leading-relaxed" style="color: #8A9CAC;">
+          Tested on equities, crypto, and forex. Signal logic is price-agnostic — it reads volume behavior, not asset class.
+        </p>
+      </div>
+
+      <div class="flex flex-col px-10 py-12 card-border" style="border-top: none; border-bottom: none;">
+        <div class="data-label mb-8">02</div>
+        <h5 class="text-white font-noto font-semibold text-lg mb-3">Any Timeframe</h5>
+        <p class="font-open text-sm leading-relaxed" style="color: #8A9CAC;">
+          Works on 1-minute through weekly charts. Most backtests were run on the 4H and daily — that's where the edge is most consistent.
+        </p>
+      </div>
+
+      <div class="flex flex-col px-10 py-12 card-border" style="border-top: none; border-right: none; border-bottom: none;">
+        <div class="data-label mb-8">03</div>
+        <h5 class="text-white font-noto font-semibold text-lg mb-3">Full Source Code</h5>
+        <p class="font-open text-sm leading-relaxed" style="color: #8A9CAC;">
+          No black boxes. The core indicator is free and open-source — read the logic, modify it, or just use it as-is.
+        </p>
+      </div>
+
     </div>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════════════
-     INFO / PERFORMANCE
+     PERFORMANCE
 ═══════════════════════════════════════════════════════════════ -->
-<section class="w-full max-w-[1320px] mx-auto px-12 py-12 flex flex-col items-center">
-  <!-- Section title -->
-  <div class="flex flex-col items-center p-4 mb-6">
-    <h2 class="text-[2.75em] md:text-5xl font-noto font-bold text-center text-grad-section leading-tight">
-      Real Market Performance
-    </h2>
-    <p class="text-[#999] text-2xl font-noto font-normal text-center mt-2 leading-snug">
-      Backtests don't pay the bills.<br />
-      See how our indicators perform in the wild — where it actually matters.
-    </p>
-  </div>
+<section class="w-full" style="background: #080809;">
+  <div class="max-w-site mx-auto px-8 py-20">
 
-  <!-- Two-column intro card -->
-  <div class="w-full flex flex-wrap">
-    <!-- Left column: charts + stats -->
-    <div class="w-full md:w-1/2 flex flex-col relative">
-      <div class="w-full mb-12">
-        <img src="public/profit2.png" alt="Performance chart"
-             class="w-[110%] h-full object-cover shadow-[5px_5px_10px_0px_rgba(0,0,0,0.5)]" />
-      </div>
-      <div class="w-full flex flex-col">
-        <p class="text-muted w-[45%] self-end p-4 text-left border-[3px] border-muted"
-           style="border-style: outset">
-          Outperformed Dollar-Cost Averaging (DCA) strategy on VOO and VTI<br /><br />
-          Outperformed Hold on for Dear Life (HODL) strategy on BTC<br /><br />
-          Over 80% win rate on Binance Futures
-        </p>
-      </div>
-      <div class="w-[90%] self-end mt-8 mb-8">
-        <img src="public/profit1.png" alt="Profit chart"
-             class="w-full h-full object-cover shadow-[5px_5px_10px_0px_rgba(0,0,0,0.5)]" />
-      </div>
+    <!-- Section header -->
+    <div class="flex flex-col mb-16">
+      <span class="tag-overline mb-5">Performance Data</span>
+      <h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05] mb-5">
+        Results in Live Markets
+      </h2>
+      <p class="font-open text-lg leading-relaxed max-w-xl" style="color: #8A9CAC;">
+        The charts below show live and backtested performance across multiple assets and conditions.
+        All results have specific timeframes — expand the images for context.
+      </p>
     </div>
 
-    <!-- Right column: pie chart + text -->
-    <div class="w-full md:w-1/2 flex flex-col relative">
-      <div class="w-[90%] self-center mt-48">
-        <img src="public/piechart.png" alt="Win rate pie chart"
-             class="w-full h-full object-cover shadow-[5px_5px_10px_0px_rgba(0,0,0,0.5)]" />
-      </div>
-      <div class="w-[90%] self-center p-4 mt-4 mb-48 flex flex-col items-start">
-        <h3 class="text-bright text-[1.875rem] font-noto font-medium leading-snug mb-4">
-          See the power in action
-        </h3>
-        <div class="text-muted text-sm leading-relaxed">
-          <p class="mb-4">
-            Successful trading isn't about guessing; it's about making informed, strategic decisions
-            based on solid data. Our premium indicators are designed to provide you with the same
-            powerful insights that institutional traders rely on, offering you a distinct advantage in
-            the markets. These tools are effective because they focus on volume action, market
-            exhaustion, and emotional market dynamics — key elements that are often overlooked by
-            traditional price action analysis.
-          </p>
-          <p class="mb-4">
-            These indicators are rooted in real, market-tested strategies that focus on critical
-            elements like volume-driven price movements, thresholds of market exhaustion, and areas of
-            significant institutional activity. This is why our indicators work. They empower you to
-            make decisions based on the most relevant market factors, ensuring you're not merely
-            following the crowd but positioning yourself with the market's key forces.
-          </p>
-          <p class="font-bold">
-            "The market is filled with individuals who know the price of everything, but the value of
-            nothing." — Philip Fisher
-          </p>
+    <!-- Two-column layout -->
+    <div class="w-full flex flex-wrap gap-16">
+
+      <!-- Left column -->
+      <div class="w-full md:flex-1 flex flex-col gap-8">
+
+        <div class="w-full">
+          <img src="public/profit2.png" alt="Performance chart"
+               class="w-full object-cover"
+               style="box-shadow: 0 0 60px rgba(0,0,0,0.9);" />
+        </div>
+
+        <div class="card-border" style="background: #0A0A0D;">
+          <div class="p-5" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <div class="flex items-start gap-4">
+              <div style="width: 2px; background: #E05A00; min-height: 18px; align-self: stretch; flex-shrink: 0;"></div>
+              <p class="font-open text-sm" style="color: #7A8CA0;">Outperformed DCA strategy on VOO and VTI over the 2023–2024 backtest period</p>
+            </div>
+          </div>
+          <div class="p-5" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <div class="flex items-start gap-4">
+              <div style="width: 2px; background: #E05A00; min-height: 18px; align-self: stretch; flex-shrink: 0;"></div>
+              <p class="font-open text-sm" style="color: #7A8CA0;">Outperformed HODL on BTC over the same period — better risk-adjusted entry and exit</p>
+            </div>
+          </div>
+          <div class="p-5">
+            <div class="flex items-start gap-4">
+              <div style="width: 2px; background: #E05A00; min-height: 18px; align-self: stretch; flex-shrink: 0;"></div>
+              <p class="font-open text-sm" style="color: #7A8CA0;"><strong class="text-white">65%+ win rate</strong> on USDT/Altcoin pairs, Binance, 2024 (200+ signals)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full">
+          <img src="public/profit1.png" alt="Profit chart"
+               class="w-full object-cover"
+               style="box-shadow: 0 0 60px rgba(0,0,0,0.9);" />
         </div>
       </div>
+
+      <!-- Right column -->
+      <div class="w-full md:flex-1 flex flex-col gap-8">
+
+        <div class="w-full">
+          <img src="public/piechart.png" alt="Win rate breakdown"
+               class="w-full object-cover"
+               style="box-shadow: 0 0 60px rgba(0,0,0,0.9);" />
+        </div>
+
+        <div class="flex flex-col">
+          <span class="tag-overline mb-5">How It Works</span>
+          <h3 class="text-white font-noto font-semibold text-2xl leading-snug mb-5">
+            The signal logic
+          </h3>
+          <div class="font-open text-sm leading-relaxed flex flex-col gap-4" style="color: #7A8CA0;">
+            <p>
+              The core signal is volume exhaustion: price continues moving in one direction, but
+              buying or selling pressure is collapsing. That divergence tends to resolve as a
+              reversal — and it shows up before price action confirms it.
+            </p>
+            <p>
+              The Premium variant layers in Williams %R momentum to filter out low-conviction signals.
+              The result is fewer trades, but a higher percentage of them close in the intended direction.
+            </p>
+          </div>
+
+          <blockquote class="mt-6 pl-5" style="border-left: 2px solid #E05A00;">
+            <p class="font-open text-sm italic leading-relaxed" style="color: #8A9CAC;">
+              "The market is filled with individuals who know the price of everything, but the value of nothing."
+            </p>
+            <cite class="data-label mt-2 block not-italic">— Philip Fisher</cite>
+          </blockquote>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
 </main>
-<footer class="relative w-full flex flex-col items-center"
-        style="background-image: linear-gradient(0deg, #000 0%, rgba(45,50,64,0.92) 100%)">
-  <!-- Content -->
-  <div class="relative z-10 w-full max-w-site flex flex-wrap justify-between p-12 text-white gap-8">
-    <!-- Left: copyright + disclaimer -->
-    <div class="flex flex-col max-w-lg">
-      <span class="font-exo text-base mb-2">Copyright © 2025 CDS Sole Prop.</span>
-      <p class="text-[0.7rem] text-[#d2d2d2] leading-relaxed">
-        <strong>Legal Disclaimer ⚠</strong> The information, tools, and indicators provided on this
-        platform are for educational and informational purposes only and should not be considered as
-        financial, investment, or trading advice. We are not a registered financial advisor, broker,
-        or dealer.&nbsp;Trading and investing in financial markets involve significant risk of loss.
-        Past performance is not indicative of future results. There is no guarantee that the use of
-        our indicators, strategies, or any information provided will result in profits or prevent
-        losses.<br /><br />
-        Under no circumstances shall we be held liable for any direct, indirect, incidental,
-        consequential, or special damages arising from the use or inability to use our tools,
-        indicators, or services. By using our indicators, you agree to indemnify and hold us harmless
-        from any claims, damages, or legal fees.
-      </p>
+<footer class="relative w-full" style="background: #080809; border-top: 1px solid rgba(255,255,255,0.06);">
+  <div class="relative z-10 w-full max-w-site mx-auto px-8 py-12">
+
+    <!-- Main row -->
+    <div class="flex flex-wrap justify-between gap-12 pb-10" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+
+      <!-- Left: brand + disclaimer -->
+      <div class="flex flex-col max-w-sm">
+        <div class="flex items-center gap-3 mb-5">
+          <img src="public/cds logo black-200h.png" alt="CDS Logo"
+               class="w-6 h-6" style="filter: invert() opacity(0.55)" />
+          <span class="font-noto text-sm text-white font-semibold tracking-tight">Double Trend Exhaustion™</span>
+        </div>
+        <p class="text-[0.65rem] leading-relaxed" style="color: #8A9CAC;">
+          The information, tools, and indicators provided are for educational and informational
+          purposes only and should not be considered financial, investment, or trading advice.
+          We are not a registered financial advisor, broker, or dealer. Trading involves
+          significant risk of loss. Past performance is not indicative of future results.
+          Under no circumstances shall we be held liable for any direct, indirect, incidental,
+          or consequential damages arising from the use of our tools or services.
+        </p>
+      </div>
+
+      <!-- Right: nav columns -->
+      <div class="flex gap-12 ml-auto shrink-0">
+        <div class="flex flex-col gap-3">
+          <span class="tag-overline mb-2">Navigation</span>
+          <a href="index.html"           class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Home</a>
+          <a href="indicator-list.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Indicator List</a>
+          <a href="setup-guide.html"     class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Setup Guide</a>
+          <a href="services.html"        class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Services</a>
+          <a href="contact.html"         class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Contact</a>
+        </div>
+        <div class="flex flex-col gap-3">
+          <span class="tag-overline mb-2">Indicators</span>
+          <a href="indicators/indicator-dte.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Double Trend</a>
+          <a href="indicators/indicator-dtep.html" class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Double Trend Premium</a>
+          <a href="indicators/indicator-vwap.html" class="text-[#8A9CAC] text-xs hover:text-white transition-colors">VWAP</a>
+          <a href="indicators/indicator-svp.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Volume Profile</a>
+          <a href="indicators/indicator-mdd.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Max Drawdown</a>
+        </div>
+      </div>
     </div>
 
-    <!-- Right: nav columns -->
-    <div class="flex gap-8 ml-auto shrink-0">
-      <div class="flex flex-col gap-2">
-        <span class="font-exo font-bold mb-1">Navigation</span>
-        <a href="index.html"           class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Home</a>
-        <a href="indicator-list.html"  class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Indicator List</a>
-        <a href="setup-guide.html"     class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Setup Guide</a>
-        <a href="services.html"        class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Services</a>
-        <a href="contact.html"         class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Contact</a>
-      </div>
-      <div class="flex flex-col gap-2">
-        <span class="font-exo font-bold mb-1">Indicator List</span>
-        <a href="indicators/indicator-dte.html"  class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Double Trend</a>
-        <a href="indicators/indicator-dtep.html" class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Double Trend Premium</a>
-        <a href="indicators/indicator-vwap.html" class="text-[#D9D9D9] text-sm hover:text-white transition-colors">VWAP</a>
-        <a href="indicators/indicator-svp.html"  class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Volume Profile</a>
-        <a href="indicators/indicator-mdd.html"  class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Maximum Drawdown</a>
-      </div>
+    <!-- Bottom row: copyright -->
+    <div class="pt-6">
+      <span class="data-label">© 2025 CDS Sole Prop. All rights reserved.</span>
     </div>
   </div>
 
-  <!-- Decorative wave -->
+  <!-- Decorative wave — very subtle -->
   <img src="public/waves-white.svg" alt="" class="footer-wave" aria-hidden="true" />
 </footer>
 
