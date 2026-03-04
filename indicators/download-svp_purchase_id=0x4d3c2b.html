@@ -1,304 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Download</title>
-    <meta name="description" content="Download" />
-    <meta property="og:title" content="Download" />
-    <meta property="og:description" content="Download" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="utf-8" />
-    <meta property="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/png" href="../public/cds logo black-200h.png">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download — Session Volume Profile</title>
+  <meta name="description" content="Download your Session Volume Profile Indicator source code." />
 
-    <style data-tag="reset-style-sheet">
-      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;  -webkit-font-smoothing: antialiased;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;  color: inherit;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}details {  display: block;  margin: 0;  padding: 0;}summary::-webkit-details-marker {  display: none;}[data-thq="accordion"] [data-thq="accordion-content"] {  max-height: 0;  overflow: hidden;  transition: max-height 0.3s ease-in-out;  padding: 0;}[data-thq="accordion"] details[data-thq="accordion-trigger"][open] + [data-thq="accordion-content"] {  max-height: 1000vh;}details[data-thq="accordion-trigger"][open] summary [data-thq="accordion-icon"] {  transform: rotate(180deg);}html { scroll-behavior: smooth  }
-    </style>
-    <style data-tag="default-style-sheet">
-      html {
-        font-family: "Merriweather";
-        font-size: 0.85rem;
-      }
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://doubletrends.com/indicators/download-svp_purchase_id=0x4d3c2b.html" />
+  <meta property="og:title"       content="Download — Session Volume Profile" />
+  <meta property="og:description" content="Download your Session Volume Profile Indicator source code." />
+  <meta property="og:image"       content="https://doubletrends.com/public/og-image.png" />
 
-      body {
-        font-weight: 300;
-        font-style:normal;
-        text-decoration: none;
-        text-transform: none;
-        letter-spacing: normal;
-        line-height: 1.625;
-        color: var(--dl-color-secondary-400);
-        background: var(--dl-color-gray-white);
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Download — Session Volume Profile" />
+  <meta name="twitter:description" content="Download your Session Volume Profile Indicator source code." />
 
-        fill: var(--dl-color-secondary-400);
-      }
-    </style>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/animate.css@4.1.1/animate.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
-    />
-    <style>
-      html * {
-          -webkit-font-smoothing: antialiased;
-      }
-      input::placeholder, textarea::placeholder {
-         color: #d2d6da;
-      }
-    </style>
-  </head>
-  <body>
-    <link rel="stylesheet" href="../style.css" />
-    <div>
-      <link href="../services.css" rel="stylesheet" />
+  <!-- Canonical -->
+  <link rel="canonical" href="https://doubletrends.com/indicators/download-svp_purchase_id=0x4d3c2b.html" />
 
-      <div class="services-container1">
-        <header-wrapper class="header-wrapper" rootclassname="headerundefined">
-          <!--Header component-->
-          <div class="header-header headerroot-class-name">
-            <nav class="header-nav">
-              <div class="header-container1">
-                <div class="header-container2">
-                  <img
-                    alt="image"
-                    src="../public/cds%20logo%20black-200h.png"
-                    class="header-image1"
-                  />
-                </div>
-                <a href="../index.html" class="header-link1">
-                  Double Trend Exhaustion™
-                </a>
-                <div class="header-desktop-menu1">
-                  <a href="../index.html" class="header-link2">Home</a>
-                  <a href="../indicator-list.html" class="header-link3">Indicator List</a>
-                  <a href="../setup-guide.html" class="header-link4">Setup Guide</a>
-                  <a href="../services.html" class="header-link5">Services</a>
-                  <a href="../contact.html" class="header-link6">Contact</a>
-                </div>
-                <div class="header-desktop-menu2">
-                  <a href="../index.html"><img
-                    alt="image"
-                    src="../public/nav-icons/home.svg"
-                    class="header-image2"
-                  /></a>
-                  <a href="../indicator-list.html"><img
-                    alt="image"
-                    src="../public/nav-icons/list.svg"
-                    class="header-image3"
-                  /></a>
-                  <a href="../setup-guide.html"><img
-                    alt="image"
-                    src="../public/nav-icons/help-circle.svg"
-                    class="header-image4"
-                  /></a>
-                  <a href="../services.html"><img
-                    alt="image"
-                    src="../public/nav-icons/user.svg"
-                    class="header-image5"
-                  /></a>
-                  <a href="../contact.html"><img
-                    alt="image"
-                    src="../public/nav-icons/message-circle.svg"
-                    class="header-image6"
-                  /></a>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </header-wrapper>
-        <section class="services-info4">
-          <div class="services-container4">
-            <tm-title-wrapper-jyi3
-              class="tm-title-wrapper-jyi3"
-              rootclassname="tm-titleundefined"
-            >
-              <!--TMTitle component-->
-              <div class="tm-title-container3 tm-titleroot-class-name6">
-                <h1 class="tm-title-text7">
-                  <fragment class="services-fragment34">
-                    <br />
-                    <br />
-                    <span class="services-text87">
-                      Thank You for Your Purchase!
-                    </span>
-                  </fragment>
-                </h1>
-                <span class="tm-title-text8">
-                  <fragment class="services-fragment33">
-                    <span class="services-text82">
-                      <span>
-                        You now have access to Session Volume Profile, a powerful tool designed for any assets — crypto, stocks, or forex, this indicator will help you stay ahead of market momentum and avoid FOMO-driven traps. 
-                      </span>
-                      <br />
-                      <br />
-                      <span>
-                        Click the download button below to get your files, then follow the setup guide to start using it. Happy trading! 📈 
-                      </span>
-                      <br />
-                      <br />
-                    </span>
-                  </fragment>
-                </span>
-              </div>
-            </tm-title-wrapper-jyi3>
-            <button-dark-wrapper
-              class="button-dark-wrapper"
-              rootclassname="button-darkundefined"
-            >
-              <!--ButtonDark component-->
-              <div class="button-dark-container button-darkroot-class-name7">
-                <a href="attachments/svp_0x4d3c2b.zip"><button class="button-dark-button ButtonSmall button">
-                  <span>Download Source Code</span>
-                </button></a>
-              </div>
-                <h1 class="tm-title-text8">
-                  <fragment class="services-fragment34">
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                  </fragment>
-                </h1>
-            </button-dark-wrapper>
-          </div>
-        </section>
-        <footer class="footer-footer">
-            <div class="footer-container1">
-              <div class="footer-container2">
-                <span class="footer-text10">
-                  Copyright © 2025 CDS Sole Prop.
-                </span>
-                <span class="footer-text11">
-                  <span class="footer-text12">
-                    Legal Disclaimer ⚠ : The information, tools, and indicators
-                    provided on this platform are for educational and
-                    informational purposes only and should not be considered as
-                    financial, investment, or trading advice. We are not a
-                    registered financial advisor, broker, or dealer.&nbsp;
-                  </span>
-                  <span>
-                    Trading and investing in financial markets involve
-                    significant risk of loss. Past performance is not indicative
-                    of future results. There is no guarantee that the use of our
-                    indicators, strategies, or any information provided will
-                    result in profits or prevent losses.
-                  </span>
-                  <br />
-                  <br />
-                  <span>
-                    Under no circumstances shall we be held liable for any
-                    direct, indirect, incidental, consequential, or special
-                    damages, including but not limited to financial losses, data
-                    loss, or other damages arising from the use or inability to
-                    use our tools, indicators, or services. By using our
-                    indicators, you agree to indemnify and hold us harmless from
-                    any claims, damages, or legal fees resulting from your use
-                    of the information or tools provided.
-                  </span>
-                  <br />
-                </span>
-              </div>
-              <div class="footer-container3">
-                <div class="footer-container4">
-                  <span class="footer-text18">Navigation</span>
-                  <a href="../index.html" class="footer-navlink1 Large">
-                    Home
-                  </a>
-                  <a href="../indicator-list.html" class="footer-navlink2 Large">
-                    Indicator List
-                  </a>
-                  <a href="../setup-guide.html" class="footer-navlink3 Large">
-                    Setup Guide
-                  </a>
-                  <a href="../services.html" class="footer-navlink4 Large">
-                    Services
-                  </a>
-                  <a href="../contact.html" class="footer-link Large">Contact</a>
-                </div>
-                <div class="footer-container5">
-                  <span class="footer-text19">Indicator List</span>
-                  <a href="./indicator-dte.html" class="footer-navlink5 Large">Double Trend</a>
-                  <a href="./indicator-dtep.html" class="footer-navlink6 Large">Double Trend Premium</a>
-                  <a href="./indicator-vwap.html" class="footer-navlink7 Large">VWAP</a>
-                  <a href="./indicator-svp.html" class="footer-navlink8 Large">Volume Profile</a>
-                  <a href="./indicator-mdd.html" class="footer-navlink9 Large">Maximum Drawdown</a>
-                </div>
-              </div>
-            </div>
-            <img
-              alt="image"
-              src="../public/waves-white.svg"
-              class="footer-image"
-            />
-          </footer>
-        </footer-wrapper>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../public/cds logo black-200h.png" />
+
+  <!-- Fonts (only what's actually used) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Exo+2:wght@400;600;700&family=Merriweather:wght@300;400&display=swap" />
+
+  <!-- Tailwind Play CDN with custom config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:     '#BF4408',
+            'primary-h': '#E65103',
+            dark:        '#191818',
+            light:       '#FBFAF9',
+            muted:       '#9dafd3',
+            'muted-dim': '#8392ab',
+            bright:      '#d6e6ff',
+            'gray-d':    '#D9D9D9',
+          },
+          fontFamily: {
+            noto:  ['"Noto Sans"', 'sans-serif'],
+            open:  ['"Open Sans"', 'sans-serif'],
+            exo:   ['"Exo 2"', 'sans-serif'],
+            serif: ['Merriweather', 'Georgia', 'serif'],
+          },
+          maxWidth: {
+            site: '1200px',
+            hero: '1000px',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Custom CSS: text-gradient helpers and button gradients -->
+  <style>
+    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+
+    /* Text gradients */
+    .text-grad-hero {
+      background-image: linear-gradient(180deg, #fff 0%, #b2b2b2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .text-grad-section {
+      background-image: radial-gradient(circle at left top, #fff 0%, #7f7f7f 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Buttons */
+    .btn-light {
+      color: #fff;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: -0.025rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease-in;
+      background-image: linear-gradient(180deg, #fff 0%, rgba(142,168,191,0.67) 98%);
+      box-shadow: 0 4px 7px -1px rgba(0,0,0,.11), 0 2px 4px -1px rgba(0,0,0,.07);
+    }
+    .btn-light:hover { transform: scale(1.02); }
+
+    .btn-dark {
+      color: #fff;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: -0.025rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease-in;
+      background-image: linear-gradient(180deg, rgba(72,72,72,0.5) 0%, #0f0f0f 98%);
+      box-shadow: 0 4px 7px -1px rgba(0,0,0,.11), 0 2px 4px -1px rgba(0,0,0,.07);
+    }
+    .btn-dark:hover { transform: scale(1.02); }
+
+    /* Accordion (replaces teleport-custom-scripts) */
+    details[open] summary .acc-icon { transform: rotate(180deg); }
+    .acc-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; }
+    details[open] + .acc-content { max-height: 1000vh; }
+
+    /* Footer wave overlay */
+    .footer-wave {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    /* Code block in setup guide */
+    .code-block {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      background: #111;
+      color: #aef;
+      padding: 1rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+
+<body class="bg-[#191818] text-[#9dafd3] font-['Merriweather'] font-light leading-[1.625] antialiased">
+<header class="fixed top-0 left-0 right-0 h-20 z-30 flex justify-center px-2"
+        style="background-image: linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)">
+  <nav class="w-full max-w-site self-center flex items-center justify-between px-6 py-2">
+    <!-- Logo + brand -->
+    <div class="flex items-center shrink-0">
+      <img src="../public/cds logo black-200h.png" alt="CDS Logo"
+           class="w-9 h-9" style="filter:invert()" />
+      <a href="../index.html"
+         class="text-white font-semibold font-noto ml-[1vw] hidden md:block">
+        Double Trend Exhaustion™
+      </a>
+    </div>
+
+    <!-- Desktop text nav -->
+    <div class="hidden md:flex items-center">
+      <a href="../index.html"        class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Home</a>
+      <a href="../indicator-list.html" class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Indicator List</a>
+      <a href="../setup-guide.html"  class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Setup Guide</a>
+      <a href="../services.html"     class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Services</a>
+      <a href="../contact.html"      class="text-white text-sm font-semibold font-exo tracking-tight hover:text-[#595959] transition-colors mx-4 py-2">Contact</a>
+    </div>
+
+    <!-- Mobile icon nav -->
+    <div class="flex md:hidden items-center mr-[2vw] gap-2">
+      <a href="../index.html"><img src="../public/nav-icons/home.svg"         alt="Home"           class="w-6 h-6 mx-2" /></a>
+      <a href="../indicator-list.html"><img src="../public/nav-icons/list.svg" alt="Indicator List" class="w-6 h-6 mx-2" /></a>
+      <a href="../setup-guide.html"><img src="../public/nav-icons/help-circle.svg" alt="Setup Guide" class="w-6 h-6 mx-2" /></a>
+      <a href="../services.html"><img src="../public/nav-icons/user.svg"       alt="Services"       class="w-6 h-6 mx-2" /></a>
+      <a href="../contact.html"><img src="../public/nav-icons/message-circle.svg" alt="Contact"     class="w-6 h-6 ml-2" /></a>
+    </div>
+  </nav>
+</header>
+
+<main>
+<!-- DOWNLOAD: SVP (post-purchase) -->
+<section class="w-full max-w-[1320px] mx-auto px-6 md:px-12 pt-32 pb-16 flex flex-col items-center">
+  <div class="flex flex-col items-center p-4 mb-8 max-w-2xl w-full text-center">
+    <h1 class="text-[2.75em] font-noto font-bold text-grad-section leading-tight">
+      Thank You for Your Purchase!
+    </h1>
+    <p class="text-[#999] text-xl font-noto mt-4 leading-snug">
+      You now have access to Session Volume Profile Indicator.<br /><br />
+      Click the download button below to get your files, then follow the setup guide to start using
+      it. Happy trading! 📈
+    </p>
+  </div>
+  <a href="attachments/svp_0x4d3c2b.zip"><button class="btn-dark mb-8">Download Source Code</button></a>
+  <p class="text-muted text-sm mt-4">
+    Need help setting it up? Check the
+    <a href="../setup-guide.html" class="text-primary hover:underline">Setup Guide</a>.
+  </p>
+</section>
+
+</main>
+<footer class="relative w-full flex flex-col items-center"
+        style="background-image: linear-gradient(0deg, #000 0%, rgba(45,50,64,0.92) 100%)">
+  <!-- Content -->
+  <div class="relative z-10 w-full max-w-site flex flex-wrap justify-between p-12 text-white gap-8">
+    <!-- Left: copyright + disclaimer -->
+    <div class="flex flex-col max-w-lg">
+      <span class="font-exo text-base mb-2">Copyright © 2025 CDS Sole Prop.</span>
+      <p class="text-[0.7rem] text-[#d2d2d2] leading-relaxed">
+        <strong>Legal Disclaimer ⚠</strong> The information, tools, and indicators provided on this
+        platform are for educational and informational purposes only and should not be considered as
+        financial, investment, or trading advice. We are not a registered financial advisor, broker,
+        or dealer.&nbsp;Trading and investing in financial markets involve significant risk of loss.
+        Past performance is not indicative of future results. There is no guarantee that the use of
+        our indicators, strategies, or any information provided will result in profits or prevent
+        losses.<br /><br />
+        Under no circumstances shall we be held liable for any direct, indirect, incidental,
+        consequential, or special damages arising from the use or inability to use our tools,
+        indicators, or services. By using our indicators, you agree to indemnify and hold us harmless
+        from any claims, damages, or legal fees.
+      </p>
+    </div>
+
+    <!-- Right: nav columns -->
+    <div class="flex gap-8 ml-auto shrink-0">
+      <div class="flex flex-col gap-2">
+        <span class="font-exo font-bold mb-1">Navigation</span>
+        <a href="../index.html"           class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Home</a>
+        <a href="../indicator-list.html"  class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Indicator List</a>
+        <a href="../setup-guide.html"     class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Setup Guide</a>
+        <a href="../services.html"        class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Services</a>
+        <a href="../contact.html"         class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Contact</a>
+      </div>
+      <div class="flex flex-col gap-2">
+        <span class="font-exo font-bold mb-1">Indicator List</span>
+        <a href="../indicators/indicator-dte.html"  class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Double Trend</a>
+        <a href="../indicators/indicator-dtep.html" class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Double Trend Premium</a>
+        <a href="../indicators/indicator-vwap.html" class="text-[#D9D9D9] text-sm hover:text-white transition-colors">VWAP</a>
+        <a href="../indicators/indicator-svp.html"  class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Volume Profile</a>
+        <a href="../indicators/indicator-mdd.html"  class="text-[#D9D9D9] text-sm hover:text-white transition-colors">Maximum Drawdown</a>
       </div>
     </div>
-    <script
-      defer=""
-      src="https://unpkg.com/@teleporthq/teleport-custom-scripts"
-    ></script>
-  </body>
+  </div>
+
+  <!-- Decorative wave -->
+  <img src="../public/waves-white.svg" alt="" class="footer-wave" aria-hidden="true" />
+</footer>
+
+</body>
 </html>

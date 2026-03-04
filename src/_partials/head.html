@@ -1,0 +1,139 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{TITLE}}</title>
+  <meta name="description" content="{{DESC}}" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="{{CANONICAL}}" />
+  <meta property="og:title"       content="{{TITLE}}" />
+  <meta property="og:description" content="{{DESC}}" />
+  <meta property="og:image"       content="https://doubletrends.com/public/og-image.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="{{TITLE}}" />
+  <meta name="twitter:description" content="{{DESC}}" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="{{CANONICAL}}" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ROOT}}public/cds logo black-200h.png" />
+
+  <!-- Fonts (only what's actually used) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Exo+2:wght@400;600;700&family=Merriweather:wght@300;400&display=swap" />
+
+  <!-- Tailwind Play CDN with custom config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:     '#BF4408',
+            'primary-h': '#E65103',
+            dark:        '#191818',
+            light:       '#FBFAF9',
+            muted:       '#9dafd3',
+            'muted-dim': '#8392ab',
+            bright:      '#d6e6ff',
+            'gray-d':    '#D9D9D9',
+          },
+          fontFamily: {
+            noto:  ['"Noto Sans"', 'sans-serif'],
+            open:  ['"Open Sans"', 'sans-serif'],
+            exo:   ['"Exo 2"', 'sans-serif'],
+            serif: ['Merriweather', 'Georgia', 'serif'],
+          },
+          maxWidth: {
+            site: '1200px',
+            hero: '1000px',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Custom CSS: text-gradient helpers and button gradients -->
+  <style>
+    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+
+    /* Text gradients */
+    .text-grad-hero {
+      background-image: linear-gradient(180deg, #fff 0%, #b2b2b2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .text-grad-section {
+      background-image: radial-gradient(circle at left top, #fff 0%, #7f7f7f 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Buttons */
+    .btn-light {
+      color: #fff;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: -0.025rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease-in;
+      background-image: linear-gradient(180deg, #fff 0%, rgba(142,168,191,0.67) 98%);
+      box-shadow: 0 4px 7px -1px rgba(0,0,0,.11), 0 2px 4px -1px rgba(0,0,0,.07);
+    }
+    .btn-light:hover { transform: scale(1.02); }
+
+    .btn-dark {
+      color: #fff;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: -0.025rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease-in;
+      background-image: linear-gradient(180deg, rgba(72,72,72,0.5) 0%, #0f0f0f 98%);
+      box-shadow: 0 4px 7px -1px rgba(0,0,0,.11), 0 2px 4px -1px rgba(0,0,0,.07);
+    }
+    .btn-dark:hover { transform: scale(1.02); }
+
+    /* Accordion (replaces teleport-custom-scripts) */
+    details[open] summary .acc-icon { transform: rotate(180deg); }
+    .acc-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; }
+    details[open] + .acc-content { max-height: 1000vh; }
+
+    /* Footer wave overlay */
+    .footer-wave {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    /* Code block in setup guide */
+    .code-block {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      background: #111;
+      color: #aef;
+      padding: 1rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>

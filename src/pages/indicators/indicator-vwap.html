@@ -1,0 +1,51 @@
+<!-- INDICATOR: VWAP -->
+<section class="w-full max-w-[1320px] mx-auto px-6 md:px-12 pt-32 pb-16 flex flex-col">
+
+  <div class="mb-8">
+    <h1 class="text-[2.25rem] font-noto font-bold text-grad-section leading-tight">
+      Volume Weighted Average Price (VWAP) Indicator
+    </h1>
+    <p class="text-[#999] text-lg font-noto mt-1">Volatility &amp; Volume Analysis Series</p>
+  </div>
+
+  <div class="border border-muted p-6 mb-12 max-w-3xl">
+    <span class="text-muted text-sm font-semibold font-noto uppercase tracking-wide mb-3 block">Key takeaways</span>
+    <div class="text-muted text-[1.25rem] font-noto leading-snug">
+      <p class="mb-4">
+        VWAP is a lagging, volume-weighted indicator, used primarily for intraday trading to assess
+        whether prices are above or below a fair value benchmark.
+      </p>
+      <p class="mb-4">
+        Institutional firms rely on VWAP to execute large orders (millions or billions in value).
+        They break down orders into smaller pieces and use VWAP to ensure executions occur at a fair
+        price without significantly impacting the market.
+      </p>
+      <p class="text-sm font-serif font-light">
+        Used by: J.P. Morgan, Morgan Stanley, RBC Capital Market, Jane Street, BlackRock<br /><br />
+        <a href="https://www.jpmorgan.com/content/dam/jpm/cib/complex/content/markets/jpm-x-jpb-x-us-monthly-summary/JPB-X%20Quarterly%20Doc%20-%20Q42021.pdf" class="text-primary hover:underline text-xs">[1] J.P. Morgan U.S. Quarterly Summary</a><br />
+        <a href="https://www.morganstanley.com/content/dam/msdotcom/en/assets/pdfs/sales_and_trading_disclosures/MS_US_Cash_Equity_Order_Handling_and_Routing_FAQs.pdf" class="text-primary hover:underline text-xs">[2] Morgan Stanley Order Handling &amp; Routing Practice</a><br />
+        <a href="https://www.rbc.com/newsroom/news/article.html?article=125749" class="text-primary hover:underline text-xs">[3] RBC Capital Markets Aiden® Arrival Announcement</a><br />
+        <a href="https://medium.com/@andrew_zori/part-1-2-etf-execution-strategies-a-study-note-on-jane-streets-report-c2085eca0204" class="text-primary hover:underline text-xs">[4] ETF Execution Strategies — Jane Street</a><br />
+        <a href="https://www.blackrock.com/corporate/literature/whitepaper/viewpoint-a-global-perspective-on-market-on-close-activity-july-2020.pdf" class="text-primary hover:underline text-xs">[5] BlackRock Global Perspective White Paper</a>
+      </p>
+    </div>
+    <div class="mt-6">
+      <a href="checkout-vwap.html"><button class="btn-dark">Source Code (USD $299)</button></a>
+    </div>
+  </div>
+
+  <!-- Detail images (use whatever images exist) -->
+  <div class="w-full flex flex-col md:flex-row gap-8 mb-12">
+    <div class="md:w-1/2"><img src="{{ROOT}}public/indicator-details/vwap1.png" alt="VWAP chart" class="w-full" /></div>
+    <div class="md:w-1/2 flex flex-col justify-center">
+      <p class="text-muted text-sm leading-relaxed">
+        The VWAP indicator plots the volume-weighted average price from the start of each trading
+        session, giving traders a dynamic benchmark that adjusts with each trade. When price is
+        above VWAP, the market is considered bullish; when below, bearish. Institutional algorithms
+        commonly use this line as a trigger for order execution, making it a critical level for
+        all market participants.
+      </p>
+    </div>
+  </div>
+
+</section>

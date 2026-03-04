@@ -1,0 +1,19 @@
+<!-- CHECKOUT: SVP -->
+<section class="w-full max-w-[1320px] mx-auto px-6 md:px-12 pt-32 pb-16 flex flex-col items-center">
+  <div class="flex flex-col items-center p-4 mb-8 max-w-2xl w-full text-center">
+    <h1 class="text-[2.75em] font-noto font-bold text-grad-section leading-tight">Session Volume Profile</h1>
+    <p class="text-[#999] text-xl font-noto mt-4 leading-snug">
+      It looks like you're trying to access a premium feature. No worries — you're just one step away!<br /><br />
+      You'll be redirected to our secure point-of-sale powered by Stripe Inc. to complete your
+      payment. International payments are accepted, including Visa and Mastercard.
+    </p>
+  </div>
+  <a href="https://buy.stripe.com/14k28bdqmbf9f6gbIM">
+    <button class="btn-dark mb-8">Proceed to Checkout</button>
+  </a>
+  <style>
+    .payment-img { max-width: 30vw; }
+    @media (max-width: 768px) { .payment-img { max-width: 90vw; } }
+  </style>
+  <img class="payment-img" src="{{ROOT}}payments.png" alt="Accepted payment methods" />
+</section>

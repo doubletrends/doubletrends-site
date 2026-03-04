@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /indicators/download-
+
+Sitemap: https://doubletrends.com/sitemap.xml
