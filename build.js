@@ -21,7 +21,7 @@ const pages = [
     src:   'index.html',
     out:   'index.html',
     title: 'Double Trend Exhaustion™ — Precision Market Indicators',
-    desc:  'Professional-grade TradingView indicators for retail traders. Identify trend reversals with institutional-level precision.',
+    desc:  'Open-source TradingView indicators built on volume exhaustion and momentum divergence. Identify trend reversals before price action confirms.',
     root:  '',
   },
   {
@@ -78,7 +78,7 @@ const pages = [
     src:   'indicators/indicator-vwap.html',
     out:   'indicators/indicator-vwap.html',
     title: 'Volume Weighted Average Price (VWAP) Indicator',
-    desc:  'Institutional VWAP indicator revealing where smart money positions throughout the trading session.',
+    desc:  'Session-reset VWAP implementation for TradingView. Optimized for intraday and day trading setups.',
     root:  '../',
   },
   {
@@ -92,7 +92,7 @@ const pages = [
     src:   'indicators/indicator-mdd.html',
     out:   'indicators/indicator-mdd.html',
     title: 'Maximum Drawdown Threshold Indicator',
-    desc:  'Identify key entry and exit points during FUD and FOMO with the Maximum Drawdown Threshold Indicator.',
+    desc:  'Identify historically significant drawdown thresholds for long-term entry and exit timing. Free and open-source.',
     root:  '../',
   },
   // ── checkout pages ─────────────────────────────────────────────────────
@@ -200,7 +200,7 @@ for (const page of pages) {
     `<!DOCTYPE html>
 <html lang="en">
 ${replace(head, vars)}
-<body class="bg-[#191818] text-[#9dafd3] font-['Merriweather'] font-light leading-[1.625] antialiased">
+<body class="bg-[#080809] text-[#A8BCCC] font-['DM_Sans'] leading-relaxed antialiased">
 ${replace(header, vars)}
 <main>
 ${content}
