@@ -3,15 +3,15 @@
   "name": "cdssp-github-io",
   "compatibility_date": "2025-09-27",
   "assets": {
-    "directory": ".",
-    "binding": "ASSETS",
-    "exclude": [
-      "node_modules",
-      ".git",
-      "src",
-      "package.json",
-      "build.js",
-      "wrangler.jsonc"
-    ]
-  }
+    "directory": "."
+  },
+  "base_dir": ".",
+  "ignore_assets": [
+    "node_modules",
+    ".git",
+    "src",
+    "package.json",
+    "build.js",
+    "wrangler.jsonc"
+  ]
 }
