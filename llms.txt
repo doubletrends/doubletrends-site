@@ -1,0 +1,36 @@
+# DoubleTrends™
+
+DoubleTrends™ is a rules-based S&P 500 index signal for ETF investors. It tracks the S&P 500 index and sends a Telegram alert when its oversold-reversal rule fires. The site also publishes research notes on drawdowns, market exhaustion, investor behavior, and market-structure tools.
+
+Important: the content is educational market information only. It is not financial, investment, trading, tax, or legal advice, and it is not a recommendation to buy, sell, or hold any security.
+
+## Primary Pages
+
+- Home and product overview: https://doubletrends.com/
+- Academy index: https://doubletrends.com/academy/
+- Data and quant services: https://doubletrends.com/company/services.html
+- Careers: https://doubletrends.com/company/careers.html
+- Contact: https://doubletrends.com/company/contact.html
+
+## Academy Articles
+
+- S&P 500 drawdown history: https://doubletrends.com/academy/sp-500-drawdowns.html
+- Why buying the dip is hard: https://doubletrends.com/academy/why-buying-the-dip-is-hard.html
+- Every S&P 500 bottom since 2016: https://doubletrends.com/academy/every-sp-500-bottom-since-2016.html
+- DoubleTrends™ signal methodology: https://doubletrends.com/academy/double-trend-exhaustion.html
+- Maximum Drawdown research note: https://doubletrends.com/academy/maximum-drawdown.html
+- Volume Profile and VWAP primer: https://doubletrends.com/academy/volume-profile-vwap.html
+
+## Machine-Readable Data
+
+- Replay data for the S&P 500 signal chart: https://doubletrends.com/public/replay/sp500.json
+- XML sitemap: https://doubletrends.com/sitemap.xml
+
+## Entity Summary
+
+- Brand: DoubleTrends™
+- Operator: CDS Sole Prop
+- Coverage: S&P 500 index
+- Intended audience: ETF investors using S&P 500 exposure such as VOO, SPY, or IVV
+- Delivery: Telegram alert
+- Signal type: low-frequency, rules-based oversold reversal

@@ -1,17 +1,17 @@
-<footer class="relative w-full" style="background: #080809; border-top: 1px solid rgba(255,255,255,0.06);">
+<footer class="relative w-full" style="background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.08);">
   <div class="relative z-10 w-full max-w-site mx-auto px-8 py-12">
 
     <!-- Main row -->
-    <div class="flex flex-wrap justify-between gap-12 pb-10" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+    <div class="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12 pb-10" style="border-bottom: 1px solid rgba(0,0,0,0.08);">
 
       <!-- Left: brand + disclaimer -->
       <div class="flex flex-col max-w-sm">
         <div class="flex items-center gap-3 mb-5">
-          <img src="{{ROOT}}public/cds logo black-200h.png" alt="CDS Logo"
-               class="w-6 h-6" style="filter: invert() opacity(0.55)" />
-          <span class="font-noto text-sm text-white font-semibold tracking-tight">Double Trend Exhaustion™</span>
+          <img src="{{ROOT}}public/brand/cds-logo.png" alt="CDS Logo"
+               class="w-6 h-6" style="opacity: 0.55" />
+          <span class="font-noto text-sm text-dark font-semibold tracking-tight">DoubleTrends™</span>
         </div>
-        <p class="text-[0.65rem] leading-relaxed" style="color: #8A9CAC;">
+        <p class="text-[0.65rem] leading-relaxed text-muted">
           The information, tools, and indicators provided are for educational and informational
           purposes only and should not be considered financial, investment, or trading advice.
           We are not a registered financial advisor, broker, or dealer. Trading involves
@@ -19,25 +19,39 @@
           Under no circumstances shall we be held liable for any direct, indirect, incidental,
           or consequential damages arising from the use of our tools or services.
         </p>
+        <p class="text-[0.65rem] leading-relaxed mt-4 text-muted-dim">
+          DoubleTrends™ signals are provided for educational and informational purposes only and do not constitute financial, investment, or trading advice. Past performance does not guarantee future results.
+        </p>
       </div>
 
-      <!-- Right: nav columns -->
-      <div class="flex gap-12 ml-auto shrink-0">
-        <div class="flex flex-col gap-3">
-          <span class="tag-overline mb-2">Navigation</span>
-          <a href="{{ROOT}}index.html"           class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Home</a>
-          <a href="{{ROOT}}indicator-list.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Indicator List</a>
-          <a href="{{ROOT}}setup-guide.html"     class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Setup Guide</a>
-          <a href="{{ROOT}}services.html"        class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Services</a>
-          <a href="{{ROOT}}contact.html"         class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Contact</a>
-        </div>
-        <div class="flex flex-col gap-3">
-          <span class="tag-overline mb-2">Indicators</span>
-          <a href="{{ROOT}}indicators/indicator-dte.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Double Trend</a>
-          <a href="{{ROOT}}indicators/indicator-dtep.html" class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Double Trend Premium</a>
-          <a href="{{ROOT}}indicators/indicator-vwap.html" class="text-[#8A9CAC] text-xs hover:text-white transition-colors">VWAP</a>
-          <a href="{{ROOT}}indicators/indicator-svp.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Volume Profile</a>
-          <a href="{{ROOT}}indicators/indicator-mdd.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Max Drawdown</a>
+      <!-- Right: sitemap columns -->
+      <div class="flex justify-start lg:justify-end">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 md:gap-12 w-max">
+          <div class="flex flex-col gap-3 w-40">
+            <span class="tag-overline mb-2">Product</span>
+            <a href="{{ROOT}}index.html" class="foot-link">Home</a>
+            <a href="{{ROOT}}index.html#track-record" class="foot-link">Track Record</a>
+            <a href="{{ROOT}}index.html#how-it-works" class="foot-link">How It Works</a>
+            <a href="{{ROOT}}index.html#pricing" class="foot-link">Pricing</a>
+            <a href="{{ROOT}}index.html#faq" class="foot-link">FAQ</a>
+            <a href="{{SUBSCRIBE_URL}}" class="foot-link">Subscribe</a>
+          </div>
+          <div class="flex flex-col gap-3 w-40">
+            <span class="tag-overline mb-2">Academy</span>
+            <a href="{{ROOT}}academy/index.html" class="foot-link">Academy home</a>
+            <a href="{{ROOT}}academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 drawdowns</a>
+            <a href="{{ROOT}}academy/why-buying-the-dip-is-hard.html" class="foot-link">Why dip-buying is hard</a>
+            <a href="{{ROOT}}academy/every-sp-500-bottom-since-2016.html" class="foot-link">Market bottoms since 2016</a>
+            <a href="{{ROOT}}academy/double-trend-exhaustion.html" class="foot-link">DoubleTrends™</a>
+            <a href="{{ROOT}}academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
+            <a href="{{ROOT}}academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
+          </div>
+          <div class="flex flex-col gap-3 w-40">
+            <span class="tag-overline mb-2">Company</span>
+            <a href="{{ROOT}}company/services.html" class="foot-link">Services</a>
+            <a href="{{ROOT}}company/careers.html" class="foot-link">Careers</a>
+            <a href="{{ROOT}}company/contact.html" class="foot-link">Contact</a>
+          </div>
         </div>
       </div>
     </div>
@@ -49,5 +63,5 @@
   </div>
 
   <!-- Decorative wave — very subtle -->
-  <img src="{{ROOT}}public/waves-white.svg" alt="" class="footer-wave" aria-hidden="true" />
+  <img src="{{ROOT}}public/decor/waves.svg" alt="" class="footer-wave" aria-hidden="true" />
 </footer>

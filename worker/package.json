@@ -1,0 +1,12 @@
+{
+  "name": "dtep-subscriptions",
+  "private": true,
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260524.0",
+    "wrangler": "^4.0.0"
+  },
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "db:init": "wrangler d1 execute dtep --file=schema.sql"
+  }
+}

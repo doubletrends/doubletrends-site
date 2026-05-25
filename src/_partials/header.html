@@ -1,33 +1,32 @@
 <header class="fixed top-0 left-0 right-0 z-30"
-        style="background: rgba(8,8,9,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
-  <nav class="w-full max-w-site mx-auto flex items-center justify-between px-6 h-16">
+        style="background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.08);">
+  <nav class="w-full max-w-site mx-auto flex items-center justify-between gap-4 px-6 h-16">
 
-    <!-- Logo + brand -->
     <div class="flex items-center gap-3 shrink-0">
-      <img src="{{ROOT}}public/cds logo black-200h.png" alt="CDS Logo"
-           class="w-7 h-7" style="filter: invert() opacity(0.85)" />
+      <img src="{{ROOT}}public/brand/cds-logo.png" alt="CDS Logo"
+           class="w-7 h-7" style="opacity: 0.85" />
       <a href="{{ROOT}}index.html"
-         class="text-white font-noto font-semibold text-sm tracking-tight hidden md:block">
-        Double Trend Exhaustion™
+         class="text-[#1E2530] font-noto font-semibold text-sm tracking-tight hidden md:block">
+        DoubleTrends™
       </a>
     </div>
 
-    <!-- Desktop text nav -->
-    <div class="hidden md:flex items-center gap-1">
-      <a href="{{ROOT}}index.html"           class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Home</a>
-      <a href="{{ROOT}}indicator-list.html"  class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Indicators</a>
-      <a href="{{ROOT}}setup-guide.html"     class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Setup</a>
-      <a href="{{ROOT}}services.html"        class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Services</a>
-      <a href="{{ROOT}}contact.html"         class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Contact</a>
+    <div class="hidden lg:flex items-center gap-1">
+      <a href="{{ROOT}}index.html#track-record" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Track Record</a>
+      <a href="{{ROOT}}index.html#how-it-works" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">How It Works</a>
+      <a href="{{ROOT}}index.html#pricing"      class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Pricing</a>
+      <a href="{{ROOT}}index.html#faq"          class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">FAQ</a>
+      <a href="{{ROOT}}academy/index.html" class="btn-dark ml-2 !px-4 !py-2 text-[0.65rem]">Academy</a>
+      <a href="{{SUBSCRIBE_URL}}" class="btn-light ml-2 !px-4 !py-2 text-[0.65rem]">Subscribe</a>
     </div>
 
-    <!-- Mobile icon nav -->
-    <div class="flex md:hidden items-center gap-1">
-      <a href="{{ROOT}}index.html"><img src="{{ROOT}}public/nav-icons/home.svg"               alt="Home"           class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
-      <a href="{{ROOT}}indicator-list.html"><img src="{{ROOT}}public/nav-icons/list.svg"       alt="Indicator List" class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
-      <a href="{{ROOT}}setup-guide.html"><img src="{{ROOT}}public/nav-icons/help-circle.svg"  alt="Setup Guide"    class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
-      <a href="{{ROOT}}services.html"><img src="{{ROOT}}public/nav-icons/user.svg"             alt="Services"       class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
-      <a href="{{ROOT}}contact.html"><img src="{{ROOT}}public/nav-icons/message-circle.svg"   alt="Contact"        class="w-5 h-5 ml-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+    <div class="flex lg:hidden items-center gap-1 overflow-x-auto">
+      <a href="{{ROOT}}index.html#track-record" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Track</a>
+      <a href="{{ROOT}}index.html#how-it-works" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Works</a>
+      <a href="{{ROOT}}index.html#pricing" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Price</a>
+      <a href="{{ROOT}}index.html#faq" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">FAQ</a>
+      <a href="{{ROOT}}academy/index.html" class="btn-dark !px-3 !py-2 text-[0.6rem]">Academy</a>
+      <a href="{{SUBSCRIBE_URL}}" class="btn-light !px-3 !py-2 text-[0.6rem]">Subscribe</a>
     </div>
   </nav>
 </header>
