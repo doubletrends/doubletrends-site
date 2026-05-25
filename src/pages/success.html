@@ -70,7 +70,7 @@
   // The invite link is written by Stripe's checkout.session.completed webhook,
   // which can land a moment after this redirect — so poll until it's ready.
   var attempt = 0;
-  var MAX_ATTEMPTS = 20;   // ~40s at 2s intervals
+  var MAX_ATTEMPTS = 60;   // ~2min at 2s intervals — allows for live webhook lag
   var INTERVAL_MS = 2000;
 
   function poll() {

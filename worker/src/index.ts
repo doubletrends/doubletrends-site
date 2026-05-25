@@ -498,6 +498,10 @@ function hex(bytes: Uint8Array): string {
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      // The success page fetches /access cross-origin (doubletrends.com → workers.dev).
+      "access-control-allow-origin": "*",
+    },
   });
 }
