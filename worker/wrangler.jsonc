@@ -1,0 +1,23 @@
+{
+  "name": "dtep-subscriptions",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-05-24",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "dtep",
+      // Replace after running: wrangler d1 create dtep
+      "database_id": "PLACEHOLDER_D1_ID"
+    }
+  ]
+
+  /*
+   * Set these with wrangler secret put:
+   * TELEGRAM_BOT_TOKEN
+   * TELEGRAM_CHANNEL_ID
+   * STRIPE_SECRET_KEY
+   * STRIPE_WEBHOOK_SECRET
+   * STRIPE_PRICE_ID
+   * TELEGRAM_WEBHOOK_SECRET  (same value you pass as secret_token to setWebhook)
+   */
+}

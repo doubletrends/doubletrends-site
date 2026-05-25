@@ -9,7 +9,10 @@
   "ignore_assets": [
     "node_modules",
     ".git",
+    ".github",
     "src",
+    "signal",
+    "worker",
     "package.json",
     "build.js",
     "wrangler.jsonc"

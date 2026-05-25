@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Background Lab — colour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=JetBrains+Mono:wght@400;600&display=swap" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; color: #1E2530; }
+
+  .sec {
+    background-color: var(--warm);
+    min-height: 480px;
+    padding: 70px 48px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  /* Fixed motif for all sections: grid + crosshair node, faded top→down */
+  .fade {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 0V24M0 12H24' stroke='rgba(30,37,48,0.05)' stroke-width='1'/%3E%3Cpath d='M12 8V16M8 12H16' stroke='rgba(30,37,48,0.20)' stroke-width='1.2'/%3E%3C/svg%3E");
+    background-size: 24px 24px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+  }
+
+  .tag {
+    position: absolute; top: 18px; left: 24px; z-index: 2;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #5A6473; background: rgba(255,255,255,0.7);
+    padding: 4px 10px; border: 1px solid rgba(0,0,0,0.08);
+  }
+  .tag b { color: #C2410C; }
+  .tag .css { color: #8A93A0; text-transform: none; letter-spacing: 0; display:block; margin-top:3px; }
+
+  .card {
+    position: relative; z-index: 1;
+    background: #FFFFFF; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    padding: 36px; max-width: 520px; width: 100%;
+  }
+  .ovl { font-family:'JetBrains Mono',monospace; font-size:1.0rem; letter-spacing:0.18em; text-transform:uppercase; color:#C2410C; }
+  .card h2 { font-family:'Syne',sans-serif; font-weight:700; font-size:1.8rem; line-height:1.05; margin:12px 0; }
+  .card p { color:#5A6473; font-size:0.9rem; line-height:1.6; }
+  .stat { display:flex; align-items:flex-end; gap:8px; margin-top:20px; }
+  .stat .v { font-family:'Syne',sans-serif; font-weight:700; font-size:2.2rem; line-height:1; }
+  .stat .l { font-family:'JetBrains Mono',monospace; font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:#8A93A0; margin-bottom:6px; }
+</style>
+</head>
+<body>
+
+  <!-- lightness ladder: palest → most presence -->
+  <div class="sec" style="--warm:#FBFAF7">
+    <div class="fade"></div>
+    <span class="tag"><b>A</b> · #FBFAF7<span class="css">palest · barely off white · low sat</span></span>
+    <div class="card"><span class="ovl">Track Record</span><h2>Ten years. Every major bottom.</h2><p>Sample body copy on a white card, so you can judge how much the base reads against the card and behind the faded grid.</p><div class="stat"><span class="v">14</span><span class="l">signals · 2016–2026</span></div></div>
+  </div>
+
+  <div class="sec" style="--warm:#F8F6F2">
+    <div class="fade"></div>
+    <span class="tag"><b>B</b> · #F8F6F2<span class="css">very light warm · low sat</span></span>
+    <div class="card"><span class="ovl">Track Record</span><h2>Ten years. Every major bottom.</h2><p>Sample body copy on a white card, so you can judge how much the base reads against the card and behind the faded grid.</p><div class="stat"><span class="v">14</span><span class="l">signals · 2016–2026</span></div></div>
+  </div>
+
+  <div class="sec" style="--warm:#F6F4EE">
+    <div class="fade"></div>
+    <span class="tag"><b>C</b> · #F6F4EE<span class="css">light warm · a touch more sat</span></span>
+    <div class="card"><span class="ovl">Track Record</span><h2>Ten years. Every major bottom.</h2><p>Sample body copy on a white card, so you can judge how much the base reads against the card and behind the faded grid.</p><div class="stat"><span class="v">14</span><span class="l">signals · 2016–2026</span></div></div>
+  </div>
+
+  <div class="sec" style="--warm:#F4F1EA">
+    <div class="fade"></div>
+    <span class="tag"><b>D</b> · #F4F1EA<span class="css">warm · more presence</span></span>
+    <div class="card"><span class="ovl">Track Record</span><h2>Ten years. Every major bottom.</h2><p>Sample body copy on a white card, so you can judge how much the base reads against the card and behind the faded grid.</p><div class="stat"><span class="v">14</span><span class="l">signals · 2016–2026</span></div></div>
+  </div>
+
+  <div class="sec" style="--warm:#F2EFE7">
+    <div class="fade"></div>
+    <span class="tag"><b>E</b> · #F2EFE7<span class="css">warmest of the set</span></span>
+    <div class="card"><span class="ovl">Track Record</span><h2>Ten years. Every major bottom.</h2><p>Sample body copy on a white card, so you can judge how much the base reads against the card and behind the faded grid.</p><div class="stat"><span class="v">14</span><span class="l">signals · 2016–2026</span></div></div>
+  </div>
+
+  <!-- saturation A/B: same lightness as C, but greyer (less warm) -->
+  <div class="sec" style="--warm:#F6F4F0">
+    <div class="fade"></div>
+    <span class="tag"><b>F</b> · #F6F4F0<span class="css">SAME lightness as C, LESS saturated → compare warmth</span></span>
+    <div class="card"><span class="ovl">Track Record</span><h2>Ten years. Every major bottom.</h2><p>Sample body copy on a white card, so you can judge how much the base reads against the card and behind the faded grid.</p><div class="stat"><span class="v">14</span><span class="l">signals · 2016–2026</span></div></div>
+  </div>
+
+</body>
+</html>

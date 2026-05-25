@@ -1,0 +1,14 @@
+CREATE TABLE subscribers (
+  stripe_customer_id TEXT PRIMARY KEY,
+  subscription_id TEXT,
+  checkout_session_id TEXT,
+  invite_link TEXT,
+  telegram_user_id TEXT,
+  status TEXT,
+  created_at TEXT,
+  updated_at TEXT
+);
+
+CREATE INDEX idx_subscribers_checkout_session_id ON subscribers (checkout_session_id);
+CREATE INDEX idx_subscribers_telegram_user_id ON subscribers (telegram_user_id);
+CREATE INDEX idx_subscribers_subscription_id ON subscribers (subscription_id);

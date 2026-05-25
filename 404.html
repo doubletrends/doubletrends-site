@@ -3,26 +3,93 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404 Not Found — Double Trend Exhaustion™</title>
+  <title>404 Not Found — DoubleTrends™</title>
   <meta name="description" content="Page not found." />
+  <meta name="author" content="CDS Sole Prop" />
+  <meta name="application-name" content="DoubleTrends™" />
+  <meta name="robots" content="noindex,follow" />
+  <meta name="theme-color" content="#FBFAF7" />
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website" />
+  <meta property="og:site_name"   content="DoubleTrends™" />
   <meta property="og:url"         content="https://doubletrends.com/404.html" />
-  <meta property="og:title"       content="404 Not Found — Double Trend Exhaustion™" />
+  <meta property="og:title"       content="404 Not Found — DoubleTrends™" />
   <meta property="og:description" content="Page not found." />
-  <meta property="og:image"       content="https://doubletrends.com/public/og-image.png" />
+  <meta property="og:image"       content="https://doubletrends.com/public/decor/hero.png" />
+  <meta property="og:locale"      content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content="404 Not Found — Double Trend Exhaustion™" />
+  <meta name="twitter:title"       content="404 Not Found — DoubleTrends™" />
   <meta name="twitter:description" content="Page not found." />
+  <meta name="twitter:image"       content="https://doubletrends.com/public/decor/hero.png" />
 
   <!-- Canonical -->
   <link rel="canonical" href="https://doubletrends.com/404.html" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="public/cds logo black-200h.png" />
+  <link rel="icon" type="image/png" href="public/brand/cds-logo.png" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://doubletrends.com/#organization",
+      "name": "CDS Sole Prop",
+      "url": "https://doubletrends.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://doubletrends.com/public/brand/cds-logo.png"
+      },
+      "brand": {
+        "@type": "Brand",
+        "name": "DoubleTrends™"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://doubletrends.com/#website",
+      "url": "https://doubletrends.com",
+      "name": "DoubleTrends™",
+      "publisher": {
+        "@id": "https://doubletrends.com/#organization"
+      },
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://doubletrends.com/404.html#webpage",
+      "url": "https://doubletrends.com/404.html",
+      "name": "404 Not Found — DoubleTrends™",
+      "description": "Page not found.",
+      "isPartOf": {
+        "@id": "https://doubletrends.com/#website"
+      },
+      "about": {
+        "@id": "https://doubletrends.com/#organization"
+      },
+      "inLanguage": "en-US",
+      "dateModified": "2026-05-25"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://doubletrends.com/404.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://doubletrends.com"
+        }
+      ]
+    }
+  ]
+}
+  </script>
 
   <!-- Fonts: Syne (display) + DM Sans (body) + JetBrains Mono (data) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,14 +104,14 @@
       theme: {
         extend: {
           colors: {
-            primary:     '#E05A00',
-            'primary-h': '#FF6A10',
-            dark:        '#080809',
-            light:       '#F5F3EF',
-            muted:       '#A8BCCC',
-            'muted-dim': '#7A8CA0',
-            bright:      '#C8DCFF',
-            'gray-d':    '#D0D0D0',
+            primary:     '#C2410C',
+            'primary-h': '#9A330A',
+            dark:        '#1E2530',
+            light:       '#FBFAF7',
+            muted:       '#5A6473',
+            'muted-dim': '#8A93A0',
+            bright:      '#2A3340',
+            'gray-d':    '#5A6473',
           },
           fontFamily: {
             /* Remapped — existing class names preserved for all other pages */
@@ -63,22 +130,54 @@
     };
   </script>
 
+  <!-- Component classes — expand to the exact utilities they replace (DRY, zero visual change) -->
+  <style type="text/tailwindcss">
+    @layer components {
+      /* Article scaffolding (Academy pages) */
+      .lead       { @apply font-open text-lg md:text-xl leading-relaxed text-bright; }
+      .prose-p    { @apply font-open text-base leading-relaxed text-dark; }
+      .article-h2 { @apply text-dark font-noto font-bold text-2xl md:text-3xl leading-tight mb-5; }
+      .fine-print { @apply font-open text-xs leading-relaxed text-muted-dim; }
+      /* Footer navigation links */
+      .foot-link       { @apply text-muted text-xs transition-colors; }
+      .foot-link:hover { @apply text-dark; }
+    }
+  </style>
+
   <style>
     html { scroll-behavior: smooth; }
     * { box-sizing: border-box; }
-    body { font-family: 'DM Sans', sans-serif; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: #FBFAF7;
+    }
+    /* Site texture: a fine grid with a crosshair node at each intersection, held in a
+       fixed viewport overlay that fades top→down (strong at the top of the screen, gone
+       by ~70%). Tunables: tile = background-size; grid faintness = first path stroke alpha
+       (0.05); crosshair strength = second path stroke alpha (0.20); fade reach = mask stop. */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 0V24M0 12H24' stroke='rgba(30,37,48,0.05)' stroke-width='1'/%3E%3Cpath d='M12 8V16M8 12H16' stroke='rgba(30,37,48,0.20)' stroke-width='1.2'/%3E%3C/svg%3E");
+      background-size: 24px 24px;
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+              mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+    }
     a { color: inherit; text-decoration: none; }
     img { display: block; }
 
     /* ── Text gradients ─────────────────────────────────────────── */
     .text-grad-hero {
-      background-image: linear-gradient(160deg, #ffffff 10%, #909090 100%);
+      background-image: linear-gradient(160deg, #1E2530 10%, #5A6473 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .text-grad-section {
-      background-image: linear-gradient(140deg, #ffffff 0%, #5a5a5a 100%);
+      background-image: linear-gradient(140deg, #1E2530 0%, #6A7280 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -89,8 +188,8 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      color: #080809;
-      background: #F5F3EF;
+      color: #ffffff;
+      background: #C2410C;
       font-family: 'DM Sans', sans-serif;
       font-size: 0.68rem;
       font-weight: 600;
@@ -101,13 +200,13 @@
       cursor: pointer;
       transition: background 0.15s ease, transform 0.1s ease;
     }
-    .btn-light:hover { background: #ffffff; transform: translateY(-1px); }
+    .btn-light:hover { background: #9A330A; transform: translateY(-1px); }
 
     .btn-dark {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      color: #C8C8C8;
+      color: #1E2530;
       background: transparent;
       font-family: 'DM Sans', sans-serif;
       font-size: 0.68rem;
@@ -115,20 +214,18 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 0.8rem 1.75rem;
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(0,0,0,0.22);
       cursor: pointer;
       transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
     }
     .btn-dark:hover {
-      border-color: rgba(255,255,255,0.45);
-      color: #ffffff;
+      border-color: rgba(0,0,0,0.5);
+      color: #000000;
       transform: translateY(-1px);
     }
 
     /* ── Accordion ──────────────────────────────────────────────── */
     details[open] summary .acc-icon { transform: rotate(180deg); }
-    .acc-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; }
-    details[open] + .acc-content { max-height: 1000vh; }
 
     /* ── Footer wave overlay ────────────────────────────────────── */
     .footer-wave {
@@ -145,10 +242,10 @@
     .code-block {
       font-family: 'JetBrains Mono', 'Courier New', monospace;
       font-size: 0.75rem;
-      background: #0C0C0F;
-      color: #7BBFEF;
+      background: #F0EEE9;
+      color: #1E2530;
       padding: 1.25rem;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(0,0,0,0.08);
       overflow-x: auto;
       white-space: pre-wrap;
     }
@@ -159,96 +256,212 @@
       font-size: 0.62rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #7A8CA0;
+      color: #8A93A0;
     }
     .data-value {
       font-family: 'Syne', sans-serif;
       font-weight: 700;
       font-size: 2.25rem;
-      color: #F5F3EF;
+      color: #1E2530;
       line-height: 1;
     }
 
     /* ── Structural utilities ───────────────────────────────────── */
-    .hairline   { border-top:  1px solid rgba(255,255,255,0.06); }
-    .hairline-v { border-left: 1px solid rgba(255,255,255,0.06); }
-    .card-border { border: 1px solid rgba(255,255,255,0.07); }
-
-    /* ── Dot-grid background ────────────────────────────────────── */
-    .dot-grid {
-      background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
-      background-size: 28px 28px;
+    .hairline   { border-top:  1px solid rgba(0,0,0,0.08); }
+    .hairline-v { border-left: 1px solid rgba(0,0,0,0.08); }
+    .card-border {
+      background: #FFFFFF;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 10px 28px rgba(30,37,48,0.045);
+    }
+    .terminal-shell {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,247,244,0.98)),
+        #FFFFFF;
+      border: 1px solid rgba(30,37,48,0.14);
+      box-shadow:
+        0 24px 70px rgba(30,37,48,0.10),
+        0 1px 0 rgba(255,255,255,0.9) inset;
+    }
+    .terminal-bar {
+      background: #1E2530;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: #FFFFFF;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.42rem 0.7rem;
+      border: 1px solid rgba(30,37,48,0.10);
+      background: rgba(255,255,255,0.72);
+      color: #1E2530;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .status-dot {
+      width: 0.42rem;
+      height: 0.42rem;
+      background: #C2410C;
+      box-shadow: 0 0 0 3px rgba(194,65,12,0.14);
+      display: inline-block;
+    }
+    .metric-tile {
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(30,37,48,0.10);
+      box-shadow: 0 10px 30px rgba(30,37,48,0.05);
+    }
+    .product-panel {
+      background:
+        linear-gradient(180deg, #FFFFFF 0%, #F7F5F0 100%);
+      border: 1px solid rgba(30,37,48,0.10);
+      box-shadow: 0 18px 46px rgba(30,37,48,0.07);
+    }
+    .step-marker {
+      width: 2.15rem;
+      height: 2.15rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #1E2530;
+      color: #FFFFFF;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem;
+      font-weight: 600;
+    }
+    .page-hero {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(247,245,240,0.96)),
+        #FFFFFF;
+      border: 1px solid rgba(30,37,48,0.10);
+      box-shadow: 0 22px 60px rgba(30,37,48,0.08);
+    }
+    .article-shell {
+      max-width: 1040px;
+    }
+    .article-hero {
+      background:
+        linear-gradient(135deg, #FFFFFF 0%, #F6F3ED 58%, #EFEAE1 100%);
+      border: 1px solid rgba(30,37,48,0.12);
+      border-top: 3px solid #C2410C;
+      box-shadow: 0 24px 70px rgba(30,37,48,0.09);
+    }
+    .media-frame {
+      background: #FFFFFF;
+      border: 1px solid rgba(30,37,48,0.12);
+      box-shadow: 0 18px 46px rgba(30,37,48,0.08);
+    }
+    .cta-panel {
+      background:
+        linear-gradient(135deg, #1E2530 0%, #2A3340 100%);
+      color: #FFFFFF;
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 24px 70px rgba(30,37,48,0.18);
+    }
+    .cta-panel .prose-p,
+    .cta-panel p {
+      color: rgba(255,255,255,0.76);
+    }
+    .cta-panel h3 {
+      color: #FFFFFF;
+    }
+    .table-shell {
+      background: #FFFFFF;
+      border: 1px solid rgba(30,37,48,0.12);
+      box-shadow: 0 18px 46px rgba(30,37,48,0.07);
+      overflow-x: auto;
+    }
+    .directory-card {
+      background:
+        linear-gradient(180deg, #FFFFFF 0%, #F8F6F1 100%);
+      border: 1px solid rgba(30,37,48,0.10);
+      box-shadow: 0 18px 46px rgba(30,37,48,0.07);
+      transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+    }
+    .directory-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(194,65,12,0.28);
+      box-shadow: 0 24px 60px rgba(30,37,48,0.10);
+    }
+    .service-image {
+      min-height: 280px;
+      background: #EEF0F2;
     }
 
     /* ── Overline / category tag ─────────────────────────────────── */
     .tag-overline {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.6rem;
+      font-size: 1.2rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: #E87030;
+      color: #C2410C;
     }
   </style>
 </head>
 
-<body class="bg-[#080809] text-[#A8BCCC] font-['DM_Sans'] leading-relaxed antialiased">
+<body class="bg-light text-dark font-['DM_Sans'] leading-relaxed antialiased">
 <header class="fixed top-0 left-0 right-0 z-30"
-        style="background: rgba(8,8,9,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
-  <nav class="w-full max-w-site mx-auto flex items-center justify-between px-6 h-16">
+        style="background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.08);">
+  <nav class="w-full max-w-site mx-auto flex items-center justify-between gap-4 px-6 h-16">
 
-    <!-- Logo + brand -->
     <div class="flex items-center gap-3 shrink-0">
-      <img src="public/cds logo black-200h.png" alt="CDS Logo"
-           class="w-7 h-7" style="filter: invert() opacity(0.85)" />
+      <img src="public/brand/cds-logo.png" alt="CDS Logo"
+           class="w-7 h-7" style="opacity: 0.85" />
       <a href="index.html"
-         class="text-white font-noto font-semibold text-sm tracking-tight hidden md:block">
-        Double Trend Exhaustion™
+         class="text-[#1E2530] font-noto font-semibold text-sm tracking-tight hidden md:block">
+        DoubleTrends™
       </a>
     </div>
 
-    <!-- Desktop text nav -->
-    <div class="hidden md:flex items-center gap-1">
-      <a href="index.html"           class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Home</a>
-      <a href="indicator-list.html"  class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Indicators</a>
-      <a href="setup-guide.html"     class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Setup</a>
-      <a href="services.html"        class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Services</a>
-      <a href="contact.html"         class="text-[#5A6878] hover:text-white font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Contact</a>
+    <div class="hidden lg:flex items-center gap-1">
+      <a href="index.html#track-record" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Track Record</a>
+      <a href="index.html#how-it-works" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">How It Works</a>
+      <a href="index.html#pricing"      class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">Pricing</a>
+      <a href="index.html#faq"          class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.65rem] tracking-[0.12em] uppercase transition-colors px-4 py-2">FAQ</a>
+      <a href="academy/index.html" class="btn-dark ml-2 !px-4 !py-2 text-[0.65rem]">Academy</a>
+      <a href="https://buy.stripe.com/PLACEHOLDER_SUBSCRIPTION" class="btn-light ml-2 !px-4 !py-2 text-[0.65rem]">Subscribe</a>
     </div>
 
-    <!-- Mobile icon nav -->
-    <div class="flex md:hidden items-center gap-1">
-      <a href="index.html"><img src="public/nav-icons/home.svg"               alt="Home"           class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
-      <a href="indicator-list.html"><img src="public/nav-icons/list.svg"       alt="Indicator List" class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
-      <a href="setup-guide.html"><img src="public/nav-icons/help-circle.svg"  alt="Setup Guide"    class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
-      <a href="services.html"><img src="public/nav-icons/user.svg"             alt="Services"       class="w-5 h-5 mx-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
-      <a href="contact.html"><img src="public/nav-icons/message-circle.svg"   alt="Contact"        class="w-5 h-5 ml-2 opacity-50 hover:opacity-100 transition-opacity" style="filter:invert()" /></a>
+    <div class="flex lg:hidden items-center gap-1 overflow-x-auto">
+      <a href="index.html#track-record" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Track</a>
+      <a href="index.html#how-it-works" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Works</a>
+      <a href="index.html#pricing" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Price</a>
+      <a href="index.html#faq" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">FAQ</a>
+      <a href="academy/index.html" class="btn-dark !px-3 !py-2 text-[0.6rem]">Academy</a>
+      <a href="https://buy.stripe.com/PLACEHOLDER_SUBSCRIPTION" class="btn-light !px-3 !py-2 text-[0.6rem]">Subscribe</a>
     </div>
   </nav>
 </header>
 
 <main>
 <!-- 404 -->
-<section class="w-full min-h-screen flex flex-col items-center justify-center px-6 text-center bg-dark">
-  <h1 class="text-[6rem] font-noto font-bold text-grad-hero leading-none mb-4">404</h1>
-  <p class="text-muted text-xl mb-8">The page you're looking for doesn't exist.</p>
-  <a href="index.html"><button class="btn-light">Go Home</button></a>
-</section>
+<section class="w-full min-h-screen flex flex-col items-center justify-center px-6 text-center" style="background: #FBFAF7;">
+<div class="terminal-shell p-10 md:p-14 max-w-xl w-full">
+<span class="data-label">Route not found</span>
+<h1 class="text-[6rem] font-noto font-bold text-grad-section leading-none my-4">404</h1>
+<p class="text-muted text-xl mb-8">The page you're looking for doesn't exist.</p>
+<a href="index.html"><button class="btn-light">Go Home</button></a>
+</div>
+</section> 
 
 </main>
-<footer class="relative w-full" style="background: #080809; border-top: 1px solid rgba(255,255,255,0.06);">
+<footer class="relative w-full" style="background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.08);">
   <div class="relative z-10 w-full max-w-site mx-auto px-8 py-12">
 
     <!-- Main row -->
-    <div class="flex flex-wrap justify-between gap-12 pb-10" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+    <div class="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12 pb-10" style="border-bottom: 1px solid rgba(0,0,0,0.08);">
 
       <!-- Left: brand + disclaimer -->
       <div class="flex flex-col max-w-sm">
         <div class="flex items-center gap-3 mb-5">
-          <img src="public/cds logo black-200h.png" alt="CDS Logo"
-               class="w-6 h-6" style="filter: invert() opacity(0.55)" />
-          <span class="font-noto text-sm text-white font-semibold tracking-tight">Double Trend Exhaustion™</span>
+          <img src="public/brand/cds-logo.png" alt="CDS Logo"
+               class="w-6 h-6" style="opacity: 0.55" />
+          <span class="font-noto text-sm text-dark font-semibold tracking-tight">DoubleTrends™</span>
         </div>
-        <p class="text-[0.65rem] leading-relaxed" style="color: #8A9CAC;">
+        <p class="text-[0.65rem] leading-relaxed text-muted">
           The information, tools, and indicators provided are for educational and informational
           purposes only and should not be considered financial, investment, or trading advice.
           We are not a registered financial advisor, broker, or dealer. Trading involves
@@ -256,25 +469,39 @@
           Under no circumstances shall we be held liable for any direct, indirect, incidental,
           or consequential damages arising from the use of our tools or services.
         </p>
+        <p class="text-[0.65rem] leading-relaxed mt-4 text-muted-dim">
+          DoubleTrends™ signals are provided for educational and informational purposes only and do not constitute financial, investment, or trading advice. Past performance does not guarantee future results.
+        </p>
       </div>
 
-      <!-- Right: nav columns -->
-      <div class="flex gap-12 ml-auto shrink-0">
-        <div class="flex flex-col gap-3">
-          <span class="tag-overline mb-2">Navigation</span>
-          <a href="index.html"           class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Home</a>
-          <a href="indicator-list.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Indicator List</a>
-          <a href="setup-guide.html"     class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Setup Guide</a>
-          <a href="services.html"        class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Services</a>
-          <a href="contact.html"         class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Contact</a>
-        </div>
-        <div class="flex flex-col gap-3">
-          <span class="tag-overline mb-2">Indicators</span>
-          <a href="indicators/indicator-dte.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Double Trend</a>
-          <a href="indicators/indicator-dtep.html" class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Double Trend Premium</a>
-          <a href="indicators/indicator-vwap.html" class="text-[#8A9CAC] text-xs hover:text-white transition-colors">VWAP</a>
-          <a href="indicators/indicator-svp.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Volume Profile</a>
-          <a href="indicators/indicator-mdd.html"  class="text-[#8A9CAC] text-xs hover:text-white transition-colors">Max Drawdown</a>
+      <!-- Right: sitemap columns -->
+      <div class="flex justify-start lg:justify-end">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 md:gap-12 w-max">
+          <div class="flex flex-col gap-3 w-40">
+            <span class="tag-overline mb-2">Product</span>
+            <a href="index.html" class="foot-link">Home</a>
+            <a href="index.html#track-record" class="foot-link">Track Record</a>
+            <a href="index.html#how-it-works" class="foot-link">How It Works</a>
+            <a href="index.html#pricing" class="foot-link">Pricing</a>
+            <a href="index.html#faq" class="foot-link">FAQ</a>
+            <a href="https://buy.stripe.com/PLACEHOLDER_SUBSCRIPTION" class="foot-link">Subscribe</a>
+          </div>
+          <div class="flex flex-col gap-3 w-40">
+            <span class="tag-overline mb-2">Academy</span>
+            <a href="academy/index.html" class="foot-link">Academy home</a>
+            <a href="academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 drawdowns</a>
+            <a href="academy/why-buying-the-dip-is-hard.html" class="foot-link">Why dip-buying is hard</a>
+            <a href="academy/every-sp-500-bottom-since-2016.html" class="foot-link">Market bottoms since 2016</a>
+            <a href="academy/double-trend-exhaustion.html" class="foot-link">DoubleTrends™</a>
+            <a href="academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
+            <a href="academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
+          </div>
+          <div class="flex flex-col gap-3 w-40">
+            <span class="tag-overline mb-2">Company</span>
+            <a href="company/services.html" class="foot-link">Services</a>
+            <a href="company/careers.html" class="foot-link">Careers</a>
+            <a href="company/contact.html" class="foot-link">Contact</a>
+          </div>
         </div>
       </div>
     </div>
@@ -286,7 +513,7 @@
   </div>
 
   <!-- Decorative wave — very subtle -->
-  <img src="public/waves-white.svg" alt="" class="footer-wave" aria-hidden="true" />
+  <img src="public/decor/waves.svg" alt="" class="footer-wave" aria-hidden="true" />
 </footer>
 
 </body>
