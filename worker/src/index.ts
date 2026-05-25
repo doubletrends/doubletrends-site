@@ -1,6 +1,16 @@
+import {
+  buildDeepLink,
+  decideClaim,
+  decideReissue,
+  generateToken,
+  parseCommand,
+  type SubscriberRow,
+} from "./access";
+
 interface Env {
   DB: D1Database;
   TELEGRAM_BOT_TOKEN: string;
+  TELEGRAM_BOT_USERNAME: string;
   TELEGRAM_CHANNEL_ID: string;
   STRIPE_SECRET_KEY: string;
   STRIPE_WEBHOOK_SECRET: string;
@@ -21,12 +31,6 @@ interface StripeObject {
   subscription?: string;
 }
 
-interface Subscriber {
-  stripe_customer_id: string;
-  subscription_id: string | null;
-  telegram_user_id: string | null;
-}
-
 interface TelegramInviteLinkResponse {
   ok: boolean;
   result?: {
@@ -36,25 +40,23 @@ interface TelegramInviteLinkResponse {
 }
 
 interface TelegramUpdate {
+  message?: {
+    text?: string;
+    chat?: { id?: number; type?: string };
+    from?: { id?: number };
+  };
   chat_member?: {
-    invite_link?: {
-      invite_link?: string;
-    };
-    new_chat_member?: {
-      user?: {
-        id?: number;
-      };
-    };
+    invite_link?: { invite_link?: string };
+    new_chat_member?: { user?: { id?: number } };
   };
   chat_join_request?: {
-    invite_link?: {
-      invite_link?: string;
-    };
-    from?: {
-      id?: number;
-    };
+    invite_link?: { invite_link?: string };
+    from?: { id?: number };
   };
 }
+
+// Single-use invite links expire quickly so a leaked link can't be reused.
+const INVITE_TTL_SECONDS = 600;
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -75,6 +77,8 @@ export default {
     return json({ error: "not found" }, 404);
   },
 };
+
+// ─── Stripe ───────────────────────────────────────────────────────────────────
 
 async function handleStripeWebhook(request: Request, env: Env): Promise<Response> {
   const rawBody = await request.text();
@@ -111,40 +115,32 @@ async function handleCheckoutCompleted(object: StripeObject, env: Env): Promise<
     return;
   }
 
-  const invite = await telegramApi<TelegramInviteLinkResponse>(
-    "createChatInviteLink",
-    {
-      chat_id: env.TELEGRAM_CHANNEL_ID,
-      member_limit: 1,
-    },
-    env,
-  );
-
-  const inviteLink = invite.result?.invite_link;
-  if (!invite.ok || !inviteLink) {
-    throw new Error(invite.description ?? "Telegram invite link creation failed");
-  }
-
+  // No Telegram call here — we just mint an activation token. The actual invite
+  // link is created on demand when the user taps the deep link and DMs the bot,
+  // so a closed tab or an unused link never locks a paying customer out.
+  const token = generateToken();
   const now = new Date().toISOString();
+
   await env.DB.prepare(
     `INSERT INTO subscribers (
       stripe_customer_id,
       subscription_id,
       checkout_session_id,
+      claim_token,
       invite_link,
       telegram_user_id,
       status,
       created_at,
       updated_at
-    ) VALUES (?, ?, ?, ?, NULL, 'active', ?, ?)
+    ) VALUES (?, ?, ?, ?, NULL, NULL, 'active', ?, ?)
     ON CONFLICT(stripe_customer_id) DO UPDATE SET
       subscription_id = excluded.subscription_id,
       checkout_session_id = excluded.checkout_session_id,
-      invite_link = excluded.invite_link,
+      claim_token = excluded.claim_token,
       status = 'active',
       updated_at = excluded.updated_at`,
   )
-    .bind(customerId, subscriptionId ?? null, checkoutSessionId, inviteLink, now, now)
+    .bind(customerId, subscriptionId ?? null, checkoutSessionId, token, now, now)
     .run();
 }
 
@@ -160,9 +156,7 @@ async function handleSubscriptionInactive(
 
   if (row) {
     await env.DB.prepare(
-      `UPDATE subscribers
-      SET status = ?, updated_at = ?
-      WHERE stripe_customer_id = ?`,
+      `UPDATE subscribers SET status = ?, updated_at = ? WHERE stripe_customer_id = ?`,
     )
       .bind(status, now, row.stripe_customer_id)
       .run();
@@ -172,8 +166,7 @@ async function handleSubscriptionInactive(
     }
   } else if (customerId || subscriptionId) {
     await env.DB.prepare(
-      `UPDATE subscribers
-      SET status = ?, updated_at = ?
+      `UPDATE subscribers SET status = ?, updated_at = ?
       WHERE stripe_customer_id = ? OR subscription_id = ?`,
     )
       .bind(status, now, customerId ?? "", subscriptionId ?? "")
@@ -185,20 +178,21 @@ async function findSubscriber(
   customerId: string | undefined,
   subscriptionId: string | undefined,
   env: Env,
-): Promise<Subscriber | null> {
+): Promise<SubscriberRow | null> {
   if (!customerId && !subscriptionId) {
     return null;
   }
-
   return env.DB.prepare(
-    `SELECT stripe_customer_id, subscription_id, telegram_user_id
+    `SELECT stripe_customer_id, subscription_id, claim_token, invite_link, telegram_user_id, status
     FROM subscribers
     WHERE stripe_customer_id = ? OR subscription_id = ?
     LIMIT 1`,
   )
     .bind(customerId ?? "", subscriptionId ?? "")
-    .first<Subscriber>();
+    .first<SubscriberRow>();
 }
+
+// ─── Success page lookup ────────────────────────────────────────────────────────
 
 async function handleAccess(url: URL, env: Env): Promise<Response> {
   const sessionId = url.searchParams.get("session_id");
@@ -207,17 +201,21 @@ async function handleAccess(url: URL, env: Env): Promise<Response> {
   }
 
   const row = await env.DB.prepare(
-    "SELECT invite_link FROM subscribers WHERE checkout_session_id = ? LIMIT 1",
+    "SELECT claim_token FROM subscribers WHERE checkout_session_id = ? LIMIT 1",
   )
     .bind(sessionId)
-    .first<{ invite_link: string | null }>();
+    .first<{ claim_token: string | null }>();
 
-  if (!row?.invite_link) {
+  // 404 (not 200-with-null) so the success page keeps polling until the Stripe
+  // webhook has written the row.
+  if (!row?.claim_token) {
     return json({ error: "not found" }, 404);
   }
 
-  return json({ invite_link: row.invite_link });
+  return json({ deep_link: buildDeepLink(env.TELEGRAM_BOT_USERNAME, row.claim_token) });
 }
+
+// ─── Telegram ─────────────────────────────────────────────────────────────────
 
 async function handleTelegramWebhook(request: Request, env: Env): Promise<Response> {
   // Telegram echoes the secret_token set at setWebhook time; reject forgeries.
@@ -226,37 +224,178 @@ async function handleTelegramWebhook(request: Request, env: Env): Promise<Respon
   }
 
   const update = (await request.json()) as TelegramUpdate;
+
+  // A private message to the bot — handle /start <token>, /start, /link.
+  if (update.message?.chat?.type === "private" && update.message.from?.id !== undefined) {
+    await handleBotMessage(
+      update.message.text,
+      String(update.message.from.id),
+      update.message.chat.id ?? update.message.from.id,
+      env,
+    );
+    return json({ ok: true });
+  }
+
+  // Safety net: if someone joins via an issued link, confirm their user id.
   const inviteLink =
     update.chat_member?.invite_link?.invite_link ??
     update.chat_join_request?.invite_link?.invite_link;
-  const userId =
+  const joinUserId =
     update.chat_member?.new_chat_member?.user?.id ??
     update.chat_join_request?.from?.id;
 
-  if (inviteLink && userId !== undefined) {
+  if (inviteLink && joinUserId !== undefined) {
     await env.DB.prepare(
-      `UPDATE subscribers
-      SET telegram_user_id = ?, updated_at = ?
-      WHERE invite_link = ?`,
+      `UPDATE subscribers SET telegram_user_id = ?, updated_at = ? WHERE invite_link = ?`,
     )
-      .bind(String(userId), new Date().toISOString(), inviteLink)
+      .bind(String(joinUserId), new Date().toISOString(), inviteLink)
       .run();
   }
 
   return json({ ok: true });
 }
 
-async function removeTelegramMember(userId: string, env: Env): Promise<void> {
-  await telegramApi("banChatMember", {
-    chat_id: env.TELEGRAM_CHANNEL_ID,
-    user_id: userId,
-  }, env);
+async function handleBotMessage(
+  text: string | undefined,
+  fromUserId: string,
+  chatId: number,
+  env: Env,
+): Promise<void> {
+  const { command, arg } = parseCommand(text);
 
-  await telegramApi("unbanChatMember", {
-    chat_id: env.TELEGRAM_CHANNEL_ID,
-    user_id: userId,
-    only_if_banned: true,
-  }, env);
+  if (command === "/start" && arg) {
+    await handleClaim(arg, fromUserId, chatId, env);
+    return;
+  }
+
+  if (command === "/start" || command === "/link") {
+    await handleReissue(fromUserId, chatId, env);
+    return;
+  }
+
+  await sendMessage(
+    chatId,
+    "Send /link to get a fresh invite to the DoubleTrends™ channel. " +
+      "If you haven't subscribed yet, visit doubletrends.com.",
+    env,
+  );
+}
+
+async function handleClaim(
+  token: string,
+  fromUserId: string,
+  chatId: number,
+  env: Env,
+): Promise<void> {
+  const row = await env.DB.prepare(
+    `SELECT stripe_customer_id, subscription_id, claim_token, invite_link, telegram_user_id, status
+    FROM subscribers WHERE claim_token = ? LIMIT 1`,
+  )
+    .bind(token)
+    .first<SubscriberRow>();
+
+  const decision = decideClaim(row, fromUserId);
+
+  switch (decision.kind) {
+    case "not_found":
+      await sendMessage(chatId, "That activation link isn't valid. Please use the link shown after checkout, or contact info@doubletrends.com.", env);
+      return;
+    case "wrong_user":
+      await sendMessage(chatId, "This activation link has already been used by another Telegram account. Contact info@doubletrends.com if you need help.", env);
+      return;
+    case "inactive":
+      await sendMessage(chatId, "Your subscription isn't active. If you believe this is a mistake, contact info@doubletrends.com.", env);
+      return;
+    case "grant": {
+      if (decision.needsBind && row) {
+        await env.DB.prepare(
+          `UPDATE subscribers SET telegram_user_id = ?, updated_at = ? WHERE claim_token = ?`,
+        )
+          .bind(fromUserId, new Date().toISOString(), token)
+          .run();
+      }
+      await issueInvite(chatId, env, true);
+      return;
+    }
+  }
+}
+
+async function handleReissue(fromUserId: string, chatId: number, env: Env): Promise<void> {
+  const row = await env.DB.prepare(
+    `SELECT stripe_customer_id, subscription_id, claim_token, invite_link, telegram_user_id, status
+    FROM subscribers WHERE telegram_user_id = ? LIMIT 1`,
+  )
+    .bind(fromUserId)
+    .first<SubscriberRow>();
+
+  const decision = decideReissue(row);
+
+  switch (decision.kind) {
+    case "not_subscribed":
+      await sendMessage(chatId, "We couldn't find a subscription for your account. Subscribe at doubletrends.com, then tap the activation link shown after checkout.", env);
+      return;
+    case "inactive":
+      await sendMessage(chatId, "Your subscription isn't active right now, so a new invite can't be issued. Contact info@doubletrends.com for help.", env);
+      return;
+    case "grant":
+      await issueInvite(chatId, env, false, fromUserId);
+      return;
+  }
+}
+
+// Create a fresh single-use, short-lived invite link and DM it to the user.
+async function issueInvite(
+  chatId: number,
+  env: Env,
+  bindByChat: boolean,
+  knownUserId?: string,
+): Promise<void> {
+  const invite = await telegramApi<TelegramInviteLinkResponse>(
+    "createChatInviteLink",
+    {
+      chat_id: env.TELEGRAM_CHANNEL_ID,
+      member_limit: 1,
+      expire_date: Math.floor(Date.now() / 1000) + INVITE_TTL_SECONDS,
+    },
+    env,
+  );
+
+  const inviteLink = invite.result?.invite_link;
+  if (!invite.ok || !inviteLink) {
+    await sendMessage(chatId, "Something went wrong creating your invite. Please try /link again in a minute, or contact info@doubletrends.com.", env);
+    return;
+  }
+
+  // Record the latest issued link so the chat_member webhook can confirm the join.
+  const userId = knownUserId ?? (bindByChat ? String(chatId) : null);
+  if (userId) {
+    await env.DB.prepare(
+      `UPDATE subscribers SET invite_link = ?, updated_at = ? WHERE telegram_user_id = ?`,
+    )
+      .bind(inviteLink, new Date().toISOString(), userId)
+      .run();
+  }
+
+  await sendMessage(
+    chatId,
+    `✅ You're all set. Tap to join the DoubleTrends™ channel (link valid for ${Math.round(
+      INVITE_TTL_SECONDS / 60,
+    )} minutes):\n\n${inviteLink}\n\nNeed a new link later? Just send /link.`,
+    env,
+  );
+}
+
+async function removeTelegramMember(userId: string, env: Env): Promise<void> {
+  await telegramApi("banChatMember", { chat_id: env.TELEGRAM_CHANNEL_ID, user_id: userId }, env);
+  await telegramApi(
+    "unbanChatMember",
+    { chat_id: env.TELEGRAM_CHANNEL_ID, user_id: userId, only_if_banned: true },
+    env,
+  );
+}
+
+async function sendMessage(chatId: number, text: string, env: Env): Promise<void> {
+  await telegramApi("sendMessage", { chat_id: chatId, text }, env);
 }
 
 async function telegramApi<T = unknown>(
@@ -264,16 +403,11 @@ async function telegramApi<T = unknown>(
   params: Record<string, unknown>,
   env: Env,
 ): Promise<T> {
-  const response = await fetch(
-    `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`,
-    {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(params),
-    },
-  );
+  const response = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(params),
+  });
 
   if (!response.ok) {
     throw new Error(`Telegram API ${method} failed with ${response.status}`);
@@ -281,6 +415,8 @@ async function telegramApi<T = unknown>(
 
   return response.json() as Promise<T>;
 }
+
+// ─── Stripe signature verification ──────────────────────────────────────────────
 
 async function verifyStripeSignature(
   rawBody: string,
@@ -362,8 +498,6 @@ function hex(bytes: Uint8Array): string {
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: {
-      "content-type": "application/json",
-    },
+    headers: { "content-type": "application/json" },
   });
 }

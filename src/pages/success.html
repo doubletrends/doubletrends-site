@@ -1,0 +1,112 @@
+<!-- ══════════════════════════════════════════════════════ CHECKOUT SUCCESS ═══════════════════════════════════════════════════════ -->
+<section class="w-full max-w-[1320px] mx-auto px-6 md:px-12 pt-32 pb-16 flex flex-col items-center">
+<div class="page-hero w-full flex flex-col items-center p-8 md:p-12 mb-12 max-w-3xl text-center">
+<span class="tag-overline mb-3">Payment received</span>
+<h1 class="text-[2.75em] font-noto font-bold text-center text-grad-section leading-tight"> You're subscribed </h1>
+<p class="text-[#5A6473] text-2xl font-noto text-center mt-2 leading-snug"> Thank you for subscribing to DoubleTrends™. We're generating your private, one-time invite link to the Telegram signal channel. </p>
+</div>
+
+<div class="w-full max-w-3xl flex flex-col gap-6">
+<div class="product-panel p-8 md:p-10 flex flex-col items-center text-center">
+
+<!-- State: verifying (default) -->
+<div id="state-loading" class="flex flex-col items-center">
+<span class="status-pill"><span class="status-dot"></span>Preparing your access</span>
+<p class="text-muted text-sm leading-relaxed mt-6 max-w-xl"> This usually takes a few seconds while we confirm your payment. Please keep this tab open — your invite link will appear here automatically. </p>
+</div>
+
+<!-- State: ready (activation deep link available) -->
+<div id="state-ready" class="hidden flex-col items-center">
+<span class="tag-overline text-center block">Activate your access</span>
+<p class="text-muted text-sm leading-relaxed mt-4 max-w-xl"> Tap below to open our Telegram bot. It will confirm your subscription and send you a private link to join the signal channel. </p>
+<a id="invite-link" href="#" target="_blank" rel="noopener" class="mt-8 block">
+<button class="btn-light">Activate in Telegram</button>
+</a>
+<p class="fine-print mt-6 max-w-xl"> Lost your link or switched devices later? Open the bot anytime and send <span class="font-mono">/link</span> — as long as your subscription is active, it will send you a fresh invite. </p>
+</div>
+
+<!-- State: pending too long / error -->
+<div id="state-pending" class="hidden flex-col items-center">
+<span class="status-pill"><span class="status-dot"></span>Still setting up</span>
+<p class="text-muted text-sm leading-relaxed mt-6 max-w-xl"> Your payment went through, but your invite link is taking longer than usual to generate. It can take a minute or two. You can keep waiting, or retry below. </p>
+<button id="retry-btn" class="btn-dark mt-8">Check again</button>
+<p class="fine-print mt-6 max-w-xl"> If it still doesn't appear, email <a class="underline" href="mailto:info@doubletrends.com?subject=DoubleTrends%E2%84%A2%20access">info@doubletrends.com</a> with the email you used at checkout and we'll send your invite link manually. </p>
+</div>
+
+<!-- State: no session id in URL -->
+<div id="state-nosession" class="hidden flex-col items-center">
+<span class="tag-overline text-center block">Nothing to verify</span>
+<p class="text-muted text-sm leading-relaxed mt-4 max-w-xl"> We couldn't find a checkout reference in this link. If you've just paid, return to the page Stripe redirected you to. If you need help, email <a class="underline" href="mailto:info@doubletrends.com?subject=DoubleTrends%E2%84%A2%20access">info@doubletrends.com</a>. </p>
+</div>
+
+</div>
+</div>
+</section>
+
+<script>
+(function () {
+  var WORKER_URL = "{{WORKER_URL}}";
+  var sessionId = new URLSearchParams(window.location.search).get("session_id");
+
+  var loading   = document.getElementById("state-loading");
+  var ready     = document.getElementById("state-ready");
+  var pending   = document.getElementById("state-pending");
+  var nosession = document.getElementById("state-nosession");
+
+  function show(el) {
+    [loading, ready, pending, nosession].forEach(function (n) {
+      n.classList.add("hidden");
+      n.classList.remove("flex");
+    });
+    el.classList.remove("hidden");
+    el.classList.add("flex");
+  }
+
+  if (!sessionId) {
+    show(nosession);
+    return;
+  }
+
+  // The invite link is written by Stripe's checkout.session.completed webhook,
+  // which can land a moment after this redirect — so poll until it's ready.
+  var attempt = 0;
+  var MAX_ATTEMPTS = 20;   // ~40s at 2s intervals
+  var INTERVAL_MS = 2000;
+
+  function poll() {
+    attempt += 1;
+    fetch(WORKER_URL + "/access?session_id=" + encodeURIComponent(sessionId))
+      .then(function (res) {
+        if (res.ok) return res.json();
+        return null;
+      })
+      .then(function (data) {
+        if (data && data.deep_link) {
+          document.getElementById("invite-link").href = data.deep_link;
+          show(ready);
+          return;
+        }
+        if (attempt >= MAX_ATTEMPTS) {
+          show(pending);
+          return;
+        }
+        setTimeout(poll, INTERVAL_MS);
+      })
+      .catch(function () {
+        if (attempt >= MAX_ATTEMPTS) {
+          show(pending);
+          return;
+        }
+        setTimeout(poll, INTERVAL_MS);
+      });
+  }
+
+  document.getElementById("retry-btn").addEventListener("click", function () {
+    attempt = 0;
+    show(loading);
+    poll();
+  });
+
+  poll();
+})();
+</script>
