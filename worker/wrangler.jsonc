@@ -6,18 +6,18 @@
     {
       "binding": "DB",
       "database_name": "dtep",
-      // Replace after running: wrangler d1 create dtep
-      "database_id": "PLACEHOLDER_D1_ID"
+      "database_id": "9a0d6893-99cc-43aa-b86f-3f0ddb1e12e2"
     }
   ]
 
   /*
    * Set these with wrangler secret put:
    * TELEGRAM_BOT_TOKEN
+   * TELEGRAM_BOT_USERNAME     (without @, e.g. DoubleTrendsBot — used to build the t.me activation deep link)
    * TELEGRAM_CHANNEL_ID
    * STRIPE_SECRET_KEY
    * STRIPE_WEBHOOK_SECRET
    * STRIPE_PRICE_ID
-   * TELEGRAM_WEBHOOK_SECRET  (same value you pass as secret_token to setWebhook)
+   * TELEGRAM_WEBHOOK_SECRET   (same value you pass as secret_token to setWebhook)
    */
 }

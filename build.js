@@ -24,7 +24,9 @@ const path = require('path');
 // ─── Site config ────────────────────────────────────────────────────────────
 const SITE_URL = 'https://doubletrends.com';
 const TODAY    = new Date().toISOString().split('T')[0];
-const SUBSCRIBE_URL = 'https://buy.stripe.com/PLACEHOLDER_SUBSCRIPTION';
+const SUBSCRIBE_URL = 'https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c';
+// Cloudflare Worker base URL (no trailing slash). Filled in after `wrangler deploy`.
+const WORKER_URL = 'https://dtep-subscriptions.marc-d94.workers.dev';
 const OG_IMAGE = `${SITE_URL}/public/decor/hero.png`;
 const PUBLISHER = {
   '@type': 'Organization',
@@ -74,6 +76,11 @@ const pages = [
     src: '404.html', root: '', sitemap: false, kind: 'webpage', robots: 'noindex,follow',
     title: '404 Not Found — DoubleTrends™',
     desc:  'Page not found.',
+  },
+  {
+    src: 'success.html', root: '', sitemap: false, kind: 'webpage', robots: 'noindex,follow',
+    title: 'You\'re Subscribed — DoubleTrends™',
+    desc:  'Your DoubleTrends™ subscription is active. Get your private invite link to the Telegram signal channel.',
   },
 
   // ── academy: articles ───────────────────────────────────────────────────────
@@ -285,6 +292,7 @@ for (const page of pages) {
     DESC:      page.desc,
     CANONICAL: canonicalFor(page.src),
     SUBSCRIBE_URL,
+    WORKER_URL,
     OG_TYPE:   page.kind === 'article' ? 'article' : 'website',
     OG_IMAGE,
     ROBOTS:    page.robots ?? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
