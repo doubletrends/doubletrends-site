@@ -162,7 +162,14 @@ async function handleSubscriptionInactive(
       .run();
 
     if (row.telegram_user_id) {
-      await removeTelegramMember(row.telegram_user_id, env);
+      // Best-effort: Telegram refuses to remove the channel owner/admins, and the
+      // user may have already left. Never let that fail the webhook (which would
+      // make Stripe retry forever) — the canceled status above is what matters.
+      try {
+        await removeTelegramMember(row.telegram_user_id, env);
+      } catch (err) {
+        console.error("removeTelegramMember failed (non-fatal):", err);
+      }
     }
   } else if (customerId || subscriptionId) {
     await env.DB.prepare(
