@@ -31,7 +31,7 @@ const OG_IMAGE = `${SITE_URL}/public/decor/hero.png`;
 const PUBLISHER = {
   '@type': 'Organization',
   '@id': `${SITE_URL}/#organization`,
-  name: 'CDS Sole Prop',
+  name: "Cheng's Data Service",
   url: SITE_URL,
   logo: {
     '@type': 'ImageObject',
@@ -70,6 +70,26 @@ const pages = [
     src: 'company/contact.html', root: '../', priority: 0.6, kind: 'contact',
     title: 'Contact — DoubleTrends™',
     desc:  'Contact DoubleTrends™ for product questions, data and quant service inquiries, research questions, partnerships, or company matters.',
+  },
+  {
+    src: 'legal/refund-policy.html', root: '../', priority: 0.4, kind: 'webpage',
+    title: 'Free Trial & Refunds — DoubleTrends™',
+    desc:  'DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund is available within 14 days of any charge when no signal has been delivered since.',
+  },
+  {
+    src: 'legal/terms.html', root: '../', priority: 0.3, kind: 'webpage',
+    title: 'Terms of Service — DoubleTrends™',
+    desc:  'The terms governing use of the DoubleTrends™ website and subscription, including billing, acceptable use, disclaimers, and limitation of liability. Governed by Ontario, Canada law.',
+  },
+  {
+    src: 'legal/privacy.html', root: '../', priority: 0.3, kind: 'webpage',
+    title: 'Privacy Policy — DoubleTrends™',
+    desc:  'How DoubleTrends™ handles personal information: no cookies, no analytics, no tracking. We process only the minimum needed to take payment via Stripe and deliver the Telegram signal channel.',
+  },
+  {
+    src: 'legal/disclaimer.html', root: '../', priority: 0.3, kind: 'webpage',
+    title: 'Disclaimer — DoubleTrends™',
+    desc:  'DoubleTrends™ provides educational, rules-based market information only — not financial, investment, trading, tax, or legal advice. Trading involves risk; past performance does not guarantee future results.',
   },
 
   {
@@ -259,6 +279,13 @@ function breadcrumbItems(page) {
       '@type': 'ListItem',
       position: 2,
       name: 'Company',
+      item: canonicalFor(page.src),
+    });
+  } else if (parts[0] === 'legal') {
+    items.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Legal',
       item: canonicalFor(page.src),
     });
   }
