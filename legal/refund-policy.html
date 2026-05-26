@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Free Trial & Refunds — DoubleTrends™</title>
-  <meta name="description" content="DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund is available within 14 days of any charge when no signal has been delivered since." />
+  <meta name="description" content="DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund within 14 days of any charge if no signal has fired." />
   <meta name="author" content="Cheng's Data Service" />
   <meta name="application-name" content="DoubleTrends™" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
@@ -15,14 +15,14 @@
   <meta property="og:site_name"   content="DoubleTrends™" />
   <meta property="og:url"         content="https://doubletrends.com/legal/refund-policy.html" />
   <meta property="og:title"       content="Free Trial & Refunds — DoubleTrends™" />
-  <meta property="og:description" content="DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund is available within 14 days of any charge when no signal has been delivered since." />
+  <meta property="og:description" content="DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund within 14 days of any charge if no signal has fired." />
   <meta property="og:image"       content="https://doubletrends.com/public/decor/hero.png" />
   <meta property="og:locale"      content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content="Free Trial & Refunds — DoubleTrends™" />
-  <meta name="twitter:description" content="DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund is available within 14 days of any charge when no signal has been delivered since." />
+  <meta name="twitter:description" content="DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund within 14 days of any charge if no signal has fired." />
   <meta name="twitter:image"       content="https://doubletrends.com/public/decor/hero.png" />
 
   <!-- Canonical -->
@@ -65,7 +65,7 @@
       "@id": "https://doubletrends.com/legal/refund-policy.html#webpage",
       "url": "https://doubletrends.com/legal/refund-policy.html",
       "name": "Free Trial & Refunds — DoubleTrends™",
-      "description": "DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund is available within 14 days of any charge when no signal has been delivered since.",
+      "description": "DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund within 14 days of any charge if no signal has fired.",
       "isPartOf": {
         "@id": "https://doubletrends.com/#website"
       },
@@ -499,9 +499,9 @@
   <div class="relative z-10 w-full max-w-site mx-auto px-8 py-12">
 
     <!-- Main row -->
-    <div class="grid grid-cols-1 lg:grid-cols-[30%_70%] gap-12 pb-10" style="border-bottom: 1px solid rgba(0,0,0,0.08);">
+    <div class="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12">
 
-      <!-- Left: brand + disclaimer -->
+      <!-- Left: brand + disclaimer + copyright -->
       <div class="flex flex-col max-w-sm">
         <div class="flex items-center gap-3 mb-5">
           <img src="../public/brand/cds-logo.png" alt="CDS Logo"
@@ -511,12 +511,14 @@
         <p class="text-[0.65rem] leading-relaxed text-muted-dim">
           DoubleTrends™ signals are provided for educational and informational purposes only and do not constitute financial, investment, or trading advice. Past performance does not guarantee future results.
         </p>
+        <span class="data-label mt-6">© 2026 Cheng&rsquo;s Data Service. All rights reserved.</span>
       </div>
 
-      <!-- Right: sitemap columns -->
+      <!-- Right: sitemap columns — each column shrinks to its widest line; a hairline divider
+           with equal padding on both sides separates sections at lg+. Stacks vertically below lg. -->
       <div class="flex justify-start lg:justify-end">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 w-max">
-          <div class="flex flex-col gap-3 w-40">
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-0 w-max">
+          <div class="flex flex-col items-start gap-3 lg:pr-8">
             <span class="tag-overline mb-2">Product</span>
             <a href="../index.html" class="foot-link">Home</a>
             <a href="../index.html#track-record" class="foot-link">Track Record</a>
@@ -526,7 +528,7 @@
             <a href="../index.html#faq" class="foot-link">FAQ</a>
             <a href="https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c" class="foot-link">Subscribe</a>
           </div>
-          <div class="flex flex-col gap-3 w-40">
+          <div class="flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Academy</span>
             <a href="../academy/index.html" class="foot-link">Academy home</a>
             <a href="../academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 drawdowns</a>
@@ -536,13 +538,14 @@
             <a href="../academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
             <a href="../academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
           </div>
-          <div class="flex flex-col gap-3 w-40">
+          <div class="flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Company</span>
-            <a href="../company/services.html" class="foot-link">Services</a>
+            <a href="../company/mission.html" class="foot-link">Mission</a>
+            <a href="../company/consulting.html" class="foot-link">Consulting</a>
             <a href="../company/careers.html" class="foot-link">Careers</a>
             <a href="../company/contact.html" class="foot-link">Contact</a>
           </div>
-          <div class="flex flex-col gap-3 w-40">
+          <div class="flex flex-col items-start gap-3 lg:pl-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Legal</span>
             <a href="../legal/terms.html" class="foot-link">Terms of Service</a>
             <a href="../legal/privacy.html" class="foot-link">Privacy Policy</a>
@@ -552,16 +555,88 @@
         </div>
       </div>
     </div>
-
-    <!-- Bottom row: copyright -->
-    <div class="pt-6">
-      <span class="data-label">© 2026 Cheng&rsquo;s Data Service. All rights reserved.</span>
-    </div>
   </div>
 
   <!-- Decorative wave — very subtle -->
   <img src="../public/decor/waves.svg" alt="" class="footer-wave" aria-hidden="true" />
 </footer>
+
+<!-- ═══════════ Honesty interstitial before Stripe checkout ═══════════
+     Body-level overlay injected into every page via the {{CHECKOUT_GATE}} slot.
+     Intercepts clicks on any link to Stripe checkout and shows a privacy /
+     read-the-terms note before proceeding. Pure JS, no dependencies. -->
+<div id="checkout-gate" class="fixed inset-0 z-50 hidden items-center justify-center px-5"
+     role="dialog" aria-modal="true" aria-labelledby="checkout-gate-title" aria-hidden="true">
+  <div id="checkout-gate-backdrop" class="absolute inset-0"
+       style="background: rgba(30,37,48,0.55); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);"></div>
+  <div class="relative w-full max-w-lg bg-white p-8 md:p-10"
+       style="border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 30px 80px rgba(30,37,48,0.28);">
+    <span class="tag-overline" style="font-size: 0.72rem;">A note before checkout</span>
+    <h2 id="checkout-gate-title" class="font-noto font-bold text-2xl text-dark mt-3 mb-4 leading-tight">
+      We&rsquo;d rather you go in informed.
+    </h2>
+    <p class="text-muted text-sm leading-relaxed mb-4">
+      We value your privacy. This site sets no cookies, runs no analytics, and tracks nothing.
+      Checkout is handled entirely by <strong class="text-dark">Stripe</strong> — we never see or store your full card number.
+    </p>
+    <p class="text-muted text-sm leading-relaxed mb-6">
+      Before you subscribe, we genuinely hope you&rsquo;ll take a minute to read our
+      <a href="../legal/terms.html" target="_blank" rel="noopener" class="text-primary hover:underline">Terms of Service</a>
+      and <a href="../legal/privacy.html" target="_blank" rel="noopener" class="text-primary hover:underline">Privacy Policy</a>.
+      Most people skip the fine print — but this is the financial space, where real money and real risk are involved.
+      DoubleTrends™ is an informational signal, not financial advice, and we&rsquo;d rather you understand exactly what it is before you commit.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-3 sm:justify-end">
+      <button type="button" id="checkout-gate-cancel" class="btn-dark justify-center">Go back</button>
+      <a id="checkout-gate-continue" href="#" class="btn-light justify-center">Continue to checkout</a>
+    </div>
+  </div>
+</div>
+<script>
+  (function () {
+    var gate = document.getElementById('checkout-gate');
+    if (!gate) return;
+    var continueBtn = document.getElementById('checkout-gate-continue');
+    var cancelBtn = document.getElementById('checkout-gate-cancel');
+    var backdrop = document.getElementById('checkout-gate-backdrop');
+    var lastFocus = null;
+
+    function isCheckoutLink(a) {
+      return a && a.href && a.href.indexOf('stripe.com') !== -1;
+    }
+    function openGate(href) {
+      continueBtn.setAttribute('href', href);
+      gate.classList.remove('hidden');
+      gate.classList.add('flex');
+      gate.setAttribute('aria-hidden', 'false');
+      lastFocus = document.activeElement;
+      continueBtn.focus();
+      document.body.style.overflow = 'hidden';
+    }
+    function closeGate() {
+      gate.classList.add('hidden');
+      gate.classList.remove('flex');
+      gate.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a') : null;
+      if (!a) return;
+      if (a.id === 'checkout-gate-continue') return; // let the proceed link navigate
+      if (isCheckoutLink(a)) {
+        e.preventDefault();
+        openGate(a.href);
+      }
+    });
+    cancelBtn.addEventListener('click', closeGate);
+    backdrop.addEventListener('click', closeGate);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !gate.classList.contains('hidden')) closeGate();
+    });
+  })();
+</script>
 
 </body>
 </html>

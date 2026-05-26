@@ -16,7 +16,14 @@
   </url>
 
   <url>
-    <loc>https://doubletrends.com/company/services.html</loc>
+    <loc>https://doubletrends.com/company/mission.html</loc>
+    <lastmod>2026-05-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://doubletrends.com/company/consulting.html</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
