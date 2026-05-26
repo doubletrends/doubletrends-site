@@ -2,9 +2,9 @@
   <div class="relative z-10 w-full max-w-site mx-auto px-8 py-12">
 
     <!-- Main row -->
-    <div class="grid grid-cols-1 lg:grid-cols-[30%_70%] gap-12 pb-10" style="border-bottom: 1px solid rgba(0,0,0,0.08);">
+    <div class="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12">
 
-      <!-- Left: brand + disclaimer -->
+      <!-- Left: brand + disclaimer + copyright -->
       <div class="flex flex-col max-w-sm">
         <div class="flex items-center gap-3 mb-5">
           <img src="{{ROOT}}public/brand/cds-logo.png" alt="CDS Logo"
@@ -14,12 +14,14 @@
         <p class="text-[0.65rem] leading-relaxed text-muted-dim">
           DoubleTrends™ signals are provided for educational and informational purposes only and do not constitute financial, investment, or trading advice. Past performance does not guarantee future results.
         </p>
+        <span class="data-label mt-6">© 2026 Cheng&rsquo;s Data Service. All rights reserved.</span>
       </div>
 
-      <!-- Right: sitemap columns -->
+      <!-- Right: sitemap columns — each column shrinks to its widest line; a hairline divider
+           with equal padding on both sides separates sections at lg+. Stacks vertically below lg. -->
       <div class="flex justify-start lg:justify-end">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 w-max">
-          <div class="flex flex-col gap-3 w-40">
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-0 w-max">
+          <div class="flex flex-col items-start gap-3 lg:pr-8">
             <span class="tag-overline mb-2">Product</span>
             <a href="{{ROOT}}index.html" class="foot-link">Home</a>
             <a href="{{ROOT}}index.html#track-record" class="foot-link">Track Record</a>
@@ -29,7 +31,7 @@
             <a href="{{ROOT}}index.html#faq" class="foot-link">FAQ</a>
             <a href="{{SUBSCRIBE_URL}}" class="foot-link">Subscribe</a>
           </div>
-          <div class="flex flex-col gap-3 w-40">
+          <div class="flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Academy</span>
             <a href="{{ROOT}}academy/index.html" class="foot-link">Academy home</a>
             <a href="{{ROOT}}academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 drawdowns</a>
@@ -39,13 +41,14 @@
             <a href="{{ROOT}}academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
             <a href="{{ROOT}}academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
           </div>
-          <div class="flex flex-col gap-3 w-40">
+          <div class="flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Company</span>
-            <a href="{{ROOT}}company/services.html" class="foot-link">Services</a>
+            <a href="{{ROOT}}company/mission.html" class="foot-link">Mission</a>
+            <a href="{{ROOT}}company/consulting.html" class="foot-link">Consulting</a>
             <a href="{{ROOT}}company/careers.html" class="foot-link">Careers</a>
             <a href="{{ROOT}}company/contact.html" class="foot-link">Contact</a>
           </div>
-          <div class="flex flex-col gap-3 w-40">
+          <div class="flex flex-col items-start gap-3 lg:pl-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Legal</span>
             <a href="{{ROOT}}legal/terms.html" class="foot-link">Terms of Service</a>
             <a href="{{ROOT}}legal/privacy.html" class="foot-link">Privacy Policy</a>
@@ -54,11 +57,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Bottom row: copyright -->
-    <div class="pt-6">
-      <span class="data-label">© 2026 Cheng&rsquo;s Data Service. All rights reserved.</span>
     </div>
   </div>
 

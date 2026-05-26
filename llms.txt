@@ -8,7 +8,7 @@ Important: the content is educational market information only. It is not financi
 
 - Home and product overview: https://doubletrends.com/
 - Academy index: https://doubletrends.com/academy/
-- Data and quant services: https://doubletrends.com/company/services.html
+- Consulting (data & quant services): https://doubletrends.com/company/consulting.html
 - Careers: https://doubletrends.com/company/careers.html
 - Contact: https://doubletrends.com/company/contact.html
 
