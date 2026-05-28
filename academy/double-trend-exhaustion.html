@@ -73,7 +73,7 @@
         "@id": "https://doubletrends.com/#organization"
       },
       "inLanguage": "en-US",
-      "dateModified": "2026-05-26"
+      "dateModified": "2026-05-28"
     },
     {
       "@type": "BreadcrumbList",
@@ -115,7 +115,7 @@
       },
       "image": "https://doubletrends.com/public/decor/hero.png",
       "datePublished": "2026-05-25",
-      "dateModified": "2026-05-26",
+      "dateModified": "2026-05-28",
       "inLanguage": "en-US"
     }
   ]
@@ -484,7 +484,7 @@
 <span class="tag-overline mb-4 block">What it measures</span>
 <h2 class="article-h2"> Two horizons of Williams %R </h2>
 <p class="prose-p mb-4"> Williams %R is a momentum oscillator that measures where the latest close sits inside the recent high-low range. It moves between 0 and &minus;100: readings near &minus;100 mean price is pinned near the bottom of its range, the hallmark of an oversold market. </p>
-<p class="prose-p mb-6"> DoubleTrends&trade; computes %R over two periods at once &mdash; a fast 21-bar window and a slow 112-bar window &mdash; so it reads short-term momentum and the broader trend in a single view. Each line is smoothed with an exponential moving average (7 on the fast, 3 on the slow) to cut erratic noise without lagging the turn. </p>
+<p class="prose-p mb-6"> DoubleTrends&trade; computes %R over two horizons at once &mdash; a shorter window that reads near-term momentum and a longer window that reads the broader trend &mdash; so a single view holds both timeframes. Each line is smoothed to cut erratic noise without lagging the turn. </p>
 <div class="media-frame overflow-hidden">
 <img src="../public/academy/dtep-1.png" alt="DoubleTrends™ dual Williams %R chart" class="w-full" />
 </div>
@@ -494,7 +494,7 @@
 <section class="mb-14">
 <span class="tag-overline mb-4 block">How a signal forms</span>
 <h2 class="article-h2"> Exhaustion first, then the reversal </h2>
-<p class="prose-p mb-4"> When <em>both</em> the fast and slow %R fall to or below &minus;80, the market is deeply oversold on both horizons at the same time &mdash; selling pressure is stretched. The indicator marks this state with square warnings: the trend may be exhausting, but it has not turned yet. </p>
+<p class="prose-p mb-4"> When <em>both</em> horizons drop into the deep-oversold zone at the same time, the market is stretched on the short view and the long view simultaneously &mdash; selling pressure is exhausting on both clocks. The indicator marks this state with square warnings: the trend may be exhausting, but it has not turned yet. </p>
 <p class="prose-p mb-6"> The actual DoubleTrends&trade; alert waits for the reversal. When %R climbs back out of the oversold zone, a triangle marks the buy reversal &mdash; objective evidence that downside momentum has improved, not merely that price has fallen. That climb-out, not the entry into oversold, is the signal you receive. </p>
 <div class="media-frame overflow-hidden">
 <img src="../public/academy/dtep-2.png" alt="DoubleTrends™ oversold reversal signal chart" class="w-full" />
@@ -523,7 +523,7 @@
 <!-- Reference & method -->
 <section class="hairline pt-6">
 <p class="data-label mb-3">Reference &amp; method</p>
-<p class="fine-print"> Built on Williams %R (<a href="https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/williams-r" class="text-primary hover:underline break-all">Fidelity Investments</a>), computed on two periods (21 and 112) with EMA smoothing (7 and 3) and an oversold threshold of &minus;80 on both. Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results. </p>
+<p class="fine-print"> Built on a dual-horizon Williams %R framework (<a href="https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/williams-r" class="text-primary hover:underline break-all">Fidelity Investments</a>) &mdash; a shorter window for momentum and a longer window for trend, both smoothed and gated by a deep-oversold threshold. The exact lookback periods, smoothing constants, and threshold value are part of the production rule and are not published. Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results. </p>
 </section>
 </article>
 
@@ -609,19 +609,22 @@
       We&rsquo;d rather you go in informed.
     </h2>
     <p class="text-muted text-sm leading-relaxed mb-4">
-      We value your privacy. This site sets no cookies, runs no analytics, and tracks nothing.
-      Checkout is handled entirely by <strong class="text-dark">Stripe</strong> — we never see or store your full card number.
+      No cookies, no analytics, no tracking. Checkout is handled by <strong class="text-dark">Stripe</strong> &mdash; we never see or store your card number.
+    </p>
+    <p class="text-muted text-sm leading-relaxed mb-4">
+      Cancel anytime. The first 30 days are a free trial; cancel before it ends and you are never charged. Once billed, cancelling stops future charges and access continues to the end of the paid term &mdash; and a full refund of that charge is available within 14 days, as long as no signal has been delivered since. See our <a href="../legal/refund-policy.html" target="_blank" rel="noopener" class="text-primary hover:underline">Refund Policy</a>.
     </p>
     <p class="text-muted text-sm leading-relaxed mb-6">
-      Before you subscribe, we genuinely hope you&rsquo;ll take a minute to read our
+      Most people skip the fine print &mdash; but this is the financial space, where real money and real risk are involved. DoubleTrends&trade; is an informational signal, not financial advice. Please take a minute with our
       <a href="../legal/terms.html" target="_blank" rel="noopener" class="text-primary hover:underline">Terms of Service</a>
       and <a href="../legal/privacy.html" target="_blank" rel="noopener" class="text-primary hover:underline">Privacy Policy</a>.
-      Most people skip the fine print — but this is the financial space, where real money and real risk are involved.
-      DoubleTrends™ is an informational signal, not financial advice, and we&rsquo;d rather you understand exactly what it is before you commit.
+    </p>
+    <p class="text-muted text-xs leading-relaxed mb-4">
+      By clicking &ldquo;Agree and continue,&rdquo; you confirm you have fully read the above policies and accept them.
     </p>
     <div class="flex flex-col sm:flex-row gap-3 sm:justify-end">
       <button type="button" id="checkout-gate-cancel" class="btn-dark justify-center">Go back</button>
-      <a id="checkout-gate-continue" href="#" class="btn-light justify-center">Continue to checkout</a>
+      <a id="checkout-gate-continue" href="#" class="btn-light justify-center">Agree and continue</a>
     </div>
   </div>
 </div>
