@@ -95,7 +95,7 @@ const pages = [
 
   // ── utility pages ────────────────────────────────────────────────────────
   {
-    src: '404.html', root: '', sitemap: false, kind: 'webpage', robots: 'noindex,follow',
+    src: '404.html', root: '/', sitemap: false, kind: 'webpage', robots: 'noindex,follow',
     title: '404 Not Found — DoubleTrends™',
     desc:  'Page not found.',
   },
