@@ -2,26 +2,30 @@
  * build-brand.js
  *
  * Generates the CDS brand asset set in public/brand/ from a single source of
- * truth — JetBrains Mono Bold + rust bar geometry. Produces:
+ * truth — JetBrains Mono Bold + rust bar geometry. Three asset families:
  *
- *   SVG (paths, font-independent)
- *     cds-favicon.svg                 32×32 favicon  [ + rust bar + ]
- *     cds-logo.svg                    tight logo    [CDS] + rust bar over S right half
- *     cds-logo-square.svg             600×600 logo, vertically centered in a square canvas
+ *   Logo — the [ ] mark (no letters), edge-to-edge in a 32×32 viewBox.
+ *     cds-logo.svg               auto color (prefers-color-scheme)
+ *     cds-logo-light.png         512×512 · dark glyphs (for light backgrounds)
+ *     cds-logo-dark.png          512×512 · light glyphs (for dark backgrounds)
  *
- *   PNG (rasterized via sharp)
- *     cds-favicon-{32,180,512}.png            dark glyphs (for light backgrounds)
- *     cds-favicon-dark-{32,180,512}.png       light glyphs (for dark backgrounds)
- *     cds-logo-light.png                      dark glyphs, ~800px wide
- *     cds-logo-dark.png                       light glyphs, ~800px wide
- *     cds-logo-square-light.png               dark glyphs, 1024×1024
- *     cds-logo-square-dark.png                light glyphs, 1024×1024
- *     og-image.png                            1200×630 social card (logo + tagline)
+ *   Wordmark — [CDS] + rust bar over S right half, on a square canvas.
+ *     cds-wordmark.svg           600×600 · auto color
+ *     cds-wordmark-light.png     1024×1024 · dark glyphs
+ *     cds-wordmark-dark.png      1024×1024 · light glyphs
+ *
+ *   Favicon — small browser-tab PNGs + Stripe checkout brand icon.
+ *     cds-favicon-32.png         32×32 · dark glyphs · legacy favicon
+ *     cds-favicon-180.png        180×180 · dark glyphs · Apple touch icon
+ *     cds-favicon-stripe.png     512×512 · dark glyphs · padded for circular crop
+ *
+ *   Social
+ *     og-image.png               1200×630 social card (wordmark + tagline)
  *
  * Geometry rules (locked):
- *   logo    — bar left = S cell center · bar right = midpoint of visible gap
- *             between S glyph and ] glyph · bar bottom = S visual bottom (S overshoot)
- *   favicon — bar centered between [ and ] glyphs · same bar-bottom rule
+ *   wordmark — bar left = S cell center · bar right = midpoint of visible gap
+ *              between S glyph and ] glyph · bar bottom = S visual bottom (S overshoot)
+ *   logo     — bar centered between [ and ] glyphs · same bar-bottom rule
  *   brackets — vertically scaled (uniform K) so inner cavity = full letter range
  */
 
@@ -43,6 +47,11 @@ const COLOR = {
 
 const BAR_HEIGHT = 4;   // viewBox units
 const BAR_LIFT   = 4;   // bar top sits BAR_LIFT above baseline; bar bottom = baseline
+
+// Uniform shrink for the Stripe checkout brand icon variant only, so bracket
+// corners clear Stripe's circular crop. 0.85 → 7.5% padding per side.
+// The website favicon stays edge-to-edge (scale 1.0) for crisp browser tabs.
+const STRIPE_FAVICON_SCALE = 0.85;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function loadFont() {
@@ -166,7 +175,7 @@ function styleBlock({ colorMode }) {
   return `<style>.g{fill:${fill}}</style>`;
 }
 
-// ─── Logo — [CDS] + rust bar ──────────────────────────────────────────────
+// ─── Wordmark — [CDS] + rust bar ──────────────────────────────────────────
 
 // Build the logo's path/bar/transform pieces for an arbitrary canvas + baseline.
 // Bar height is sized to BAR_HEIGHT at fontSize 26 (the logo base size).
@@ -228,24 +237,14 @@ function logoPieces(font, fontSize, baselineY, vbW) {
   };
 }
 
-function logoSvg({ vbW, vbH, pieces, colorMode }) {
+function wordmarkSvg({ vbW, vbH, pieces, colorMode }) {
   const { cdsPaths, lPath, rPath, bracketTransform, bar } = pieces;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="CDS">${styleBlock({ colorMode })}<g class="g"><path d="${cdsPaths.join(' ')}"/><g transform="${bracketTransform}"><path d="${lPath} ${rPath}"/></g></g><rect x="${bar.x.toFixed(3)}" y="${bar.y.toFixed(3)}" width="${bar.w.toFixed(3)}" height="${bar.h.toFixed(3)}" fill="${COLOR.rust}"/></svg>`;
 }
 
-function tightLogoSvg({ pieces, colorMode }) {
-  const { left, top, right, bottom } = pieces.bounds;
-  const vbX = Math.floor(left * 1000) / 1000;
-  const vbY = Math.floor(top * 1000) / 1000;
-  const vbW = Math.ceil((right - vbX) * 1000) / 1000;
-  const vbH = Math.ceil((bottom - vbY) * 1000) / 1000;
-  const { cdsPaths, lPath, rPath, bracketTransform, bar } = pieces;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vbX.toFixed(3)} ${vbY.toFixed(3)} ${vbW.toFixed(3)} ${vbH.toFixed(3)}" role="img" aria-label="CDS">${styleBlock({ colorMode })}<g class="g"><path d="${cdsPaths.join(' ')}"/><g transform="${bracketTransform}"><path d="${lPath} ${rPath}"/></g></g><rect x="${bar.x.toFixed(3)}" y="${bar.y.toFixed(3)}" width="${bar.w.toFixed(3)}" height="${bar.h.toFixed(3)}" fill="${COLOR.rust}"/></svg>`;
-}
-
-// Compute baselineY so the *full* logo height (letter visual top → letter
+// Compute baselineY so the *full* wordmark height (letter visual top → letter
 // visual bottom, plus K·armThickness on each side from the scaled brackets)
-// is vertically centered in vbH. The logo's vertical center is NOT the
+// is vertically centered in vbH. The wordmark's vertical center is NOT the
 // baseline — cap + S overshoot top is much taller than S overshoot bottom,
 // so the visual center sits below the baseline.
 function centeredBaseline(font, fontSize, vbH) {
@@ -259,27 +258,23 @@ function centeredBaseline(font, fontSize, vbH) {
   return topY + sMet.visualTopFromBaseline + armExt;
 }
 
-function buildLogo(font, { colorMode } = { colorMode: 'auto' }) {
-  const fontSize  = 26;
-  const vbW       = 100;
-  const vbH       = 28;
-  const baselineY = centeredBaseline(font, fontSize, vbH);
-  const pieces = logoPieces(font, fontSize, baselineY, vbW);
-  return tightLogoSvg({ pieces, colorMode });
-}
-
-// Square logo — same artwork, just centered in a square canvas for easy
-// cropping (Telegram channel, app icon, profile picture, etc.).
-function buildLogoSquare(font, { colorMode } = { colorMode: 'auto' }) {
+// Wordmark — [CDS] + rust bar, centered in a square canvas for easy cropping
+// (Telegram channel, app icon, profile picture, etc.).
+function buildWordmark(font, { colorMode } = { colorMode: 'auto' }) {
   const vbSize   = 600;
   const fontSize = 160;
   const baselineY = centeredBaseline(font, fontSize, vbSize);
   const pieces = logoPieces(font, fontSize, baselineY, vbSize);
-  return logoSvg({ vbW: vbSize, vbH: vbSize, pieces, colorMode });
+  return wordmarkSvg({ vbW: vbSize, vbH: vbSize, pieces, colorMode });
 }
 
-// ─── Favicon — [_] square mark ────────────────────────────────────────────────
-function buildFavicon(font, { colorMode } = { colorMode: 'auto' }) {
+// ─── Logo — [ ] mark, no letters ──────────────────────────────────────────────
+// Options:
+//   scale         — uniform shrink of artwork around viewBox center (e.g. 0.85 for Stripe).
+//   fillViewBox   — true ⇒ scale artwork up so it fills the viewBox edge-to-edge along
+//                   its longer dimension (no padding around the brackets). For logo
+//                   files used inline on pages. Favicons keep the natural geometry.
+function buildLogo(font, { colorMode, scale = 1, fillViewBox = false } = { colorMode: 'auto' }) {
   const fontSize   = 24;
   const vbW        = 32;
   const vbH        = 32;
@@ -310,9 +305,25 @@ function buildFavicon(font, { colorMode } = { colorMode: 'auto' }) {
   const barY    = letters.bottom - BAR_HEIGHT;
 
   // Brackets scaled so inner cavity matches the (would-be) letter range
-  const { transform } = bracketScale(font, fontSize, baselineY);
+  const { K, ty, transform } = bracketScale(font, fontSize, baselineY);
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="CDS">${styleBlock({ colorMode })}<g class="g" transform="${transform}"><path d="${leftPath} ${rightPath}"/></g><rect x="${barX.toFixed(3)}" y="${barY.toFixed(3)}" width="${barW.toFixed(3)}" height="${BAR_HEIGHT}" fill="${COLOR.rust}"/></svg>`;
+  // Artwork bbox in viewBox coords — used by fillViewBox to compute the scale-up factor.
+  const geom = extractBracketGeometry(font, '[', fontSize);
+  const xMin = leftX + lMet.x1;
+  const xMax = rightX + rMet.x2;
+  const yMin = K * (baselineY + geom.outerTop) + ty;
+  const yMax = K * (baselineY + geom.outerBottom) + ty;
+  const fillScale = fillViewBox
+    ? Math.min(vbW / (xMax - xMin), vbH / (yMax - yMin))
+    : 1;
+  const finalScale = scale * fillScale;
+
+  const cx = vbW / 2, cy = vbH / 2;
+  const inner = `<g class="g" transform="${transform}"><path d="${leftPath} ${rightPath}"/></g><rect x="${barX.toFixed(3)}" y="${barY.toFixed(3)}" width="${barW.toFixed(3)}" height="${BAR_HEIGHT}" fill="${COLOR.rust}"/>`;
+  const body = finalScale === 1
+    ? inner
+    : `<g transform="translate(${cx} ${cy}) scale(${finalScale.toFixed(5)}) translate(${-cx} ${-cy})">${inner}</g>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="CDS">${styleBlock({ colorMode })}${body}</svg>`;
 }
 
 // ─── OG image — 1200×630 with centered logo + tagline ─────────────────────
@@ -403,58 +414,46 @@ async function main() {
   if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
   const font = loadFont();
 
-  // SVGs — smart color (prefers-color-scheme)
-  const logoAuto = buildLogo(font, { colorMode: 'auto' });
-  const markAuto     = buildFavicon(font,     { colorMode: 'auto' });
+  // ── Logo — [ ] mark, scaled to fill the 32×32 viewBox (no padding) ──
+  const logoAuto  = buildLogo(font, { colorMode: 'auto',  fillViewBox: true });
+  const logoLight = buildLogo(font, { colorMode: 'light', fillViewBox: true });
+  const logoDark  = buildLogo(font, { colorMode: 'dark',  fillViewBox: true });
 
   fs.writeFileSync(path.join(OUT_DIR, 'cds-logo.svg'), logoAuto + '\n');
   console.log('✓ cds-logo.svg');
 
-  fs.writeFileSync(path.join(OUT_DIR, 'cds-favicon.svg'), markAuto + '\n');
-  console.log('✓ cds-favicon.svg');
-
-  // Square logo (canvas only — artwork unchanged), for cropping into avatars
-  const logoSquareAuto = buildLogoSquare(font, { colorMode: 'auto' });
-  fs.writeFileSync(path.join(OUT_DIR, 'cds-logo-square.svg'), logoSquareAuto + '\n');
-  console.log('✓ cds-logo-square.svg');
-
-  // Explicit-color variants for PNG raster (PNGs can't carry media queries)
-  const logoLight       = buildLogo(font,       { colorMode: 'light' });
-  const logoDark        = buildLogo(font,       { colorMode: 'dark'  });
-  const logoSquareLight = buildLogoSquare(font, { colorMode: 'light' });
-  const logoSquareDark  = buildLogoSquare(font, { colorMode: 'dark'  });
-  const markLight           = buildFavicon(font,           { colorMode: 'light' });
-  const markDark            = buildFavicon(font,           { colorMode: 'dark'  });
-
-  // Favicon PNGs — dark glyphs (for light backgrounds)
-  await rasterizeSquare(markLight, path.join(OUT_DIR, 'cds-favicon-32.png'),  32);
-  console.log('✓ cds-favicon-32.png');
-  await rasterizeSquare(markLight, path.join(OUT_DIR, 'cds-favicon-180.png'), 180);
-  console.log('✓ cds-favicon-180.png');
-  await rasterizeSquare(markLight, path.join(OUT_DIR, 'cds-favicon-512.png'), 512);
-  console.log('✓ cds-favicon-512.png');
-
-  // Favicon PNGs — light glyphs (for dark backgrounds)
-  await rasterizeSquare(markDark, path.join(OUT_DIR, 'cds-favicon-dark-32.png'),  32);
-  console.log('✓ cds-favicon-dark-32.png');
-  await rasterizeSquare(markDark, path.join(OUT_DIR, 'cds-favicon-dark-180.png'), 180);
-  console.log('✓ cds-favicon-dark-180.png');
-  await rasterizeSquare(markDark, path.join(OUT_DIR, 'cds-favicon-dark-512.png'), 512);
-  console.log('✓ cds-favicon-dark-512.png');
-
-  // Logo PNGs at ~800px wide (good for email/social embeds)
-  await rasterizeWidth(logoLight, path.join(OUT_DIR, 'cds-logo-light.png'), 800);
+  await rasterizeSquare(logoLight, path.join(OUT_DIR, 'cds-logo-light.png'), 512);
   console.log('✓ cds-logo-light.png');
-  await rasterizeWidth(logoDark,  path.join(OUT_DIR, 'cds-logo-dark.png'),  800);
+  await rasterizeSquare(logoDark,  path.join(OUT_DIR, 'cds-logo-dark.png'),  512);
   console.log('✓ cds-logo-dark.png');
 
-  // Square logo PNGs at 1024px (avatar / app-icon size)
-  await rasterizeSquare(logoSquareLight, path.join(OUT_DIR, 'cds-logo-square-light.png'), 1024);
-  console.log('✓ cds-logo-square-light.png');
-  await rasterizeSquare(logoSquareDark,  path.join(OUT_DIR, 'cds-logo-square-dark.png'),  1024);
-  console.log('✓ cds-logo-square-dark.png');
+  // ── Wordmark — [CDS] on square canvas ──
+  const wordmarkAuto  = buildWordmark(font, { colorMode: 'auto'  });
+  const wordmarkLight = buildWordmark(font, { colorMode: 'light' });
+  const wordmarkDark  = buildWordmark(font, { colorMode: 'dark'  });
 
-  // OG image 1200×630
+  fs.writeFileSync(path.join(OUT_DIR, 'cds-wordmark.svg'), wordmarkAuto + '\n');
+  console.log('✓ cds-wordmark.svg');
+
+  await rasterizeSquare(wordmarkLight, path.join(OUT_DIR, 'cds-wordmark-light.png'), 1024);
+  console.log('✓ cds-wordmark-light.png');
+  await rasterizeSquare(wordmarkDark,  path.join(OUT_DIR, 'cds-wordmark-dark.png'),  1024);
+  console.log('✓ cds-wordmark-dark.png');
+
+  // ── Favicon — small browser-tab PNGs + Stripe brand icon ──
+  // Favicons use the natural geometry (small breathing room around brackets) — the
+  // logo files are edge-to-edge, but browser tabs read better with a touch of margin.
+  const faviconLight = buildLogo(font, { colorMode: 'light' });
+  await rasterizeSquare(faviconLight, path.join(OUT_DIR, 'cds-favicon-32.png'),  32);
+  console.log('✓ cds-favicon-32.png');
+  await rasterizeSquare(faviconLight, path.join(OUT_DIR, 'cds-favicon-180.png'), 180);
+  console.log('✓ cds-favicon-180.png');
+
+  const logoStripe = buildLogo(font, { colorMode: 'light', scale: STRIPE_FAVICON_SCALE });
+  await rasterizeSquare(logoStripe, path.join(OUT_DIR, 'cds-favicon-stripe.png'), 512);
+  console.log('✓ cds-favicon-stripe.png');
+
+  // ── Social ──
   const ogSvg = buildOgImage(font);
   await rasterizeNative(ogSvg, path.join(OUT_DIR, 'og-image.png'));
   console.log('✓ og-image.png');

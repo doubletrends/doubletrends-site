@@ -36,7 +36,7 @@
   <link rel="canonical" href="https://doubletrends.com/brand.html" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="public/brand/cds-favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="public/brand/cds-logo.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="public/brand/cds-favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="public/brand/cds-favicon-180.png" />
 
@@ -55,9 +55,9 @@
       "email": "info@doubletrends.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://doubletrends.com/public/brand/cds-logo-light.png",
-        "width": 800,
-        "height": 302
+        "url": "https://doubletrends.com/public/brand/cds-wordmark-light.png",
+        "width": 1024,
+        "height": 1024
       },
       "brand": {
         "@type": "Brand",
@@ -735,7 +735,7 @@
 
     <div class="flex items-center gap-3 shrink-0">
       <a href="index.html" aria-label="CDS — home" class="inline-flex items-center">
-        <img src="public/brand/cds-logo.svg" alt="CDS" class="h-6 w-auto" width="68" height="26" />
+        <img src="public/brand/cds-logo.svg" alt="CDS" class="h-6 w-auto" width="24" height="24" />
       </a>
       <a href="index.html"
          class="text-[#1E2530] font-noto font-semibold text-[1.125rem] tracking-tight hidden md:block">
@@ -780,71 +780,55 @@
 
   <div class="w-full max-w-5xl flex flex-col gap-6">
 
-    <!-- Logo · horizontal -->
+    <!-- Logo · the [ ] mark -->
     <div class="terminal-shell p-6 md:p-8 lg:p-10">
       <span class="tag-overline">Logo</span>
-      <h3 class="text-[#1E2530] text-xl md:text-2xl font-noto font-bold mt-3 mb-4">Horizontal &mdash; [CDS] with rust bar</h3>
-      <p class="text-muted text-sm md:text-base leading-relaxed mb-6">The primary mark, vertically centered in a 100&times;28 viewBox. Used in the site header, on social cards, in the email footer.</p>
+      <h3 class="text-[#1E2530] text-xl md:text-2xl font-noto font-bold mt-3 mb-4">The mark &mdash; [ ] with rust bar, no letters</h3>
+      <p class="text-muted text-sm md:text-base leading-relaxed mb-6">The primary brand identity, edge-to-edge in a 32&times;32 viewBox. Used in the site header and footer, as the browser favicon, and anywhere the wordmark would be too wide. The rust bar sits at the position S would occupy.</p>
       <div class="grid md:grid-cols-2 gap-3">
         <div class="border border-[rgba(30,37,48,0.1)] bg-light px-12 py-12 flex items-center justify-center min-h-[200px]">
-          <img src="public/brand/cds-logo.svg" alt="CDS logo · light" style="height: 96px; width: auto;" />
+          <img src="public/brand/cds-logo.svg" alt="CDS logo · light" style="width: 160px; height: 160px;" />
         </div>
         <div class="border border-[rgba(30,37,48,0.1)] bg-dark px-12 py-12 flex items-center justify-center min-h-[200px]">
-          <img src="public/brand/cds-logo-dark.png" alt="CDS logo · dark" style="height: 96px; width: auto;" />
+          <img src="public/brand/cds-logo-dark.png" alt="CDS logo · dark" style="width: 160px; height: 160px;" />
         </div>
       </div>
     </div>
 
-    <!-- Logo · square -->
+    <!-- Wordmark · [CDS] -->
     <div class="terminal-shell p-6 md:p-8 lg:p-10">
-      <span class="tag-overline">Logo · Square canvas</span>
-      <h3 class="text-[#1E2530] text-xl md:text-2xl font-noto font-bold mt-3 mb-4">Same mark, square canvas for cropping</h3>
-      <p class="text-muted text-sm md:text-base leading-relaxed mb-6">Vertically centered in a 600&times;600 viewBox so the mark can be cropped to any aspect ratio without re-aligning. Use for profile pictures, app icons, Telegram channel avatars.</p>
+      <span class="tag-overline">Wordmark</span>
+      <h3 class="text-[#1E2530] text-xl md:text-2xl font-noto font-bold mt-3 mb-4">[CDS] on a square canvas</h3>
+      <p class="text-muted text-sm md:text-base leading-relaxed mb-6">The textual mark, vertically centered in a 600&times;600 viewBox so it can be cropped to any aspect ratio without re-aligning. Used for profile pictures, app icons, Telegram channel avatars, and Google&rsquo;s publisher logo in structured data.</p>
       <div class="grid md:grid-cols-2 gap-3">
         <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex items-center justify-center">
-          <img src="public/brand/cds-logo-square.svg" alt="CDS logo square · light" style="width: 240px; height: 240px;" />
+          <img src="public/brand/cds-wordmark.svg" alt="CDS wordmark · light" style="width: 240px; height: 240px;" />
         </div>
         <div class="border border-[rgba(30,37,48,0.1)] bg-dark p-6 flex items-center justify-center">
-          <img src="public/brand/cds-logo-square-dark.png" alt="CDS logo square · dark" style="width: 240px; height: 240px;" />
+          <img src="public/brand/cds-wordmark-dark.png" alt="CDS wordmark · dark" style="width: 240px; height: 240px;" />
         </div>
       </div>
     </div>
 
-    <!-- Favicon -->
+    <!-- Favicon · browser + Stripe -->
     <div class="terminal-shell p-6 md:p-8 lg:p-10">
       <span class="tag-overline">Favicon</span>
-      <h3 class="text-[#1E2530] text-xl md:text-2xl font-noto font-bold mt-3 mb-4">Square companion mark &mdash; [_]</h3>
-      <p class="text-muted text-sm md:text-base leading-relaxed mb-6">For browser tabs and small square slots where the full wordmark won&rsquo;t read. Same construction rules as the logo, brackets only. The rust bar sits at the position S would occupy.</p>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-        <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex flex-col items-center justify-center gap-3 min-h-[140px]">
-          <img src="public/brand/cds-favicon.svg" alt="" style="width: 64px; height: 64px;" />
-          <span class="data-label">64 · light</span>
+      <h3 class="text-[#1E2530] text-xl md:text-2xl font-noto font-bold mt-3 mb-4">Browser-tab and Stripe-specific PNGs</h3>
+      <p class="text-muted text-sm md:text-base leading-relaxed mb-6">Sized variants of the logo for places that can&rsquo;t consume SVG. The Stripe variant is padded to 85% so the bracket corners clear Stripe&rsquo;s circular crop on the checkout brand icon.</p>
+      <div class="grid grid-cols-3 gap-3">
+        <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex flex-col items-center justify-center gap-3 min-h-[180px]">
+          <img src="public/brand/cds-favicon-32.png" alt="" style="width: 64px; height: 64px;" />
+          <span class="data-label">32&times;32 &middot; legacy</span>
         </div>
-        <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex flex-col items-center justify-center gap-3 min-h-[140px]">
-          <img src="public/brand/cds-favicon.svg" alt="" style="width: 32px; height: 32px;" />
-          <span class="data-label">32 · light</span>
+        <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex flex-col items-center justify-center gap-3 min-h-[180px]">
+          <img src="public/brand/cds-favicon-180.png" alt="" style="width: 96px; height: 96px;" />
+          <span class="data-label">180&times;180 &middot; apple-touch</span>
         </div>
-        <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex flex-col items-center justify-center gap-3 min-h-[140px]">
-          <img src="public/brand/cds-favicon.svg" alt="" style="width: 16px; height: 16px;" />
-          <span class="data-label">16 · light</span>
-        </div>
-        <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex flex-col items-center justify-center gap-3 min-h-[140px]">
-          <span class="font-mono text-[10px] text-muted-dim leading-relaxed text-center">browser tab<br>≈ 16&times;16</span>
-        </div>
-        <div class="border border-[rgba(30,37,48,0.1)] bg-dark p-6 flex flex-col items-center justify-center gap-3 min-h-[140px]">
-          <img src="public/brand/cds-favicon-dark-180.png" alt="" style="width: 64px; height: 64px;" />
-          <span class="font-mono text-[9.5px] uppercase tracking-[0.14em]" style="color: rgba(255,255,255,0.5)">64 · dark</span>
-        </div>
-        <div class="border border-[rgba(30,37,48,0.1)] bg-dark p-6 flex flex-col items-center justify-center gap-3 min-h-[140px]">
-          <img src="public/brand/cds-favicon-dark-32.png" alt="" style="width: 32px; height: 32px;" />
-          <span class="font-mono text-[9.5px] uppercase tracking-[0.14em]" style="color: rgba(255,255,255,0.5)">32 · dark</span>
-        </div>
-        <div class="border border-[rgba(30,37,48,0.1)] bg-dark p-6 flex flex-col items-center justify-center gap-3 min-h-[140px]">
-          <img src="public/brand/cds-favicon-dark-32.png" alt="" style="width: 16px; height: 16px;" />
-          <span class="font-mono text-[9.5px] uppercase tracking-[0.14em]" style="color: rgba(255,255,255,0.5)">16 · dark</span>
-        </div>
-        <div class="border border-[rgba(30,37,48,0.1)] bg-dark p-6 flex flex-col items-center justify-center gap-3 min-h-[140px]">
-          <span class="font-mono text-[10px] leading-relaxed text-center" style="color: rgba(255,255,255,0.5)">Telegram dark<br>≈ 16&times;16</span>
+        <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex flex-col items-center justify-center gap-3 min-h-[180px]">
+          <div style="width: 96px; height: 96px; border-radius: 50%; overflow: hidden; background: #FBFAF7;" class="flex items-center justify-center">
+            <img src="public/brand/cds-favicon-stripe.png" alt="" style="width: 96px; height: 96px;" />
+          </div>
+          <span class="data-label">512&times;512 &middot; stripe (cropped)</span>
         </div>
       </div>
     </div>
@@ -883,7 +867,7 @@
           <span class="step-marker shrink-0">4</span>
           <div>
             <p class="text-dark font-noto font-semibold text-base md:text-lg mb-1">Height &nbsp;=&nbsp; (4&nbsp;&divide;&nbsp;26)&nbsp;&times;&nbsp;fontSize</p>
-            <p class="text-muted text-sm md:text-base leading-relaxed">Proportional to the type, locked at the wordmark&rsquo;s base ratio (4 units of bar in a 26-unit fontSize). Scales identically at every output size &mdash; header, favicon, social card.</p>
+            <p class="text-muted text-sm md:text-base leading-relaxed">Proportional to the type, locked at the wordmark&rsquo;s base ratio (4 units of bar in a 26-unit fontSize). Scales identically at every output size &mdash; wordmark, logo, favicon, social card.</p>
           </div>
         </div>
       </div>
@@ -915,7 +899,7 @@
       <span class="tag-overline">Construction · Vertical centering</span>
       <h3 class="text-[#1E2530] text-xl md:text-2xl font-noto font-bold mt-3 mb-4">The baseline isn&rsquo;t the visual center</h3>
       <p class="text-muted text-sm md:text-base leading-relaxed mb-4">
-        Because cap height + S overshoot top occupies ~95% of the letter range and S overshoot bottom only ~5%, the wordmark&rsquo;s visual center sits below the typographic baseline. Naively setting <code class="font-mono text-xs" style="background:#F0EEE9; padding:1px 6px;">baselineY&nbsp;=&nbsp;vbH&nbsp;/&nbsp;2</code> produces a logo that looks shifted upward.
+        Because cap height + S overshoot top occupies ~95% of the letter range and S overshoot bottom only ~5%, the wordmark&rsquo;s visual center sits below the typographic baseline. Naively setting <code class="font-mono text-xs" style="background:#F0EEE9; padding:1px 6px;">baselineY&nbsp;=&nbsp;vbH&nbsp;/&nbsp;2</code> produces a wordmark that looks shifted upward.
       </p>
       <p class="text-muted text-sm md:text-base leading-relaxed mb-4">The correct baseline:</p>
       <pre class="code-block mb-2"><code>fullHeight = letterHeight + 2 &times; K &times; armThickness
@@ -955,7 +939,7 @@ baselineY  = topY + letterTopAbove + K &times; armThickness</code></pre>
         <div class="border-l-2 border-[#C2410C] pl-4">
           <span class="data-label">Mark &mdash; embedded as paths</span>
           <p class="font-mono font-bold text-2xl text-dark mt-2">JetBrains Mono Bold</p>
-          <p class="text-muted text-sm mt-2">Letterforms in the logo and favicon. Extracted as paths via <code class="font-mono text-xs" style="background:#F0EEE9; padding:1px 6px;">opentype.js</code> so marks render identically regardless of font availability.</p>
+          <p class="text-muted text-sm mt-2">Letterforms in the wordmark; bracket arms in the logo and favicon. Extracted as paths via <code class="font-mono text-xs" style="background:#F0EEE9; padding:1px 6px;">opentype.js</code> so marks render identically regardless of font availability.</p>
         </div>
         <div class="border-l-2 border-[#C2410C] pl-4">
           <span class="data-label">Display &mdash; Google Fonts</span>
@@ -991,15 +975,15 @@ baselineY  = topY + letterTopAbove + K &times; armThickness</code></pre>
             </tr>
           </thead>
           <tbody>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo.svg</td><td class="py-3 pr-6 text-muted">Primary logo &middot; auto color via prefers-color-scheme</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-light.png</td><td class="py-3 pr-6 text-muted">~800px PNG &middot; dark glyphs &middot; email, social embeds</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-dark.png</td><td class="py-3 pr-6 text-muted">~800px PNG &middot; light glyphs &middot; dark backgrounds</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-square.svg</td><td class="py-3 pr-6 text-muted">600&times;600 SVG &middot; logo on square canvas, for cropping</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-square-light.png</td><td class="py-3 pr-6 text-muted">1024&times;1024 PNG &middot; dark glyphs</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-square-dark.png</td><td class="py-3 pr-6 text-muted">1024&times;1024 PNG &middot; light glyphs</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-favicon.svg</td><td class="py-3 pr-6 text-muted">Browser favicon &middot; auto color</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-favicon-32&thinsp;/&thinsp;-180&thinsp;/&thinsp;-512.png</td><td class="py-3 pr-6 text-muted">PNG favicons &middot; dark glyphs (legacy, apple-touch, PWA)</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-favicon-dark-32&thinsp;/&thinsp;-180&thinsp;/&thinsp;-512.png</td><td class="py-3 pr-6 text-muted">PNG favicons &middot; light glyphs (Telegram dark, dark-mode apps)</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo.svg</td><td class="py-3 pr-6 text-muted">The [ ] mark &middot; auto color via prefers-color-scheme &middot; site header, footer, SVG favicon</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-light.png</td><td class="py-3 pr-6 text-muted">512&times;512 PNG &middot; dark glyphs &middot; for embeds where SVG isn&rsquo;t supported</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-dark.png</td><td class="py-3 pr-6 text-muted">512&times;512 PNG &middot; light glyphs &middot; dark backgrounds</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-wordmark.svg</td><td class="py-3 pr-6 text-muted">600&times;600 SVG &middot; [CDS] on square canvas &middot; auto color</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-wordmark-light.png</td><td class="py-3 pr-6 text-muted">1024&times;1024 PNG &middot; dark glyphs &middot; Google publisher logo (JSON-LD)</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-wordmark-dark.png</td><td class="py-3 pr-6 text-muted">1024&times;1024 PNG &middot; light glyphs &middot; dark backgrounds, Telegram avatar</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-favicon-32.png</td><td class="py-3 pr-6 text-muted">32&times;32 PNG &middot; legacy browser favicon</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-favicon-180.png</td><td class="py-3 pr-6 text-muted">180&times;180 PNG &middot; Apple touch icon</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-favicon-stripe.png</td><td class="py-3 pr-6 text-muted">512&times;512 PNG &middot; padded 85% &middot; Stripe checkout brand icon (circular crop)</td></tr>
             <tr><td class="font-mono py-3 pr-6 text-dark">og-image.png</td><td class="py-3 pr-6 text-muted">1200&times;630 social card &middot; OG and Twitter preview</td></tr>
           </tbody>
         </table>
@@ -1020,7 +1004,7 @@ baselineY  = topY + letterTopAbove + K &times; armThickness</code></pre>
       <div class="flex flex-col max-w-sm">
         <div class="flex items-center gap-3 mb-5">
           <img src="public/brand/cds-logo.svg" alt="CDS"
-               class="h-6 w-auto" style="opacity: 0.72" width="68" height="26" />
+               class="h-6 w-auto" style="opacity: 0.72" width="24" height="24" />
           <span class="font-noto text-[1.125rem] text-dark font-semibold tracking-tight" style="opacity: 0.72">DoubleTrends™</span>
         </div>
         <p class="text-[0.65rem] leading-relaxed text-muted-dim">
