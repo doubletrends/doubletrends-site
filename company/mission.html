@@ -16,20 +16,22 @@
   <meta property="og:url"         content="https://doubletrends.com/company/mission.html" />
   <meta property="og:title"       content="Mission — DoubleTrends™" />
   <meta property="og:description" content="Why DoubleTrends™ exists and the principles behind it: one transparent, rule-based oversold-reversal signal — transparency over hype, education over dependency, narrow over vague." />
-  <meta property="og:image"       content="https://doubletrends.com/public/decor/hero.png" />
+  <meta property="og:image"       content="https://doubletrends.com/public/brand/og-image.png" />
   <meta property="og:locale"      content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content="Mission — DoubleTrends™" />
   <meta name="twitter:description" content="Why DoubleTrends™ exists and the principles behind it: one transparent, rule-based oversold-reversal signal — transparency over hype, education over dependency, narrow over vague." />
-  <meta name="twitter:image"       content="https://doubletrends.com/public/decor/hero.png" />
+  <meta name="twitter:image"       content="https://doubletrends.com/public/brand/og-image.png" />
 
   <!-- Canonical -->
   <link rel="canonical" href="https://doubletrends.com/company/mission.html" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="../public/brand/cds-logo.png" />
+  <link rel="icon" type="image/svg+xml" href="../public/brand/cds-favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../public/brand/cds-favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../public/brand/cds-favicon-180.png" />
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -43,7 +45,7 @@
       "url": "https://doubletrends.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://doubletrends.com/public/brand/cds-logo.png"
+        "url": "https://doubletrends.com/public/brand/cds-logo-light.png"
       },
       "brand": {
         "@type": "Brand",
@@ -97,11 +99,100 @@
 }
   </script>
 
-  <!-- Fonts: Syne (display) + DM Sans (body) + JetBrains Mono (data) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;600&family=Merriweather:wght@300;400&display=swap" />
+  <!-- Fonts: self-hosted brand typography -->
+  <style>
+    @font-face {
+      font-family: 'Syne';
+      src: url('../public/fonts/syne/syne-400.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Syne';
+      src: url('../public/fonts/syne/syne-600.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Syne';
+      src: url('../public/fonts/syne/syne-700.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Syne';
+      src: url('../public/fonts/syne/syne-800.woff2') format('woff2');
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      src: url('../public/fonts/dm-sans/dm-sans-300.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      src: url('../public/fonts/dm-sans/dm-sans-400.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      src: url('../public/fonts/dm-sans/dm-sans-400-italic.woff2') format('woff2');
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      src: url('../public/fonts/dm-sans/dm-sans-500.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      src: url('../public/fonts/dm-sans/dm-sans-600.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../public/fonts/jetbrains-mono/jetbrains-mono-400.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../public/fonts/jetbrains-mono/jetbrains-mono-600.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../public/fonts/merriweather/merriweather-300.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../public/fonts/merriweather/merriweather-400.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
 
   <!-- Tailwind Play CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -414,10 +505,11 @@
   <nav class="w-full max-w-site mx-auto flex items-center justify-between gap-4 px-6 h-16">
 
     <div class="flex items-center gap-3 shrink-0">
-      <img src="../public/brand/cds-logo.png" alt="CDS Logo"
-           class="w-7 h-7" style="opacity: 0.85" />
+      <a href="../index.html" aria-label="CDS — home" class="inline-flex items-center">
+        <img src="../public/brand/cds-logo.svg" alt="CDS" class="h-6 w-auto" width="68" height="26" />
+      </a>
       <a href="../index.html"
-         class="text-[#1E2530] font-noto font-semibold text-sm tracking-tight hidden md:block">
+         class="text-[#1E2530] font-noto font-semibold text-[1.125rem] tracking-tight hidden md:block">
         DoubleTrends™
       </a>
     </div>
@@ -527,9 +619,9 @@
       <!-- Left: brand + disclaimer + copyright -->
       <div class="flex flex-col max-w-sm">
         <div class="flex items-center gap-3 mb-5">
-          <img src="../public/brand/cds-logo.png" alt="CDS Logo"
-               class="w-6 h-6" style="opacity: 0.55" />
-          <span class="font-noto text-sm text-dark font-semibold tracking-tight">DoubleTrends™</span>
+          <img src="../public/brand/cds-logo.svg" alt="CDS"
+               class="h-6 w-auto" style="opacity: 0.72" width="68" height="26" />
+          <span class="font-noto text-[1.125rem] text-dark font-semibold tracking-tight">DoubleTrends™</span>
         </div>
         <p class="text-[0.65rem] leading-relaxed text-muted-dim">
           DoubleTrends™ signals are provided for educational and informational purposes only and do not constitute financial, investment, or trading advice. Past performance does not guarantee future results.

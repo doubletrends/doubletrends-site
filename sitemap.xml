@@ -44,6 +44,13 @@
   </url>
 
   <url>
+    <loc>https://doubletrends.com/brand.html</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
     <loc>https://doubletrends.com/legal/refund-policy.html</loc>
     <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>

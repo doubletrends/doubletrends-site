@@ -27,7 +27,7 @@ const TODAY    = new Date().toISOString().split('T')[0];
 const SUBSCRIBE_URL = 'https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c';
 // Cloudflare Worker base URL (no trailing slash). Filled in after `wrangler deploy`.
 const WORKER_URL = 'https://dtep-subscriptions.marc-d94.workers.dev';
-const OG_IMAGE = `${SITE_URL}/public/decor/hero.png`;
+const OG_IMAGE = `${SITE_URL}/public/brand/og-image.png`;
 const PUBLISHER = {
   '@type': 'Organization',
   '@id': `${SITE_URL}/#organization`,
@@ -35,7 +35,7 @@ const PUBLISHER = {
   url: SITE_URL,
   logo: {
     '@type': 'ImageObject',
-    url: `${SITE_URL}/public/brand/cds-logo.png`,
+    url: `${SITE_URL}/public/brand/cds-logo-light.png`,
   },
   brand: {
     '@type': 'Brand',
@@ -75,6 +75,11 @@ const pages = [
     src: 'company/contact.html', root: '../', priority: 0.6, kind: 'contact',
     title: 'Contact — DoubleTrends™',
     desc:  'Contact DoubleTrends™ for product questions, data and quant service inquiries, research questions, partnerships, or company matters.',
+  },
+  {
+    src: 'brand.html', root: '', priority: 0.3, kind: 'webpage',
+    title: 'Brand — Identity & Construction | CDS',
+    desc:  'How the CDS logo and favicon are constructed: four geometric constraints that lock the rust bar to S, a bracket scale that aligns the inner cavity with the letter range, color palette, typography, and asset inventory.',
   },
   {
     src: 'legal/refund-policy.html', root: '../', priority: 0.4, kind: 'webpage',
