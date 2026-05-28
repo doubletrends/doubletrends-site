@@ -1,12 +1,19 @@
 User-agent: *
 
-# 屏蔽构建源码与配置文件 (防止直接访问 src)
+# Public static assets used by indexed pages.
+Allow: /public/
+Allow: /public/brand/
+Allow: /public/fonts/
+Allow: /public/replay/
+
+# Source and local build/dependency files are not public content.
 Disallow: /src/
 Disallow: /build.js
+Disallow: /build-brand.js
 Disallow: /package.json
+Disallow: /package-lock.json
 Disallow: /node_modules/
-
-# 允许抓取其他内容
-Allow: /
+Disallow: /.github/
+Disallow: /.claude/
 
 Sitemap: https://doubletrends.com/sitemap.xml

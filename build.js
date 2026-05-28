@@ -20,140 +20,41 @@
 
 const fs   = require('fs');
 const path = require('path');
+const {
+  SITE_URL,
+  SUBSCRIBE_URL,
+  WORKER_URL,
+  OG_IMAGE,
+  OG_IMAGE_ALT,
+  PUBLISHER,
+  pages,
+} = require('./src/site.config');
 
 // ─── Site config ────────────────────────────────────────────────────────────
-const SITE_URL = 'https://doubletrends.com';
-const TODAY    = new Date().toISOString().split('T')[0];
-const SUBSCRIBE_URL = 'https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c';
-// Cloudflare Worker base URL (no trailing slash). Filled in after `wrangler deploy`.
-const WORKER_URL = 'https://dtep-subscriptions.marc-d94.workers.dev';
-const OG_IMAGE = `${SITE_URL}/public/brand/og-image.png`;
-const PUBLISHER = {
-  '@type': 'Organization',
-  '@id': `${SITE_URL}/#organization`,
-  name: "Cheng's Data Service",
-  url: SITE_URL,
-  logo: {
-    '@type': 'ImageObject',
-    url: `${SITE_URL}/public/brand/cds-logo-light.png`,
-  },
-  brand: {
-    '@type': 'Brand',
-    name: 'DoubleTrends™',
-  },
-};
+function todayInTimeZone(timeZone) {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(new Date());
+  const get = (type) => parts.find((part) => part.type === type).value;
+  return `${get('year')}-${get('month')}-${get('day')}`;
+}
 
-const pages = [
-  {
-    src: 'index.html', root: '', priority: 1.0, kind: 'home',
-    title: 'DoubleTrends™ — S&P 500 Signals for ETF Investors',
-    desc:  'A rules-based S&P 500 signal for ETF investors: DoubleTrends™ sends a Telegram alert when its oversold-reversal model fires, for funds like VOO or SPY.',
-  },
-  {
-    src: 'academy/index.html', root: '../', priority: 0.9, kind: 'collection',
-    title: 'Academy — Research & Education | DoubleTrends™',
-    desc:  'Research notes on S&P 500 drawdowns, market exhaustion, investor behavior, volume structure, and the concepts behind the DoubleTrends™ signal.',
-  },
-
-  // ── company ───────────────────────────────────────────────────────────────
-  {
-    src: 'company/mission.html', root: '../', priority: 0.5, kind: 'webpage',
-    title: 'Mission — DoubleTrends™',
-    desc:  'Why DoubleTrends™ exists and the principles behind it: one transparent, rule-based oversold-reversal signal — transparency over hype, education over dependency, narrow over vague.',
-  },
-  {
-    src: 'company/consulting.html', root: '../', priority: 0.6, kind: 'services',
-    title: 'Consulting — DoubleTrends™',
-    desc:  'The data engineering and quantitative research behind DoubleTrends™, available for custom projects: ML modelling, statistical analysis, forecasting, and data collection.',
-  },
-  {
-    src: 'company/careers.html', root: '../', priority: 0.5, kind: 'webpage',
-    title: 'Careers — DoubleTrends™',
-    desc:  'Roles we expect to grow into — Research Analyst, Data Scientist, and Sales. Not currently hiring, but open applications are welcome.',
-  },
-  {
-    src: 'company/contact.html', root: '../', priority: 0.6, kind: 'contact',
-    title: 'Contact — DoubleTrends™',
-    desc:  'Contact DoubleTrends™ for product questions, data and quant service inquiries, research questions, partnerships, or company matters.',
-  },
-  {
-    src: 'brand.html', root: '', priority: 0.3, kind: 'webpage',
-    title: 'Brand — Identity & Construction | CDS',
-    desc:  'How the CDS logo and favicon are constructed: four geometric constraints that lock the rust bar to S, a bracket scale that aligns the inner cavity with the letter range, color palette, typography, and asset inventory.',
-  },
-  {
-    src: 'legal/refund-policy.html', root: '../', priority: 0.4, kind: 'webpage',
-    title: 'Free Trial & Refunds — DoubleTrends™',
-    desc:  'DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund within 14 days of any charge if no signal has fired.',
-  },
-  {
-    src: 'legal/terms.html', root: '../', priority: 0.3, kind: 'webpage',
-    title: 'Terms of Service — DoubleTrends™',
-    desc:  'The terms for using the DoubleTrends™ website and subscription: billing, acceptable use, disclaimers, and limitation of liability. Governed by Ontario law.',
-  },
-  {
-    src: 'legal/privacy.html', root: '../', priority: 0.3, kind: 'webpage',
-    title: 'Privacy Policy — DoubleTrends™',
-    desc:  'How DoubleTrends™ handles your data: no cookies, no analytics, no tracking — only the minimum needed to bill via Stripe and deliver the Telegram signal.',
-  },
-  {
-    src: 'legal/disclaimer.html', root: '../', priority: 0.3, kind: 'webpage',
-    title: 'Disclaimer — DoubleTrends™',
-    desc:  'DoubleTrends™ provides educational, rules-based market information only — not financial, investment, trading, tax, or legal advice. Trading involves risk.',
-  },
-
-  {
-    src: '404.html', root: '', sitemap: false, kind: 'webpage', robots: 'noindex,follow',
-    title: '404 Not Found — DoubleTrends™',
-    desc:  'Page not found.',
-  },
-  {
-    src: 'success.html', root: '', sitemap: false, kind: 'webpage', robots: 'noindex,follow',
-    title: 'You\'re Subscribed — DoubleTrends™',
-    desc:  'Your DoubleTrends™ subscription is active. Get your private invite link to the Telegram signal channel.',
-  },
-
-  // ── academy: articles ───────────────────────────────────────────────────────
-  {
-    src: 'academy/sp-500-drawdowns.html', root: '../', priority: 0.8, kind: 'article',
-    title: 'How Often Does the S&P 500 Dip — and How Deep? | Academy',
-    desc:  'Seventy-six years of S&P 500 data: how often corrections and bear markets hit, how deep they go, how long recovery takes — and what it means for buying the dip.',
-  },
-  {
-    src: 'academy/why-buying-the-dip-is-hard.html', root: '../', priority: 0.8, kind: 'article',
-    title: 'Why Buying the Dip Is Hard — and How to Fix It | Academy',
-    desc:  'The best market days happen during crashes — all 10 of the S&P 500\'s best days since 2000 came while it was already down 10%+. Why dip-buying fails, and how a rule fixes it.',
-  },
-  {
-    src: 'academy/every-sp-500-bottom-since-2016.html', root: '../', priority: 0.8, kind: 'article',
-    title: 'Every S&P 500 Bottom Since 2016 — the Pattern | Academy',
-    desc:  'All 12 DoubleTrends™ signals on the S&P 500 index, the drawdown at each, and the returns that followed — median +14.6% over 12 months — with an honest look at where it misfired.',
-  },
-
-  // ── academy: methods ────────────────────────────────────────────────────────
-  {
-    src: 'academy/volume-profile-vwap.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'Volume Profile & VWAP, Explained | Academy',
-    desc:  'A plain-English primer on two standard volume tools: Volume Profile (volume traded at each price level) and VWAP (the volume-weighted average price benchmark).',
-  },
-  {
-    src: 'academy/double-trend-exhaustion.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'DoubleTrends™: Double Trend Exhaustion Explained | Academy',
-    desc:  'How the DoubleTrends™ signal works: a double trend exhaustion model built on dual-period Williams %R, flagging when a selloff\'s downside momentum is exhausted.',
-  },
-  {
-    src: 'academy/maximum-drawdown.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'Maximum Drawdown — Original Research | Academy',
-    desc:  'Our own percentile-of-history measure of how cheap price is versus its own past — a layered, multi-timeframe read of market stress that underpins the dip thesis.',
-  },
-];
+const TODAY = todayInTimeZone('Asia/Shanghai');
+const ARTICLE_PUBLISHED = '2026-05-25';
 
 // ─── Read partials ────────────────────────────────────────────────────────────
 const partialsDir = path.join(__dirname, 'src', '_partials');
 const read = (name) => fs.readFileSync(path.join(partialsDir, name), 'utf8');
 
 const layout = read('layout.html');
-const head   = read('head.html');
+const head   = replace(read('head.html'), {
+  FONTS: read('fonts.html'),
+  TAILWIND: read('tailwind.html'),
+  STYLES: read('styles.html'),
+});
 const header = read('header.html');
 const footer = read('footer.html');
 const checkoutGate = read('checkout-gate.html');
@@ -175,6 +76,23 @@ function canonicalFor(src) {
   return `${SITE_URL}/${src.replace(/index\.html$/, '')}`;
 }
 
+function pageDisplayName(page) {
+  return page.title
+    .replace(' — S&P 500 Signals for ETF Investors', '')
+    .replace(' | Academy', '')
+    .replace(' | DoubleTrends™', '')
+    .replace(' — DoubleTrends™', '')
+    .replace(' — Research & Education', '')
+    .replace(' — Identity & Construction | CDS', '');
+}
+
+function socialExtraFor(page) {
+  if (page.kind !== 'article') return '';
+  return `  <meta property="article:published_time" content="${ARTICLE_PUBLISHED}" />
+  <meta property="article:modified_time" content="${TODAY}" />
+  <meta property="article:section" content="Academy" />`;
+}
+
 function jsonLdFor(page) {
   const canonical = canonicalFor(page.src);
   const isArticle = page.kind === 'article';
@@ -190,6 +108,7 @@ function jsonLdFor(page) {
       '@id': `${SITE_URL}/#website`,
       url: SITE_URL,
       name: 'DoubleTrends™',
+      description: 'Rules-based S&P 500 index alerts and research notes for ETF investors.',
       publisher: { '@id': PUBLISHER['@id'] },
       inLanguage: 'en-US',
     },
@@ -248,8 +167,21 @@ function jsonLdFor(page) {
       mainEntityOfPage: { '@id': `${canonical}#webpage` },
       author: { '@id': PUBLISHER['@id'] },
       publisher: { '@id': PUBLISHER['@id'] },
-      image: OG_IMAGE,
-      datePublished: '2026-05-25',
+      image: {
+        '@type': 'ImageObject',
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+      },
+      articleSection: 'Academy',
+      about: [
+        'S&P 500 index',
+        'ETF investing',
+        'market drawdowns',
+        'oversold reversal',
+      ],
+      isAccessibleForFree: true,
+      datePublished: ARTICLE_PUBLISHED,
       dateModified: TODAY,
       inLanguage: 'en-US',
     });
@@ -281,22 +213,15 @@ function breadcrumbItems(page) {
       items.push({
         '@type': 'ListItem',
         position: 3,
-        name: page.title.replace(' | Academy', ''),
+        name: pageDisplayName(page),
         item: canonicalFor(page.src),
       });
     }
-  } else if (parts[0] === 'company') {
+  } else if (page.src !== 'index.html') {
     items.push({
       '@type': 'ListItem',
       position: 2,
-      name: 'Company',
-      item: canonicalFor(page.src),
-    });
-  } else if (parts[0] === 'legal') {
-    items.push({
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Legal',
+      name: pageDisplayName(page),
       item: canonicalFor(page.src),
     });
   }
@@ -334,6 +259,8 @@ for (const page of pages) {
     WORKER_URL,
     OG_TYPE:   page.kind === 'article' ? 'article' : 'website',
     OG_IMAGE,
+    OG_IMAGE_ALT,
+    SOCIAL_EXTRA: socialExtraFor(page),
     ROBOTS:    page.robots ?? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
     JSONLD:    jsonLdFor(page),
   });
@@ -367,3 +294,48 @@ ${urls}
 
 fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemap, 'utf8');
 console.log('✓  sitemap.xml generated');
+
+// ─── Generate llms.txt ───────────────────────────────────────────────────────
+const primaryPages = pages
+  .filter((p) => p.sitemap !== false && p.kind !== 'article')
+  .map((p) => `- ${pageDisplayName(p)}: ${canonicalFor(p.src)}\n  ${p.desc}`)
+  .join('\n');
+
+const academyArticles = pages
+  .filter((p) => p.kind === 'article')
+  .map((p) => `- ${pageDisplayName(p)}: ${canonicalFor(p.src)}\n  ${p.desc}`)
+  .join('\n');
+
+const llms = `# DoubleTrends™
+
+DoubleTrends™ is a rules-based S&P 500 index signal for ETF investors. It tracks the S&P 500 index and sends a Telegram alert when its oversold-reversal rule fires. The site also publishes research notes on drawdowns, market exhaustion, investor behavior, and market-structure tools.
+
+Important: the content is educational market information only. It is not financial, investment, trading, tax, or legal advice, and it is not a recommendation to buy, sell, or hold any security.
+
+## Primary Pages
+
+${primaryPages}
+
+## Academy Articles
+
+${academyArticles}
+
+## Machine-Readable Data
+
+- Replay data for the S&P 500 signal chart: ${SITE_URL}/public/replay/sp500.json
+- XML sitemap: ${SITE_URL}/sitemap.xml
+- Robots policy: ${SITE_URL}/robots.txt
+
+## Entity Summary
+
+- Brand: DoubleTrends™
+- Operator: Cheng's Data Service
+- Coverage: S&P 500 index
+- Intended audience: ETF investors using S&P 500 exposure such as VOO, SPY, or IVV
+- Delivery: Telegram alert
+- Signal type: low-frequency, rules-based oversold reversal
+- Contact: info@doubletrends.com
+`;
+
+fs.writeFileSync(path.join(__dirname, 'llms.txt'), llms, 'utf8');
+console.log('✓  llms.txt generated');

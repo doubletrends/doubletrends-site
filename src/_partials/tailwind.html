@@ -1,0 +1,46 @@
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:     '#C2410C',
+            'primary-h': '#9A330A',
+            dark:        '#1E2530',
+            light:       '#FBFAF7',
+            muted:       '#5A6473',
+            'muted-dim': '#8A93A0',
+            bright:      '#2A3340',
+            'gray-d':    '#5A6473',
+          },
+          fontFamily: {
+            /* Remapped — existing class names preserved for all other pages */
+            noto:  ['"Syne"', 'sans-serif'],
+            open:  ['"DM Sans"', 'sans-serif'],
+            exo:   ['"DM Sans"', 'sans-serif'],
+            mono:  ['"JetBrains Mono"', 'monospace'],
+            serif: ['Merriweather', 'Georgia', 'serif'],
+          },
+          maxWidth: {
+            site: '1200px',
+            hero: '1000px',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Component classes — expand to the exact utilities they replace (DRY, zero visual change) -->
+  <style type="text/tailwindcss">
+    @layer components {
+      /* Article scaffolding (Academy pages) */
+      .lead       { @apply font-open text-lg md:text-xl leading-relaxed text-bright; }
+      .prose-p    { @apply font-open text-base leading-relaxed text-dark; }
+      .article-h2 { @apply text-dark font-noto font-bold text-2xl md:text-3xl leading-tight mb-5; }
+      .fine-print { @apply font-open text-xs leading-relaxed text-muted-dim; }
+      /* Footer navigation links */
+      .foot-link       { @apply text-muted text-xs transition-colors; }
+      .foot-link:hover { @apply text-dark; }
+    }
+  </style>

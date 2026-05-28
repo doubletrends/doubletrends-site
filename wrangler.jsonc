@@ -3,7 +3,8 @@
   "name": "cdssp-github-io",
   "compatibility_date": "2025-09-27",
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "not_found_handling": "404-page"
   },
   "base_dir": ".",
   "ignore_assets": [

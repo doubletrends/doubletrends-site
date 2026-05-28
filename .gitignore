@@ -2,5 +2,6 @@ __pycache__/
 *.pyc
 node_modules/
 .wrangler/
+.claude/
 .dev.vars
 .dev.vars.*
