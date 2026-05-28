@@ -6,25 +6,49 @@ Important: the content is educational market information only. It is not financi
 
 ## Primary Pages
 
-- Home and product overview: https://doubletrends.com/
-- Academy index: https://doubletrends.com/academy/
-- Consulting (data & quant services): https://doubletrends.com/company/consulting.html
+- DoubleTrends™: https://doubletrends.com/
+  A rules-based S&P 500 signal for ETF investors: DoubleTrends™ sends a Telegram alert when its oversold-reversal model fires, for funds like VOO or SPY.
+- Academy: https://doubletrends.com/academy/
+  Research notes on S&P 500 drawdowns, market exhaustion, investor behavior, volume structure, and the concepts behind the DoubleTrends™ signal.
+- Mission: https://doubletrends.com/company/mission.html
+  Why DoubleTrends™ exists and the principles behind it: one transparent, rule-based oversold-reversal signal — transparency over hype, education over dependency, narrow over vague.
+- Consulting: https://doubletrends.com/company/consulting.html
+  The data engineering and quantitative research behind DoubleTrends™, available for custom projects: ML modelling, statistical analysis, forecasting, and data collection.
 - Careers: https://doubletrends.com/company/careers.html
+  Roles we expect to grow into — Research Analyst, Data Scientist, and Sales. Not currently hiring, but open applications are welcome.
 - Contact: https://doubletrends.com/company/contact.html
+  Contact DoubleTrends™ for product questions, data and quant service inquiries, research questions, partnerships, or company matters.
+- Brand: https://doubletrends.com/brand.html
+  How the CDS logo and favicon are constructed: four geometric constraints that lock the rust bar to S, a bracket scale that aligns the inner cavity with the letter range, color palette, typography, and asset inventory.
+- Free Trial & Refunds: https://doubletrends.com/legal/refund-policy.html
+  DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund within 14 days of any charge if no signal has fired.
+- Terms of Service: https://doubletrends.com/legal/terms.html
+  The terms for using the DoubleTrends™ website and subscription: billing, acceptable use, disclaimers, and limitation of liability. Governed by Ontario law.
+- Privacy Policy: https://doubletrends.com/legal/privacy.html
+  How DoubleTrends™ handles your data: no cookies, no analytics, no tracking — only the minimum needed to bill via Stripe and deliver the Telegram signal.
+- Disclaimer: https://doubletrends.com/legal/disclaimer.html
+  DoubleTrends™ provides educational, rules-based market information only — not financial, investment, trading, tax, or legal advice. Trading involves risk.
 
 ## Academy Articles
 
-- S&P 500 drawdown history: https://doubletrends.com/academy/sp-500-drawdowns.html
-- Why buying the dip is hard: https://doubletrends.com/academy/why-buying-the-dip-is-hard.html
-- Every S&P 500 bottom since 2016: https://doubletrends.com/academy/every-sp-500-bottom-since-2016.html
-- DoubleTrends™ signal methodology: https://doubletrends.com/academy/double-trend-exhaustion.html
-- Maximum Drawdown research note: https://doubletrends.com/academy/maximum-drawdown.html
-- Volume Profile and VWAP primer: https://doubletrends.com/academy/volume-profile-vwap.html
+- How Often Does the S&P 500 Dip — and How Deep?: https://doubletrends.com/academy/sp-500-drawdowns.html
+  Seventy-six years of S&P 500 data: how often corrections and bear markets hit, how deep they go, how long recovery takes — and what it means for buying the dip.
+- Why Buying the Dip Is Hard — and How to Fix It: https://doubletrends.com/academy/why-buying-the-dip-is-hard.html
+  The best market days happen during crashes — all 10 of the S&P 500's best days since 2000 came while it was already down 10%+. Why dip-buying fails, and how a rule fixes it.
+- Every S&P 500 Bottom Since 2016 — the Pattern: https://doubletrends.com/academy/every-sp-500-bottom-since-2016.html
+  All 12 DoubleTrends™ signals on the S&P 500 index, the drawdown at each, and the returns that followed — median +14.6% over 12 months — with an honest look at where it misfired.
+- Volume Profile & VWAP, Explained: https://doubletrends.com/academy/volume-profile-vwap.html
+  A plain-English primer on two standard volume tools: Volume Profile (volume traded at each price level) and VWAP (the volume-weighted average price benchmark).
+- DoubleTrends™: Double Trend Exhaustion Explained: https://doubletrends.com/academy/double-trend-exhaustion.html
+  How the DoubleTrends™ signal works: a double trend exhaustion model built on dual-period Williams %R, flagging when a selloff's downside momentum is exhausted.
+- Maximum Drawdown — Original Research: https://doubletrends.com/academy/maximum-drawdown.html
+  Our own percentile-of-history measure of how cheap price is versus its own past — a layered, multi-timeframe read of market stress that underpins the dip thesis.
 
 ## Machine-Readable Data
 
 - Replay data for the S&P 500 signal chart: https://doubletrends.com/public/replay/sp500.json
 - XML sitemap: https://doubletrends.com/sitemap.xml
+- Robots policy: https://doubletrends.com/robots.txt
 
 ## Entity Summary
 
@@ -34,3 +58,4 @@ Important: the content is educational market information only. It is not financi
 - Intended audience: ETF investors using S&P 500 exposure such as VOO, SPY, or IVV
 - Delivery: Telegram alert
 - Signal type: low-frequency, rules-based oversold reversal
+- Contact: info@doubletrends.com
