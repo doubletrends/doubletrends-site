@@ -73,7 +73,7 @@
         "@id": "https://doubletrends.com/#organization"
       },
       "inLanguage": "en-US",
-      "dateModified": "2026-05-26"
+      "dateModified": "2026-05-28"
     },
     {
       "@type": "BreadcrumbList",
@@ -115,7 +115,7 @@
       },
       "image": "https://doubletrends.com/public/decor/hero.png",
       "datePublished": "2026-05-25",
-      "dateModified": "2026-05-26",
+      "dateModified": "2026-05-28",
       "inLanguage": "en-US"
     }
   ]
@@ -484,7 +484,7 @@
 <span class="tag-overline mb-4 block">What it measures</span>
 <h2 class="article-h2"> Price, ranked against its own past </h2>
 <p class="prose-p mb-4"> Instead of comparing price to a moving average, Maximum Drawdown asks a simpler question: across a lookback window, how many past closes sit <em>above</em> today's close? The more prior closes that are higher, the deeper today's price sits within its own recent history. </p>
-<p class="prose-p mb-6"> It runs that count across several windows at once &mdash; 208, 52, 30, and 14 bars &mdash; so a single reading blends long- and short-horizon weakness into one layered view. A high count across windows means price is deeply depressed relative to where it has recently traded: a percentile of an asset against itself, not against an arbitrary benchmark or a fixed percentage threshold. </p>
+<p class="prose-p mb-6"> It runs that count across a stack of lookback windows at once &mdash; spanning multi-year, multi-month, and multi-week horizons &mdash; so a single reading blends long- and short-horizon weakness into one layered view. A high count across windows means price is deeply depressed relative to where it has recently traded: a percentile of an asset against itself, not against an arbitrary benchmark or a fixed percentage threshold. </p>
 <div class="media-frame overflow-hidden">
 <img src="../public/academy/mdd-1.png" alt="Maximum Drawdown indicator chart" class="w-full" />
 </div>
@@ -522,7 +522,7 @@
 <!-- Method -->
 <section class="hairline pt-6">
 <p class="data-label mb-3">Method</p>
-<p class="fine-print"> Maximum Drawdown is original work by CDS: for each lookback (208 / 52 / 30 / 14 bars) it counts the past closes above the current close, then reads the layered result as a percentile of price within its own history. Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results. </p>
+<p class="fine-print"> Maximum Drawdown is original work by CDS: across a stack of lookback windows &mdash; from multi-year down to multi-week horizons &mdash; it counts the past closes above the current close, then reads the layered result as a percentile of price within its own history. The exact window lengths are part of the production indicator and are not published. Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results. </p>
 </section>
 </article>
 
@@ -608,19 +608,22 @@
       We&rsquo;d rather you go in informed.
     </h2>
     <p class="text-muted text-sm leading-relaxed mb-4">
-      We value your privacy. This site sets no cookies, runs no analytics, and tracks nothing.
-      Checkout is handled entirely by <strong class="text-dark">Stripe</strong> — we never see or store your full card number.
+      No cookies, no analytics, no tracking. Checkout is handled by <strong class="text-dark">Stripe</strong> &mdash; we never see or store your card number.
+    </p>
+    <p class="text-muted text-sm leading-relaxed mb-4">
+      Cancel anytime. The first 30 days are a free trial; cancel before it ends and you are never charged. Once billed, cancelling stops future charges and access continues to the end of the paid term &mdash; and a full refund of that charge is available within 14 days, as long as no signal has been delivered since. See our <a href="../legal/refund-policy.html" target="_blank" rel="noopener" class="text-primary hover:underline">Refund Policy</a>.
     </p>
     <p class="text-muted text-sm leading-relaxed mb-6">
-      Before you subscribe, we genuinely hope you&rsquo;ll take a minute to read our
+      Most people skip the fine print &mdash; but this is the financial space, where real money and real risk are involved. DoubleTrends&trade; is an informational signal, not financial advice. Please take a minute with our
       <a href="../legal/terms.html" target="_blank" rel="noopener" class="text-primary hover:underline">Terms of Service</a>
       and <a href="../legal/privacy.html" target="_blank" rel="noopener" class="text-primary hover:underline">Privacy Policy</a>.
-      Most people skip the fine print — but this is the financial space, where real money and real risk are involved.
-      DoubleTrends™ is an informational signal, not financial advice, and we&rsquo;d rather you understand exactly what it is before you commit.
+    </p>
+    <p class="text-muted text-xs leading-relaxed mb-4">
+      By clicking &ldquo;Agree and continue,&rdquo; you confirm you have fully read the above policies and accept them.
     </p>
     <div class="flex flex-col sm:flex-row gap-3 sm:justify-end">
       <button type="button" id="checkout-gate-cancel" class="btn-dark justify-center">Go back</button>
-      <a id="checkout-gate-continue" href="#" class="btn-light justify-center">Continue to checkout</a>
+      <a id="checkout-gate-continue" href="#" class="btn-light justify-center">Agree and continue</a>
     </div>
   </div>
 </div>

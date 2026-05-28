@@ -12,7 +12,7 @@
 <span class="tag-overline mb-4 block">What it measures</span>
 <h2 class="article-h2"> Price, ranked against its own past </h2>
 <p class="prose-p mb-4"> Instead of comparing price to a moving average, Maximum Drawdown asks a simpler question: across a lookback window, how many past closes sit <em>above</em> today's close? The more prior closes that are higher, the deeper today's price sits within its own recent history. </p>
-<p class="prose-p mb-6"> It runs that count across several windows at once &mdash; 208, 52, 30, and 14 bars &mdash; so a single reading blends long- and short-horizon weakness into one layered view. A high count across windows means price is deeply depressed relative to where it has recently traded: a percentile of an asset against itself, not against an arbitrary benchmark or a fixed percentage threshold. </p>
+<p class="prose-p mb-6"> It runs that count across a stack of lookback windows at once &mdash; spanning multi-year, multi-month, and multi-week horizons &mdash; so a single reading blends long- and short-horizon weakness into one layered view. A high count across windows means price is deeply depressed relative to where it has recently traded: a percentile of an asset against itself, not against an arbitrary benchmark or a fixed percentage threshold. </p>
 <div class="media-frame overflow-hidden">
 <img src="{{ROOT}}public/academy/mdd-1.png" alt="Maximum Drawdown indicator chart" class="w-full" />
 </div>
@@ -50,6 +50,6 @@
 <!-- Method -->
 <section class="hairline pt-6">
 <p class="data-label mb-3">Method</p>
-<p class="fine-print"> Maximum Drawdown is original work by CDS: for each lookback (208 / 52 / 30 / 14 bars) it counts the past closes above the current close, then reads the layered result as a percentile of price within its own history. Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results. </p>
+<p class="fine-print"> Maximum Drawdown is original work by CDS: across a stack of lookback windows &mdash; from multi-year down to multi-week horizons &mdash; it counts the past closes above the current close, then reads the layered result as a percentile of price within its own history. The exact window lengths are part of the production indicator and are not published. Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results. </p>
 </section>
 </article>
