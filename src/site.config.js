@@ -15,9 +15,9 @@ const PUBLISHER = {
   email: 'info@doubletrends.com',
   logo: {
     '@type': 'ImageObject',
-    url: `${SITE_URL}/public/brand/cds-logo-light.png`,
-    width: 800,
-    height: 302,
+    url: `${SITE_URL}/public/brand/cds-wordmark-light.png`,
+    width: 1024,
+    height: 1024,
   },
   brand: {
     '@type': 'Brand',
