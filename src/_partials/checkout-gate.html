@@ -32,48 +32,4 @@
     </div>
   </div>
 </div>
-<script>
-  (function () {
-    var gate = document.getElementById('checkout-gate');
-    if (!gate) return;
-    var continueBtn = document.getElementById('checkout-gate-continue');
-    var cancelBtn = document.getElementById('checkout-gate-cancel');
-    var backdrop = document.getElementById('checkout-gate-backdrop');
-    var lastFocus = null;
-
-    function isCheckoutLink(a) {
-      return a && a.href && a.href.indexOf('stripe.com') !== -1;
-    }
-    function openGate(href) {
-      continueBtn.setAttribute('href', href);
-      gate.classList.remove('hidden');
-      gate.classList.add('flex');
-      gate.setAttribute('aria-hidden', 'false');
-      lastFocus = document.activeElement;
-      continueBtn.focus();
-      document.body.style.overflow = 'hidden';
-    }
-    function closeGate() {
-      gate.classList.add('hidden');
-      gate.classList.remove('flex');
-      gate.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
-    }
-
-    document.addEventListener('click', function (e) {
-      var a = e.target.closest ? e.target.closest('a') : null;
-      if (!a) return;
-      if (a.id === 'checkout-gate-continue') return; // let the proceed link navigate
-      if (isCheckoutLink(a)) {
-        e.preventDefault();
-        openGate(a.href);
-      }
-    });
-    cancelBtn.addEventListener('click', closeGate);
-    backdrop.addEventListener('click', closeGate);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !gate.classList.contains('hidden')) closeGate();
-    });
-  })();
-</script>
+<script src="{{ROOT}}public/js/checkout-gate.js"></script>

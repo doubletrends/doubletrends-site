@@ -1,4 +1,4 @@
-<header class="fixed top-0 left-0 right-0 z-30"
+<header class="site-header fixed top-0 left-0 right-0 z-30"
         style="background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.08);">
   <nav class="w-full max-w-site mx-auto flex items-center justify-between gap-4 px-6 h-16">
 
@@ -7,7 +7,7 @@
         <img src="{{ROOT}}public/brand/cds-logo.svg" alt="CDS" class="h-6 w-auto" width="24" height="24" />
       </a>
       <a href="{{ROOT}}index.html"
-         class="text-[#1E2530] font-noto font-semibold text-[1.125rem] tracking-tight hidden md:block">
+         class="text-[#1E2530] font-noto font-semibold text-[1.125rem] tracking-tight">
         DoubleTrends™
       </a>
     </div>
@@ -22,14 +22,10 @@
       <a href="{{SUBSCRIBE_URL}}" class="btn-light ml-2 !px-4 !py-2 text-[0.65rem]">Subscribe</a>
     </div>
 
-    <div class="flex lg:hidden items-center gap-1 overflow-x-auto">
-      <a href="{{ROOT}}index.html#track-record" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Track</a>
-      <a href="{{ROOT}}index.html#how-it-works" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Works</a>
-      <a href="{{ROOT}}index.html#pricing" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Price</a>
-      <a href="{{ROOT}}index.html#refund" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Refund</a>
-      <a href="{{ROOT}}index.html#faq" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">FAQ</a>
-      <a href="{{ROOT}}academy/index.html" class="btn-dark !px-3 !py-2 text-[0.6rem]">Academy</a>
-      <a href="{{SUBSCRIBE_URL}}" class="btn-light !px-3 !py-2 text-[0.6rem]">Subscribe</a>
+    <div class="flex lg:hidden items-center gap-1.5 shrink-0">
+      <a href="{{ROOT}}index.html" class="mobile-nav-link">Product</a>
+      <a href="{{ROOT}}academy/index.html" class="mobile-nav-link">Academy</a>
+      <a href="{{SUBSCRIBE_URL}}" class="mobile-nav-cta">Subscribe</a>
     </div>
   </nav>
 </header>

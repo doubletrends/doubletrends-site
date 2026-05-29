@@ -1,11 +1,11 @@
 <footer class="relative w-full" style="background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.08);">
-  <div class="relative z-10 w-full max-w-site mx-auto px-8 py-12">
+  <div class="site-footer-inner relative z-10 w-full max-w-site mx-auto px-8 py-12">
 
     <!-- Main row -->
-    <div class="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12">
+    <div class="site-footer-grid grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12">
 
       <!-- Left: brand + disclaimer + copyright -->
-      <div class="flex flex-col max-w-sm">
+      <div class="site-footer-brand flex flex-col max-w-sm">
         <div class="flex items-center gap-3 mb-5">
           <img src="{{ROOT}}public/brand/cds-logo.svg" alt="CDS"
                class="h-6 w-auto" style="opacity: 0.72" width="24" height="24" />
@@ -19,9 +19,9 @@
 
       <!-- Right: sitemap columns — each column shrinks to its widest line; a hairline divider
            with equal padding on both sides separates sections at lg+. Stacks vertically below lg. -->
-      <div class="flex justify-start lg:justify-end">
-        <div class="flex flex-col lg:flex-row gap-8 lg:gap-0 w-max">
-          <div class="flex flex-col items-start gap-3 lg:pr-8">
+      <div class="site-footer-nav-wrap flex justify-start lg:justify-end">
+        <div class="site-footer-nav flex flex-col lg:flex-row gap-8 lg:gap-0 w-max">
+          <div class="site-footer-group flex flex-col items-start gap-3 lg:pr-8">
             <span class="tag-overline mb-2">Product</span>
             <a href="{{ROOT}}index.html" class="foot-link">Home</a>
             <a href="{{ROOT}}index.html#track-record" class="foot-link">Track Record</a>
@@ -31,7 +31,7 @@
             <a href="{{ROOT}}index.html#faq" class="foot-link">FAQ</a>
             <a href="{{SUBSCRIBE_URL}}" class="foot-link">Subscribe</a>
           </div>
-          <div class="flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
+          <div class="site-footer-group flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Academy</span>
             <a href="{{ROOT}}academy/index.html" class="foot-link">Academy home</a>
             <a href="{{ROOT}}academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 drawdowns</a>
@@ -41,15 +41,56 @@
             <a href="{{ROOT}}academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
             <a href="{{ROOT}}academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
           </div>
-          <div class="flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
+          <div class="site-footer-group flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Company</span>
             <a href="{{ROOT}}company/mission.html" class="foot-link">Mission</a>
             <a href="{{ROOT}}company/consulting.html" class="foot-link">Consulting</a>
             <a href="{{ROOT}}company/careers.html" class="foot-link">Careers</a>
             <a href="{{ROOT}}company/contact.html" class="foot-link">Contact</a>
           </div>
-          <div class="flex flex-col items-start gap-3 lg:pl-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
+          <div class="site-footer-group flex flex-col items-start gap-3 lg:pl-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Legal</span>
+            <a href="{{ROOT}}legal/terms.html" class="foot-link">Terms of Service</a>
+            <a href="{{ROOT}}legal/privacy.html" class="foot-link">Privacy Policy</a>
+            <a href="{{ROOT}}legal/disclaimer.html" class="foot-link">Disclaimer</a>
+            <a href="{{ROOT}}legal/refund-policy.html" class="foot-link">Refund Policy</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-footer-mobile-menu">
+        <div class="site-footer-tabs" role="tablist" aria-label="Footer sections">
+          <button class="site-footer-tab" type="button" role="tab" aria-selected="false" aria-controls="footer-product" id="footer-tab-product">Product</button>
+          <button class="site-footer-tab" type="button" role="tab" aria-selected="false" aria-controls="footer-academy" id="footer-tab-academy">Academy</button>
+          <button class="site-footer-tab" type="button" role="tab" aria-selected="false" aria-controls="footer-company" id="footer-tab-company">Company</button>
+          <button class="site-footer-tab" type="button" role="tab" aria-selected="false" aria-controls="footer-legal" id="footer-tab-legal">Legal</button>
+        </div>
+        <div class="site-footer-panels">
+          <div class="site-footer-panel" role="tabpanel" id="footer-product" aria-labelledby="footer-tab-product" hidden>
+            <a href="{{ROOT}}index.html" class="foot-link">Home</a>
+            <a href="{{ROOT}}index.html#track-record" class="foot-link">Track Record</a>
+            <a href="{{ROOT}}index.html#how-it-works" class="foot-link">How It Works</a>
+            <a href="{{ROOT}}index.html#pricing" class="foot-link">Pricing</a>
+            <a href="{{ROOT}}index.html#refund" class="foot-link">Refund</a>
+            <a href="{{ROOT}}index.html#faq" class="foot-link">FAQ</a>
+            <a href="{{SUBSCRIBE_URL}}" class="foot-link">Subscribe</a>
+          </div>
+          <div class="site-footer-panel" role="tabpanel" id="footer-academy" aria-labelledby="footer-tab-academy" hidden>
+            <a href="{{ROOT}}academy/index.html" class="foot-link">Academy home</a>
+            <a href="{{ROOT}}academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 drawdowns</a>
+            <a href="{{ROOT}}academy/why-buying-the-dip-is-hard.html" class="foot-link">Why dip-buying is hard</a>
+            <a href="{{ROOT}}academy/every-sp-500-bottom-since-2016.html" class="foot-link">Market bottoms since 2016</a>
+            <a href="{{ROOT}}academy/double-trend-exhaustion.html" class="foot-link">DoubleTrends™</a>
+            <a href="{{ROOT}}academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
+            <a href="{{ROOT}}academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
+          </div>
+          <div class="site-footer-panel" role="tabpanel" id="footer-company" aria-labelledby="footer-tab-company" hidden>
+            <a href="{{ROOT}}company/mission.html" class="foot-link">Mission</a>
+            <a href="{{ROOT}}company/consulting.html" class="foot-link">Consulting</a>
+            <a href="{{ROOT}}company/careers.html" class="foot-link">Careers</a>
+            <a href="{{ROOT}}company/contact.html" class="foot-link">Contact</a>
+          </div>
+          <div class="site-footer-panel" role="tabpanel" id="footer-legal" aria-labelledby="footer-tab-legal" hidden>
             <a href="{{ROOT}}legal/terms.html" class="foot-link">Terms of Service</a>
             <a href="{{ROOT}}legal/privacy.html" class="foot-link">Privacy Policy</a>
             <a href="{{ROOT}}legal/disclaimer.html" class="foot-link">Disclaimer</a>
@@ -62,4 +103,5 @@
 
   <!-- Decorative wave — very subtle -->
   <img src="{{ROOT}}public/decor/waves.svg" alt="" class="footer-wave" aria-hidden="true" />
+  <script src="{{ROOT}}public/js/footer-menu.js"></script>
 </footer>
