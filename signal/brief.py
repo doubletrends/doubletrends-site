@@ -30,7 +30,13 @@ def post_snapshot(payload: dict, endpoint: str, secret: str) -> None:
     request = urllib.request.Request(
         endpoint,
         data=data,
-        headers={"Content-Type": "application/json", "X-Brief-Secret": secret},
+        headers={
+            "Content-Type": "application/json",
+            "X-Brief-Secret": secret,
+            # Default Python-urllib UA gets flagged as a bot by Cloudflare's
+            # edge when the source IP is a data center (GitHub Actions runner).
+            "User-Agent": "dtep-brief/1.0 (+https://doubletrends.com)",
+        },
         method="POST",
     )
     with urllib.request.urlopen(request, timeout=30) as response:
