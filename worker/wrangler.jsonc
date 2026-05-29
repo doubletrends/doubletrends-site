@@ -14,11 +14,10 @@
    * Set these with wrangler secret put:
    * TELEGRAM_BOT_TOKEN
    * TELEGRAM_BOT_USERNAME     (without @, e.g. DoubleTrendsBot — used to build the t.me activation deep link)
-   * TELEGRAM_CHANNEL_ID
    * STRIPE_SECRET_KEY
    * STRIPE_WEBHOOK_SECRET
    * STRIPE_PRICE_ID
    * TELEGRAM_WEBHOOK_SECRET   (same value you pass as secret_token to setWebhook)
-   * BRIEF_SHARED_SECRET       (must match the GitHub Actions secret used by signal/brief.py)
+   * BRIEF_SHARED_SECRET       (shared with the GitHub Actions secret used by signal/brief.py and signal/notify.py)
    */
 }
