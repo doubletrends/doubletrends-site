@@ -15,3 +15,14 @@ CREATE INDEX idx_subscribers_claim_token ON subscribers (claim_token);
 CREATE INDEX idx_subscribers_telegram_user_id ON subscribers (telegram_user_id);
 CREATE INDEX idx_subscribers_subscription_id ON subscribers (subscription_id);
 CREATE INDEX idx_subscribers_invite_link ON subscribers (invite_link);
+
+CREATE TABLE brief_snapshot (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  ticker TEXT NOT NULL,
+  display_name TEXT NOT NULL,
+  as_of_date TEXT NOT NULL,
+  close_value REAL NOT NULL,
+  mdd_value REAL NOT NULL,
+  tier TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);

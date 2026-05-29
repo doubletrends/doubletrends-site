@@ -1,0 +1,23 @@
+name: DTEP Brief
+
+# Top of each UTC hour during US market hours, Mon-Fri.
+# Covers both EST (14:30-21:00 UTC) and EDT (13:30-20:00 UTC) without DST logic.
+on:
+  schedule:
+    - cron: "0 13-21 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance pandas
+      - run: python brief.py
+        working-directory: signal
+        env:
+          BRIEF_ENDPOINT: ${{ secrets.BRIEF_ENDPOINT }}
+          BRIEF_SHARED_SECRET: ${{ secrets.BRIEF_SHARED_SECRET }}
