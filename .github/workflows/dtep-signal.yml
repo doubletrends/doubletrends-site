@@ -18,4 +18,5 @@ jobs:
         working-directory: signal
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          SUBSCRIBERS_ENDPOINT: ${{ secrets.SUBSCRIBERS_ENDPOINT }}
+          BRIEF_SHARED_SECRET: ${{ secrets.BRIEF_SHARED_SECRET }}

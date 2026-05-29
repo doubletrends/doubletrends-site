@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
   buildDeepLink,
+  decideAccess,
   decideClaim,
-  decideReissue,
   generateToken,
   parseCommand,
   type SubscriberRow,
@@ -24,12 +24,12 @@ function row(overrides: Partial<SubscriberRow> = {}): SubscriberRow {
 test("parseCommand splits command and payload", () => {
   assert.deepEqual(parseCommand("/start abc123"), { command: "/start", arg: "abc123" });
   assert.deepEqual(parseCommand("/start"), { command: "/start", arg: null });
-  assert.deepEqual(parseCommand("/link"), { command: "/link", arg: null });
+  assert.deepEqual(parseCommand("/status"), { command: "/status", arg: null });
   assert.deepEqual(parseCommand(undefined), { command: "", arg: null });
 });
 
 test("parseCommand strips @botname and lowercases the command", () => {
-  assert.deepEqual(parseCommand("/Link@DoubleTrendsBot"), { command: "/link", arg: null });
+  assert.deepEqual(parseCommand("/Status@DoubleTrendsBot"), { command: "/status", arg: null });
   assert.deepEqual(parseCommand("  /START   tok  "), { command: "/start", arg: "tok" });
 });
 
@@ -66,16 +66,19 @@ test("decideClaim: canceled/past_due subscription is denied", () => {
   assert.deepEqual(decideClaim(row({ status: "past_due" }), "100"), { kind: "inactive" });
 });
 
-test("decideReissue: unknown user is told to subscribe", () => {
-  assert.deepEqual(decideReissue(null), { kind: "not_subscribed" });
+test("decideAccess: unknown user is not_subscribed", () => {
+  assert.deepEqual(decideAccess(null), { kind: "not_subscribed" });
 });
 
-test("decideReissue: active subscriber gets a fresh link", () => {
-  assert.deepEqual(decideReissue(row({ telegram_user_id: "100" })), { kind: "grant" });
+test("decideAccess: active subscriber is active", () => {
+  assert.deepEqual(decideAccess(row({ telegram_user_id: "100" })), { kind: "active" });
 });
 
-test("decideReissue: inactive subscriber is denied", () => {
-  assert.deepEqual(decideReissue(row({ telegram_user_id: "100", status: "past_due" })), {
+test("decideAccess: canceled/past_due subscribers are inactive", () => {
+  assert.deepEqual(decideAccess(row({ telegram_user_id: "100", status: "canceled" })), {
+    kind: "inactive",
+  });
+  assert.deepEqual(decideAccess(row({ telegram_user_id: "100", status: "past_due" })), {
     kind: "inactive",
   });
 });

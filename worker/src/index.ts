@@ -1,17 +1,21 @@
 import {
   buildDeepLink,
+  decideAccess,
   decideClaim,
-  decideReissue,
   generateToken,
   parseCommand,
   type SubscriberRow,
 } from "./access";
+import {
+  formatBriefMessage,
+  NO_BRIEF_MESSAGE,
+  type BriefSnapshot,
+} from "./brief";
 
 interface Env {
   DB: D1Database;
   TELEGRAM_BOT_TOKEN: string;
   TELEGRAM_BOT_USERNAME: string;
-  TELEGRAM_CHANNEL_ID: string;
   STRIPE_SECRET_KEY: string;
   STRIPE_WEBHOOK_SECRET: string;
   STRIPE_PRICE_ID: string;
@@ -28,23 +32,6 @@ interface BriefPayload {
   tier: string;
 }
 
-interface BriefRow {
-  ticker: string;
-  display_name: string;
-  as_of_date: string;
-  close_value: number;
-  mdd_value: number;
-  tier: string;
-  updated_at: string;
-}
-
-const TIER_LABELS: Record<string, string> = {
-  daily_noise: "Daily Noise",
-  common_correction: "Common Correction",
-  bear_market: "Bear Market",
-  crash: "Crash",
-};
-
 interface StripeEvent {
   type: string;
   data: {
@@ -58,32 +45,13 @@ interface StripeObject {
   subscription?: string;
 }
 
-interface TelegramInviteLinkResponse {
-  ok: boolean;
-  result?: {
-    invite_link?: string;
-  };
-  description?: string;
-}
-
 interface TelegramUpdate {
   message?: {
     text?: string;
     chat?: { id?: number; type?: string };
     from?: { id?: number };
   };
-  chat_member?: {
-    invite_link?: { invite_link?: string };
-    new_chat_member?: { user?: { id?: number } };
-  };
-  chat_join_request?: {
-    invite_link?: { invite_link?: string };
-    from?: { id?: number };
-  };
 }
-
-// Single-use invite links expire quickly so a leaked link can't be reused.
-const INVITE_TTL_SECONDS = 600;
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -103,6 +71,10 @@ export default {
 
     if (request.method === "POST" && url.pathname === "/internal/brief") {
       return handleBriefIngest(request, env);
+    }
+
+    if (request.method === "GET" && url.pathname === "/internal/subscribers") {
+      return handleSubscribersList(request, env);
     }
 
     return json({ error: "not found" }, 404);
@@ -182,52 +154,18 @@ async function handleSubscriptionInactive(
 ): Promise<void> {
   const customerId = object.customer;
   const subscriptionId = object.subscription ?? object.id;
-  const row = await findSubscriber(customerId, subscriptionId, env);
-  const now = new Date().toISOString();
-
-  if (row) {
-    await env.DB.prepare(
-      `UPDATE subscribers SET status = ?, updated_at = ? WHERE stripe_customer_id = ?`,
-    )
-      .bind(status, now, row.stripe_customer_id)
-      .run();
-
-    if (row.telegram_user_id) {
-      // Best-effort: Telegram refuses to remove the channel owner/admins, and the
-      // user may have already left. Never let that fail the webhook (which would
-      // make Stripe retry forever) — the canceled status above is what matters.
-      try {
-        await removeTelegramMember(row.telegram_user_id, env);
-      } catch (err) {
-        console.error("removeTelegramMember failed (non-fatal):", err);
-      }
-    }
-  } else if (customerId || subscriptionId) {
-    await env.DB.prepare(
-      `UPDATE subscribers SET status = ?, updated_at = ?
-      WHERE stripe_customer_id = ? OR subscription_id = ?`,
-    )
-      .bind(status, now, customerId ?? "", subscriptionId ?? "")
-      .run();
-  }
-}
-
-async function findSubscriber(
-  customerId: string | undefined,
-  subscriptionId: string | undefined,
-  env: Env,
-): Promise<SubscriberRow | null> {
   if (!customerId && !subscriptionId) {
-    return null;
+    return;
   }
-  return env.DB.prepare(
-    `SELECT stripe_customer_id, subscription_id, claim_token, invite_link, telegram_user_id, status
-    FROM subscribers
-    WHERE stripe_customer_id = ? OR subscription_id = ?
-    LIMIT 1`,
+
+  // Flipping status to inactive is enough — signal/brief queries filter by
+  // status='active', so the user instantly stops receiving DMs.
+  await env.DB.prepare(
+    `UPDATE subscribers SET status = ?, updated_at = ?
+    WHERE stripe_customer_id = ? OR subscription_id = ?`,
   )
-    .bind(customerId ?? "", subscriptionId ?? "")
-    .first<SubscriberRow>();
+    .bind(status, new Date().toISOString(), customerId ?? "", subscriptionId ?? "")
+    .run();
 }
 
 // ─── Success page lookup ────────────────────────────────────────────────────────
@@ -263,7 +201,6 @@ async function handleTelegramWebhook(request: Request, env: Env): Promise<Respon
 
   const update = (await request.json()) as TelegramUpdate;
 
-  // A private message to the bot — handle /start <token>, /start, /link.
   if (update.message?.chat?.type === "private" && update.message.from?.id !== undefined) {
     await handleBotMessage(
       update.message.text,
@@ -271,23 +208,6 @@ async function handleTelegramWebhook(request: Request, env: Env): Promise<Respon
       update.message.chat.id ?? update.message.from.id,
       env,
     );
-    return json({ ok: true });
-  }
-
-  // Safety net: if someone joins via an issued link, confirm their user id.
-  const inviteLink =
-    update.chat_member?.invite_link?.invite_link ??
-    update.chat_join_request?.invite_link?.invite_link;
-  const joinUserId =
-    update.chat_member?.new_chat_member?.user?.id ??
-    update.chat_join_request?.from?.id;
-
-  if (inviteLink && joinUserId !== undefined) {
-    await env.DB.prepare(
-      `UPDATE subscribers SET telegram_user_id = ?, updated_at = ? WHERE invite_link = ?`,
-    )
-      .bind(String(joinUserId), new Date().toISOString(), inviteLink)
-      .run();
   }
 
   return json({ ok: true });
@@ -306,51 +226,65 @@ async function handleBotMessage(
     return;
   }
 
-  if (command === "/start" || command === "/link") {
-    await handleReissue(fromUserId, chatId, env);
+  if (command === "/start" || command === "/status") {
+    await handleStatus(fromUserId, chatId, env);
     return;
   }
 
   if (command === "/brief") {
-    await handleBrief(chatId, env);
+    await handleBrief(fromUserId, chatId, env);
     return;
   }
 
   await sendMessage(
     chatId,
-    "Send /link to get a fresh invite to the DoubleTrends™ channel, or /brief for the latest market read. " +
+    "Send /status to check your subscription, or /brief for the latest market read. " +
       "If you haven't subscribed yet, visit doubletrends.com.",
     env,
   );
 }
 
-async function handleBrief(chatId: number, env: Env): Promise<void> {
-  const row = await env.DB.prepare(
-    `SELECT ticker, display_name, as_of_date, close_value, mdd_value, tier, updated_at
-    FROM brief_snapshot WHERE id = 1 LIMIT 1`,
-  ).first<BriefRow>();
+async function handleBrief(fromUserId: string, chatId: number, env: Env): Promise<void> {
+  const subscriber = await findSubscriberByTelegramUser(fromUserId, env);
+  const access = decideAccess(subscriber);
 
-  if (!row) {
+  if (access.kind === "not_subscribed") {
     await sendMessage(
       chatId,
-      "No market brief available yet. Please try /brief again shortly.",
+      "/brief is a subscriber-only feature. Visit doubletrends.com to subscribe.",
       env,
     );
     return;
   }
 
-  const tierLabel = TIER_LABELS[row.tier] ?? row.tier;
-  const message = [
-    `${row.display_name} (${row.ticker}) — as of ${row.as_of_date}`,
-    `Close ${row.close_value.toFixed(2)}`,
-    ``,
-    `Maximum Drawdown (blended, 1m/3m/1y/2y): ${row.mdd_value.toFixed(1)} → ${tierLabel}`,
-    ``,
-    `Tiers: <40 noise · 40–65 correction · 65–85 bear · ≥85 crash`,
-    `Updated ${row.updated_at}`,
-  ].join("\n");
+  if (access.kind === "inactive") {
+    await sendMessage(
+      chatId,
+      "Your subscription isn't active right now. Contact info@doubletrends.com for help.",
+      env,
+    );
+    return;
+  }
 
+  const row = await env.DB.prepare(
+    `SELECT ticker, display_name, as_of_date, close_value, mdd_value, tier, updated_at
+    FROM brief_snapshot WHERE id = 1 LIMIT 1`,
+  ).first<BriefSnapshot>();
+
+  const message = row ? formatBriefMessage(row) : NO_BRIEF_MESSAGE;
   await sendMessage(chatId, message, env);
+}
+
+async function findSubscriberByTelegramUser(
+  fromUserId: string,
+  env: Env,
+): Promise<SubscriberRow | null> {
+  return env.DB.prepare(
+    `SELECT stripe_customer_id, subscription_id, claim_token, invite_link, telegram_user_id, status
+    FROM subscribers WHERE telegram_user_id = ? LIMIT 1`,
+  )
+    .bind(fromUserId)
+    .first<SubscriberRow>();
 }
 
 // ─── Brief ingest (called hourly by the GitHub Actions job) ─────────────────────
@@ -441,84 +375,60 @@ async function handleClaim(
           .bind(fromUserId, new Date().toISOString(), token)
           .run();
       }
-      await issueInvite(chatId, env, true);
+      await sendMessage(
+        chatId,
+        "✅ You're all set. Your DoubleTrends™ subscription is active and tied to this Telegram account. " +
+          "When the next S&P 500 oversold-reversal signal fires, I'll DM it to you right here. " +
+          "Send /brief any time for the latest market read.",
+        env,
+      );
       return;
     }
   }
 }
 
-async function handleReissue(fromUserId: string, chatId: number, env: Env): Promise<void> {
-  const row = await env.DB.prepare(
-    `SELECT stripe_customer_id, subscription_id, claim_token, invite_link, telegram_user_id, status
-    FROM subscribers WHERE telegram_user_id = ? LIMIT 1`,
-  )
-    .bind(fromUserId)
-    .first<SubscriberRow>();
+async function handleStatus(fromUserId: string, chatId: number, env: Env): Promise<void> {
+  const row = await findSubscriberByTelegramUser(fromUserId, env);
+  const access = decideAccess(row);
 
-  const decision = decideReissue(row);
-
-  switch (decision.kind) {
+  switch (access.kind) {
     case "not_subscribed":
-      await sendMessage(chatId, "We couldn't find a subscription for your account. Subscribe at doubletrends.com, then tap the activation link shown after checkout.", env);
+      await sendMessage(
+        chatId,
+        "You're not currently subscribed. Visit doubletrends.com to subscribe, then tap the activation link shown after checkout.",
+        env,
+      );
       return;
     case "inactive":
-      await sendMessage(chatId, "Your subscription isn't active right now, so a new invite can't be issued. Contact info@doubletrends.com for help.", env);
+      await sendMessage(
+        chatId,
+        "Your DoubleTrends™ subscription isn't active right now. Contact info@doubletrends.com for help.",
+        env,
+      );
       return;
-    case "grant":
-      await issueInvite(chatId, env, false, fromUserId);
+    case "active":
+      await sendMessage(
+        chatId,
+        "✅ Your DoubleTrends™ subscription is active. Signals will arrive here automatically. Send /brief for the latest market read.",
+        env,
+      );
       return;
   }
 }
 
-// Create a fresh single-use, short-lived invite link and DM it to the user.
-async function issueInvite(
-  chatId: number,
-  env: Env,
-  bindByChat: boolean,
-  knownUserId?: string,
-): Promise<void> {
-  const invite = await telegramApi<TelegramInviteLinkResponse>(
-    "createChatInviteLink",
-    {
-      chat_id: env.TELEGRAM_CHANNEL_ID,
-      member_limit: 1,
-      expire_date: Math.floor(Date.now() / 1000) + INVITE_TTL_SECONDS,
-    },
-    env,
-  );
+// ─── Subscribers list (called by signal/notify.py at fire time) ────────────────
 
-  const inviteLink = invite.result?.invite_link;
-  if (!invite.ok || !inviteLink) {
-    await sendMessage(chatId, "Something went wrong creating your invite. Please try /link again in a minute, or contact info@doubletrends.com.", env);
-    return;
+async function handleSubscribersList(request: Request, env: Env): Promise<Response> {
+  if (request.headers.get("X-Brief-Secret") !== env.BRIEF_SHARED_SECRET) {
+    return json({ error: "unauthorized" }, 401);
   }
 
-  // Record the latest issued link so the chat_member webhook can confirm the join.
-  const userId = knownUserId ?? (bindByChat ? String(chatId) : null);
-  if (userId) {
-    await env.DB.prepare(
-      `UPDATE subscribers SET invite_link = ?, updated_at = ? WHERE telegram_user_id = ?`,
-    )
-      .bind(inviteLink, new Date().toISOString(), userId)
-      .run();
-  }
+  const result = await env.DB.prepare(
+    `SELECT telegram_user_id FROM subscribers
+    WHERE status = 'active' AND telegram_user_id IS NOT NULL`,
+  ).all<{ telegram_user_id: string }>();
 
-  await sendMessage(
-    chatId,
-    `✅ You're all set. Tap to join the DoubleTrends™ channel (link valid for ${Math.round(
-      INVITE_TTL_SECONDS / 60,
-    )} minutes):\n\n${inviteLink}\n\nNeed a new link later? Just send /link.`,
-    env,
-  );
-}
-
-async function removeTelegramMember(userId: string, env: Env): Promise<void> {
-  await telegramApi("banChatMember", { chat_id: env.TELEGRAM_CHANNEL_ID, user_id: userId }, env);
-  await telegramApi(
-    "unbanChatMember",
-    { chat_id: env.TELEGRAM_CHANNEL_ID, user_id: userId, only_if_banned: true },
-    env,
-  );
+  return json({ subscribers: result.results });
 }
 
 async function sendMessage(chatId: number, text: string, env: Env): Promise<void> {

@@ -53,23 +53,24 @@ export function decideClaim(row: SubscriberRow | null, fromUserId: string): Clai
   return { kind: "grant", needsBind: !row.telegram_user_id };
 }
 
-export type ReissueDecision =
+export type AccessDecision =
   | { kind: "not_subscribed" }
   | { kind: "inactive" }
-  | { kind: "grant" };
+  | { kind: "active" };
 
 /**
- * Decide what to do when a known user asks for a fresh link (bare `/start` or
- * `/link`). `row` is the subscriber matched by telegram_user_id (or null).
+ * Shared subscriber-state check. Used by /status (to report state) and /brief
+ * (to gate access to subscriber-only content). `row` is matched by
+ * telegram_user_id (or null if unknown).
  */
-export function decideReissue(row: SubscriberRow | null): ReissueDecision {
+export function decideAccess(row: SubscriberRow | null): AccessDecision {
   if (!row) {
     return { kind: "not_subscribed" };
   }
   if (row.status !== "active") {
     return { kind: "inactive" };
   }
-  return { kind: "grant" };
+  return { kind: "active" };
 }
 
 /** Build the t.me deep link a freshly-paid customer taps to activate. */
