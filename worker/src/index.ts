@@ -279,9 +279,15 @@ async function findSubscriberByTelegramUser(
   fromUserId: string,
   env: Env,
 ): Promise<SubscriberRow | null> {
+  // A user can accumulate multiple rows over time (subscribe → cancel →
+  // resubscribe creates a new stripe_customer_id and a new row, leaving the
+  // old canceled row behind with the same telegram_user_id). Prefer the
+  // active one, falling back to the most recently updated.
   return env.DB.prepare(
     `SELECT stripe_customer_id, subscription_id, claim_token, invite_link, telegram_user_id, status
-    FROM subscribers WHERE telegram_user_id = ? LIMIT 1`,
+    FROM subscribers WHERE telegram_user_id = ?
+    ORDER BY CASE WHEN status = 'active' THEN 0 ELSE 1 END, updated_at DESC
+    LIMIT 1`,
   )
     .bind(fromUserId)
     .first<SubscriberRow>();
