@@ -102,7 +102,7 @@ const pages = [
   {
     src: 'success.html', root: '', sitemap: false, kind: 'webpage', robots: 'noindex,follow',
     title: 'You\'re Subscribed — DoubleTrends™',
-    desc:  'Your DoubleTrends™ subscription is active. Get your private invite link to the Telegram signal channel.',
+    desc:  'Your DoubleTrends™ subscription is active. Activate the Telegram bot to start receiving signals.',
   },
 
   // ── academy: articles ────────────────────────────────────────────────────
