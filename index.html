@@ -295,6 +295,10 @@
     a { color: inherit; text-decoration: none; }
     img { display: block; }
 
+    /* ══════════════════════════════════════════════════════════════
+       Shared Visual Primitives
+       ══════════════════════════════════════════════════════════════ */
+
     /* ── Text gradients ─────────────────────────────────────────── */
     .text-grad-hero {
       background-image: linear-gradient(160deg, #1E2530 10%, #5A6473 100%);
@@ -352,6 +356,12 @@
 
     /* ── Accordion ──────────────────────────────────────────────── */
     details[open] summary .acc-icon { transform: rotate(180deg); }
+    #faq details {
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+    #faq details:hover {
+      border-color: #C2410C;
+    }
 
     /* ── Footer wave overlay ────────────────────────────────────── */
     .footer-wave {
@@ -392,13 +402,21 @@
       line-height: 1;
     }
 
-    /* ── Structural utilities ───────────────────────────────────── */
+    /* ── Structural surfaces and utilities ──────────────────────── */
     .hairline   { border-top:  1px solid rgba(0,0,0,0.08); }
     .hairline-v { border-left: 1px solid rgba(0,0,0,0.08); }
     .card-border {
       background: #FFFFFF;
       border: 1px solid rgba(0,0,0,0.08);
       box-shadow: 0 10px 28px rgba(30,37,48,0.045);
+    }
+    .hover-lift-rust {
+      transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+    }
+    .hover-lift-rust:hover {
+      transform: translateY(-2px);
+      border-color: #C2410C;
+      box-shadow: 0 24px 60px rgba(30,37,48,0.10);
     }
     .terminal-shell {
       background:
@@ -458,6 +476,10 @@
       font-size: 0.66rem;
       font-weight: 600;
     }
+    /* ══════════════════════════════════════════════════════════════
+       Page Layout Patterns
+       ══════════════════════════════════════════════════════════════ */
+
     .page-hero {
       background:
         linear-gradient(180deg, rgba(255,255,255,0.96), rgba(247,245,240,0.96)),
@@ -530,6 +552,8 @@
       gap: 2rem;
       color: #5A6473;
     }
+    /* ── Article pages ──────────────────────────────────────────── */
+
     .article-shell {
       max-width: 1040px;
     }
@@ -626,17 +650,13 @@
       box-shadow: 0 18px 46px rgba(30,37,48,0.07);
       overflow-x: auto;
     }
+    /* ── Directory / collection pages ───────────────────────────── */
+
     .directory-card {
       background:
         linear-gradient(180deg, #FFFFFF 0%, #F8F6F1 100%);
       border: 1px solid rgba(30,37,48,0.10);
       box-shadow: 0 18px 46px rgba(30,37,48,0.07);
-      transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
-    }
-    .directory-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(194,65,12,0.28);
-      box-shadow: 0 24px 60px rgba(30,37,48,0.10);
     }
     .directory-shell {
       width: 100%;
@@ -734,11 +754,247 @@
       text-transform: uppercase;
       color: #C2410C;
     }
+    /* ══════════════════════════════════════════════════════════════
+       Responsive Overrides
+       ══════════════════════════════════════════════════════════════ */
+
+    .mobile-nav-link,
+    .mobile-nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.15rem;
+      padding: 0 0.68rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .mobile-nav-link {
+      color: #1E2530;
+      border: 1px solid rgba(30,37,48,0.16);
+      background: rgba(255,255,255,0.68);
+    }
+    .mobile-nav-cta {
+      color: #FFFFFF;
+      background: #C2410C;
+      border: 1px solid #C2410C;
+    }
+    .site-footer-mobile-menu {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      body {
+        overflow-x: hidden;
+        text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      .site-header nav {
+        height: 4rem !important;
+        align-items: center;
+        gap: 0.65rem;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+      .site-header nav > div:last-child {
+        min-width: 0;
+      }
+
+      .home-container,
+      footer .max-w-site {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+      }
+      .home-container.py-20,
+      .home-container[class*="py-20"] {
+        padding-top: 3.75rem !important;
+        padding-bottom: 3.75rem !important;
+      }
+
+      .home-hero {
+        min-height: auto !important;
+        align-items: flex-start;
+      }
+      .home-hero-content {
+        padding-top: 6.25rem !important;
+        padding-bottom: 3.25rem !important;
+      }
+      .home-hero .home-container {
+        gap: 1.65rem !important;
+      }
+      .home-hero h1 {
+        font-size: clamp(2.55rem, 14vw, 3.75rem) !important;
+        line-height: 0.96 !important;
+        margin-bottom: 1.25rem !important;
+        max-width: 9ch;
+      }
+      .home-hero p {
+        font-size: 1rem !important;
+        line-height: 1.7 !important;
+      }
+      .home-decor-img {
+        inset: auto 0 0 auto !important;
+        width: 100% !important;
+        height: 46% !important;
+        opacity: 0.22 !important;
+        object-position: right bottom !important;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.55) 38%, rgba(0,0,0,0.9) 100%) !important;
+                mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.55) 38%, rgba(0,0,0,0.9) 100%) !important;
+      }
+
+      main .btn-light,
+      main .btn-dark {
+        width: 100%;
+        justify-content: center;
+        min-height: 2.9rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        text-align: center;
+      }
+
+      .tag-overline,
+      .section-overline {
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        line-height: 1.45;
+      }
+      .data-label {
+        font-size: 0.58rem;
+        letter-spacing: 0.1em;
+        line-height: 1.45;
+      }
+      .data-value {
+        font-size: 2rem;
+      }
+      .home-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+      .metric-tile,
+      .product-panel,
+      .terminal-shell,
+      .card-border,
+      .directory-card {
+        box-shadow: 0 10px 24px rgba(30,37,48,0.045);
+      }
+      .product-panel {
+        padding: 1.35rem !important;
+      }
+
+      #chart {
+        height: 330px !important;
+      }
+      #replay-shell .terminal-bar,
+      #replay-shell .relative > .flex,
+      #replay-shell > .relative:last-child > .flex {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+      .status-pill {
+        white-space: normal;
+      }
+
+      .page-shell,
+      .directory-shell,
+      .article-page {
+        padding: 7rem 1.25rem 3.5rem !important;
+      }
+      .page-hero-center,
+      .directory-hero,
+      .article-hero-frame,
+      .article-cta {
+        padding: 1.25rem !important;
+        margin-bottom: 2rem !important;
+      }
+      .page-title,
+      .directory-title {
+        font-size: 2.1rem !important;
+        line-height: 1.12 !important;
+      }
+      .page-subtitle,
+      .directory-subtitle {
+        font-size: 1.08rem !important;
+        line-height: 1.55 !important;
+      }
+      .article-title {
+        font-size: 2.05rem !important;
+        line-height: 1.08 !important;
+      }
+      .article-section {
+        margin-bottom: 2.5rem !important;
+      }
+
+      .site-footer-inner {
+        padding-top: 2.5rem !important;
+        padding-bottom: 2.75rem !important;
+      }
+      .site-footer-grid {
+        display: flex !important;
+        flex-direction: column;
+        gap: 1.75rem !important;
+      }
+      .site-footer-brand {
+        max-width: none !important;
+        padding-bottom: 1.35rem;
+        border-bottom: 1px solid rgba(30,37,48,0.08);
+      }
+      .site-footer-nav-wrap {
+        display: none !important;
+      }
+      .site-footer-mobile-menu {
+        display: grid !important;
+        gap: 1rem;
+        width: 100%;
+      }
+      .site-footer-tabs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.45rem;
+      }
+      .site-footer-tab {
+        min-width: 0;
+        height: 2.65rem;
+        padding: 0 0.35rem;
+        border: 1px solid rgba(194,65,12,0.34);
+        background: rgba(194,65,12,0.06);
+        color: #C2410C;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.58rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .site-footer-tab.is-active {
+        background: #C2410C;
+        border-color: #C2410C;
+        color: #FFFFFF;
+      }
+      .site-footer-panels {
+        min-height: 0;
+        padding: 1.1rem 0 0.1rem;
+      }
+      .site-footer-panel {
+        display: grid;
+        gap: 0.72rem;
+        grid-template-columns: 1fr;
+      }
+      .site-footer-panel[hidden] {
+        display: none;
+      }
+      .site-footer-panel .foot-link {
+        font-size: 0.82rem;
+        line-height: 1.45;
+      }
+    }
   </style>
 </head>
 
 <body class="bg-light text-dark font-['DM_Sans'] leading-relaxed antialiased">
-<header class="fixed top-0 left-0 right-0 z-30"
+<header class="site-header fixed top-0 left-0 right-0 z-30"
         style="background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.08);">
   <nav class="w-full max-w-site mx-auto flex items-center justify-between gap-4 px-6 h-16">
 
@@ -747,7 +1003,7 @@
         <img src="public/brand/cds-logo.svg" alt="CDS" class="h-6 w-auto" width="24" height="24" />
       </a>
       <a href="index.html"
-         class="text-[#1E2530] font-noto font-semibold text-[1.125rem] tracking-tight hidden md:block">
+         class="text-[#1E2530] font-noto font-semibold text-[1.125rem] tracking-tight">
         DoubleTrends™
       </a>
     </div>
@@ -762,28 +1018,24 @@
       <a href="https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c" class="btn-light ml-2 !px-4 !py-2 text-[0.65rem]">Subscribe</a>
     </div>
 
-    <div class="flex lg:hidden items-center gap-1 overflow-x-auto">
-      <a href="index.html#track-record" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Track</a>
-      <a href="index.html#how-it-works" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Works</a>
-      <a href="index.html#pricing" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Price</a>
-      <a href="index.html#refund" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Refund</a>
-      <a href="index.html#faq" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">FAQ</a>
-      <a href="academy/index.html" class="btn-dark !px-3 !py-2 text-[0.6rem]">Academy</a>
-      <a href="https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c" class="btn-light !px-3 !py-2 text-[0.6rem]">Subscribe</a>
+    <div class="flex lg:hidden items-center gap-1.5 shrink-0">
+      <a href="index.html" class="mobile-nav-link">Product</a>
+      <a href="academy/index.html" class="mobile-nav-link">Academy</a>
+      <a href="https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c" class="mobile-nav-cta">Subscribe</a>
     </div>
   </nav>
 </header>
 
 <main>
-<section class="relative w-full min-h-screen flex items-center overflow-hidden" style="background-color: #FFFFFF;">
+<section class="home-hero relative w-full min-h-screen flex items-center overflow-hidden" style="background-color: #FFFFFF;">
 <img src="public/decor/hero.png" alt="" aria-hidden="true"
-     class="absolute inset-y-0 right-0 h-full w-2/3 object-cover object-right pointer-events-none"
+     class="home-decor-img absolute inset-y-0 right-0 h-full w-2/3 object-cover object-right pointer-events-none"
      style="opacity: 0.7; filter: grayscale(35%);
             -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.9) 100%);
             mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.9) 100%);" />
 <div class="absolute inset-x-0 bottom-0 h-32 pointer-events-none" style="background: linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0) 100%);"></div>
-<div class="relative z-10 w-full pt-32 pb-20">
-<div class="max-w-site mx-auto px-8 flex flex-col gap-9">
+<div class="home-hero-content relative z-10 w-full pt-32 pb-20">
+<div class="home-container max-w-site mx-auto px-8 flex flex-col gap-9">
 <span class="tag-overline">Telegram Alerts &middot; S&amp;P 500 Index</span>
 <div class="max-w-4xl">
 <h1 class="text-5xl md:text-7xl lg:text-[5.6rem] font-bold font-noto leading-[0.98] text-grad-hero mb-7"> Stop guessing the bottom. </h1>
@@ -798,26 +1050,26 @@
 </div>
 </section>
 <section id="track-record" class="w-full" style="background: transparent; border-top: 1px solid rgba(0,0,0,0.08);">
-<div class="max-w-site mx-auto px-8 py-20">
+<div class="home-container max-w-site mx-auto px-8 py-20">
 <div class="flex flex-col mb-10">
 <span class="tag-overline mb-5">Track Record</span>
 <h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05] mb-5"> Ten years. Every dip. </h2>
 <p class="font-open text-lg leading-relaxed max-w-3xl" style="color: #5A6473;"> Watch the S&amp;P 500 index replay from 2016. Each ▲ marks a DoubleTrends™ oversold-reversal alert &mdash; the same kind of signal a subscriber would receive. The rule fired at major stress points including the 2018 selloff, the COVID crash, the 2022 bear-market low, the 2023 correction, the 2025 tariff crash, and the 2026 Iran-war selloff. </p>
 </div>
-<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-<div class="metric-tile px-5 py-4">
+<div class="home-metrics grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+<div class="metric-tile hover-lift-rust px-5 py-4">
 <span class="data-label">Coverage</span>
 <div class="font-noto text-2xl font-bold text-dark mt-2">S&amp;P 500</div>
 </div>
-<div class="metric-tile px-5 py-4">
+<div class="metric-tile hover-lift-rust px-5 py-4">
 <span class="data-label">Interval</span>
 <div class="font-noto text-2xl font-bold text-dark mt-2">Daily</div>
 </div>
-<div class="metric-tile px-5 py-4">
+<div class="metric-tile hover-lift-rust px-5 py-4">
 <span class="data-label">Signals</span>
 <div class="font-noto text-2xl font-bold text-primary mt-2">12 fired</div>
 </div>
-<div class="metric-tile px-5 py-4">
+<div class="metric-tile hover-lift-rust px-5 py-4">
 <span class="data-label">Replay</span>
 <div class="font-noto text-2xl font-bold text-dark mt-2">2016–2026</div>
 </div>
@@ -840,7 +1092,7 @@
 </div>
 <div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(194,65,12,0.16); transition: opacity 0.45s ease;"></div>
 </div>
-<div id="chart" class="w-full" style="height: 480px;"></div>
+<div id="chart" class="w-full" data-replay-src="public/replay/sp500.json" style="height: 480px;"></div>
 <div class="relative overflow-hidden">
 <div class="flex items-center justify-between gap-4 flex-wrap px-5 py-4" style="border-top: 1px solid rgba(30,37,48,0.10); background: rgba(251,250,247,0.82);">
 <div class="flex items-center gap-4 flex-wrap">
@@ -861,19 +1113,19 @@
 </section>
 <section id="how-it-works" class="relative w-full overflow-hidden" style="background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08);">
 <img src="public/academy/mdd-2.png" alt="" aria-hidden="true"
-     class="absolute inset-y-0 right-0 h-full w-2/3 object-cover object-right pointer-events-none"
+     class="home-decor-img absolute inset-y-0 right-0 h-full w-2/3 object-cover object-right pointer-events-none"
      style="opacity: 0.7; filter: grayscale(35%);
             -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.9) 100%);
             mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.9) 100%);" />
 <div class="absolute inset-x-0 top-0 h-20 pointer-events-none" style="background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255,255,255,0) 100%);"></div>
 <div class="absolute inset-x-0 bottom-0 h-20 pointer-events-none" style="background: linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0) 100%);"></div>
-<div class="relative z-10 max-w-site mx-auto px-8 py-20">
+<div class="home-container relative z-10 max-w-site mx-auto px-8 py-20">
 <div class="flex flex-col mb-12">
 <span class="tag-overline mb-5">How It Works</span>
 <h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05]"> Three steps. Then the rule watches. </h2>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-<div class="product-panel flex flex-col px-8 py-9">
+<div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
 <div class="step-marker mb-8">01</div>
 <h3 class="text-[#1E2530] font-noto font-semibold text-lg mb-3">Start free</h3>
 <p class="font-open text-sm leading-relaxed" style="color: #5A6473;">Begin a 30-day free trial &mdash; $0 today, just your card on file. You get full access to the S&amp;P 500 signal channel, not a dashboard or daily commentary &mdash; just the alert when the rule fires. Cancel any time in the first 30 days and you are never charged.</p>
@@ -881,7 +1133,7 @@
 <span class="data-label">30-day free trial · Stripe</span>
 </div>
 </div>
-<div class="product-panel flex flex-col px-8 py-9">
+<div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
 <div class="step-marker mb-8">02</div>
 <h3 class="text-[#1E2530] font-noto font-semibold text-lg mb-3">Join the channel</h3>
 <p class="font-open text-sm leading-relaxed" style="color: #5A6473;">After checkout, you receive a private, single-use invite to the Telegram channel. That channel is where the production alert is delivered.</p>
@@ -889,7 +1141,7 @@
 <span class="data-label">Private Telegram access</span>
 </div>
 </div>
-<div class="product-panel flex flex-col px-8 py-9">
+<div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
 <div class="step-marker mb-8">03</div>
 <h3 class="text-[#1E2530] font-noto font-semibold text-lg mb-3">Get the alert</h3>
 <p class="font-open text-sm leading-relaxed" style="color: #5A6473;">When the S&amp;P 500 index meets the oversold-reversal rule, everyone receives the same message the same day. Historically this is rare &mdash; exactly the point. You get notified when the setup matters, not every time the market moves.</p>
@@ -901,14 +1153,14 @@
 </div>
 </section>
 <section id="pricing" class="w-full" style="background: transparent;">
-<div class="max-w-site mx-auto px-8 py-20">
+<div class="home-container max-w-site mx-auto px-8 py-20">
 <div class="flex flex-col mb-10 max-w-3xl">
 <span class="tag-overline mb-5">Pricing</span>
 <h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05]"> One signal. One subscription. </h2>
 <p class="font-open text-lg leading-relaxed mt-5" style="color: #5A6473;">Built for investors who want a clean rule, not another dashboard. Subscribe once, join the channel, and let the S&amp;P 500 index signal come to you when the market is washed out and the model sees the reversal begin.</p>
 </div>
 <div class="grid lg:grid-cols-[1fr_0.9fr] gap-6 items-stretch">
-<div class="product-panel p-8 flex flex-col justify-between">
+<div class="product-panel hover-lift-rust p-8 flex flex-col justify-between">
 <div>
 <div class="flex items-center justify-between gap-4 flex-wrap mb-8">
 <span class="data-label">Subscription</span>
@@ -929,7 +1181,7 @@
 <a href="https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c" class="btn-light">Start your free trial</a>
 </div>
 </div>
-<div class="terminal-shell p-6 flex flex-col justify-between">
+<div class="terminal-shell hover-lift-rust p-6 flex flex-col justify-between">
 <div>
 <span class="data-label">What you are paying for</span>
 <div class="mt-5 flex flex-col">
@@ -958,28 +1210,28 @@
 </section>
 <section id="refund" class="relative w-full overflow-hidden" style="background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.08);">
 <img src="public/academy/mdd-3.png" alt="" aria-hidden="true"
-     class="absolute inset-y-0 right-0 h-full w-2/3 object-cover object-right pointer-events-none"
+     class="home-decor-img absolute inset-y-0 right-0 h-full w-2/3 object-cover object-right pointer-events-none"
      style="opacity: 0.7; filter: grayscale(35%);
             -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.9) 100%);
             mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.9) 100%);" />
 <div class="absolute inset-x-0 top-0 h-20 pointer-events-none" style="background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255,255,255,0) 100%);"></div>
 <div class="absolute inset-x-0 bottom-0 h-20 pointer-events-none" style="background: linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0) 100%);"></div>
-<div class="relative z-10 max-w-site mx-auto px-8 py-20">
+<div class="home-container relative z-10 max-w-site mx-auto px-8 py-20">
 <div class="flex flex-col mb-10 max-w-3xl">
 <span class="tag-overline mb-5">Refund Policy</span>
 <h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05]"> Changed your mind? Full refund. </h2>
 <p class="font-open text-lg leading-relaxed mt-5" style="color: #5A6473;">Start with a 30-day free trial — $0 today, and cancel any time before it ends to avoid any charge. Even once you are billed, you are never locked into a service that turned out not to be for you.</p>
 </div>
 <div class="grid md:grid-cols-3 gap-6">
-<div class="product-panel p-7 flex flex-col">
+<div class="product-panel hover-lift-rust p-7 flex flex-col">
 <span class="data-label">30-day free trial</span>
 <p class="font-open text-sm leading-relaxed mt-3" style="color: #5A6473;">Pay nothing today. Get full channel access for 30 days, and cancel any time before it ends — your card is never charged.</p>
 </div>
-<div class="product-panel p-7 flex flex-col">
+<div class="product-panel hover-lift-rust p-7 flex flex-col">
 <span class="data-label">After the trial &amp; renewals</span>
 <p class="font-open text-sm leading-relaxed mt-3" style="color: #5A6473;">Once your trial converts, and on each annual renewal, a full refund is still available within 14 days of the charge if no signal has been delivered since. We email you before every charge.</p>
 </div>
-<div class="product-panel p-7 flex flex-col">
+<div class="product-panel hover-lift-rust p-7 flex flex-col">
 <span class="data-label">Cancel anytime</span>
 <p class="font-open text-sm leading-relaxed mt-3" style="color: #5A6473;">Cancel whenever you like to stop future charges. You keep access until the end of your current paid period.</p>
 </div>
@@ -990,7 +1242,7 @@
 </div>
 </section>
 <section id="faq" class="w-full" style="background: transparent; border-top: 1px solid rgba(0,0,0,0.08);">
-<div class="max-w-site mx-auto px-8 py-20">
+<div class="home-container max-w-site mx-auto px-8 py-20">
 <div class="flex flex-col mb-10">
 <span class="tag-overline mb-5">FAQ</span>
 <h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05]"> Questions </h2>
@@ -1040,18 +1292,18 @@
 </div>
 </section>
 <script src="https://unpkg.com/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
-<script> (async function () { const DATA = await fetch('public/replay/sp500.json').then(r => r.json()); const candles = DATA.candles; const signalSet = new Set(DATA.signals); const signalIdx = []; candles.forEach((c, i) => { if (signalSet.has(c.time)) signalIdx.push(i); }); const FAST = 5; const SLOW = 1; const SLOW_WINDOW = 22; const PAUSE_MS = 1000; const TICK_MS = 32; const WINDOW = 180; const chartEl = document.getElementById('chart'); const chart = LightweightCharts.createChart(chartEl, { width: chartEl.clientWidth, height: 480, layout: { background: { type: 'solid', color: '#FFFFFF' }, textColor: '#5A6473', fontFamily: "'JetBrains Mono', monospace", }, grid: { vertLines: { color: 'rgba(0,0,0,0.06)' }, horzLines: { color: 'rgba(0,0,0,0.06)' }, }, rightPriceScale: { borderColor: 'rgba(0,0,0,0.12)' }, timeScale: { borderColor: 'rgba(0,0,0,0.12)', rightOffset: 4, fixLeftEdge: false }, crosshair: { mode: LightweightCharts.CrosshairMode.Normal }, handleScroll: false, handleScale: false, }); const series = chart.addCandlestickSeries({ upColor: '#2E9E7B', downColor: '#C8413B', wickUpColor: '#2E9E7B', wickDownColor: '#C8413B', borderVisible: false, priceLineVisible: false, lastValueVisible: false, }); const readout = document.getElementById('readout'); const statusEl = document.getElementById('status'); const flashBands = Array.from(document.querySelectorAll('.flash-band')); const replayBtn = document.getElementById('replayBtn'); const replayShell = document.getElementById('replay-shell'); let i = 0, markers = [], signalsShown = 0, pausedUntil = 0, timer = null, hasStarted = false; function nextSignalDistance(idx) { for (const s of signalIdx) { if (s >= idx) return s - idx; } return Infinity; } function scroll() { const from = Math.max(0, i - WINDOW); chart.timeScale().setVisibleLogicalRange({ from, to: i + 4 }); } function fireFlash() { flashBands.forEach(el => { el.style.opacity = '1'; }); setTimeout(() => { flashBands.forEach(el => { el.style.opacity = '0'; }); }, 220); } function addCandle() { const c = candles[i]; const t = c.time; const isSignal = signalSet.has(t); series.update({ ...c }); readout.innerHTML = `Signals: <b style="color: #C2410C;">${signalsShown}</b> · ${t}`; if (isSignal) { markers.push({ time: t, position: 'belowBar', color: '#C2410C', shape: 'arrowUp', size: 2 }); series.setMarkers(markers); signalsShown++; readout.innerHTML = `Signals: <b style="color: #C2410C;">${signalsShown}</b> · ${t}`; fireFlash(); pausedUntil = performance.now() + PAUSE_MS; i++; scroll(); return true; } i++; return false; } function step() { if (performance.now() < pausedUntil) return; if (i >= candles.length) { finish(); return; } const stepN = nextSignalDistance(i) <= SLOW_WINDOW ? SLOW : FAST; for (let k = 0; k < stepN && i < candles.length; k++) { if (addCandle()) break; } scroll(); } function finish() { clearInterval(timer); timer = null; replayBtn.textContent = 'Replay'; const total = candles.length; const startFrom = Math.max(0, total - WINDOW), startTo = total + 4; const endFrom = -6, endTo = total + 6; const dur = 1200, t0 = performance.now(); const ease = (x) => 1 - Math.pow(1 - x, 3); statusEl.textContent = 'overview...'; (function anim(now) { const p = Math.min(1, (now - t0) / dur), e = ease(p); chart.timeScale().setVisibleLogicalRange({ from: startFrom + (endFrom - startFrom) * e, to: startTo + (endTo - startTo) * e, }); if (p < 1) requestAnimationFrame(anim); else { readout.innerHTML = `Signals: <b style="color: #C2410C;">${signalsShown}</b> · 2016 → 2026`; statusEl.textContent = `${signalsShown} signals · ${candles[0].time} → ${candles[total-1].time}`; } })(performance.now()); } function start() { if (timer) clearInterval(timer); series.setData([]); series.setMarkers([]); i = 0; markers = []; signalsShown = 0; pausedUntil = 0; statusEl.textContent = 'replaying...'; replayBtn.textContent = 'Replaying'; timer = setInterval(step, TICK_MS); } replayBtn.addEventListener('click', start); window.addEventListener('resize', () => chart.applyOptions({ width: chartEl.clientWidth, height: 480 })); statusEl.textContent = 'ready'; const observer = new IntersectionObserver((entries) => { if (!hasStarted && entries.some(entry => entry.isIntersecting)) { hasStarted = true; start(); observer.disconnect(); } }, { threshold: 0.35 }); observer.observe(replayShell); })();
-</script>
+<script src="public/js/replay-chart.js"></script>
+<script src="public/js/faq-accordion.js"></script>
 
 </main>
 <footer class="relative w-full" style="background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.08);">
-  <div class="relative z-10 w-full max-w-site mx-auto px-8 py-12">
+  <div class="site-footer-inner relative z-10 w-full max-w-site mx-auto px-8 py-12">
 
     <!-- Main row -->
-    <div class="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12">
+    <div class="site-footer-grid grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12">
 
       <!-- Left: brand + disclaimer + copyright -->
-      <div class="flex flex-col max-w-sm">
+      <div class="site-footer-brand flex flex-col max-w-sm">
         <div class="flex items-center gap-3 mb-5">
           <img src="public/brand/cds-logo.svg" alt="CDS"
                class="h-6 w-auto" style="opacity: 0.72" width="24" height="24" />
@@ -1065,9 +1317,9 @@
 
       <!-- Right: sitemap columns — each column shrinks to its widest line; a hairline divider
            with equal padding on both sides separates sections at lg+. Stacks vertically below lg. -->
-      <div class="flex justify-start lg:justify-end">
-        <div class="flex flex-col lg:flex-row gap-8 lg:gap-0 w-max">
-          <div class="flex flex-col items-start gap-3 lg:pr-8">
+      <div class="site-footer-nav-wrap flex justify-start lg:justify-end">
+        <div class="site-footer-nav flex flex-col lg:flex-row gap-8 lg:gap-0 w-max">
+          <div class="site-footer-group flex flex-col items-start gap-3 lg:pr-8">
             <span class="tag-overline mb-2">Product</span>
             <a href="index.html" class="foot-link">Home</a>
             <a href="index.html#track-record" class="foot-link">Track Record</a>
@@ -1077,7 +1329,7 @@
             <a href="index.html#faq" class="foot-link">FAQ</a>
             <a href="https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c" class="foot-link">Subscribe</a>
           </div>
-          <div class="flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
+          <div class="site-footer-group flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Academy</span>
             <a href="academy/index.html" class="foot-link">Academy home</a>
             <a href="academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 drawdowns</a>
@@ -1087,15 +1339,56 @@
             <a href="academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
             <a href="academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
           </div>
-          <div class="flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
+          <div class="site-footer-group flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Company</span>
             <a href="company/mission.html" class="foot-link">Mission</a>
             <a href="company/consulting.html" class="foot-link">Consulting</a>
             <a href="company/careers.html" class="foot-link">Careers</a>
             <a href="company/contact.html" class="foot-link">Contact</a>
           </div>
-          <div class="flex flex-col items-start gap-3 lg:pl-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
+          <div class="site-footer-group flex flex-col items-start gap-3 lg:pl-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Legal</span>
+            <a href="legal/terms.html" class="foot-link">Terms of Service</a>
+            <a href="legal/privacy.html" class="foot-link">Privacy Policy</a>
+            <a href="legal/disclaimer.html" class="foot-link">Disclaimer</a>
+            <a href="legal/refund-policy.html" class="foot-link">Refund Policy</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-footer-mobile-menu">
+        <div class="site-footer-tabs" role="tablist" aria-label="Footer sections">
+          <button class="site-footer-tab" type="button" role="tab" aria-selected="false" aria-controls="footer-product" id="footer-tab-product">Product</button>
+          <button class="site-footer-tab" type="button" role="tab" aria-selected="false" aria-controls="footer-academy" id="footer-tab-academy">Academy</button>
+          <button class="site-footer-tab" type="button" role="tab" aria-selected="false" aria-controls="footer-company" id="footer-tab-company">Company</button>
+          <button class="site-footer-tab" type="button" role="tab" aria-selected="false" aria-controls="footer-legal" id="footer-tab-legal">Legal</button>
+        </div>
+        <div class="site-footer-panels">
+          <div class="site-footer-panel" role="tabpanel" id="footer-product" aria-labelledby="footer-tab-product" hidden>
+            <a href="index.html" class="foot-link">Home</a>
+            <a href="index.html#track-record" class="foot-link">Track Record</a>
+            <a href="index.html#how-it-works" class="foot-link">How It Works</a>
+            <a href="index.html#pricing" class="foot-link">Pricing</a>
+            <a href="index.html#refund" class="foot-link">Refund</a>
+            <a href="index.html#faq" class="foot-link">FAQ</a>
+            <a href="https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c" class="foot-link">Subscribe</a>
+          </div>
+          <div class="site-footer-panel" role="tabpanel" id="footer-academy" aria-labelledby="footer-tab-academy" hidden>
+            <a href="academy/index.html" class="foot-link">Academy home</a>
+            <a href="academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 drawdowns</a>
+            <a href="academy/why-buying-the-dip-is-hard.html" class="foot-link">Why dip-buying is hard</a>
+            <a href="academy/every-sp-500-bottom-since-2016.html" class="foot-link">Market bottoms since 2016</a>
+            <a href="academy/double-trend-exhaustion.html" class="foot-link">DoubleTrends™</a>
+            <a href="academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
+            <a href="academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
+          </div>
+          <div class="site-footer-panel" role="tabpanel" id="footer-company" aria-labelledby="footer-tab-company" hidden>
+            <a href="company/mission.html" class="foot-link">Mission</a>
+            <a href="company/consulting.html" class="foot-link">Consulting</a>
+            <a href="company/careers.html" class="foot-link">Careers</a>
+            <a href="company/contact.html" class="foot-link">Contact</a>
+          </div>
+          <div class="site-footer-panel" role="tabpanel" id="footer-legal" aria-labelledby="footer-tab-legal" hidden>
             <a href="legal/terms.html" class="foot-link">Terms of Service</a>
             <a href="legal/privacy.html" class="foot-link">Privacy Policy</a>
             <a href="legal/disclaimer.html" class="foot-link">Disclaimer</a>
@@ -1108,6 +1401,7 @@
 
   <!-- Decorative wave — very subtle -->
   <img src="public/decor/waves.svg" alt="" class="footer-wave" aria-hidden="true" />
+  <script src="public/js/footer-menu.js"></script>
 </footer>
 
 <!-- ═══════════ Honesty interstitial before Stripe checkout ═══════════
@@ -1144,51 +1438,7 @@
     </div>
   </div>
 </div>
-<script>
-  (function () {
-    var gate = document.getElementById('checkout-gate');
-    if (!gate) return;
-    var continueBtn = document.getElementById('checkout-gate-continue');
-    var cancelBtn = document.getElementById('checkout-gate-cancel');
-    var backdrop = document.getElementById('checkout-gate-backdrop');
-    var lastFocus = null;
-
-    function isCheckoutLink(a) {
-      return a && a.href && a.href.indexOf('stripe.com') !== -1;
-    }
-    function openGate(href) {
-      continueBtn.setAttribute('href', href);
-      gate.classList.remove('hidden');
-      gate.classList.add('flex');
-      gate.setAttribute('aria-hidden', 'false');
-      lastFocus = document.activeElement;
-      continueBtn.focus();
-      document.body.style.overflow = 'hidden';
-    }
-    function closeGate() {
-      gate.classList.add('hidden');
-      gate.classList.remove('flex');
-      gate.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
-    }
-
-    document.addEventListener('click', function (e) {
-      var a = e.target.closest ? e.target.closest('a') : null;
-      if (!a) return;
-      if (a.id === 'checkout-gate-continue') return; // let the proceed link navigate
-      if (isCheckoutLink(a)) {
-        e.preventDefault();
-        openGate(a.href);
-      }
-    });
-    cancelBtn.addEventListener('click', closeGate);
-    backdrop.addEventListener('click', closeGate);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !gate.classList.contains('hidden')) closeGate();
-    });
-  })();
-</script>
+<script src="public/js/checkout-gate.js"></script>
 
 </body>
 </html>

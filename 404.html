@@ -286,6 +286,10 @@
     a { color: inherit; text-decoration: none; }
     img { display: block; }
 
+    /* ══════════════════════════════════════════════════════════════
+       Shared Visual Primitives
+       ══════════════════════════════════════════════════════════════ */
+
     /* ── Text gradients ─────────────────────────────────────────── */
     .text-grad-hero {
       background-image: linear-gradient(160deg, #1E2530 10%, #5A6473 100%);
@@ -343,6 +347,12 @@
 
     /* ── Accordion ──────────────────────────────────────────────── */
     details[open] summary .acc-icon { transform: rotate(180deg); }
+    #faq details {
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+    #faq details:hover {
+      border-color: #C2410C;
+    }
 
     /* ── Footer wave overlay ────────────────────────────────────── */
     .footer-wave {
@@ -383,13 +393,21 @@
       line-height: 1;
     }
 
-    /* ── Structural utilities ───────────────────────────────────── */
+    /* ── Structural surfaces and utilities ──────────────────────── */
     .hairline   { border-top:  1px solid rgba(0,0,0,0.08); }
     .hairline-v { border-left: 1px solid rgba(0,0,0,0.08); }
     .card-border {
       background: #FFFFFF;
       border: 1px solid rgba(0,0,0,0.08);
       box-shadow: 0 10px 28px rgba(30,37,48,0.045);
+    }
+    .hover-lift-rust {
+      transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+    }
+    .hover-lift-rust:hover {
+      transform: translateY(-2px);
+      border-color: #C2410C;
+      box-shadow: 0 24px 60px rgba(30,37,48,0.10);
     }
     .terminal-shell {
       background:
@@ -449,6 +467,10 @@
       font-size: 0.66rem;
       font-weight: 600;
     }
+    /* ══════════════════════════════════════════════════════════════
+       Page Layout Patterns
+       ══════════════════════════════════════════════════════════════ */
+
     .page-hero {
       background:
         linear-gradient(180deg, rgba(255,255,255,0.96), rgba(247,245,240,0.96)),
@@ -521,6 +543,8 @@
       gap: 2rem;
       color: #5A6473;
     }
+    /* ── Article pages ──────────────────────────────────────────── */
+
     .article-shell {
       max-width: 1040px;
     }
@@ -617,17 +641,13 @@
       box-shadow: 0 18px 46px rgba(30,37,48,0.07);
       overflow-x: auto;
     }
+    /* ── Directory / collection pages ───────────────────────────── */
+
     .directory-card {
       background:
         linear-gradient(180deg, #FFFFFF 0%, #F8F6F1 100%);
       border: 1px solid rgba(30,37,48,0.10);
       box-shadow: 0 18px 46px rgba(30,37,48,0.07);
-      transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
-    }
-    .directory-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(194,65,12,0.28);
-      box-shadow: 0 24px 60px rgba(30,37,48,0.10);
     }
     .directory-shell {
       width: 100%;
@@ -725,11 +745,247 @@
       text-transform: uppercase;
       color: #C2410C;
     }
+    /* ══════════════════════════════════════════════════════════════
+       Responsive Overrides
+       ══════════════════════════════════════════════════════════════ */
+
+    .mobile-nav-link,
+    .mobile-nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.15rem;
+      padding: 0 0.68rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .mobile-nav-link {
+      color: #1E2530;
+      border: 1px solid rgba(30,37,48,0.16);
+      background: rgba(255,255,255,0.68);
+    }
+    .mobile-nav-cta {
+      color: #FFFFFF;
+      background: #C2410C;
+      border: 1px solid #C2410C;
+    }
+    .site-footer-mobile-menu {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      body {
+        overflow-x: hidden;
+        text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      .site-header nav {
+        height: 4rem !important;
+        align-items: center;
+        gap: 0.65rem;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+      .site-header nav > div:last-child {
+        min-width: 0;
+      }
+
+      .home-container,
+      footer .max-w-site {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+      }
+      .home-container.py-20,
+      .home-container[class*="py-20"] {
+        padding-top: 3.75rem !important;
+        padding-bottom: 3.75rem !important;
+      }
+
+      .home-hero {
+        min-height: auto !important;
+        align-items: flex-start;
+      }
+      .home-hero-content {
+        padding-top: 6.25rem !important;
+        padding-bottom: 3.25rem !important;
+      }
+      .home-hero .home-container {
+        gap: 1.65rem !important;
+      }
+      .home-hero h1 {
+        font-size: clamp(2.55rem, 14vw, 3.75rem) !important;
+        line-height: 0.96 !important;
+        margin-bottom: 1.25rem !important;
+        max-width: 9ch;
+      }
+      .home-hero p {
+        font-size: 1rem !important;
+        line-height: 1.7 !important;
+      }
+      .home-decor-img {
+        inset: auto 0 0 auto !important;
+        width: 100% !important;
+        height: 46% !important;
+        opacity: 0.22 !important;
+        object-position: right bottom !important;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.55) 38%, rgba(0,0,0,0.9) 100%) !important;
+                mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.55) 38%, rgba(0,0,0,0.9) 100%) !important;
+      }
+
+      main .btn-light,
+      main .btn-dark {
+        width: 100%;
+        justify-content: center;
+        min-height: 2.9rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        text-align: center;
+      }
+
+      .tag-overline,
+      .section-overline {
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        line-height: 1.45;
+      }
+      .data-label {
+        font-size: 0.58rem;
+        letter-spacing: 0.1em;
+        line-height: 1.45;
+      }
+      .data-value {
+        font-size: 2rem;
+      }
+      .home-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+      .metric-tile,
+      .product-panel,
+      .terminal-shell,
+      .card-border,
+      .directory-card {
+        box-shadow: 0 10px 24px rgba(30,37,48,0.045);
+      }
+      .product-panel {
+        padding: 1.35rem !important;
+      }
+
+      #chart {
+        height: 330px !important;
+      }
+      #replay-shell .terminal-bar,
+      #replay-shell .relative > .flex,
+      #replay-shell > .relative:last-child > .flex {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+      .status-pill {
+        white-space: normal;
+      }
+
+      .page-shell,
+      .directory-shell,
+      .article-page {
+        padding: 7rem 1.25rem 3.5rem !important;
+      }
+      .page-hero-center,
+      .directory-hero,
+      .article-hero-frame,
+      .article-cta {
+        padding: 1.25rem !important;
+        margin-bottom: 2rem !important;
+      }
+      .page-title,
+      .directory-title {
+        font-size: 2.1rem !important;
+        line-height: 1.12 !important;
+      }
+      .page-subtitle,
+      .directory-subtitle {
+        font-size: 1.08rem !important;
+        line-height: 1.55 !important;
+      }
+      .article-title {
+        font-size: 2.05rem !important;
+        line-height: 1.08 !important;
+      }
+      .article-section {
+        margin-bottom: 2.5rem !important;
+      }
+
+      .site-footer-inner {
+        padding-top: 2.5rem !important;
+        padding-bottom: 2.75rem !important;
+      }
+      .site-footer-grid {
+        display: flex !important;
+        flex-direction: column;
+        gap: 1.75rem !important;
+      }
+      .site-footer-brand {
+        max-width: none !important;
+        padding-bottom: 1.35rem;
+        border-bottom: 1px solid rgba(30,37,48,0.08);
+      }
+      .site-footer-nav-wrap {
+        display: none !important;
+      }
+      .site-footer-mobile-menu {
+        display: grid !important;
+        gap: 1rem;
+        width: 100%;
+      }
+      .site-footer-tabs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.45rem;
+      }
+      .site-footer-tab {
+        min-width: 0;
+        height: 2.65rem;
+        padding: 0 0.35rem;
+        border: 1px solid rgba(194,65,12,0.34);
+        background: rgba(194,65,12,0.06);
+        color: #C2410C;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.58rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .site-footer-tab.is-active {
+        background: #C2410C;
+        border-color: #C2410C;
+        color: #FFFFFF;
+      }
+      .site-footer-panels {
+        min-height: 0;
+        padding: 1.1rem 0 0.1rem;
+      }
+      .site-footer-panel {
+        display: grid;
+        gap: 0.72rem;
+        grid-template-columns: 1fr;
+      }
+      .site-footer-panel[hidden] {
+        display: none;
+      }
+      .site-footer-panel .foot-link {
+        font-size: 0.82rem;
+        line-height: 1.45;
+      }
+    }
   </style>
 </head>
 
 <body class="bg-light text-dark font-['DM_Sans'] leading-relaxed antialiased">
-<header class="fixed top-0 left-0 right-0 z-30"
+<header class="site-header fixed top-0 left-0 right-0 z-30"
         style="background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.08);">
   <nav class="w-full max-w-site mx-auto flex items-center justify-between gap-4 px-6 h-16">
 
@@ -738,7 +994,7 @@
         <img src="/public/brand/cds-logo.svg" alt="CDS" class="h-6 w-auto" width="24" height="24" />
       </a>
       <a href="/index.html"
-         class="text-[#1E2530] font-noto font-semibold text-[1.125rem] tracking-tight hidden md:block">
+         class="text-[#1E2530] font-noto font-semibold text-[1.125rem] tracking-tight">
         DoubleTrends™
       </a>
     </div>
@@ -753,14 +1009,10 @@
       <a href="https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c" class="btn-light ml-2 !px-4 !py-2 text-[0.65rem]">Subscribe</a>
     </div>
 
-    <div class="flex lg:hidden items-center gap-1 overflow-x-auto">
-      <a href="/index.html#track-record" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Track</a>
-      <a href="/index.html#how-it-works" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Works</a>
-      <a href="/index.html#pricing" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Price</a>
-      <a href="/index.html#refund" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">Refund</a>
-      <a href="/index.html#faq" class="text-[#5A6473] hover:text-[#1E2530] font-exo font-semibold text-[0.6rem] tracking-[0.08em] uppercase transition-colors px-2 py-2">FAQ</a>
-      <a href="/academy/index.html" class="btn-dark !px-3 !py-2 text-[0.6rem]">Academy</a>
-      <a href="https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c" class="btn-light !px-3 !py-2 text-[0.6rem]">Subscribe</a>
+    <div class="flex lg:hidden items-center gap-1.5 shrink-0">
+      <a href="/index.html" class="mobile-nav-link">Product</a>
+      <a href="/academy/index.html" class="mobile-nav-link">Academy</a>
+      <a href="https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c" class="mobile-nav-cta">Subscribe</a>
     </div>
   </nav>
 </header>
@@ -778,13 +1030,13 @@
 
 </main>
 <footer class="relative w-full" style="background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.08);">
-  <div class="relative z-10 w-full max-w-site mx-auto px-8 py-12">
+  <div class="site-footer-inner relative z-10 w-full max-w-site mx-auto px-8 py-12">
 
     <!-- Main row -->
-    <div class="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12">
+    <div class="site-footer-grid grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12">
 
       <!-- Left: brand + disclaimer + copyright -->
-      <div class="flex flex-col max-w-sm">
+      <div class="site-footer-brand flex flex-col max-w-sm">
         <div class="flex items-center gap-3 mb-5">
           <img src="/public/brand/cds-logo.svg" alt="CDS"
                class="h-6 w-auto" style="opacity: 0.72" width="24" height="24" />
@@ -798,9 +1050,9 @@
 
       <!-- Right: sitemap columns — each column shrinks to its widest line; a hairline divider
            with equal padding on both sides separates sections at lg+. Stacks vertically below lg. -->
-      <div class="flex justify-start lg:justify-end">
-        <div class="flex flex-col lg:flex-row gap-8 lg:gap-0 w-max">
-          <div class="flex flex-col items-start gap-3 lg:pr-8">
+      <div class="site-footer-nav-wrap flex justify-start lg:justify-end">
+        <div class="site-footer-nav flex flex-col lg:flex-row gap-8 lg:gap-0 w-max">
+          <div class="site-footer-group flex flex-col items-start gap-3 lg:pr-8">
             <span class="tag-overline mb-2">Product</span>
             <a href="/index.html" class="foot-link">Home</a>
             <a href="/index.html#track-record" class="foot-link">Track Record</a>
@@ -810,7 +1062,7 @@
             <a href="/index.html#faq" class="foot-link">FAQ</a>
             <a href="https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c" class="foot-link">Subscribe</a>
           </div>
-          <div class="flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
+          <div class="site-footer-group flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Academy</span>
             <a href="/academy/index.html" class="foot-link">Academy home</a>
             <a href="/academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 drawdowns</a>
@@ -820,15 +1072,56 @@
             <a href="/academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
             <a href="/academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
           </div>
-          <div class="flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
+          <div class="site-footer-group flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Company</span>
             <a href="/company/mission.html" class="foot-link">Mission</a>
             <a href="/company/consulting.html" class="foot-link">Consulting</a>
             <a href="/company/careers.html" class="foot-link">Careers</a>
             <a href="/company/contact.html" class="foot-link">Contact</a>
           </div>
-          <div class="flex flex-col items-start gap-3 lg:pl-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
+          <div class="site-footer-group flex flex-col items-start gap-3 lg:pl-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Legal</span>
+            <a href="/legal/terms.html" class="foot-link">Terms of Service</a>
+            <a href="/legal/privacy.html" class="foot-link">Privacy Policy</a>
+            <a href="/legal/disclaimer.html" class="foot-link">Disclaimer</a>
+            <a href="/legal/refund-policy.html" class="foot-link">Refund Policy</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-footer-mobile-menu">
+        <div class="site-footer-tabs" role="tablist" aria-label="Footer sections">
+          <button class="site-footer-tab" type="button" role="tab" aria-selected="false" aria-controls="footer-product" id="footer-tab-product">Product</button>
+          <button class="site-footer-tab" type="button" role="tab" aria-selected="false" aria-controls="footer-academy" id="footer-tab-academy">Academy</button>
+          <button class="site-footer-tab" type="button" role="tab" aria-selected="false" aria-controls="footer-company" id="footer-tab-company">Company</button>
+          <button class="site-footer-tab" type="button" role="tab" aria-selected="false" aria-controls="footer-legal" id="footer-tab-legal">Legal</button>
+        </div>
+        <div class="site-footer-panels">
+          <div class="site-footer-panel" role="tabpanel" id="footer-product" aria-labelledby="footer-tab-product" hidden>
+            <a href="/index.html" class="foot-link">Home</a>
+            <a href="/index.html#track-record" class="foot-link">Track Record</a>
+            <a href="/index.html#how-it-works" class="foot-link">How It Works</a>
+            <a href="/index.html#pricing" class="foot-link">Pricing</a>
+            <a href="/index.html#refund" class="foot-link">Refund</a>
+            <a href="/index.html#faq" class="foot-link">FAQ</a>
+            <a href="https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c" class="foot-link">Subscribe</a>
+          </div>
+          <div class="site-footer-panel" role="tabpanel" id="footer-academy" aria-labelledby="footer-tab-academy" hidden>
+            <a href="/academy/index.html" class="foot-link">Academy home</a>
+            <a href="/academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 drawdowns</a>
+            <a href="/academy/why-buying-the-dip-is-hard.html" class="foot-link">Why dip-buying is hard</a>
+            <a href="/academy/every-sp-500-bottom-since-2016.html" class="foot-link">Market bottoms since 2016</a>
+            <a href="/academy/double-trend-exhaustion.html" class="foot-link">DoubleTrends™</a>
+            <a href="/academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
+            <a href="/academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
+          </div>
+          <div class="site-footer-panel" role="tabpanel" id="footer-company" aria-labelledby="footer-tab-company" hidden>
+            <a href="/company/mission.html" class="foot-link">Mission</a>
+            <a href="/company/consulting.html" class="foot-link">Consulting</a>
+            <a href="/company/careers.html" class="foot-link">Careers</a>
+            <a href="/company/contact.html" class="foot-link">Contact</a>
+          </div>
+          <div class="site-footer-panel" role="tabpanel" id="footer-legal" aria-labelledby="footer-tab-legal" hidden>
             <a href="/legal/terms.html" class="foot-link">Terms of Service</a>
             <a href="/legal/privacy.html" class="foot-link">Privacy Policy</a>
             <a href="/legal/disclaimer.html" class="foot-link">Disclaimer</a>
@@ -841,6 +1134,7 @@
 
   <!-- Decorative wave — very subtle -->
   <img src="/public/decor/waves.svg" alt="" class="footer-wave" aria-hidden="true" />
+  <script src="/public/js/footer-menu.js"></script>
 </footer>
 
 <!-- ═══════════ Honesty interstitial before Stripe checkout ═══════════
@@ -877,51 +1171,7 @@
     </div>
   </div>
 </div>
-<script>
-  (function () {
-    var gate = document.getElementById('checkout-gate');
-    if (!gate) return;
-    var continueBtn = document.getElementById('checkout-gate-continue');
-    var cancelBtn = document.getElementById('checkout-gate-cancel');
-    var backdrop = document.getElementById('checkout-gate-backdrop');
-    var lastFocus = null;
-
-    function isCheckoutLink(a) {
-      return a && a.href && a.href.indexOf('stripe.com') !== -1;
-    }
-    function openGate(href) {
-      continueBtn.setAttribute('href', href);
-      gate.classList.remove('hidden');
-      gate.classList.add('flex');
-      gate.setAttribute('aria-hidden', 'false');
-      lastFocus = document.activeElement;
-      continueBtn.focus();
-      document.body.style.overflow = 'hidden';
-    }
-    function closeGate() {
-      gate.classList.add('hidden');
-      gate.classList.remove('flex');
-      gate.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
-    }
-
-    document.addEventListener('click', function (e) {
-      var a = e.target.closest ? e.target.closest('a') : null;
-      if (!a) return;
-      if (a.id === 'checkout-gate-continue') return; // let the proceed link navigate
-      if (isCheckoutLink(a)) {
-        e.preventDefault();
-        openGate(a.href);
-      }
-    });
-    cancelBtn.addEventListener('click', closeGate);
-    backdrop.addEventListener('click', closeGate);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !gate.classList.contains('hidden')) closeGate();
-    });
-  })();
-</script>
+<script src="/public/js/checkout-gate.js"></script>
 
 </body>
 </html>
