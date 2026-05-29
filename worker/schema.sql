@@ -6,6 +6,8 @@ CREATE TABLE subscribers (
   invite_link TEXT,
   telegram_user_id TEXT,
   status TEXT,
+  email TEXT,
+  full_name TEXT,
   created_at TEXT,
   updated_at TEXT
 );

@@ -43,6 +43,10 @@ interface StripeObject {
   id?: string;
   customer?: string;
   subscription?: string;
+  customer_details?: {
+    email?: string | null;
+    name?: string | null;
+  };
 }
 
 interface TelegramUpdate {
@@ -118,12 +122,15 @@ async function handleCheckoutCompleted(object: StripeObject, env: Env): Promise<
     return;
   }
 
-  // No Telegram call here — we just mint an activation token. The actual invite
-  // link is created on demand when the user taps the deep link and DMs the bot,
-  // so a closed tab or an unused link never locks a paying customer out.
+  // We mint the activation token here; the user binds their Telegram account
+  // later by DMing the bot with /start <token>.
   const token = generateToken();
+  const email = object.customer_details?.email ?? null;
+  const fullName = object.customer_details?.name ?? null;
   const now = new Date().toISOString();
 
+  // COALESCE on UPDATE so a re-checkout event that's missing customer_details
+  // (rare, but possible) doesn't blank a previously-captured email/name.
   await env.DB.prepare(
     `INSERT INTO subscribers (
       stripe_customer_id,
@@ -133,17 +140,21 @@ async function handleCheckoutCompleted(object: StripeObject, env: Env): Promise<
       invite_link,
       telegram_user_id,
       status,
+      email,
+      full_name,
       created_at,
       updated_at
-    ) VALUES (?, ?, ?, ?, NULL, NULL, 'active', ?, ?)
+    ) VALUES (?, ?, ?, ?, NULL, NULL, 'active', ?, ?, ?, ?)
     ON CONFLICT(stripe_customer_id) DO UPDATE SET
       subscription_id = excluded.subscription_id,
       checkout_session_id = excluded.checkout_session_id,
       claim_token = excluded.claim_token,
       status = 'active',
+      email = COALESCE(excluded.email, email),
+      full_name = COALESCE(excluded.full_name, full_name),
       updated_at = excluded.updated_at`,
   )
-    .bind(customerId, subscriptionId ?? null, checkoutSessionId, token, now, now)
+    .bind(customerId, subscriptionId ?? null, checkoutSessionId, token, email, fullName, now, now)
     .run();
 }
 

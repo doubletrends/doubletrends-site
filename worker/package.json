@@ -10,6 +10,7 @@
   "scripts": {
     "deploy": "wrangler deploy",
     "db:init": "wrangler d1 execute dtep --file=schema.sql",
+    "db:peek": "wrangler d1 execute dtep --remote --command \"SELECT email, full_name, telegram_user_id, status, updated_at, stripe_customer_id FROM subscribers ORDER BY updated_at DESC;\"",
     "test": "node --import tsx --test test/*.test.ts",
     "typecheck": "tsc --noEmit"
   }
