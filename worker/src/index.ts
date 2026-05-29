@@ -440,8 +440,12 @@ async function handleSubscribersList(request: Request, env: Env): Promise<Respon
     return json({ error: "unauthorized" }, 401);
   }
 
+  // DISTINCT defends against a customer ending up with multiple active rows
+  // (e.g., re-subscribed without canceling first → Stripe mints a fresh
+  // customer_id → second row with the same telegram_user_id). Without it
+  // the same user would be DMed twice per signal.
   const result = await env.DB.prepare(
-    `SELECT telegram_user_id FROM subscribers
+    `SELECT DISTINCT telegram_user_id FROM subscribers
     WHERE status = 'active' AND telegram_user_id IS NOT NULL`,
   ).all<{ telegram_user_id: string }>();
 
