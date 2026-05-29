@@ -16,7 +16,34 @@ interface Env {
   STRIPE_WEBHOOK_SECRET: string;
   STRIPE_PRICE_ID: string;
   TELEGRAM_WEBHOOK_SECRET: string;
+  BRIEF_SHARED_SECRET: string;
 }
+
+interface BriefPayload {
+  ticker: string;
+  display_name: string;
+  as_of_date: string;
+  close: number;
+  mdd_value: number;
+  tier: string;
+}
+
+interface BriefRow {
+  ticker: string;
+  display_name: string;
+  as_of_date: string;
+  close_value: number;
+  mdd_value: number;
+  tier: string;
+  updated_at: string;
+}
+
+const TIER_LABELS: Record<string, string> = {
+  daily_noise: "Daily Noise",
+  common_correction: "Common Correction",
+  bear_market: "Bear Market",
+  crash: "Crash",
+};
 
 interface StripeEvent {
   type: string;
@@ -72,6 +99,10 @@ export default {
 
     if (request.method === "POST" && url.pathname === "/webhook/telegram") {
       return handleTelegramWebhook(request, env);
+    }
+
+    if (request.method === "POST" && url.pathname === "/internal/brief") {
+      return handleBriefIngest(request, env);
     }
 
     return json({ error: "not found" }, 404);
@@ -280,12 +311,101 @@ async function handleBotMessage(
     return;
   }
 
+  if (command === "/brief") {
+    await handleBrief(chatId, env);
+    return;
+  }
+
   await sendMessage(
     chatId,
-    "Send /link to get a fresh invite to the DoubleTrends™ channel. " +
+    "Send /link to get a fresh invite to the DoubleTrends™ channel, or /brief for the latest market read. " +
       "If you haven't subscribed yet, visit doubletrends.com.",
     env,
   );
+}
+
+async function handleBrief(chatId: number, env: Env): Promise<void> {
+  const row = await env.DB.prepare(
+    `SELECT ticker, display_name, as_of_date, close_value, mdd_value, tier, updated_at
+    FROM brief_snapshot WHERE id = 1 LIMIT 1`,
+  ).first<BriefRow>();
+
+  if (!row) {
+    await sendMessage(
+      chatId,
+      "No market brief available yet. Please try /brief again shortly.",
+      env,
+    );
+    return;
+  }
+
+  const tierLabel = TIER_LABELS[row.tier] ?? row.tier;
+  const message = [
+    `${row.display_name} (${row.ticker}) — as of ${row.as_of_date}`,
+    `Close ${row.close_value.toFixed(2)}`,
+    ``,
+    `Maximum Drawdown (blended, 1m/3m/1y/2y): ${row.mdd_value.toFixed(1)} → ${tierLabel}`,
+    ``,
+    `Tiers: <40 noise · 40–65 correction · 65–85 bear · ≥85 crash`,
+    `Updated ${row.updated_at}`,
+  ].join("\n");
+
+  await sendMessage(chatId, message, env);
+}
+
+// ─── Brief ingest (called hourly by the GitHub Actions job) ─────────────────────
+
+async function handleBriefIngest(request: Request, env: Env): Promise<Response> {
+  if (request.headers.get("X-Brief-Secret") !== env.BRIEF_SHARED_SECRET) {
+    return json({ error: "unauthorized" }, 401);
+  }
+
+  let payload: BriefPayload;
+  try {
+    payload = (await request.json()) as BriefPayload;
+  } catch {
+    return json({ error: "invalid json" }, 400);
+  }
+
+  if (
+    typeof payload.ticker !== "string" ||
+    typeof payload.display_name !== "string" ||
+    typeof payload.as_of_date !== "string" ||
+    typeof payload.tier !== "string" ||
+    typeof payload.close !== "number" ||
+    typeof payload.mdd_value !== "number" ||
+    !Number.isFinite(payload.close) ||
+    !Number.isFinite(payload.mdd_value)
+  ) {
+    return json({ error: "invalid payload" }, 400);
+  }
+
+  const now = new Date().toISOString();
+  await env.DB.prepare(
+    `INSERT INTO brief_snapshot
+      (id, ticker, display_name, as_of_date, close_value, mdd_value, tier, updated_at)
+    VALUES (1, ?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT(id) DO UPDATE SET
+      ticker = excluded.ticker,
+      display_name = excluded.display_name,
+      as_of_date = excluded.as_of_date,
+      close_value = excluded.close_value,
+      mdd_value = excluded.mdd_value,
+      tier = excluded.tier,
+      updated_at = excluded.updated_at`,
+  )
+    .bind(
+      payload.ticker,
+      payload.display_name,
+      payload.as_of_date,
+      payload.close,
+      payload.mdd_value,
+      payload.tier,
+      now,
+    )
+    .run();
+
+  return json({ ok: true });
 }
 
 async function handleClaim(

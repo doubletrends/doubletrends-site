@@ -19,5 +19,6 @@
    * STRIPE_WEBHOOK_SECRET
    * STRIPE_PRICE_ID
    * TELEGRAM_WEBHOOK_SECRET   (same value you pass as secret_token to setWebhook)
+   * BRIEF_SHARED_SECRET       (must match the GitHub Actions secret used by signal/brief.py)
    */
 }
