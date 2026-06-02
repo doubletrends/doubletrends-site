@@ -131,6 +131,10 @@ async function handleCheckoutCompleted(object: StripeObject, env: Env): Promise<
 
   // COALESCE on UPDATE so a re-checkout event that's missing customer_details
   // (rare, but possible) doesn't blank a previously-captured email/name.
+  // claim_token is also preserved on conflict: a Stripe webhook retry (caused
+  // by us writing the row then failing to return 200) would otherwise mint a
+  // fresh token and invalidate the one the success page may have already
+  // handed to the user.
   await env.DB.prepare(
     `INSERT INTO subscribers (
       stripe_customer_id,
@@ -148,7 +152,7 @@ async function handleCheckoutCompleted(object: StripeObject, env: Env): Promise<
     ON CONFLICT(stripe_customer_id) DO UPDATE SET
       subscription_id = excluded.subscription_id,
       checkout_session_id = excluded.checkout_session_id,
-      claim_token = excluded.claim_token,
+      claim_token = COALESCE(claim_token, excluded.claim_token),
       status = 'active',
       email = COALESCE(excluded.email, email),
       full_name = COALESCE(excluded.full_name, full_name),
