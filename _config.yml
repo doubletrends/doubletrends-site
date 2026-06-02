@@ -1,0 +1,15 @@
+# Stop GitHub Pages from serving backend source and build tooling.
+# Default Jekyll behavior is "serve everything that doesn't start with . or _",
+# which would otherwise expose signal/dtep.py, worker/src/index.ts, etc., at
+# doubletrends.com/<path>/<file>.
+exclude:
+  - signal/
+  - worker/
+  - research/
+  - src/
+  - docs/
+  - build.js
+  - build-brand.js
+  - wrangler.jsonc
+  - package.json
+  - package-lock.json
