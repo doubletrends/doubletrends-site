@@ -1,7 +1,7 @@
 const SITE_URL = 'https://doubletrends.com';
 const SUBSCRIBE_URL = 'https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c';
-// Cloudflare Worker base URL (no trailing slash). Filled in after `wrangler deploy`.
-const WORKER_URL = 'https://dtep-subscriptions.marc-d94.workers.dev';
+// Cloudflare Worker base URL (no trailing slash).
+const WORKER_URL = 'https://api.doubletrends.com';
 const OG_IMAGE = `${SITE_URL}/public/brand/og-image.png`;
 const OG_IMAGE_ALT = 'CDS logo and DoubleTrends tagline';
 
