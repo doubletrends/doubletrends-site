@@ -6,23 +6,6 @@
     "directory": ".",
     "not_found_handling": "404-page"
   },
-  "base_dir": ".",
-  "ignore_assets": [
-    "node_modules",
-    ".git",
-    ".github",
-    ".dev.vars",
-    ".dev.vars.production",
-    "src",
-    "signal",
-    "worker",
-    "research",
-    "docs",
-    "package.json",
-    "package-lock.json",
-    "build.js",
-    "build-brand.js",
-    "wrangler.jsonc",
-    "_config.yml"
-  ]
+  "base_dir": "."
+  // Asset filtering lives in .assetsignore (gitignore syntax).
 }
