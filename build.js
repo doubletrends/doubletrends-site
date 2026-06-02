@@ -45,6 +45,11 @@ function todayInTimeZone(timeZone) {
 const TODAY = todayInTimeZone('Asia/Shanghai');
 const ARTICLE_PUBLISHED = '2026-05-25';
 
+// ─── Prepare output directory ────────────────────────────────────────────────
+const DIST = path.join(__dirname, 'dist');
+fs.rmSync(DIST, { recursive: true, force: true });
+fs.mkdirSync(DIST, { recursive: true });
+
 // ─── Read partials ────────────────────────────────────────────────────────────
 const partialsDir = path.join(__dirname, 'src', '_partials');
 const read = (name) => fs.readFileSync(path.join(partialsDir, name), 'utf8');
@@ -234,7 +239,7 @@ let built = 0;
 
 for (const page of pages) {
   const srcPath = path.join(__dirname, 'src', 'pages', page.src);
-  const outPath = path.join(__dirname, page.src);
+  const outPath = path.join(DIST, page.src);
 
   if (!fs.existsSync(srcPath)) {
     console.warn(`⚠  Missing source: ${page.src}`);
@@ -292,7 +297,7 @@ ${urls}
 </urlset>
 `;
 
-fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemap, 'utf8');
+fs.writeFileSync(path.join(DIST, 'sitemap.xml'), sitemap, 'utf8');
 console.log('✓  sitemap.xml generated');
 
 // ─── Generate llms.txt ───────────────────────────────────────────────────────
@@ -337,5 +342,12 @@ ${academyArticles}
 - Contact: info@doubletrends.com
 `;
 
-fs.writeFileSync(path.join(__dirname, 'llms.txt'), llms, 'utf8');
+fs.writeFileSync(path.join(DIST, 'llms.txt'), llms, 'utf8');
 console.log('✓  llms.txt generated');
+
+// ─── Copy static assets ──────────────────────────────────────────────────────
+fs.cpSync(path.join(__dirname, 'public'), path.join(DIST, 'public'), { recursive: true });
+console.log('✓  public/ copied');
+
+fs.copyFileSync(path.join(__dirname, 'src', 'robots.txt'), path.join(DIST, 'robots.txt'));
+console.log('✓  robots.txt copied');
