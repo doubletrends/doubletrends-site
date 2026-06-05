@@ -45,6 +45,23 @@ function todayInTimeZone(timeZone) {
 const TODAY = todayInTimeZone('Asia/Shanghai');
 const ARTICLE_PUBLISHED = '2026-05-25';
 
+// ─── Track-record numbers from the backfill ─────────────────────────────────
+// Read once at build start so {{TR_*}} placeholders resolve to real numbers in
+// static HTML (good for SEO and avoids a flash-of-loading-content). Generated
+// by build-replay-data.js — see that file's header for the contract.
+const HISTORY_PATH = path.join(__dirname, 'public', 'replay', 'history.json');
+const history = JSON.parse(fs.readFileSync(HISTORY_PATH, 'utf8'));
+const tr = history.metrics_since_replay_start;
+const trAll = history.metrics;
+const replayStartYear = (history.replay_start_date || tr.first_signal).slice(0, 4);
+const TRACK_RECORD = {
+  TR_SIGNAL_COUNT: String(tr.total_signals),
+  TR_SIGNAL_COUNT_TOTAL: String(trAll.total_signals),
+  TR_MEDIAN_1Y_PCT: `+${tr.median_1y_pct}%`,
+  TR_POSITIVE_1Y: `${tr.positive_1y_count} of ${tr.matured_1y_count}`,
+  TR_REPLAY_RANGE: `${replayStartYear}–${tr.last_signal.slice(0, 4)}`,
+};
+
 // ─── Prepare output directory ────────────────────────────────────────────────
 const DIST = path.join(__dirname, 'dist');
 fs.rmSync(DIST, { recursive: true, force: true });
@@ -268,6 +285,7 @@ for (const page of pages) {
     SOCIAL_EXTRA: socialExtraFor(page),
     ROBOTS:    page.robots ?? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
     JSONLD:    jsonLdFor(page),
+    ...TRACK_RECORD,
   });
 
   ensureDir(outPath);

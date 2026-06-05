@@ -1,26 +1,30 @@
 <!-- ══════════════════════════════════════════════════════════════ ACADEMY ═══════════════════════════════════════════════════════════════ -->
-<!-- ── Section: DoubleTrends™ Series ─────────────────────────── -->
 <section class="directory-shell">
+
+<!-- ── Hero ─────────────────────────────────────────────────────── -->
 <div class="page-hero directory-hero">
 <span class="tag-overline mb-3">Academy</span>
 <h2 class="directory-title"> Research &amp; Education </h2>
-<p class="directory-subtitle mt-2"> Research notes behind how we read market exhaustion, volume, and drawdown behavior &mdash; written for ETF investors who want context, not noise. </p>
+<p class="directory-subtitle mt-2"> Notes on how the market actually behaves and on the inputs the engine reads &mdash; written for long-term ETF investors who want context, not noise. </p>
 </div>
-<!-- Featured article -->
+
+<!-- ── Research: featured ───────────────────────────────────────── -->
 <a href="{{ROOT}}academy/sp-500-drawdowns.html" class="terminal-shell directory-featured hover-lift-rust group">
 <div class="p-8 md:p-10">
 <span class="tag-overline">Featured &middot; Market History</span>
 <h3 class="text-[#1E2530] font-noto font-bold text-2xl md:text-3xl leading-tight mt-3 mb-3 group-hover:text-bright transition-colors"> How often does the S&amp;P 500 dip &mdash; and how deep? </h3>
-<p class="font-open text-sm md:text-base leading-relaxed" style="color: #5A6473;"> Seventy-six years of data on how often corrections and bear markets hit, how far they fall, and how long recovery takes &mdash; a baseline for deciding when a dip is normal stress and when it deserves attention. </p>
+<p class="font-open text-sm md:text-base leading-relaxed" style="color: #5A6473;"> Seventy-six years of data on how often corrections and bear markets hit, how far they fall, and how long recovery takes &mdash; the base rates behind every dip-buying decision. </p>
 <span class="btn-dark mt-6">Read the article</span>
 </div>
 </a>
+
+<!-- ── Research: grid ───────────────────────────────────────────── -->
 <div class="directory-grid">
 <a href="{{ROOT}}academy/why-buying-the-dip-is-hard.html" class="block directory-card hover-lift-rust group">
 <div class="p-6 md:p-7">
 <span class="tag-overline">Investor Behavior</span>
 <h3 class="text-[#1E2530] font-noto font-bold text-xl md:text-2xl leading-tight mt-3 mb-3 group-hover:text-bright transition-colors"> Why buying the dip is so hard &mdash; and how to make it automatic </h3>
-<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> The best market days often arrive during the worst headlines. This note explains why dip-buying fails in practice, and how a rule can make the decision less emotional. </p>
+<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> The best market days arrive during the worst headlines. Why dip-buying fails in practice, and how a pre-committed rule replaces improvisation under stress. </p>
 <span class="btn-dark mt-5">Read the article</span>
 </div>
 </a>
@@ -28,36 +32,83 @@
 <div class="p-6 md:p-7">
 <span class="tag-overline">Track Record</span>
 <h3 class="text-[#1E2530] font-noto font-bold text-xl md:text-2xl leading-tight mt-3 mb-3 group-hover:text-bright transition-colors"> Every S&amp;P 500 bottom since 2016 &mdash; and what they had in common </h3>
-<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> All 12 S&amp;P 500 index signals, the drawdown at each, and what came after &mdash; including the uncomfortable cases where the market kept falling first. </p>
+<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> Every signal the engine has fired on the index since 2016 &mdash; the drawdown at each, what came after, and the cases where the market kept falling first. </p>
 <span class="btn-dark mt-5">Read the article</span>
 </div>
 </a>
 </div>
+
+<!-- ── Standard Tools ───────────────────────────────────────────── -->
 <div class="directory-methods">
 <div class="page-hero directory-hero">
-<span class="tag-overline mb-3">Methods</span>
-<h2 class="directory-title"> The tools behind the research </h2>
-<p class="directory-subtitle mt-2"> The concepts and indicators we use to read the market &mdash; explained as building blocks, not standalone investment instructions. </p>
+<span class="tag-overline mb-3">Standard Tools</span>
+<h2 class="directory-title"> The indicators behind the read. </h2>
+<p class="directory-subtitle mt-2"> Williams %R, drawdown, volume-at-price. The concepts the product is built on &mdash; explained as building blocks, not standalone trading systems. </p>
 </div>
 <div class="directory-methods-grid">
+
 <article class="directory-card hover-lift-rust p-6">
-<span class="tag-overline">The signal</span>
+<span class="tag-overline">The engine</span>
 <h3 class="text-[#1E2530] font-noto font-bold text-xl leading-tight mt-3 mb-3"> DoubleTrends&trade; </h3>
-<p class="text-muted text-sm leading-relaxed mb-5"> The engine behind our alerts: a dual Williams %R model that waits for broad-index selling pressure to become oversold, then watches for the reversal out of that state. </p>
+<p class="text-muted text-sm leading-relaxed mb-5"> Williams %R, doubled. A fifty-year-old momentum oscillator run on two timeframes and smoothed, that flags when broad-index selling has exhausted itself. </p>
 <a href="{{ROOT}}academy/double-trend-exhaustion.html" class="text-primary hover:underline font-noto text-sm font-semibold">Learn the concept &rarr;</a>
 </article>
+
 <article class="directory-card hover-lift-rust p-6">
-<span class="tag-overline">Original research</span>
+<span class="tag-overline">Stress lens</span>
 <h3 class="text-[#1E2530] font-noto font-bold text-xl leading-tight mt-3 mb-3"> Maximum Drawdown </h3>
-<p class="text-muted text-sm leading-relaxed mb-5"> Our own measure of how depressed price is versus its own history &mdash; a percentile lens for separating routine weakness from deeper market stress. </p>
+<p class="text-muted text-sm leading-relaxed mb-5"> How far below the trailing high, and for how long. A two-axis lens that turns a price chart into a measurable read on market stress. </p>
 <a href="{{ROOT}}academy/maximum-drawdown.html" class="text-primary hover:underline font-noto text-sm font-semibold">Learn the concept &rarr;</a>
 </article>
+
 <article class="directory-card hover-lift-rust p-6">
-<span class="tag-overline">Primer</span>
+<span class="tag-overline">Liquidity</span>
 <h3 class="text-[#1E2530] font-noto font-bold text-xl leading-tight mt-3 mb-3"> Volume Profile &amp; VWAP </h3>
-<p class="text-muted text-sm leading-relaxed mb-5"> How volume-at-price and the volume-weighted average price help read support, resistance, and intraday value &mdash; standard tools, explained without turning them into a trading system. </p>
+<p class="text-muted text-sm leading-relaxed mb-5"> The institutional-desk vocabulary for how the order book actually fills. Volume-at-price as inventory zones and the point of control; VWAP as the canonical benchmark every execution algo and TCA report is built around. </p>
 <a href="{{ROOT}}academy/volume-profile-vwap.html" class="text-primary hover:underline font-noto text-sm font-semibold">Learn the concept &rarr;</a>
 </article>
+
 </div>
 </div>
+
+<!-- ── Macro Anchors ────────────────────────────────────────────── -->
+<div class="directory-methods mt-16">
+<div class="page-hero directory-hero">
+<span class="tag-overline mb-3">Macro Anchors</span>
+<h2 class="directory-title"> The four inputs around the price. </h2>
+<p class="directory-subtitle mt-2"> The external series the engine reads to tell calm from panic. One article per input &mdash; what it measures, how to read it, and why it matters to a stress-only signal. </p>
+</div>
+<div class="grid gap-6 md:grid-cols-2 w-full">
+
+<article class="directory-card hover-lift-rust p-6">
+<span class="tag-overline">Volatility</span>
+<h3 class="text-[#1E2530] font-noto font-bold text-xl leading-tight mt-3 mb-3"> VIX percentile </h3>
+<p class="text-muted text-sm leading-relaxed mb-5"> Why the fear gauge is more honest as a percentile of its own one-year history than as a raw level. How VIX rank separates routine selling from genuine stress. </p>
+<a href="{{ROOT}}academy/vix-percentile.html" class="text-primary hover:underline font-noto text-sm font-semibold">Read the article &rarr;</a>
+</article>
+
+<article class="directory-card hover-lift-rust p-6">
+<span class="tag-overline">Interest Rate</span>
+<h3 class="text-[#1E2530] font-noto font-bold text-xl leading-tight mt-3 mb-3"> U.S. Federal Funds Rate </h3>
+<p class="text-muted text-sm leading-relaxed mb-5"> The price of money set by the Federal Reserve. Why the rate's recent slope tells you more about macro pressure than the headline level. </p>
+<a href="{{ROOT}}academy/fed-funds-rate.html" class="text-primary hover:underline font-noto text-sm font-semibold">Read the article &rarr;</a>
+</article>
+
+<article class="directory-card hover-lift-rust p-6">
+<span class="tag-overline">Labor</span>
+<h3 class="text-[#1E2530] font-noto font-bold text-xl leading-tight mt-3 mb-3"> Unemployment Rate </h3>
+<p class="text-muted text-sm leading-relaxed mb-5"> The cleanest signal that the macro regime is turning. How recent slope and the trailing-year-average crossover read pressure on consumers and corporates. </p>
+<a href="{{ROOT}}academy/unemployment.html" class="text-primary hover:underline font-noto text-sm font-semibold">Read the article &rarr;</a>
+</article>
+
+<article class="directory-card hover-lift-rust p-6">
+<span class="tag-overline">Inflation</span>
+<h3 class="text-[#1E2530] font-noto font-bold text-xl leading-tight mt-3 mb-3"> CPI year-over-year </h3>
+<p class="text-muted text-sm leading-relaxed mb-5"> Year-over-year inflation as the context behind every Fed decision. A central bank tightening into 2% inflation is a different beast from one tightening into 6%. </p>
+<a href="{{ROOT}}academy/cpi-inflation.html" class="text-primary hover:underline font-noto text-sm font-semibold">Read the article &rarr;</a>
+</article>
+
+</div>
+</div>
+
 </section>

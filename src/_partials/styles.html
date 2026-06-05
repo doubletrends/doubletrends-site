@@ -64,23 +64,19 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      color: #1E2530;
-      background: transparent;
+      color: #FFFFFF;
+      background: #1E2530;
       font-family: 'DM Sans', sans-serif;
       font-size: 0.68rem;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 0.8rem 1.75rem;
-      border: 1px solid rgba(0,0,0,0.22);
+      border: none;
       cursor: pointer;
-      transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+      transition: background 0.15s ease, transform 0.1s ease;
     }
-    .btn-dark:hover {
-      border-color: rgba(0,0,0,0.5);
-      color: #000000;
-      transform: translateY(-1px);
-    }
+    .btn-dark:hover { background: #2C3441; transform: translateY(-1px); }
 
     /* ── Accordion ──────────────────────────────────────────────── */
     details[open] summary .acc-icon { transform: rotate(180deg); }
@@ -155,6 +151,19 @@
         0 24px 70px rgba(30,37,48,0.10),
         0 1px 0 rgba(255,255,255,0.9) inset;
     }
+    #replay-shell {
+      --replay-calm-rgb: 46, 158, 123;
+      --replay-correction-rgb: 234, 179, 8;
+      --replay-panic-rgb: 217, 119, 6;
+      --replay-bear-rgb: 200, 65, 59;
+      --replay-band-alpha-calm: 0.07;
+      --replay-band-alpha-correction: 0.10;
+      --replay-band-alpha-panic: 0.10;
+      --replay-band-alpha-bear: 0.12;
+      --replay-legend-alpha: 0.50;
+      --replay-alert-rgb: 255, 0, 0;
+      --replay-flash-alpha: 0.16;
+    }
     .terminal-bar {
       background: #1E2530;
       border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -180,6 +189,24 @@
       background: #C2410C;
       box-shadow: 0 0 0 3px rgba(194,65,12,0.14);
       display: inline-block;
+    }
+    .replay-legend-swatch {
+      display: inline-block;
+      width: 0.8rem;
+      height: 0.65rem;
+      vertical-align: -0.05rem;
+    }
+    .replay-legend-swatch[data-regime="calm"] {
+      background: rgba(var(--replay-calm-rgb), var(--replay-legend-alpha));
+    }
+    .replay-legend-swatch[data-regime="correction"] {
+      background: rgba(var(--replay-correction-rgb), var(--replay-legend-alpha));
+    }
+    .replay-legend-swatch[data-regime="panic"] {
+      background: rgba(var(--replay-panic-rgb), var(--replay-legend-alpha));
+    }
+    .replay-legend-swatch[data-regime="bear"] {
+      background: rgba(var(--replay-bear-rgb), var(--replay-legend-alpha));
     }
     .metric-tile {
       background: rgba(255,255,255,0.78);
@@ -535,9 +562,9 @@
       white-space: nowrap;
     }
     .mobile-nav-link {
-      color: #1E2530;
-      border: 1px solid rgba(30,37,48,0.16);
-      background: rgba(255,255,255,0.68);
+      color: #FFFFFF;
+      background: #1E2530;
+      border: 1px solid #1E2530;
     }
     .mobile-nav-cta {
       color: #FFFFFF;

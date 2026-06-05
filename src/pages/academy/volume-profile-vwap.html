@@ -1,41 +1,49 @@
 <!-- ARTICLE: Volume Profile & VWAP, Explained -->
 <article class="article-page">
+
 <!-- Header -->
 <header class="article-hero article-hero-frame">
-<span class="tag-overline">Academy &middot; Primer</span>
+<span class="tag-overline">Academy &middot; Standard Tool</span>
 <h1 class="article-title"> Volume Profile &amp; VWAP, Explained </h1>
-<p class="lead"> Volume Profile and VWAP are two standard volume-based tools traders use to read where value and activity sit in the market. One maps volume across price levels; the other tracks the volume-weighted average price over a chosen period. They are not the DoubleTrends™ signal, but they help explain the market-structure language investors often see around support, resistance, and value. </p>
+<p class="lead"> Volume Profile and VWAP are two of the most widely used market-structure tools on any institutional desk. One maps how much volume traded at each price level. The other tracks the volume-weighted average price across a chosen period. For a liquidity provider quoting two-sided markets, both are the working vocabulary of how the order book actually fills &mdash; not chart decoration, but the lens you use to position inventory and benchmark every fill. </p>
 </header>
+
 <!-- Volume Profile -->
 <section class="article-section">
 <span class="section-overline">Volume Profile</span>
-<h2 class="article-h2"> Volume Traded at Each Price Level </h2>
-<p class="prose-p mb-4"> Volume Profile shows how much volume traded at each price level during a session or selected range. Instead of measuring volume only by time, it turns trading activity into a horizontal histogram alongside the chart, making it easier to see where the market spent the most time and did the most business. </p>
-<p class="prose-p mb-6"> High-volume nodes, often called HVNs, are price areas where trading activity was concentrated. These zones can act like areas of acceptance where price may pause, consolidate, or return. Low-volume nodes, or LVNs, are thinner areas where less activity took place; when price moves into them, it can sometimes travel quickly because there was less prior trading there. The tool does not tell you whether price must hold a level. It shows where prior participation was heavy or thin. </p>
+<h2 class="article-h2"> Volume traded at each price level </h2>
+<p class="prose-p mb-4"> Volume Profile shows how much volume traded at each price level during a session or selected range. Instead of plotting volume only against time (the bottom-of-chart bars everyone knows), it turns trading activity into a horizontal histogram alongside the price axis. The result is a direct view of where the market spent the most time and did the most business. </p>
+<p class="prose-p mb-4"> The vocabulary is simple. High-volume nodes (HVNs) are price areas where activity was concentrated &mdash; the zones price tends to pause inside, consolidate around, and return to. Low-volume nodes (LVNs) are thin areas where less trading took place; when price enters them, it often moves quickly because there is little prior participation to absorb it. The tool does not tell you a level must hold. It shows where prior participation was heavy or thin. </p>
+<p class="prose-p mb-6"> For a liquidity provider the distinction is operational. An HVN is a zone where two-sided flow has been deep enough to rest inventory without taking on serious adverse selection. An LVN is where the arrival of a single sized order is far more likely to be informed &mdash; the place where quoted spreads widen, or where quotes get pulled altogether until the print clears. The point of control (POC) &mdash; the single price with the most traded volume in the window &mdash; is the gravitational center the LP defends most carefully, because it is where the most existing inventory was acquired. </p>
 <div class="media-frame overflow-hidden">
 <img src="{{ROOT}}public/academy/volume-profile.png" alt="Volume Profile chart example" class="w-full" />
 </div>
 </section>
+
 <!-- VWAP -->
 <section class="article-section">
 <span class="section-overline">VWAP</span>
-<h2 class="article-h2"> Volume-Weighted Average Price </h2>
-<p class="prose-p mb-4"> VWAP is the average price of a security over a period, weighted by how much volume traded at each price. It is calculated by multiplying each trade price by its volume, adding those values over the chosen period, and dividing by total volume. </p>
-<p class="prose-p mb-4"> Because heavier-volume prices count more than lighter-volume prices, VWAP shows where trading activity has centered, not just the simple average of price. Traders commonly use it as an intraday benchmark: price above VWAP can suggest buyers are paying above the session's volume-weighted value, while price below VWAP can suggest the opposite. </p>
-<p class="prose-p mb-6"> Standard-deviation bands around VWAP show how far price has stretched from that benchmark, giving readers a simple way to compare current price action with the session's volume-weighted center. For intraday traders, that can frame whether price is extended. For longer-horizon ETF investors, it is mainly useful as background: a reminder that price is always being negotiated around where volume actually traded. </p>
+<h2 class="article-h2"> Volume-weighted average price </h2>
+<p class="prose-p mb-4"> VWAP is the average price of a security over a period, weighted by how much volume traded at each price. The calculation: multiply each trade's price by its volume, sum those values across the chosen window, divide by total volume. Heavier-volume prices count more than lighter-volume prices &mdash; so VWAP shows where activity has actually centered, not just the simple average of price. </p>
+<p class="prose-p mb-4"> This is why VWAP is the canonical benchmark for institutional execution. A buy-side desk grading a VWAP-tracking execution algo, or a market maker reviewing fill quality post-trade, both express the answer the same way: basis points above or below VWAP. Transaction cost analysis reports are built around it. An LP that consistently fills better than arrival-time VWAP is providing liquidity at a profit; one that fills worse is paying for flow it should have passed on. </p>
+<p class="prose-p mb-4"> On the chart, price above VWAP suggests buyers are paying above the session's volume-weighted center; price below VWAP suggests the opposite. Standard-deviation bands around the VWAP line show how far price has stretched from that center, giving a simple way to compare current action with the session's structure. </p>
+<p class="prose-p mb-6"> For intraday traders, VWAP is a working tool: it frames whether price is extended on the day. For longer-horizon ETF investors, it is mainly background context &mdash; a reminder that price is always being negotiated around where volume actually traded, not around a chart pattern. </p>
 <div class="media-frame overflow-hidden">
 <img src="{{ROOT}}public/academy/vwap.png" alt="VWAP chart example" class="w-full" />
 </div>
 </section>
+
 <!-- CTA -->
 <section class="cta-panel article-cta">
 <h3 class="text-dark font-noto font-bold text-2xl mb-3">From market structure to a dated signal.</h3>
-<p class="prose-p mb-6"> Volume Profile and VWAP help explain where activity and value sit on a chart. DoubleTrends™ turns a different question into an alert: when the S&amp;P 500 index's oversold selling starts to reverse, for ETF investors using funds such as VOO, SPY, or IVV. </p>
-<a href="{{SUBSCRIBE_URL}}" class="btn-light">Subscribe</a>
+<p class="prose-p mb-6"> Volume Profile and VWAP help explain where activity sits on a chart. DoubleTrends&trade; turns a different question into an alert: when the S&amp;P 500 index's oversold selling has exhausted itself inside a stressed regime, for ETF investors using funds such as VOO, SPY, or IVV. </p>
+<a href="{{ROOT}}details.html" class="btn-light">See the product</a>
 </section>
+
 <!-- Methodology -->
 <section class="hairline pt-6">
 <p class="data-label mb-3">Educational note</p>
-<p class="fine-print"> Volume Profile and VWAP are standard market-structure tools used by many traders and charting platforms. This primer is educational information only and is not financial, investment, or trading advice. </p>
+<p class="fine-print"> Volume Profile and VWAP are standard market-structure tools used on institutional execution desks and across every major charting platform. Educational information only &mdash; not financial, investment, or trading advice. </p>
 </section>
+
 </article>

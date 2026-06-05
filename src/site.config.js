@@ -36,12 +36,22 @@ const pages = [
   {
     src: 'index.html', root: '', priority: 1.0, kind: 'home',
     title: 'DoubleTrends™ — S&P 500 Signals for ETF Investors',
-    desc:  'A rules-based S&P 500 signal for ETF investors: DoubleTrends™ sends a Telegram alert when its oversold-reversal model fires, for funds like VOO or SPY.',
+    desc:  'A rules-based S&P 500 signal for ETF investors. See the ten-year replay with every signal, try the Telegram bot in your browser, and view real /history forward returns. Built for VOO, SPY, IVV.',
+  },
+  {
+    src: 'how-it-works.html', root: '', priority: 0.9, kind: 'webpage',
+    title: 'How It Works — DoubleTrends™',
+    desc:  'What the DoubleTrends™ rule actually looks at: dual-period Williams %R as the engine, derived price features, macro anchoring via VIX and FRED series, four-regime classification, and the point-in-time discipline behind the track record.',
+  },
+  {
+    src: 'details.html', root: '', priority: 0.9, kind: 'webpage',
+    title: 'Product — DoubleTrends™',
+    desc:  'How the DoubleTrends™ subscription works in three steps, the $149/year pricing with a 30-day free trial and full-refund window, and answers to the questions investors ask before subscribing.',
   },
   {
     src: 'academy/index.html', root: '../', priority: 0.9, kind: 'collection',
     title: 'Academy — Research & Education | DoubleTrends™',
-    desc:  'Research notes on S&P 500 drawdowns, market exhaustion, investor behavior, volume structure, and the concepts behind the DoubleTrends™ signal.',
+    desc:  'Research notes on S&P 500 drawdowns and investor behavior, primers on the standard tools the engine uses (Williams %R, drawdown, volume profile), and one article per macro anchor (VIX, Fed funds, unemployment, CPI).',
   },
 
   // ── company ───────────────────────────────────────────────────────────────
@@ -119,7 +129,7 @@ const pages = [
   {
     src: 'academy/every-sp-500-bottom-since-2016.html', root: '../', priority: 0.8, kind: 'article',
     title: 'Every S&P 500 Bottom Since 2016 — the Pattern | Academy',
-    desc:  'All 12 DoubleTrends™ signals on the S&P 500 index, the drawdown at each, and the returns that followed — median +14.6% over 12 months — with an honest look at where it misfired.',
+    desc:  'Every DoubleTrends™ signal on the S&P 500 index since 2016, the drawdown at each, and the returns that followed — including an honest look at where it misfired.',
   },
 
   // ── academy: methods ─────────────────────────────────────────────────────
@@ -135,8 +145,30 @@ const pages = [
   },
   {
     src: 'academy/maximum-drawdown.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'Maximum Drawdown — Original Research | Academy',
-    desc:  'Our own percentile-of-history measure of how cheap price is versus its own past — a layered, multi-timeframe read of market stress that underpins the dip thesis.',
+    title: 'Maximum Drawdown — Depth, Duration, Sharpness | Academy',
+    desc:  'How drawdown works as a stress lens: depth from the trailing one-year high, duration since that high, and ten-day sharpness — the three price-based axes the engine reads.',
+  },
+
+  // ── academy: macro anchors ──────────────────────────────────────────────
+  {
+    src: 'academy/vix-percentile.html', root: '../', priority: 0.7, kind: 'article',
+    title: 'VIX Percentile — Reading Volatility Against Itself | Academy',
+    desc:  'Why VIX percentile inside its own trailing one-year distribution is a more honest read of market stress than the raw level — and how it feeds the regime classifier.',
+  },
+  {
+    src: 'academy/fed-funds-rate.html', root: '../', priority: 0.7, kind: 'article',
+    title: 'Fed Funds Rate — The Price of Money, in Motion | Academy',
+    desc:  'Why the recent change in the federal funds rate over three and six months matters more than the level — and how it shows up in the bear regime overlay.',
+  },
+  {
+    src: 'academy/unemployment.html', root: '../', priority: 0.7, kind: 'article',
+    title: 'Unemployment — The Cleanest Macro Deterioration Signal | Academy',
+    desc:  'Why the US unemployment rate lags but does not lie, how the engine reads its six-month change and trailing-MA crossover, and where it fits inside the bear overlay.',
+  },
+  {
+    src: 'academy/cpi-inflation.html', root: '../', priority: 0.7, kind: 'article',
+    title: 'CPI Inflation — Context Behind Every Fed Decision | Academy',
+    desc:  'Why year-over-year CPI matters as context for Fed policy, and how the combination of high inflation with active tightening forms the inflation_pressure bear-gate condition.',
   },
 ];
 
