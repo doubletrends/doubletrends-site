@@ -7,14 +7,14 @@
 <div class="absolute inset-x-0 bottom-0 h-32 pointer-events-none" style="background: linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0) 100%);"></div>
 <div class="home-hero-content relative z-10 w-full pt-32 pb-20">
 <div class="home-container max-w-site mx-auto px-8 flex flex-col gap-9">
-<span class="tag-overline">Telegram Alerts &middot; S&amp;P 500 Index</span>
+<span class="tag-overline">Private Alerts &middot; S&amp;P 500 Index</span>
 <div class="max-w-4xl">
-<h1 class="text-5xl md:text-7xl lg:text-[5.6rem] font-bold font-noto leading-[0.98] text-grad-hero mb-7"> Stop guessing the bottom. </h1>
-<p class="text-lg md:text-xl font-open leading-relaxed text-bright max-w-3xl"> DoubleTrends™ gives ETF investors a clear S&amp;P 500 dip signal. It watches the index every day and sends a Telegram alert when our rules-based model detects an oversold reversal &mdash; the moment selling pressure starts to break. Use it to act on S&amp;P 500 exposure through funds such as VOO, SPY, or IVV with less guesswork. </p>
+<h1 class="text-5xl md:text-7xl lg:text-[5.6rem] font-bold font-noto leading-[0.98] text-grad-hero mb-7"> Know which dip is the one to buy. </h1>
+<p class="text-lg md:text-xl font-open leading-relaxed text-bright max-w-3xl"> A rules-based signal for long-term ETF investors in VOO, SPY, and IVV. One Telegram alert on the day the index turns, plus a private bot for the live market read on any other day. </p>
 </div>
 <div class="flex flex-wrap gap-3">
-<a href="{{SUBSCRIBE_URL}}" class="btn-light">Start free trial</a>
-<a href="#track-record" class="btn-dark">See the track record</a>
+<a href="#track-record" class="btn-light">See it live</a>
+<a href="#history" class="btn-dark">Historical Returns</a>
 </div>
 <p class="data-label" style="color: #5A6473;"> Rules-based S&amp;P 500 index signal. Educational market information only. Not financial, investment, or trading advice. </p>
 </div>
@@ -22,29 +22,12 @@
 </section>
 <section id="track-record" class="w-full" style="background: transparent; border-top: 1px solid rgba(0,0,0,0.08);">
 <div class="home-container max-w-site mx-auto px-8 py-20">
-<div class="flex flex-col mb-10">
-<span class="tag-overline mb-5">Track Record</span>
+<div class="flex flex-col">
+<span class="tag-overline mb-5">See It Live</span>
 <h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05] mb-5"> Ten years. Every dip. </h2>
-<p class="font-open text-lg leading-relaxed max-w-3xl" style="color: #5A6473;"> Watch the S&amp;P 500 index replay from 2016. Each ▲ marks a DoubleTrends™ oversold-reversal alert &mdash; the same kind of signal a subscriber would receive. The rule fired at major stress points including the 2018 selloff, the COVID crash, the 2022 bear-market low, the 2023 correction, the 2025 tariff crash, and the 2026 Iran-war selloff. </p>
+<p class="font-open text-lg leading-relaxed max-w-3xl" style="color: #5A6473;"> Watch the S&amp;P 500 index replay from July 2016. The rule fired at every major stress point in that window including the 2018 Q4 drawdown, the COVID crash, the 2022 bear-market low, the 2025 tariff crash, and the March-April 2026 Iran war selloff. </p>
 </div>
-<div class="home-metrics grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-<div class="metric-tile hover-lift-rust px-5 py-4">
-<span class="data-label">Coverage</span>
-<div class="font-noto text-2xl font-bold text-dark mt-2">S&amp;P 500</div>
-</div>
-<div class="metric-tile hover-lift-rust px-5 py-4">
-<span class="data-label">Interval</span>
-<div class="font-noto text-2xl font-bold text-dark mt-2">Daily</div>
-</div>
-<div class="metric-tile hover-lift-rust px-5 py-4">
-<span class="data-label">Signals</span>
-<div class="font-noto text-2xl font-bold text-primary mt-2">12 fired</div>
-</div>
-<div class="metric-tile hover-lift-rust px-5 py-4">
-<span class="data-label">Replay</span>
-<div class="font-noto text-2xl font-bold text-dark mt-2">2016–2026</div>
-</div>
-</div>
+<div aria-hidden="true" style="height: 0.75rem;"></div>
 <div id="replay-shell" class="terminal-shell relative overflow-hidden isolate">
 <div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-4">
 <div class="flex items-center gap-3 flex-wrap">
@@ -52,216 +35,115 @@
 <span class="data-label !text-white">DoubleTrends™ Signal Terminal</span>
 <span class="data-label !text-[#B9C0C9]">S&amp;P 500 &middot; Daily &middot; Oversold Reversal</span>
 </div>
-<span class="data-label !text-[#F1C9B8]" id="readout">Signals: <b style="color: #FFFFFF;">0</b> &middot; &mdash;</span>
 </div>
 <div class="relative overflow-hidden">
-<div class="flex items-center gap-2 flex-wrap px-5 py-3" style="border-bottom: 1px solid rgba(30,37,48,0.10);">
-<span class="status-pill"><span class="status-dot"></span>Live replay</span>
-<span class="status-pill">Rule based</span>
-<span class="status-pill">Low frequency</span>
-<span class="status-pill">Same day alert</span>
+<div class="flex items-center justify-between gap-4 flex-wrap px-5 py-3" style="border-bottom: 1px solid rgba(30,37,48,0.10);">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="status-pill" id="replay-state-pill"><span class="status-dot"></span>Live replay</span>
+<span class="status-pill">Public data only</span>
 </div>
-<div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(194,65,12,0.16); transition: opacity 0.45s ease;"></div>
+<div class="flex items-center gap-2 flex-wrap">
+<span class="status-pill" id="signal-pill">Signals: <b style="color:#C2410C;">0</b></span>
+<span class="status-pill" id="date-pill">Date: <b style="color:#C2410C;">&mdash;</b></span>
+</div>
+</div>
+<div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(var(--replay-alert-rgb), var(--replay-flash-alpha)); transition: opacity 0.45s ease;"></div>
 </div>
 <div id="chart" class="w-full" data-replay-src="{{ROOT}}public/replay/sp500.json" style="height: 480px;"></div>
 <div class="relative overflow-hidden">
 <div class="flex items-center justify-between gap-4 flex-wrap px-5 py-4" style="border-top: 1px solid rgba(30,37,48,0.10); background: rgba(251,250,247,0.82);">
 <div class="flex items-center gap-4 flex-wrap">
-<button id="replayBtn" class="btn-light" type="button">Replay</button>
+<button id="replayBtn" class="btn-light" type="button"><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L9 5.5L0 11Z"/></svg>Replay</button>
+<button id="fastForwardBtn" class="btn-dark" type="button"><svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L6 5.5L0 11Z"/><path d="M7 0L13 5.5L7 11Z"/></svg>Fast forward</button>
 <span class="data-label" id="status">loading...</span>
 </div>
 <div class="flex items-center gap-4 flex-wrap">
-<span class="data-label"><span style="color:#2E9E7B;">■</span> Up day</span>
-<span class="data-label"><span style="color:#C8413B;">■</span> Down day</span>
-<span class="data-label"><span style="color:#C2410C;">▲</span> Signal</span>
+<span class="data-label"><span class="replay-legend-swatch" data-regime="calm"></span> Calm</span>
+<span class="data-label"><span class="replay-legend-swatch" data-regime="correction"></span> Correction</span>
+<span class="data-label"><span class="replay-legend-swatch" data-regime="panic"></span> Panic</span>
+<span class="data-label"><span class="replay-legend-swatch" data-regime="bear"></span> Bear</span>
 </div>
 </div>
-<div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(194,65,12,0.16); transition: opacity 0.45s ease;"></div>
+<div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(var(--replay-alert-rgb), var(--replay-flash-alpha)); transition: opacity 0.45s ease;"></div>
 </div>
 </div>
-<p class="data-label mt-4" style="color: #5A6473;"> S&amp;P 500 index &middot; Daily &middot; 12 signals, 2016–2026. Historical signals shown for illustration. </p>
+<p class="data-label mt-4" style="color: #5A6473;"> Point-in-time causal replay: on each date the system only sees data available back then, not future frames. </p>
 </div>
 </section>
-<section id="how-it-works" class="relative w-full overflow-hidden" style="background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08);">
-<img src="{{ROOT}}public/academy/mdd-2.png" alt="" aria-hidden="true"
+<section id="history" class="relative w-full overflow-hidden" style="background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08);">
+<img src="{{ROOT}}public/decor/hero.png" alt="" aria-hidden="true"
      class="home-decor-img absolute inset-y-0 right-0 h-full w-2/3 object-cover object-right pointer-events-none"
      style="opacity: 0.7; filter: grayscale(35%);
             -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.9) 100%);
             mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.9) 100%);" />
-<div class="absolute inset-x-0 top-0 h-20 pointer-events-none" style="background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255,255,255,0) 100%);"></div>
-<div class="absolute inset-x-0 bottom-0 h-20 pointer-events-none" style="background: linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0) 100%);"></div>
+<div class="absolute inset-x-0 top-0 h-24 pointer-events-none" style="background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255,255,255,0) 100%);"></div>
+<div class="absolute inset-x-0 bottom-0 h-24 pointer-events-none" style="background: linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0) 100%);"></div>
 <div class="home-container relative z-10 max-w-site mx-auto px-8 py-20">
-<div class="flex flex-col mb-12">
-<span class="tag-overline mb-5">How It Works</span>
-<h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05]"> Three steps. Then the rule watches. </h2>
+<div class="flex flex-col max-w-3xl">
+<span class="tag-overline mb-5">Historical Returns</span>
+<h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05] mb-5"> Signal fired. Real returns. </h2>
+<p class="font-open text-lg leading-relaxed max-w-3xl" style="color: #5A6473;"> Every DoubleTrends&trade; signal since 2004 with the 90-day, 1-year, and 2-year forward returns from the S&amp;P 500. Subscribers receive the full record signal by signal, with each outcome shown as it stands. </p>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-<div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
-<div class="step-marker mb-8">01</div>
-<h3 class="text-[#1E2530] font-noto font-semibold text-lg mb-3">Start free</h3>
-<p class="font-open text-sm leading-relaxed" style="color: #5A6473;">Begin a 30-day free trial &mdash; $0 today, just your card on file. You get full access to the S&amp;P 500 signal, not a dashboard or daily commentary &mdash; just the alert when the rule fires. Cancel any time in the first 30 days and you are never charged.</p>
-<div class="mt-8 pt-5" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="data-label">30-day free trial · Stripe</span>
-</div>
-</div>
-<div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
-<div class="step-marker mb-8">02</div>
-<h3 class="text-[#1E2530] font-noto font-semibold text-lg mb-3">Connect the bot</h3>
-<p class="font-open text-sm leading-relaxed" style="color: #5A6473;">After checkout, tap a one-time link to open our Telegram bot. It binds your subscription to your Telegram account &mdash; that&rsquo;s where every signal and on-demand market read will arrive.</p>
-<div class="mt-8 pt-5" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="data-label">Private Telegram access</span>
+<div aria-hidden="true" style="height: 0.75rem;"></div>
+<div class="terminal-shell overflow-hidden">
+<div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-3">
+<div class="flex items-center gap-3">
+<span class="status-dot"></span>
+<span class="data-label !text-white">DoubleTrends™ Signal History</span>
+<span class="data-label !text-[#B9C0C9]">S&amp;P 500 &middot; {{TR_SIGNAL_COUNT_TOTAL}} signals since 2004</span>
 </div>
 </div>
-<div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
-<div class="step-marker mb-8">03</div>
-<h3 class="text-[#1E2530] font-noto font-semibold text-lg mb-3">Get the alert (and check anytime)</h3>
-<p class="font-open text-sm leading-relaxed" style="color: #5A6473;">When the S&amp;P 500 index meets the oversold-reversal rule, the bot DMs you the same day. Rare by design &mdash; you only hear from it when the setup matters. Anytime in between, send <span class="font-mono">/brief</span> to the bot for a four-tier read of where the market sits right now: <em>daily noise &middot; common correction &middot; bear market &middot; crash</em>.</p>
-<div class="mt-8 pt-5" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="data-label">Signal + on-demand brief</span>
+<div id="history-table-wrap" class="overflow-x-auto" style="background: #FBFAF7;">
+<table id="history-table" class="w-full text-sm font-mono" style="border-collapse: collapse;">
+<thead>
+<tr style="border-bottom: 1px solid rgba(30,37,48,0.10);">
+<th class="text-left px-5 py-3 font-semibold" style="color: #5A6473;">Signal Date</th>
+<th class="text-left px-3 py-3 font-semibold" style="color: #5A6473;">Regime</th>
+<th class="text-right px-3 py-3 font-semibold" style="color: #5A6473;">Market Close</th>
+<th class="text-right px-3 py-3 font-semibold" style="color: #5A6473;">90d Return</th>
+<th class="text-right px-3 py-3 font-semibold" style="color: #5A6473;">1y Return</th>
+<th class="text-right px-5 py-3 font-semibold" style="color: #5A6473;">2y Return</th>
+</tr>
+</thead>
+<tbody id="history-table-body">
+<tr><td colspan="6" class="px-5 py-6 text-center" style="color: #5A6473;">loading...</td></tr>
+</tbody>
+</table>
 </div>
+<div class="px-5 py-3 flex items-center justify-between gap-4 flex-wrap" style="border-top: 1px solid rgba(30,37,48,0.10); background: rgba(251,250,247,0.82);">
+<span class="data-label" id="history-summary" style="color: #5A6473;">&mdash;</span>
+<span class="data-label" style="color: #5A6473;">Forward returns computed at query time. <span style="color:#2E9E7B;">+</span> positive, <span style="color:#C8413B;">&minus;</span> negative, <em>pending</em> not yet matured.</span>
 </div>
 </div>
 </div>
 </section>
-<section id="pricing" class="w-full" style="background: transparent;">
+<section class="w-full" style="background: transparent; border-top: 1px solid rgba(0,0,0,0.08);">
 <div class="home-container max-w-site mx-auto px-8 py-20">
-<div class="flex flex-col mb-10 max-w-3xl">
-<span class="tag-overline mb-5">Pricing</span>
-<h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05]"> One signal. One subscription. </h2>
-<p class="font-open text-lg leading-relaxed mt-5" style="color: #5A6473;">Built for investors who want a clean rule, not another dashboard. Subscribe once, link your Telegram account, and let the S&amp;P 500 index signal come to you when the market is washed out and the model sees the reversal begin.</p>
+<div class="max-w-5xl mx-auto hover-lift-rust overflow-hidden" style="background: linear-gradient(135deg, #171D25 0%, #222B36 58%, #2C3641 100%); box-shadow: 0 28px 80px rgba(23,29,37,0.18);">
+<div class="flex flex-col lg:flex-row lg:items-stretch">
+<div class="flex-1 px-8 py-9 md:px-10 md:py-10 lg:px-12 lg:py-11" style="border-right: 1px solid rgba(255,255,255,0.10);">
+<div class="flex items-center gap-3 flex-wrap mb-5">
+<span class="data-label" style="color: rgba(255,255,255,0.64); letter-spacing: 0.18em;">NEXT COMMAND</span>
+<span class="font-mono text-[11px] px-3 py-1" style="color: #FFD7BF; background: rgba(194,65,12,0.18); border: 1px solid rgba(194,65,12,0.28);">/METHOD</span>
 </div>
-<div class="grid lg:grid-cols-[1fr_0.9fr] gap-6 items-stretch">
-<div class="product-panel hover-lift-rust p-8 flex flex-col justify-between">
+<h2 class="text-3xl md:text-4xl lg:text-[3.15rem] font-noto font-bold leading-[1.02] mb-4" style="color: #F6F1E8;">Now look under the hood.</h2>
+<p class="font-open text-base md:text-lg leading-relaxed max-w-2xl" style="color: rgba(233,237,242,0.82);">You have seen the outcome surface and the historical proof. The next page shows the decision stack itself: what the rule reads, how the market gets classified, and what has to clear before a signal is allowed to fire.</p>
+</div>
+<div class="lg:w-[22rem] px-8 py-9 md:px-10 md:py-10 lg:px-10 lg:py-11 flex flex-col justify-between" style="background: rgba(255,255,255,0.04);">
 <div>
-<div class="flex items-center justify-between gap-4 flex-wrap mb-8">
-<span class="data-label">Subscription</span>
-<span class="status-pill"><span class="status-dot"></span>S&amp;P 500 active</span>
-</div>
-<div class="flex items-end gap-2 mb-2">
-<span class="data-value">$149</span>
-<span class="data-label mb-2">/year</span>
-</div>
-<p class="font-open text-sm font-semibold mb-2" style="color: #C2410C;">Start with 30 days free — then $149/year</p>
-<p class="font-open text-sm leading-relaxed max-w-md" style="color: #5A6473;">Annual S&P 500 reversal monitoring. Designed for the moments when long-term index investors usually hesitate: corrections, bear-market pressure, and sharp selloffs. Rare alerts only. No daily noise. </p>
-<ul class="grid sm:grid-cols-2 gap-3 my-8 font-open text-sm" style="color: #5A6473;">
-<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">S&amp;P 500 index dip alerts</li>
-<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Telegram delivery</li>
-<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Cancel anytime</li>
-<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">More indices coming</li>
-</ul>
-<a href="{{SUBSCRIBE_URL}}" class="btn-light">Start your free trial</a>
-</div>
-</div>
-<div class="terminal-shell hover-lift-rust p-6 flex flex-col justify-between">
-<div>
-<span class="data-label">What you are paying for</span>
-<div class="mt-5 flex flex-col">
-<div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Daily monitoring</span>
-<span class="data-label">Automated</span>
-</div>
-<div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Signal threshold</span>
-<span class="data-label">Rule based</span>
-</div>
-<div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Notification</span>
-<span class="data-label">Telegram</span>
-</div>
-<div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10); border-bottom: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Frequency</span>
-<span class="data-label">A few/year</span>
-</div>
-</div>
-</div>
-<p class="fine-print mt-8 leading-relaxed">Payment is processed securely by <strong class="text-dark">Stripe</strong> &mdash; your full card number is never stored on this site. The first 30 days are a free trial: cancel any time before it ends and you are never charged. After the trial converts to the paid year (or on any annual renewal), cancelling stops future charges and access continues to the end of the paid term &mdash; and a full refund of that charge is still available within 14 days of it, as long as no signal has been delivered since.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="refund" class="relative w-full overflow-hidden" style="background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.08);">
-<img src="{{ROOT}}public/academy/mdd-3.png" alt="" aria-hidden="true"
-     class="home-decor-img absolute inset-y-0 right-0 h-full w-2/3 object-cover object-right pointer-events-none"
-     style="opacity: 0.7; filter: grayscale(35%);
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.9) 100%);
-            mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.9) 100%);" />
-<div class="absolute inset-x-0 top-0 h-20 pointer-events-none" style="background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255,255,255,0) 100%);"></div>
-<div class="absolute inset-x-0 bottom-0 h-20 pointer-events-none" style="background: linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0) 100%);"></div>
-<div class="home-container relative z-10 max-w-site mx-auto px-8 py-20">
-<div class="flex flex-col mb-10 max-w-3xl">
-<span class="tag-overline mb-5">Refund Policy</span>
-<h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05]"> Changed your mind? Full refund. </h2>
-<p class="font-open text-lg leading-relaxed mt-5" style="color: #5A6473;">Start with a 30-day free trial — $0 today, and cancel any time before it ends to avoid any charge. Even once you are billed, you are never locked into a service that turned out not to be for you.</p>
-</div>
-<div class="grid md:grid-cols-3 gap-6">
-<div class="product-panel hover-lift-rust p-7 flex flex-col">
-<span class="data-label">30-day free trial</span>
-<p class="font-open text-sm leading-relaxed mt-3" style="color: #5A6473;">Pay nothing today. Get full access for 30 days, and cancel any time before it ends &mdash; your card is never charged.</p>
-</div>
-<div class="product-panel hover-lift-rust p-7 flex flex-col">
-<span class="data-label">After the trial &amp; renewals</span>
-<p class="font-open text-sm leading-relaxed mt-3" style="color: #5A6473;">Once your trial converts, and on each annual renewal, a full refund is still available within 14 days of the charge if no signal has been delivered since. We email you before every charge.</p>
-</div>
-<div class="product-panel hover-lift-rust p-7 flex flex-col">
-<span class="data-label">Cancel anytime</span>
-<p class="font-open text-sm leading-relaxed mt-3" style="color: #5A6473;">Cancel whenever you like to stop future charges. You keep access until the end of your current paid period.</p>
-</div>
+<span class="data-label" style="color: rgba(255,255,255,0.56);">Route</span>
+<p class="font-mono text-sm mt-2" style="color: #F6F1E8;">Outcome  &rarr;  Method</p>
+<p class="font-open text-sm leading-relaxed mt-4" style="color: rgba(233,237,242,0.72);">Move from signal evidence to execution logic.</p>
 </div>
 <div class="mt-8">
-<a href="{{ROOT}}legal/refund-policy.html" class="btn-light">See full policy</a>
+<a href="{{ROOT}}how-it-works.html" class="btn-light inline-flex items-center gap-3" style="padding-right: 1.1rem;"><span>Enter how it works</span><span aria-hidden="true" style="font-size: 1.05rem;">&rarr;</span></a>
+<p class="data-label mt-4" style="color: rgba(255,255,255,0.46);">THE ENGINE BEHIND.</p>
 </div>
 </div>
-</section>
-<section id="faq" class="w-full" style="background: transparent; border-top: 1px solid rgba(0,0,0,0.08);">
-<div class="home-container max-w-site mx-auto px-8 py-20">
-<div class="flex flex-col mb-10">
-<span class="tag-overline mb-5">FAQ</span>
-<h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05]"> Questions </h2>
 </div>
-<div class="max-w-3xl flex flex-col gap-3">
-<details class="card-border px-5 py-4" open>
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> What exactly do I receive? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">A short Telegram message when the S&amp;P 500 index meets the DoubleTrends™ oversold-reversal rule. The message gives the signal date and plain-language context so you know when the dip signal has fired. It does not tell you what to buy, how much to buy, or how to size a position.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> How often will it fire? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">Rarely. Since 2016, the S&amp;P 500 index version has produced 12 signals. Some years may have several signals during a volatile market; other periods may have none. The point is to reduce noise, not create a daily trading feed.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> Is this financial advice? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">No. DoubleTrends™ provides educational, rules-based market information only. It does not consider your financial situation, objectives, risk tolerance, tax position, or portfolio allocation, and it is not a recommendation to buy, sell, or hold any security.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> What does DoubleTrends™ measure? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">A dual Williams %R momentum model on the daily S&amp;P 500 index. It looks for two things: a deeply oversold condition across short and longer windows, followed by a reversal out of that oversold state.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> Which assets are covered? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">The S&amp;P 500 index today, for ETF investors using funds such as VOO, SPY, or IVV. Nasdaq 100 support, including QQQ, is planned.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> Does the signal run on VOO, SPY, or IVV? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">No. The production signal runs on the S&amp;P 500 index itself. VOO, SPY, and IVV are examples of ETFs investors may use to express S&amp;P 500 exposure. Keeping the signal at the index level avoids tying the model to one fund's mechanics.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> Does a signal mean I should buy immediately? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">No. A signal means the model detected an oversold reversal in the index. It is a timing reference, not a personal recommendation. Some investors may use it to review a planned contribution, staged entry, or cash deployment rule; others may do nothing.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> How do I get access after paying? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">Right after checkout, you tap a one-time activation link that opens our Telegram bot. The bot binds your subscription to your Telegram account; from then on, signals are DMed to you directly.</p>
-</details>
 </div>
 </div>
 </section>
 <script src="https://unpkg.com/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
 <script src="{{ROOT}}public/js/replay-chart.js"></script>
-<script src="{{ROOT}}public/js/faq-accordion.js"></script>
+<script src="{{ROOT}}public/js/history-table.js"></script>

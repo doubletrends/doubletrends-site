@@ -1,0 +1,76 @@
+<!-- ARTICLE: CPI inflation — the context behind every Fed decision -->
+<article class="article-page">
+
+<!-- Header -->
+<header class="article-hero article-hero-frame">
+<span class="tag-overline">Academy &middot; Macro Anchor</span>
+<h1 class="article-title"> CPI inflation </h1>
+<p class="lead"> CPI is the most-watched price-level series in the United States, and the headline year-over-year number drives most of the daily macro conversation. For a stress-only signal, the value of CPI is not the number itself. It is the context CPI provides for everything else &mdash; especially Fed policy. A Fed tightening into 2% inflation is a fundamentally different macro environment from one tightening into 6%, and the engine needs to know which it is reading. </p>
+</header>
+
+<!-- What it is -->
+<section class="article-section">
+<span class="section-overline">What CPI measures</span>
+<h2 class="article-h2"> A basket of consumer prices </h2>
+<p class="prose-p mb-4"> The Consumer Price Index is a weighted basket of prices for goods and services that urban US consumers buy. The Bureau of Labor Statistics surveys roughly 80,000 prices each month across categories &mdash; food, energy, housing, transportation, medical care, recreation, education &mdash; and aggregates them into a single index. The most common headline series is CPIAUCSL, the all-items index for all urban consumers, seasonally adjusted. </p>
+<p class="prose-p"> The index level itself (e.g., 310.0 in some month) is not meaningful in isolation. What matters is the rate of change. By convention, the headline inflation rate is the year-over-year percent change in CPIAUCSL &mdash; today's index versus the same month one year ago. </p>
+</section>
+
+<!-- YoY -->
+<section class="article-section">
+<span class="section-overline">Year-over-year as the standard read</span>
+<h2 class="article-h2"> Twelve months smooths the noise </h2>
+<p class="prose-p mb-4"> Month-over-month CPI prints are noisy. Energy and food can move several percent in a single month for reasons that have nothing to do with the trend. Seasonal adjustment helps, but a single print can still mislead. </p>
+<p class="prose-p"> The year-over-year change &mdash; the read the engine consumes &mdash; smooths most of that noise by construction. It compares the latest index to a value twelve months earlier, so seasonal effects mostly cancel out, and one-month spikes are averaged against eleven other months of context. It also matches how the FOMC, the bond market, and most financial commentary actually talk about inflation. </p>
+</section>
+
+<!-- The context -->
+<section class="article-section">
+<span class="section-overline">Inflation as context</span>
+<h2 class="article-h2"> Two tightening cycles, two stories </h2>
+<p class="prose-p mb-4"> The reason CPI matters to a market signal is not because high inflation directly causes selloffs. It is because high inflation changes what Fed policy <em>means</em>. Consider two superficially similar cycles: </p>
+<div class="grid md:grid-cols-2 gap-4 mb-6">
+<div class="product-panel p-6">
+<h3 class="font-noto font-semibold text-base mb-2" style="color: #C2410C;">Mid-2004 to mid-2006</h3>
+<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> Fed funds rises from 1.0% to 5.25%. CPI YoY runs around 3&ndash;4%. A measured tightening cycle into modest inflation. Equities absorbed it; the S&amp;P 500 was up over the full window. </p>
+</div>
+<div class="product-panel p-6">
+<h3 class="font-noto font-semibold text-base mb-2" style="color: #C2410C;">2022 to 2023</h3>
+<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> Fed funds rises from 0% to 5.25% in eighteen months. CPI YoY peaks above 9%. A panicked tightening cycle into the worst inflation in forty years. Equities took a 25% bear-market drawdown by October 2022. </p>
+</div>
+</div>
+<p class="prose-p"> Same destination on the rate. Wildly different stress on the system. The variable that explains the difference is the inflation context the Fed was reacting to. </p>
+</section>
+
+<!-- How the engine uses it -->
+<section class="article-section">
+<span class="section-overline">How the engine uses it</span>
+<h2 class="article-h2"> One source of pressure in the bear overlay </h2>
+<p class="prose-p mb-4"> CPI is part of the bear overlay, alongside fed funds change and unemployment. The engine does not read inflation in isolation &mdash; it reads it in combination with whether the Fed is responding. The combination matters because the two readings carry opposite implications without each other: high inflation with a cutting Fed (e.g., the depths of the 2008 crisis) describes a very different environment from high inflation with a tightening Fed (e.g., 2022). The engine treats inflation as one source of macro pressure only when both legs &mdash; elevated YoY inflation and an actively tightening Fed &mdash; are present at the same time. </p>
+<p class="prose-p mb-4"> Inside the bear gate, this combined condition counts as one of the macro-pressure sources that can support bear regime entry. </p>
+<p class="prose-p"> The specific inflation level required and the way the &ldquo;actively tightening&rdquo; condition is measured are part of the production rule and are not published. The educational point is the conjunction: an inflation print is read in the context of policy, not as a standalone gate. </p>
+</section>
+
+<!-- One input of four -->
+<section class="article-section">
+<span class="section-overline">One input of four</span>
+<p class="prose-p"> CPI is one of four macro anchors. VIX percentile reads volatility. Fed funds change reads policy. Unemployment reads labor. None decides a signal alone. Together with the price-based features &mdash; drawdown depth, duration, sharpness, and dual-timeframe Williams %R &mdash; they tell the regime classifier whether the environment around a candidate reversal is the kind where the rule has historically worked. </p>
+<div class="mt-6">
+<a href="{{ROOT}}how-it-works.html" class="text-primary hover:underline font-noto text-sm font-semibold">See how all four anchors combine &rarr;</a>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="cta-panel article-cta">
+<h3 class="text-dark font-noto font-bold text-2xl mb-3">Inflation is one input, not a trade.</h3>
+<p class="prose-p mb-6"> DoubleTrends&trade; reads CPI in combination with three other macro anchors and dual-timeframe price momentum &mdash; and only fires when all of them line up. One alert when the rule clears, for ETF investors using funds such as VOO, SPY, or IVV. </p>
+<a href="{{ROOT}}details.html" class="btn-light">See the product</a>
+</section>
+
+<!-- Method -->
+<section class="hairline pt-6">
+<p class="data-label mb-3">Data &amp; method</p>
+<p class="fine-print"> CPI inflation is sourced from the Federal Reserve Bank of St. Louis (FRED series CPIAUCSL), originally published by the Bureau of Labor Statistics. The engine reads it as year-over-year percent change in the seasonally adjusted index. Exact threshold values and the combination logic with Fed policy are part of the production rule and are not published. Educational information only &mdash; not financial, investment, or trading advice. </p>
+</section>
+
+</article>

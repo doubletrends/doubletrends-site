@@ -1,55 +1,90 @@
-<!-- ARTICLE: Maximum Drawdown — our own percentile-of-history measure -->
+<!-- ARTICLE: Maximum Drawdown — depth, duration, and sharpness -->
 <article class="article-page">
+
 <!-- Header -->
 <header class="article-hero article-hero-frame">
-<span class="tag-overline">Academy &middot; Original Research</span>
+<span class="tag-overline">Academy &middot; Stress Lens</span>
 <h1 class="article-title"> Maximum Drawdown </h1>
-<p class="lead"> Maximum Drawdown is our own measure of how depressed price is versus its own history &mdash; a percentile lens that turns &ldquo;how far have we fallen&rdquo; into a layered, multi-timeframe read of market stress. It is useful context for dip research, but it is not the same thing as the DoubleTrends™ production alert. </p>
+<p class="lead"> Drawdown is the simplest honest measure of market stress: how far the index is trading below a recent high. The trick is not measuring depth &mdash; it is reading depth alongside <em>duration</em> and <em>sharpness</em>. The same 10% drop tells three completely different stories depending on whether it took two weeks or six months to get there, and whether the worst leg was concentrated or spread out. </p>
 </header>
 
-<!-- What it measures -->
+<!-- What it is -->
 <section class="article-section">
-<span class="section-overline">What it measures</span>
-<h2 class="article-h2"> Price, ranked against its own past </h2>
-<p class="prose-p mb-4"> Instead of comparing price to a moving average, Maximum Drawdown asks a simpler question: across a lookback window, how many past closes sit <em>above</em> today's close? The more prior closes that are higher, the deeper today's price sits within its own recent history. </p>
-<p class="prose-p mb-6"> It runs that count across a stack of lookback windows at once &mdash; spanning multi-year, multi-month, and multi-week horizons &mdash; so a single reading blends long- and short-horizon weakness into one layered view. A high count across windows means price is deeply depressed relative to where it has recently traded: a percentile of an asset against itself, not against an arbitrary benchmark or a fixed percentage threshold. </p>
+<span class="section-overline">What drawdown actually is</span>
+<h2 class="article-h2"> Depth from a trailing high </h2>
+<p class="prose-p mb-4"> The drawdown on any given day is just one subtraction: today's close, expressed as a percentage below the highest close inside some lookback window. Pick a window, find the high, compare to today, report the percentage. </p>
+<p class="prose-p mb-6"> The crucial choice is the window. Drawdown from an <em>all-time</em> high tells you something about long-run market memory but reacts slowly; drawdown from a <em>10-day</em> high reacts instantly but is mostly noise. The DoubleTrends&trade; engine measures drawdown from a trailing one-year high. One year is long enough to ignore weekly chop and short enough that the &ldquo;recent peak&rdquo; is still relevant to today's market psychology. </p>
 <div class="media-frame overflow-hidden">
-<img src="{{ROOT}}public/academy/mdd-1.png" alt="Maximum Drawdown indicator chart" class="w-full" />
+<img src="{{ROOT}}public/academy/mdd-1.png" alt="Drawdown from trailing one-year high" class="w-full" />
 </div>
 </section>
 
-<!-- Why it matters -->
+<!-- Duration -->
 <section class="article-section">
-<span class="section-overline">Why it matters for buying the dip</span>
-<h2 class="article-h2"> Finding panic, not noise </h2>
-<p class="prose-p mb-4"> Extreme readings cluster where fear is doing the pricing &mdash; the moments a long-term investor wants to be buying, not selling. By measuring depth as a percentile of an asset's own history rather than a fixed percentage drop, the indicator flags undervaluation driven by capitulation, and adapts to each asset's own character. </p>
-<p class="prose-p mb-6"> It is meant to be read on both daily and weekly timeframes. The weekly view confirms that weakness is structural rather than a two- or three-day wobble, while the daily view shows how stress is building or easing right now. For a long-horizon investor, that distinction matters: small pullbacks are common, but layered stress across windows is rarer. </p>
-<div class="media-frame overflow-hidden">
-<img src="{{ROOT}}public/academy/mdd-2.png" alt="Maximum Drawdown across timeframes" class="w-full" />
+<span class="section-overline">The second axis</span>
+<h2 class="article-h2"> Duration changes the meaning </h2>
+<p class="prose-p mb-4"> Depth alone is misleading. Consider two markets both sitting at &minus;15%: </p>
+<div class="grid md:grid-cols-2 gap-4 mb-6">
+<div class="product-panel p-6">
+<h3 class="font-noto font-semibold text-lg mb-3" style="color: #C2410C;">Down 15% in three weeks</h3>
+<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> A sudden shock. Forced de-risking, vol spiking, headlines screaming. This is the panic pattern, where buying-the-dip has historically paid. </p>
+</div>
+<div class="product-panel p-6">
+<h3 class="font-noto font-semibold text-lg mb-3" style="color: #C2410C;">Down 15% over seven months</h3>
+<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> A grinding bleed. Earnings revisions, macro deterioration, structural selling. This is the bear pattern, where false bottoms are common. </p>
+</div>
+</div>
+<p class="prose-p mb-4"> The depth is identical. The market is structurally different. The discipline is to look at both axes at once &mdash; depth and duration &mdash; instead of letting the percentage speak alone. </p>
+<p class="prose-p"> The engine tracks duration as the time elapsed since the trailing one-year high. Short duration with deep depth maps to panic. Long duration with deep depth is one of the inputs the bear overlay watches for. </p>
+<div class="media-frame overflow-hidden mt-6">
+<img src="{{ROOT}}public/academy/mdd-2.png" alt="Depth and duration as two axes of stress" class="w-full" />
 </div>
 </section>
 
-<!-- Reading it -->
+<!-- Sharpness -->
 <section class="article-section">
-<span class="section-overline">Reading it</span>
-<h2 class="article-h2"> Thresholds and timeframes </h2>
-<p class="prose-p mb-4"> When the count crosses historically significant thresholds, price may be pricing in an unusually pessimistic scenario &mdash; the kind of condition long-term investors want to study carefully instead of ignoring. Deeper readings mean deeper stress; the rare, extreme ones are the layered all-timeframe lows that have lined up with major bottoms. </p>
-<p class="prose-p mb-6"> It is a context tool: it tells you <em>how cheap, relative to history</em>, not the exact day to act. DoubleTrends™ adds a different layer by waiting for oversold momentum to reverse. In practice, MDD frames the environment; the alert provides a dated rule event. </p>
-<div class="media-frame overflow-hidden">
-<img src="{{ROOT}}public/academy/mdd-3.png" alt="Maximum Drawdown threshold reading" class="w-full" />
+<span class="section-overline">The third axis</span>
+<h2 class="article-h2"> Sharpness: how brutal was the worst stretch </h2>
+<p class="prose-p mb-4"> Depth and duration describe the envelope of the selloff. Sharpness describes its texture. Two drawdowns can be the same depth and duration but feel very different if one was a steady glide down and the other was a single, vicious week. </p>
+<p class="prose-p"> The engine captures this by looking at the worst ten-day stretch within the trailing month. A market that has just absorbed a brutal ten-day leg down is being repriced by panic flow, even if the headline drawdown is modest. A market that drifted to the same depth over months has not. </p>
+</section>
+
+<!-- The classifier -->
+<section class="article-section">
+<span class="section-overline">How the engine uses these</span>
+<h2 class="article-h2"> Three numbers, one regime read </h2>
+<p class="prose-p mb-4"> Depth, duration, and sharpness are not the final answer. They are three of the inputs the regime classifier reads to decide whether a market is in calm, correction, panic, or bear. The shape of how they combine: </p>
+<div class="terminal-shell flex flex-col mb-6">
+<div class="px-5 py-4" style="border-bottom: 1px solid rgba(30,37,48,0.06);">
+<p class="font-mono text-sm mb-1" style="color: #1E2530;"> shallow depth, calm sharpness </p>
+<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> Calm or correction. No signal eligibility &mdash; the engine refuses to fire here. </p>
+</div>
+<div class="px-5 py-4" style="border-bottom: 1px solid rgba(30,37,48,0.06);">
+<p class="font-mono text-sm mb-1" style="color: #1E2530;"> off the recent ceiling + acute sharpness </p>
+<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> Panic candidate. The engine becomes eligible to fire on a Williams %R reversal. </p>
+</div>
+<div class="px-5 py-4">
+<p class="font-mono text-sm mb-1" style="color: #1E2530;"> deep depth + long duration + macro pressure </p>
+<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> Bear regime. Fires allowed, but only after a harder confirmation bar. </p>
+</div>
+</div>
+<p class="prose-p"> These shapes do not stand alone &mdash; they combine with VIX, Fed funds, unemployment, and CPI to produce the final regime read. Drawdown is the inside view: how stressed price is on its own. The macro anchors are the outside view: whether the rest of the world agrees. The exact thresholds that turn each shape on or off are part of the production rule and are not published. </p>
+<div class="media-frame overflow-hidden mt-6">
+<img src="{{ROOT}}public/academy/mdd-3.png" alt="Drawdown thresholds and the regime classifier" class="w-full" />
 </div>
 </section>
 
 <!-- CTA -->
 <section class="cta-panel article-cta">
-<h3 class="text-dark font-noto font-bold text-2xl mb-3">From &ldquo;how cheap&rdquo; to &ldquo;now.&rdquo;</h3>
-<p class="prose-p mb-6"> Maximum Drawdown shows how depressed price is. DoubleTrends&trade; turns the dip thesis into a dated alert &mdash; one message when the S&amp;P 500 index's oversold selling looks exhausted, for ETF investors using funds such as VOO, SPY, or IVV. </p>
-<a href="{{SUBSCRIBE_URL}}" class="btn-light">Subscribe</a>
+<h3 class="text-dark font-noto font-bold text-2xl mb-3">From &ldquo;how deep&rdquo; to &ldquo;now.&rdquo;</h3>
+<p class="prose-p mb-6"> Drawdown describes the environment. DoubleTrends&trade; turns the dip thesis into a dated alert &mdash; one message when the rule's three gates clear on the S&amp;P 500 index. Built for ETF investors using funds such as VOO, SPY, or IVV. </p>
+<a href="{{ROOT}}details.html" class="btn-light">See the product</a>
 </section>
 
 <!-- Method -->
 <section class="hairline pt-6">
 <p class="data-label mb-3">Method</p>
-<p class="fine-print"> Maximum Drawdown is original work by CDS: across a stack of lookback windows &mdash; from multi-year down to multi-week horizons &mdash; it counts the past closes above the current close, then reads the layered result as a percentile of price within its own history. The exact window lengths are part of the production indicator and are not published. Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results. </p>
+<p class="fine-print"> Drawdown is computed from S&amp;P 500 price index daily closes (^GSPC) against a trailing one-year high. Duration is measured as time since that high. Sharpness reads the worst ten-day stretch within the trailing month. Exact threshold values used inside the regime classifier are part of the production logic and are not published. Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results. </p>
 </section>
+
 </article>
