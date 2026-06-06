@@ -376,7 +376,7 @@ function buildOgImage(font) {
     return pathDataAt(font.charToGlyph(ch === ' ' ? ' ' : ch), x, taglineY, taglineSize);
   });
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="CDS — DoubleTrends">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="CDS — DoubleTrends™">
   <rect width="${vbW}" height="${vbH}" fill="${COLOR.light}"/>
   <g fill="${COLOR.dark}">
     <path d="${cdsPaths.join(' ')}"/>
