@@ -128,7 +128,7 @@ function socialExtraFor(page) {
 // to dist. Returns true on success, false if the source file is missing.
 // Slot contents (head/header/footer) carry placeholders themselves, so we
 // inject them first and resolve the merged result in a second pass.
-function renderRoutingCard(card) {
+function renderRoutingCard(card, root) {
   if (!card) return '';
   return replace(routingCardTemplate, {
     ROUTING_PILL:         card.pill,
@@ -136,7 +136,7 @@ function renderRoutingCard(card) {
     ROUTING_BODY:         card.body,
     ROUTING_ROUTE:        card.route,
     ROUTING_ROUTE_DESC:   card.routeDesc,
-    ROUTING_HREF:         card.href,
+    ROUTING_HREF:         `${root}${card.href}`,
     ROUTING_CTA:          card.cta,
     ROUTING_FOOTER_LABEL: card.footerLabel,
   });
@@ -179,7 +179,7 @@ function renderPage(page) {
       defaultArticlePublished: ARTICLE_PUBLISHED,
     }),
     ...TRACK_RECORD,
-    ROUTING_CARD: renderRoutingCard(page.routingCard),
+    ROUTING_CARD: renderRoutingCard(page.routingCard, page.root),
   });
 
   ensureDir(outPath);
