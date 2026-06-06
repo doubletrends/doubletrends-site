@@ -4,8 +4,17 @@
 
   if (!chartEl || !replayShell || typeof LightweightCharts === 'undefined') return;
 
-  const response = await fetch(chartEl.dataset.replaySrc);
-  const data = await response.json();
+  let data;
+  try {
+    const response = await fetch(chartEl.dataset.replaySrc);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    data = await response.json();
+  } catch (err) {
+    console.error('replay-chart: failed to load replay data', err);
+    const statusEl = document.getElementById('status');
+    if (statusEl) statusEl.textContent = 'chart unavailable';
+    return;
+  }
   const candles = data.candles;
   // sp500.json now carries the authoritative signal list from build-replay-data.js;
   // tolerate older shapes that only had `signals` and no per-candle enrichment.
@@ -92,11 +101,19 @@
     visible: false,
   });
 
+  // Candle colors come from the brand semantic tokens on :root (see
+  // primitives.html). Read at series-init time and composed as rgba so the
+  // chart stays in sync with history-table.js without a second source of truth.
+  const rootStyle = getComputedStyle(document.documentElement);
+  const cssVarRoot = (name) => rootStyle.getPropertyValue(name).trim();
+  const colorGain = `rgba(${cssVarRoot('--gain-rgb')}, 1)`;
+  const colorLoss = `rgba(${cssVarRoot('--loss-rgb')}, 1)`;
+
   const series = chart.addCandlestickSeries({
-    upColor: '#2E9E7B',
-    downColor: '#C8413B',
-    wickUpColor: '#2E9E7B',
-    wickDownColor: '#C8413B',
+    upColor: colorGain,
+    downColor: colorLoss,
+    wickUpColor: colorGain,
+    wickDownColor: colorLoss,
     borderVisible: false,
     priceLineVisible: false,
     lastValueVisible: false,

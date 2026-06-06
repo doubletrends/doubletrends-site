@@ -10,7 +10,7 @@
 <span class="tag-overline">Private Alerts &middot; S&amp;P 500 Index</span>
 <div class="max-w-4xl">
 <h1 class="text-5xl md:text-7xl lg:text-[5.6rem] font-bold font-noto leading-[0.98] text-grad-hero mb-7"> Know which dip is the one to buy. </h1>
-<p class="text-lg md:text-xl font-open leading-relaxed text-bright max-w-3xl"> DoubleTrends&trade; is a rules-based S&amp;P 500 signal for long-term ETF investors in VOO, SPY, and IVV. You get one Telegram alert on the day the rule fires, plus a private bot for the live market read on any other day. </p>
+<p class="text-lg md:text-xl font-open leading-relaxed text-dark max-w-3xl"> DoubleTrends&trade; is a rules-based S&amp;P 500 signal for long-term ETF investors in VOO, SPY, and IVV. You get one Telegram alert on the day the rule fires, plus a private bot for the live market read on any other day. </p>
 </div>
 <div class="flex flex-wrap gap-3">
 <a href="#track-record" class="btn-light">See it live</a>
@@ -32,8 +32,7 @@
 <div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-4">
 <div class="flex items-center gap-3 flex-wrap">
 <span class="status-dot"></span>
-<span class="data-label !text-white">DoubleTrends™ Signal Terminal</span>
-<span class="data-label !text-[#B9C0C9]">S&amp;P 500 &middot; Daily &middot; Oversold Reversal</span>
+<span class="data-label !text-white">DoubleTrends™ Signal Terminal (S&amp;P 500 &middot; Since 2016)</span>
 </div>
 </div>
 <div class="relative overflow-hidden">
@@ -89,8 +88,7 @@
 <div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-3">
 <div class="flex items-center gap-3">
 <span class="status-dot"></span>
-<span class="data-label !text-white">DoubleTrends™ Signal History</span>
-<span class="data-label !text-[#B9C0C9]">S&amp;P 500 &middot; {{TR_SIGNAL_COUNT_TOTAL}} signals since 2004</span>
+<span class="data-label !text-white">DoubleTrends™ Signal History (S&amp;P 500 &middot; Since 2004)</span>
 </div>
 </div>
 <div id="history-table-wrap" class="overflow-x-auto" style="background: #FBFAF7;">
@@ -112,38 +110,12 @@
 </div>
 <div class="px-5 py-3 flex items-center justify-between gap-4 flex-wrap" style="border-top: 1px solid rgba(30,37,48,0.10); background: rgba(251,250,247,0.82);">
 <span class="data-label" id="history-summary" style="color: #5A6473;">&mdash;</span>
-<span class="data-label" style="color: #5A6473;">Forward returns computed at query time. <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:#2E9E7B;"></span> positive, <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:#C8413B;"></span> negative, <em>pending</em> not yet matured.</span>
+<span class="data-label" style="color: #5A6473;">Forward returns computed at query time. <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--gain-rgb), 1);"></span> positive, <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--loss-rgb), 1);"></span> negative, <em>pending</em> not yet matured.</span>
 </div>
 </div>
 </div>
 </section>
-<section class="w-full" style="background: transparent; border-top: 1px solid rgba(0,0,0,0.08);">
-<div class="home-container max-w-site mx-auto px-8 py-20">
-<div class="max-w-5xl mx-auto hover-lift-rust overflow-hidden" style="background: linear-gradient(135deg, #171D25 0%, #222B36 58%, #2C3641 100%); box-shadow: 0 28px 80px rgba(23,29,37,0.18);">
-<div class="flex flex-col lg:flex-row lg:items-stretch">
-<div class="flex-1 px-8 py-9 md:px-10 md:py-10 lg:px-12 lg:py-11" style="border-right: 1px solid rgba(255,255,255,0.10);">
-<div class="flex items-center gap-3 flex-wrap mb-5">
-<span class="data-label" style="color: rgba(255,255,255,0.64); letter-spacing: 0.18em;">NEXT COMMAND</span>
-<span class="font-mono text-[11px] px-3 py-1" style="color: #FFD7BF; background: rgba(194,65,12,0.18); border: 1px solid rgba(194,65,12,0.28);">/METHOD</span>
-</div>
-<h2 class="text-3xl md:text-4xl lg:text-[3.15rem] font-noto font-bold leading-[1.02] mb-4" style="color: #F6F1E8;">Now look under the hood.</h2>
-<p class="font-open text-base md:text-lg leading-relaxed max-w-2xl" style="color: rgba(233,237,242,0.82);">You have seen the outcome surface and the historical proof. The next page shows the decision stack itself: what the rule reads, how the market gets classified, and what has to clear before a signal is allowed to fire.</p>
-</div>
-<div class="lg:w-[22rem] px-8 py-9 md:px-10 md:py-10 lg:px-10 lg:py-11 flex flex-col justify-between" style="background: rgba(255,255,255,0.04);">
-<div>
-<span class="data-label" style="color: rgba(255,255,255,0.56);">Route</span>
-<p class="font-mono text-sm mt-2" style="color: #F6F1E8;">Outcome  &rarr;  Method</p>
-<p class="font-open text-sm leading-relaxed mt-4" style="color: rgba(233,237,242,0.72);">Move from signal evidence to execution logic.</p>
-</div>
-<div class="mt-8">
-<a href="{{ROOT}}method.html" class="btn-light inline-flex items-center gap-3" style="padding-right: 1.1rem;"><span>Enter how it works</span><span aria-hidden="true" style="font-size: 1.05rem;">&rarr;</span></a>
-<p class="data-label mt-4" style="color: rgba(255,255,255,0.46);">THE ENGINE BEHIND.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
+{{ROUTING_CARD}}
 <script src="https://unpkg.com/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
 <script src="{{ROOT}}public/js/replay-chart.js"></script>
 <script src="{{ROOT}}public/js/history-table.js"></script>

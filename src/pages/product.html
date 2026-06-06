@@ -35,7 +35,7 @@
   }
   .chat-header-meta { display: flex; flex-direction: column; line-height: 1.2; }
   .chat-header-name { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: #FFFFFF; }
-  .chat-header-sub  { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: #B9C0C9; margin-top: 0.15rem; }
+  .chat-header-sub  { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: #5A6473; margin-top: 0.15rem; }
   .chat-log {
     flex: 1 1 auto;
     overflow-y: auto;
@@ -184,7 +184,7 @@
     cursor: pointer;
     transition: background 0.12s ease;
   }
-  .cmd-send:hover { background: #9A330A; }
+  .cmd-send:hover { background: #C2410C; }
   @keyframes chatTypingPulse {
     0%, 60%, 100% { opacity: 0.3; transform: translateY(0) scale(0.92); }
     30% { opacity: 1; transform: translateY(-2px) scale(1); }
@@ -308,7 +308,7 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 <div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
 <div class="step-marker mb-8">01</div>
-<h3 class="text-[#1E2530] font-noto font-semibold text-lg mb-3">Start free</h3>
+<h3 class="text-dark font-noto font-semibold text-lg mb-3">Start free</h3>
 <p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> Begin the 30-day trial. No charge today, just your card on file. </p>
 <div class="mt-8 pt-5" style="border-top: 1px solid rgba(30,37,48,0.10);">
 <span class="data-label">30-day free trial · Stripe Checkout</span>
@@ -316,7 +316,7 @@
 </div>
 <div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
 <div class="step-marker mb-8">02</div>
-<h3 class="text-[#1E2530] font-noto font-semibold text-lg mb-3">Connect Telegram</h3>
+<h3 class="text-dark font-noto font-semibold text-lg mb-3">Connect Telegram</h3>
 <p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> Open the one-time activation link and bind your Telegram account. </p>
 <div class="mt-8 pt-5" style="border-top: 1px solid rgba(30,37,48,0.10);">
 <span class="data-label">One-time link · Private bot</span>
@@ -324,7 +324,7 @@
 </div>
 <div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
 <div class="step-marker mb-8">03</div>
-<h3 class="text-[#1E2530] font-noto font-semibold text-lg mb-3">You&apos;re live</h3>
+<h3 class="text-dark font-noto font-semibold text-lg mb-3">You&apos;re live</h3>
 <p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> Signal alerts and on-demand bot commands are available immediately. </p>
 <div class="mt-8 pt-5" style="border-top: 1px solid rgba(30,37,48,0.10);">
 <span class="data-label">Alerts · Briefs · History</span>
@@ -375,37 +375,37 @@
 </div>
 <div class="max-w-3xl flex flex-col gap-3">
 <details class="card-border px-5 py-4" open>
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> What exactly do I receive? <span class="acc-icon data-label transition-transform">⌄</span>
+<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> What exactly do I receive? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
 <p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">A Telegram DM on signal day, plus a bot you can query anytime. You get the current market read with regime and macro context, the signal history since 2004, and your subscription status.</p>
 </details>
 <details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> How often will it fire? <span class="acc-icon data-label transition-transform">⌄</span>
+<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> How often will it fire? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
 <p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">Rarely. Since 2016, the S&amp;P 500 index version has produced {{TR_SIGNAL_COUNT}} signals. Some years have several; some have none. That is the point.</p>
 </details>
 <details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> Is this financial advice? <span class="acc-icon data-label transition-transform">⌄</span>
+<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> Is this financial advice? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
 <p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">No. DoubleTrends™ is educational, rules-based market information only. It is not a recommendation to buy, sell, or hold any security.</p>
 </details>
 <details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> What does DoubleTrends™ measure? <span class="acc-icon data-label transition-transform">⌄</span>
+<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> What does DoubleTrends™ measure? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
 <p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">A regime filter plus a dual Williams %R reversal rule on the daily S&amp;P 500. It only fires in panic or bear regimes, with bear-market reversals filtered harder.</p>
 </details>
 <details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> Which assets are covered? <span class="acc-icon data-label transition-transform">⌄</span>
+<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> Which assets are covered? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
 <p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">The S&amp;P 500 index today. ETF investors can express it with VOO, SPY, or IVV. Nasdaq 100 support, including QQQ, is planned.</p>
 </details>
 <details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> Does a signal mean I should buy immediately? <span class="acc-icon data-label transition-transform">⌄</span>
+<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> Does a signal mean I should buy immediately? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
 <p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">No. A signal is a timing reference, not a personal recommendation. Some investors use it to review a planned contribution or staged entry; others do nothing.</p>
 </details>
 <details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[#1E2530] font-noto font-semibold"> How do I get access after paying? <span class="acc-icon data-label transition-transform">⌄</span>
+<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> How do I get access after paying? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
 <p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">Right after checkout, you tap a one-time activation link that opens the Telegram bot. It binds your subscription to your Telegram account, then sends signals directly to you.</p>
 </details>

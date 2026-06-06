@@ -26,22 +26,6 @@ function pageTypeFor(kind) {
   return 'WebPage';
 }
 
-function defaultArticleAbout(page) {
-  const title = page.title.toLowerCase();
-  const topics = ['S&P 500 index', 'ETF investing'];
-
-  if (title.includes('drawdown')) topics.push('market drawdowns');
-  if (title.includes('dip')) topics.push('buying the dip');
-  if (title.includes('vix')) topics.push('volatility');
-  if (title.includes('fed')) topics.push('Federal Reserve policy');
-  if (title.includes('unemployment')) topics.push('labor market');
-  if (title.includes('cpi')) topics.push('inflation');
-  if (title.includes('williams %r') || title.includes('double trend exhaustion')) topics.push('oversold reversal');
-  if (title.includes('volume profile') || title.includes('vwap')) topics.push('market structure');
-
-  return topics;
-}
-
 function breadcrumbItems(page, siteUrl) {
   const items = [
     {
@@ -174,7 +158,7 @@ function buildSchemaNodes({ page, siteUrl, publisher, ogImage, today, defaultArt
         height: 630,
       },
       articleSection: schema.articleSection || 'Academy',
-      about: schema.about || defaultArticleAbout(page),
+      about: schema.about || ['S&P 500 index', 'ETF investing'],
       isAccessibleForFree: true,
       datePublished: schema.datePublished || defaultArticlePublished,
       dateModified: schema.dateModified || today,
@@ -206,5 +190,6 @@ function buildJsonLdScripts(context) {
 
 module.exports = {
   buildJsonLdScripts,
+  canonicalFor,
   pageDisplayName,
 };

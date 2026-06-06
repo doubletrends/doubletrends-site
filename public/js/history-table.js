@@ -10,11 +10,20 @@
     panic:      '\u{1F7E0}',
   };
 
+  // Read brand semantic colors from :root so the table stays in sync with
+  // primitives.html / brand.config.js. Composed as rgba() with full alpha;
+  // future translucent uses can drop alpha at the call site.
+  const rootStyle = getComputedStyle(document.documentElement);
+  const cssVar = (name) => rootStyle.getPropertyValue(name).trim();
+  const COLOR_GAIN = `rgba(${cssVar('--gain-rgb')}, 1)`;
+  const COLOR_LOSS = `rgba(${cssVar('--loss-rgb')}, 1)`;
+  const COLOR_PENDING = '#5A6473';  // brand `muted`
+
   function formatReturn(base, future) {
-    if (future === null || !Number.isFinite(future)) return { text: 'pending', color: '#5A6473' };
+    if (future === null || !Number.isFinite(future)) return { text: 'pending', color: COLOR_PENDING };
     const pct = (future / base - 1) * 100;
     const sign = pct >= 0 ? '+' : '';
-    const color = pct >= 0 ? '#2E9E7B' : '#C8413B';
+    const color = pct >= 0 ? COLOR_GAIN : COLOR_LOSS;
     return { text: `${sign}${pct.toFixed(0)}%`, color };
   }
 
@@ -30,7 +39,7 @@
     history = await response.json();
   } catch (err) {
     body.innerHTML =
-      '<tr><td colspan="6" class="px-5 py-6 text-center" style="color: #C8413B;">' +
+      `<tr><td colspan="6" class="px-5 py-6 text-center" style="color: ${COLOR_LOSS};">` +
       'Could not load history.</td></tr>';
     return;
   }
@@ -61,7 +70,7 @@
     const m = history.metrics;
     summary.innerHTML =
       `<b style="color: #1E2530;">${m.total_signals}</b> signals &middot; ` +
-      `median 1y <b style="color: #2E9E7B;">+${m.median_1y_pct}%</b> &middot; ` +
+      `median 1y <b style="color: ${COLOR_GAIN};">+${m.median_1y_pct}%</b> &middot; ` +
       `<b style="color: #1E2530;">${m.positive_1y_count}</b>/${m.matured_1y_count} positive at 1y`;
   }
 })();
