@@ -1,4 +1,4 @@
-# DoubleTrends Frontend
+# DoubleTrends™ Frontend
 
 Static frontend for `doubletrends.com`.
 
