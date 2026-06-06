@@ -29,7 +29,12 @@ const {
   PUBLISHER,
   pages,
 } = require('./src/site.config');
-const { buildJsonLdScripts, pageDisplayName } = require('./src/schema');
+const {
+  COLORS: BRAND_COLORS,
+  FONTS: BRAND_FONTS,
+} = require('./src/brand.config');
+const { buildJsonLdScripts, canonicalFor: canonicalForRaw, pageDisplayName } = require('./src/schema');
+const canonicalFor = (src) => canonicalForRaw(SITE_URL, src);
 
 // ─── Site config ────────────────────────────────────────────────────────────
 function todayInTimeZone(timeZone) {
@@ -81,10 +86,18 @@ const partialsDir = path.join(__dirname, 'src', '_partials');
 const read = (name) => fs.readFileSync(path.join(partialsDir, name), 'utf8');
 
 const layout = read('layout.html');
+const routingCardTemplate = read('routing-card.html');
+const styles = ['primitives', 'layouts', 'responsive']
+  .map((segment) => fs.readFileSync(path.join(partialsDir, 'styles', `${segment}.html`), 'utf8'))
+  .join('');
+const tailwind = replace(read('tailwind.html'), {
+  TAILWIND_COLORS: JSON.stringify(BRAND_COLORS, null, 2),
+  TAILWIND_FONTS:  JSON.stringify(BRAND_FONTS, null, 2),
+});
 const head   = replace(read('head.html'), {
   FONTS: read('fonts.html'),
-  TAILWIND: read('tailwind.html'),
-  STYLES: read('styles.html'),
+  TAILWIND: tailwind,
+  STYLES: styles,
 });
 const header = read('header.html');
 const footer = read('footer.html');
@@ -103,10 +116,6 @@ function ensureDir(filePath) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
-function canonicalFor(src) {
-  return `${SITE_URL}/${src.replace(/index\.html$/, '')}`;
-}
-
 function socialExtraFor(page) {
   if (page.kind !== 'article') return '';
   const section = page.schema?.articleSection || 'Academy';
@@ -115,20 +124,33 @@ function socialExtraFor(page) {
   <meta property="article:section" content="${section}" />`;
 }
 
-// ─── Build pages ────────────────────────────────────────────────────────────────
-let built = 0;
+// Render a single page: inject the layout slots, resolve placeholders, write
+// to dist. Returns true on success, false if the source file is missing.
+// Slot contents (head/header/footer) carry placeholders themselves, so we
+// inject them first and resolve the merged result in a second pass.
+function renderRoutingCard(card) {
+  if (!card) return '';
+  return replace(routingCardTemplate, {
+    ROUTING_PILL:         card.pill,
+    ROUTING_HEADLINE:     card.headline,
+    ROUTING_BODY:         card.body,
+    ROUTING_ROUTE:        card.route,
+    ROUTING_ROUTE_DESC:   card.routeDesc,
+    ROUTING_HREF:         card.href,
+    ROUTING_CTA:          card.cta,
+    ROUTING_FOOTER_LABEL: card.footerLabel,
+  });
+}
 
-for (const page of pages) {
+function renderPage(page) {
   const srcPath = path.join(__dirname, 'src', 'pages', page.src);
   const outPath = path.join(DIST, page.src);
 
   if (!fs.existsSync(srcPath)) {
     console.warn(`⚠  Missing source: ${page.src}`);
-    continue;
+    return false;
   }
 
-  // Inject the slots first, then resolve {{ROOT}}/{{TITLE}}/etc. across the
-  // assembled page — slot contents (head/header/footer) carry those placeholders.
   const assembled = replace(layout, {
     HEAD:          head,
     HEADER:        header,
@@ -157,12 +179,19 @@ for (const page of pages) {
       defaultArticlePublished: ARTICLE_PUBLISHED,
     }),
     ...TRACK_RECORD,
+    ROUTING_CARD: renderRoutingCard(page.routingCard),
   });
 
   ensureDir(outPath);
   fs.writeFileSync(outPath, html, 'utf8');
-  built++;
   console.log(`✓  ${page.src}`);
+  return true;
+}
+
+// ─── Build pages ────────────────────────────────────────────────────────────────
+let built = 0;
+for (const page of pages) {
+  if (renderPage(page)) built++;
 }
 
 console.log(`\nBuild complete — ${built} pages written.`);
@@ -172,7 +201,6 @@ const urls = pages
   .filter((p) => p.sitemap !== false)
   .map((p) => `  <url>
     <loc>${canonicalFor(p.src)}</loc>
-    <lastmod>${TODAY}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>${(p.priority ?? 0.7).toFixed(1)}</priority>
   </url>`)
