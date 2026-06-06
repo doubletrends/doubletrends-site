@@ -39,12 +39,12 @@ const pages = [
     desc:  'A rules-based S&P 500 signal for ETF investors. See the ten-year replay with every signal, try the Telegram bot in your browser, and view real /history forward returns. Built for VOO, SPY, IVV.',
   },
   {
-    src: 'how-it-works.html', root: '', priority: 0.9, kind: 'webpage',
+    src: 'method.html', root: '', priority: 0.9, kind: 'webpage',
     title: 'How It Works — DoubleTrends™',
     desc:  'What the DoubleTrends™ rule actually looks at: dual-period Williams %R as the engine, derived price features, macro anchoring via VIX and FRED series, four-regime classification, and the point-in-time discipline behind the track record.',
   },
   {
-    src: 'details.html', root: '', priority: 0.9, kind: 'webpage',
+    src: 'product.html', root: '', priority: 0.9, kind: 'webpage',
     title: 'Product — DoubleTrends™',
     desc:  'How the DoubleTrends™ subscription works in three steps, the $149/year pricing with a 30-day free trial and full-refund window, and answers to the questions investors ask before subscribing.',
   },
@@ -68,7 +68,7 @@ const pages = [
   {
     src: 'company/careers.html', root: '../', priority: 0.5, kind: 'webpage',
     title: 'Careers — DoubleTrends™',
-    desc:  'Roles we expect to grow into — Research Analyst, Data Scientist, and Sales. Not currently hiring, but open applications are welcome.',
+    desc:  'The three long-term functions we expect to build around at DoubleTrends™: Quantitative Analyst, Data Engineer, and Audience & Partnerships Lead. Not currently hiring.',
   },
   {
     src: 'company/contact.html', root: '../', priority: 0.6, kind: 'contact',

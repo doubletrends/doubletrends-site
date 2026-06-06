@@ -61,7 +61,7 @@
     const m = history.metrics;
     summary.innerHTML =
       `<b style="color: #1E2530;">${m.total_signals}</b> signals &middot; ` +
-      `median 1y <b style="color: #C2410C;">+${m.median_1y_pct}%</b> &middot; ` +
+      `median 1y <b style="color: #2E9E7B;">+${m.median_1y_pct}%</b> &middot; ` +
       `<b style="color: #1E2530;">${m.positive_1y_count}</b>/${m.matured_1y_count} positive at 1y`;
   }
 })();

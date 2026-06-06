@@ -5,108 +5,116 @@
 <div class="page-hero page-hero-center">
 <span class="tag-overline mb-3">Company</span>
 <h1 class="page-title"> Careers </h1>
-<!-- Status banner: inactive grey dot = honestly not hiring -->
-<div class="inline-flex items-center gap-2 px-4 py-1.5 mt-5" style="background: #FFFFFF; border: 1px solid rgba(0,0,0,0.1);">
-<span style="width: 7px; height: 7px; border-radius: 9999px; background: #8A93A0; display: inline-block;"></span>
-<span class="data-label" style="color: #5A6473;">Not currently hiring</span>
-</div>
-<p class="page-subtitle mt-5"> We grow by need, not by headcount targets. These are the roles we expect to open as the product, research, and client work outgrow a small team. There are no live openings today, but we keep thoughtful applications on file and reach out when the timing and scope match. </p>
+<p class="page-subtitle mt-5"> We are building a small research company around a narrow product, not a broad org chart. Growth here is driven by capability and standards, not headcount targets. These are the three functions we expect to build around as the work deepens. </p>
 </div>
 
 <!-- Role list -->
 <div class="page-content-wide">
 
-<!-- Research Analyst -->
+<!-- Quantitative Analyst -->
 <article class="product-panel p-6 md:p-8">
 <div class="flex items-start justify-between gap-4">
 <div>
 <span class="tag-overline">Research</span>
-<h3 class="text-[#1E2530] font-noto font-bold text-xl md:text-2xl leading-tight mt-2"> Research Analyst </h3>
+<h3 class="text-[#1E2530] font-noto font-bold text-xl md:text-2xl leading-tight mt-2"> Quantitative Analyst </h3>
 </div>
 <span class="shrink-0 data-label" style="border: 1px solid rgba(0,0,0,0.15); padding: 0.25rem 0.6rem; color: #8A93A0;">Closed</span>
 </div>
-<p class="text-muted text-sm leading-relaxed mt-4 mb-6"> Study how our signals behave across market regimes, then turn that work into research notes that are rigorous enough for internal use and clear enough for the Academy audience. </p>
+<p class="text-muted text-sm leading-relaxed mt-4 mb-6"> Own the analytical layer of the company: study how the signal behaves across regimes, quantify where it works and where it breaks, and turn that evidence into work that sharpens both the product and the Academy. This role is less about frontier research for its own sake and more about disciplined market analysis that holds up under scrutiny. </p>
 <div class="grid md:grid-cols-2 gap-6">
 <div>
 <span class="data-label" style="color: #5A6473;">What you'd do</span>
 <ul class="mt-3 space-y-2 text-muted text-sm leading-relaxed list-disc pl-4">
-<li>Backtest and stress-test the signal across assets and regimes</li>
-<li>Quantify hit rate, drawdown, and the cases where it misfires</li>
-<li>Write research-grade Academy articles for a retail audience</li>
-<li>Track market conditions and flag notable setups</li>
+<li>Analyze signal quality across market regimes, time windows, and failure cases, with a clear view of what is robust and what is conditional</li>
+<li>Measure hit rate, forward return shape, drawdown behavior, and false-positive patterns across the full history</li>
+<li>Build repeatable analytical workflows in Python or R that make new questions easy to test and old conclusions easy to revisit</li>
+<li>Evaluate new indicators, filters, and market features that could improve the read without bloating the system</li>
+<li>Turn quantitative findings into clear internal memos and Academy work that stay faithful to the evidence</li>
+<li>Track current market context closely enough to flag setups, anomalies, and changes worth deeper analysis</li>
 </ul>
 </div>
 <div>
 <span class="data-label" style="color: #5A6473;">What we'd look for</span>
 <ul class="mt-3 space-y-2 text-muted text-sm leading-relaxed list-disc pl-4">
-<li>Background in finance, economics, or statistics</li>
-<li>Comfortable with Python or R and market data</li>
-<li>Writes clearly for non-experts</li>
-<li>Intellectually honest about what the data does and doesn't show</li>
+<li>Degree in statistics, applied mathematics, finance, physics, computer science, or a similarly rigorous quantitative field</li>
+<li>3+ years in quantitative analysis, market research, or similarly analytical work where the standard of proof actually mattered</li>
+<li>Comfort with Python or R, market data, and reproducible analysis workflows that can survive review by others</li>
+<li>Strong statistical instincts and the discipline to distinguish a clean story from a true one</li>
+<li>Clear writing that does not smuggle in more certainty than the evidence allows</li>
+<li>Intellectual honesty, especially when the answer is inconclusive, messy, or inconvenient to the story</li>
 </ul>
 </div>
 </div>
 </article>
 
-<!-- Data Scientist -->
+<!-- Data Engineer -->
 <article class="product-panel p-6 md:p-8">
 <div class="flex items-start justify-between gap-4">
 <div>
 <span class="tag-overline">Engineering</span>
-<h3 class="text-[#1E2530] font-noto font-bold text-xl md:text-2xl leading-tight mt-2"> Data Scientist </h3>
+<h3 class="text-[#1E2530] font-noto font-bold text-xl md:text-2xl leading-tight mt-2"> Data Engineer </h3>
 </div>
 <span class="shrink-0 data-label" style="border: 1px solid rgba(0,0,0,0.15); padding: 0.25rem 0.6rem; color: #8A93A0;">Closed</span>
 </div>
-<p class="text-muted text-sm leading-relaxed mt-4 mb-6"> Own the data and signal engine that powers the daily alerts, from ingestion and validation through backtesting, scheduling, monitoring, and deployment hygiene. </p>
+<p class="text-muted text-sm leading-relaxed mt-4 mb-6"> Own the data and runtime layer that makes the research executable: ingestion, validation, persistence, internal APIs, and delivery infrastructure behind a product that has to be reliable every day it matters. In practice that means working across a Python research pipeline and a Cloudflare Worker stack that owns D1, webhooks, and customer-facing runtime behavior. </p>
 <div class="grid md:grid-cols-2 gap-6">
 <div>
 <span class="data-label" style="color: #5A6473;">What you'd do</span>
 <ul class="mt-3 space-y-2 text-muted text-sm leading-relaxed list-disc pl-4">
-<li>Maintain and extend the DoubleTrends™ signal pipeline end to end</li>
-<li>Build and validate new features and models on market time-series</li>
-<li>Safeguard data quality and reproducibility</li>
-<li>Keep the daily job reliable and observable</li>
+<li>Maintain and extend the end-to-end signal pipeline, from Python-side computation through Worker-side ingestion, persistence, and delivery</li>
+<li>Own TypeScript and SQL work inside a Cloudflare Worker architecture that handles Stripe, Telegram, internal endpoints, and D1 reads/writes</li>
+<li>Design and evolve schema, migrations, and internal API contracts so new product capabilities remain clear, auditable, and easy to reason about</li>
+<li>Implement and validate new features, filters, and model components on market time-series without compromising reproducibility</li>
+<li>Write documentation, review code, and promote architectural clarity so responsibilities stay clean across the Python and Worker boundaries</li>
+<li>Keep the daily system observable, unit-tested, and resilient under failure, including the messy edge cases that only appear in production</li>
 </ul>
 </div>
 <div>
 <span class="data-label" style="color: #5A6473;">What we'd look for</span>
 <ul class="mt-3 space-y-2 text-muted text-sm leading-relaxed list-disc pl-4">
-<li>Strong Python (pandas, numpy)</li>
-<li>Time-series analysis and a working grasp of ML</li>
-<li>Experience with market-data APIs and scheduled jobs</li>
-<li>Values reproducibility and tests over cleverness</li>
+<li>Degree in computer science, engineering, mathematics, or a related technical field</li>
+<li>3+ years building production systems in a data-heavy environment, ideally where reliability and auditability were non-negotiable</li>
+<li>Strong Python plus enough TypeScript fluency to work comfortably in a serverless backend that owns real production state</li>
+<li>Good engineering judgment around SQL schema design, API contracts, testing, code review, and change management</li>
+<li>Experience with scheduled systems, external data sources, production reliability, and cloud infrastructure; Cloudflare familiarity is a plus</li>
+<li>The ability to collaborate across research and engineering work without treating either side as someone else's problem</li>
+<li>A bias for simple, inspectable systems with clear ownership boundaries over clever but fragile machinery</li>
 </ul>
 </div>
 </div>
 </article>
 
-<!-- Sales -->
+<!-- Audience & Partnerships Lead -->
 <article class="product-panel p-6 md:p-8">
 <div class="flex items-start justify-between gap-4">
 <div>
 <span class="tag-overline">Growth</span>
-<h3 class="text-[#1E2530] font-noto font-bold text-xl md:text-2xl leading-tight mt-2"> Sales </h3>
+<h3 class="text-[#1E2530] font-noto font-bold text-xl md:text-2xl leading-tight mt-2"> Audience &amp; Partnerships Lead </h3>
 </div>
-<span class="shrink-0 data-label" style="border: 1px solid rgba(0,0,0,0.15); padding: 0.25rem 0.6rem; color: #8A93A0;">Closed</span>
+<span class="status-pill shrink-0"><span class="status-dot"></span>Open</span>
 </div>
-<p class="text-muted text-sm leading-relaxed mt-4 mb-6"> Grow the subscriber base among passive, long-horizon retail investors without turning the product into hype. The role would sit at the intersection of content, partnerships, feedback, and trust. </p>
+<p class="text-muted text-sm leading-relaxed mt-4 mb-6"> Own the trust layer between the company and the outside world: grow the audience, develop partnerships, and improve conversion without turning a narrow research product into a louder but weaker one. The role is equal parts audience strategy, distribution judgment, and partnership execution. </p>
 <div class="grid md:grid-cols-2 gap-6">
 <div>
 <span class="data-label" style="color: #5A6473;">What you'd do</span>
 <ul class="mt-3 space-y-2 text-muted text-sm leading-relaxed list-disc pl-4">
-<li>Build top-of-funnel through content, community, and partnerships</li>
-<li>Convert Academy readers into subscribers</li>
-<li>Gather user feedback and relay it back to the product</li>
-<li>Represent the product without overpromising</li>
+<li>Build and refine the audience strategy across owned and distributed surfaces: site, newsletter, search, answer engines, social, and partner channels</li>
+<li>Develop partnerships that expand qualified reach, including newsletters, adjacent brands, distribution partners, and other trust-bearing channels</li>
+<li>Improve the path from Academy reader to paying subscriber through better packaging, clearer positioning, and tighter conversion moments</li>
+<li>Translate audience and performance data into concrete recommendations for content, product, and messaging decisions</li>
+<li>Coordinate cross-functionally with research, product, and editorial work so distribution quality rises with product quality</li>
+<li>Represent the product with precision, restraint, and consistency across channels, especially where the incentive is to overstate</li>
 </ul>
 </div>
 <div>
 <span class="data-label" style="color: #5A6473;">What we'd look for</span>
 <ul class="mt-3 space-y-2 text-muted text-sm leading-relaxed list-disc pl-4">
-<li>Comfort talking to a retail-investor audience</li>
-<li>Clear, trustworthy communication</li>
-<li>Experience in fintech, creator, or community growth</li>
-<li>Puts compliance and honesty before conversion</li>
+<li>5+ years in audience growth, partnerships, editorial distribution, community, or adjacent trust-sensitive go-to-market work</li>
+<li>Strong communication instincts with a retail-investor, publishing, fintech, or finance-adjacent audience</li>
+<li>Experience in audience development, partnerships, editorial growth, community, or trust-sensitive distribution</li>
+<li>Comfort working across growth metrics, discoverability, packaging, and channel strategy without reducing everything to acquisition hacks</li>
+<li>Good judgment about message discipline, audience fit, attribution limits, and overclaim risk</li>
+<li>A real preference for long-term brand trust over short-term conversion tricks</li>
 </ul>
 </div>
 </div>
@@ -116,7 +124,7 @@
 
 <!-- Open application CTA -->
 <div class="terminal-shell hover-lift-rust w-full max-w-5xl text-center mt-16 p-8">
-<p class="text-muted text-sm leading-relaxed mb-6"> Don't see your role, or want to be first in line when one opens? Send your CV and a short note about what you would want to work on, what you have built or researched before, and why this product is a fit. We read everything, but we only reply when there is a real opening or a concrete project conversation to have. </p>
+<p class="text-muted text-sm leading-relaxed mb-6"> There are no live openings today. If your work maps closely to one of these three functions, send a CV and a short note on what you have built, researched, or grown before, and why this company is a fit. We read everything. We only reply when there is a real role or a concrete conversation to have. </p>
 <a href="mailto:info@doubletrends.com?subject=Open%20application%20%E2%80%94%20CDS" class="btn-light">Send an open application</a>
 </div>
 

@@ -64,7 +64,15 @@ const TRACK_RECORD = {
 
 // ─── Prepare output directory ────────────────────────────────────────────────
 const DIST = path.join(__dirname, 'dist');
-fs.rmSync(DIST, { recursive: true, force: true });
+try {
+  fs.rmSync(DIST, { recursive: true, force: true });
+} catch (error) {
+  if (error && (error.code === 'EPERM' || error.code === 'EBUSY')) {
+    console.warn(`!  Could not remove dist before build (${error.code}); reusing existing directory.`);
+  } else {
+    throw error;
+  }
+}
 fs.mkdirSync(DIST, { recursive: true });
 
 // ─── Read partials ────────────────────────────────────────────────────────────

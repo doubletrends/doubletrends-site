@@ -21,41 +21,77 @@
            with equal padding on both sides separates sections at lg+. Stacks vertically below lg. -->
       <div class="site-footer-nav-wrap flex justify-start lg:justify-end">
         <div class="site-footer-nav flex flex-col lg:flex-row gap-8 lg:gap-0 w-max">
-          <div class="site-footer-group flex flex-col items-start gap-3 lg:pr-8">
+          <div class="site-footer-group site-footer-align-right flex flex-col items-start gap-3 lg:pr-8">
             <span class="tag-overline mb-2">Product</span>
             <a href="{{ROOT}}index.html" class="foot-link">Home</a>
             <a href="{{ROOT}}index.html#track-record" class="foot-link">See It Live</a>
             <a href="{{ROOT}}index.html#history" class="foot-link">Historical Returns</a>
-            <a href="{{ROOT}}how-it-works.html" class="foot-link">How It Works</a>
-            <a href="{{ROOT}}details.html#pricing" class="foot-link">Pricing</a>
-            <a href="{{ROOT}}details.html#try" class="foot-link">Try the Bot</a>
-            <a href="{{ROOT}}details.html#access-flow" class="foot-link">Get Started</a>
+            <a href="{{ROOT}}method.html" class="foot-link">How It Works</a>
+            <a href="{{ROOT}}product.html#pricing" class="foot-link">Pricing &amp; FAQ</a>
           </div>
-          <div class="site-footer-group flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
+          <div class="site-footer-group site-footer-academy-group flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Academy</span>
-            <a href="{{ROOT}}academy/index.html" class="foot-link">Academy home</a>
-            <span class="data-label mt-3">Research</span>
-            <a href="{{ROOT}}academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 drawdowns</a>
-            <a href="{{ROOT}}academy/why-buying-the-dip-is-hard.html" class="foot-link">Why dip-buying is hard</a>
-            <a href="{{ROOT}}academy/every-sp-500-bottom-since-2016.html" class="foot-link">Market bottoms since 2016</a>
-            <span class="data-label mt-3">Standard Tools</span>
-            <a href="{{ROOT}}academy/double-trend-exhaustion.html" class="foot-link">DoubleTrends™</a>
-            <a href="{{ROOT}}academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
-            <a href="{{ROOT}}academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
-            <span class="data-label mt-3">Macro Anchors</span>
-            <a href="{{ROOT}}academy/vix-percentile.html" class="foot-link">VIX percentile</a>
-            <a href="{{ROOT}}academy/fed-funds-rate.html" class="foot-link">Fed funds rate</a>
-            <a href="{{ROOT}}academy/unemployment.html" class="foot-link">Unemployment rate</a>
-            <a href="{{ROOT}}academy/cpi-inflation.html" class="foot-link">CPI year-over-year</a>
+            <a href="{{ROOT}}academy/index.html" class="foot-link">Academy Home</a>
+            <div class="site-footer-accordion site-footer-academy-accordion w-full">
+              <details class="site-footer-details site-footer-subdetails">
+                <summary class="site-footer-summary site-footer-subsummary">
+                  <span class="data-label">Research</span>
+                  <span class="site-footer-expand">
+                    <span>Expand</span>
+                    <span class="acc-icon" aria-hidden="true">▾</span>
+                  </span>
+                </summary>
+                <div class="site-footer-details-content">
+                  <div class="site-footer-details-inner site-footer-academy-links flex flex-col items-start gap-3">
+                    <a href="{{ROOT}}academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 Drawdowns</a>
+                    <a href="{{ROOT}}academy/why-buying-the-dip-is-hard.html" class="foot-link">Why Dip-Buying Is Hard</a>
+                    <a href="{{ROOT}}academy/every-sp-500-bottom-since-2016.html" class="foot-link">Market Bottoms Since 2016</a>
+                  </div>
+                </div>
+              </details>
+              <details class="site-footer-details site-footer-subdetails">
+                <summary class="site-footer-summary site-footer-subsummary">
+                  <span class="data-label">Tools</span>
+                  <span class="site-footer-expand">
+                    <span>Expand</span>
+                    <span class="acc-icon" aria-hidden="true">▾</span>
+                  </span>
+                </summary>
+                <div class="site-footer-details-content">
+                  <div class="site-footer-details-inner site-footer-academy-links flex flex-col items-start gap-3">
+                    <a href="{{ROOT}}academy/double-trend-exhaustion.html" class="foot-link">DoubleTrends™</a>
+                    <a href="{{ROOT}}academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
+                    <a href="{{ROOT}}academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
+                  </div>
+                </div>
+              </details>
+              <details class="site-footer-details site-footer-subdetails">
+                <summary class="site-footer-summary site-footer-subsummary">
+                  <span class="data-label">Macro</span>
+                  <span class="site-footer-expand">
+                    <span>Expand</span>
+                    <span class="acc-icon" aria-hidden="true">▾</span>
+                  </span>
+                </summary>
+                <div class="site-footer-details-content">
+                  <div class="site-footer-details-inner site-footer-academy-links flex flex-col items-start gap-3">
+                    <a href="{{ROOT}}academy/vix-percentile.html" class="foot-link">VIX Percentile</a>
+                    <a href="{{ROOT}}academy/fed-funds-rate.html" class="foot-link">Fed Funds Rate</a>
+                    <a href="{{ROOT}}academy/unemployment.html" class="foot-link">Unemployment Rate</a>
+                    <a href="{{ROOT}}academy/cpi-inflation.html" class="foot-link">CPI Year-Over-Year</a>
+                  </div>
+                </div>
+              </details>
+            </div>
           </div>
-          <div class="site-footer-group flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
+          <div class="site-footer-group site-footer-align-right flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Company</span>
             <a href="{{ROOT}}company/mission.html" class="foot-link">Mission</a>
             <a href="{{ROOT}}company/consulting.html" class="foot-link">Consulting</a>
             <a href="{{ROOT}}company/careers.html" class="foot-link">Careers</a>
             <a href="{{ROOT}}company/contact.html" class="foot-link">Contact</a>
           </div>
-          <div class="site-footer-group flex flex-col items-start gap-3 lg:pl-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
+          <div class="site-footer-group site-footer-align-right flex flex-col items-start gap-3 lg:pl-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
             <span class="tag-overline mb-2">Legal</span>
             <a href="{{ROOT}}legal/terms.html" class="foot-link">Terms of Service</a>
             <a href="{{ROOT}}legal/privacy.html" class="foot-link">Privacy Policy</a>
@@ -77,26 +113,62 @@
             <a href="{{ROOT}}index.html" class="foot-link">Home</a>
             <a href="{{ROOT}}index.html#track-record" class="foot-link">See It Live</a>
             <a href="{{ROOT}}index.html#history" class="foot-link">Historical Returns</a>
-            <a href="{{ROOT}}how-it-works.html" class="foot-link">How It Works</a>
-            <a href="{{ROOT}}details.html#pricing" class="foot-link">Pricing</a>
-            <a href="{{ROOT}}details.html#try" class="foot-link">Try the Bot</a>
-            <a href="{{ROOT}}details.html#access-flow" class="foot-link">Get Started</a>
+            <a href="{{ROOT}}method.html" class="foot-link">How It Works</a>
+            <a href="{{ROOT}}product.html#pricing" class="foot-link">Pricing &amp; FAQ</a>
           </div>
           <div class="site-footer-panel" role="tabpanel" id="footer-academy" aria-labelledby="footer-tab-academy" hidden>
-            <a href="{{ROOT}}academy/index.html" class="foot-link">Academy home</a>
-            <span class="data-label mt-3">Research</span>
-            <a href="{{ROOT}}academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 drawdowns</a>
-            <a href="{{ROOT}}academy/why-buying-the-dip-is-hard.html" class="foot-link">Why dip-buying is hard</a>
-            <a href="{{ROOT}}academy/every-sp-500-bottom-since-2016.html" class="foot-link">Market bottoms since 2016</a>
-            <span class="data-label mt-3">Standard Tools</span>
-            <a href="{{ROOT}}academy/double-trend-exhaustion.html" class="foot-link">DoubleTrends™</a>
-            <a href="{{ROOT}}academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
-            <a href="{{ROOT}}academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
-            <span class="data-label mt-3">Macro Anchors</span>
-            <a href="{{ROOT}}academy/vix-percentile.html" class="foot-link">VIX percentile</a>
-            <a href="{{ROOT}}academy/fed-funds-rate.html" class="foot-link">Fed funds rate</a>
-            <a href="{{ROOT}}academy/unemployment.html" class="foot-link">Unemployment rate</a>
-            <a href="{{ROOT}}academy/cpi-inflation.html" class="foot-link">CPI year-over-year</a>
+            <a href="{{ROOT}}academy/index.html" class="foot-link site-footer-academy-home">Academy Home</a>
+            <div class="site-footer-accordion site-footer-academy-accordion w-full">
+              <details class="site-footer-details site-footer-subdetails">
+                <summary class="site-footer-summary site-footer-subsummary">
+                  <span class="data-label">Research</span>
+                  <span class="site-footer-expand">
+                    <span>Expand</span>
+                    <span class="acc-icon" aria-hidden="true">▾</span>
+                  </span>
+                </summary>
+                <div class="site-footer-details-content">
+                  <div class="site-footer-details-inner site-footer-academy-links flex flex-col items-start gap-3">
+                    <a href="{{ROOT}}academy/sp-500-drawdowns.html" class="foot-link">S&amp;P 500 Drawdowns</a>
+                    <a href="{{ROOT}}academy/why-buying-the-dip-is-hard.html" class="foot-link">Why Dip-Buying Is Hard</a>
+                    <a href="{{ROOT}}academy/every-sp-500-bottom-since-2016.html" class="foot-link">Market Bottoms Since 2016</a>
+                  </div>
+                </div>
+              </details>
+              <details class="site-footer-details site-footer-subdetails">
+                <summary class="site-footer-summary site-footer-subsummary">
+                  <span class="data-label">Tools</span>
+                  <span class="site-footer-expand">
+                    <span>Expand</span>
+                    <span class="acc-icon" aria-hidden="true">▾</span>
+                  </span>
+                </summary>
+                <div class="site-footer-details-content">
+                  <div class="site-footer-details-inner site-footer-academy-links flex flex-col items-start gap-3">
+                    <a href="{{ROOT}}academy/double-trend-exhaustion.html" class="foot-link">DoubleTrends™</a>
+                    <a href="{{ROOT}}academy/maximum-drawdown.html" class="foot-link">Maximum Drawdown</a>
+                    <a href="{{ROOT}}academy/volume-profile-vwap.html" class="foot-link">Volume Profile &amp; VWAP</a>
+                  </div>
+                </div>
+              </details>
+              <details class="site-footer-details site-footer-subdetails">
+                <summary class="site-footer-summary site-footer-subsummary">
+                  <span class="data-label">Macro</span>
+                  <span class="site-footer-expand">
+                    <span>Expand</span>
+                    <span class="acc-icon" aria-hidden="true">▾</span>
+                  </span>
+                </summary>
+                <div class="site-footer-details-content">
+                  <div class="site-footer-details-inner site-footer-academy-links flex flex-col items-start gap-3">
+                    <a href="{{ROOT}}academy/vix-percentile.html" class="foot-link">VIX Percentile</a>
+                    <a href="{{ROOT}}academy/fed-funds-rate.html" class="foot-link">Fed Funds Rate</a>
+                    <a href="{{ROOT}}academy/unemployment.html" class="foot-link">Unemployment Rate</a>
+                    <a href="{{ROOT}}academy/cpi-inflation.html" class="foot-link">CPI Year-Over-Year</a>
+                  </div>
+                </div>
+              </details>
+            </div>
           </div>
           <div class="site-footer-panel" role="tabpanel" id="footer-company" aria-labelledby="footer-tab-company" hidden>
             <a href="{{ROOT}}company/mission.html" class="foot-link">Mission</a>
