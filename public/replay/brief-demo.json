@@ -1,28 +1,6 @@
 {
-  "generated_at": "2026-06-05T19:23:27.830Z",
-  "source_csv": "C:\\Users\\NewAdmin\\Repo\\doubletrends-backend\\signal\\backfill\\fast\\backfill_fast.csv",
   "start_date": "2020-03-23",
   "end_date": "2020-03-26",
-  "live": {
-    "ticker": "^GSPC",
-    "display_name": "S&P 500",
-    "as_of_date": "2026-06-03",
-    "updated_at": "2026-06-03T20:10:00+00:00",
-    "close_value": 7553.68,
-    "regime": "calm",
-    "watch_active": 0,
-    "setup_active": 0,
-    "signal_active": 0,
-    "signal_date": null,
-    "vix_value": 16.06,
-    "fedfunds_value": 3.63,
-    "unrate_value": 4.3,
-    "cpi_value": 332.407,
-    "open_at": "2026-06-03T09:30:00-04:00",
-    "minutes_after_open": 400,
-    "closed_at": "2026-06-03T16:00:00-04:00",
-    "minutes_after_close": 10
-  },
   "briefs": {
     "2020-03-23": {
       "ticker": "^GSPC",

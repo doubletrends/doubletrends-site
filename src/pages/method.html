@@ -14,7 +14,7 @@
 <p class="font-open text-lg leading-relaxed" style="color: #5A6473;"> DoubleTrends&trade; works in three layers: a dual-timeframe Williams %R reversal, a market-regime classifier, and a confirmation gate. Williams %R is the engine underneath that stack: a momentum oscillator developed in the 1970s that measures where the current close sits inside the recent high-low range. </p>
 </div>
 <div class="max-w-3xl">
-<h3 class="text-[#1E2530] text-xl md:text-2xl font-noto font-bold mb-3"> Why two timeframes, not one. </h3>
+<h3 class="text-dark text-xl md:text-2xl font-noto font-bold mb-3"> Why two timeframes, not one. </h3>
 <p class="font-open text-base leading-relaxed mb-4" style="color: #5A6473;"> A single-period oscillator is too noisy. A short window catches every dip, including ones that don&rsquo;t matter; a long window catches the deep ones but lags badly. So we run Williams %R on two timeframes at once &mdash; one short, one long &mdash; and smooth each to take out day-to-day chop. </p>
 <p class="font-open text-base leading-relaxed" style="color: #5A6473;"> A reversal candidate exists only when both timeframes agree the market is deeply oversold, and both start turning back up. The name <em>DoubleTrends™</em> refers to exactly this: two trend signals, both pointing the same way. </p>
 </div>
@@ -116,7 +116,7 @@
 <div class="flex items-center gap-3">
 <span class="status-dot"></span>
 <span class="data-label !text-white">Regime Classification</span>
-<span class="data-label !text-[#B9C0C9]">Four states &middot; macro &times; price</span>
+<span class="data-label !text-[#5A6473]">Four states &middot; macro &times; price</span>
 </div>
 </div>
 <div class="overflow-x-auto" style="background: #FBFAF7;">
@@ -184,7 +184,7 @@
 <div class="flex items-center gap-3">
 <span class="status-dot"></span>
 <span class="data-label !text-white">Signal Decision Flow</span>
-<span class="data-label !text-[#B9C0C9]">Three gates &middot; all must clear</span>
+<span class="data-label !text-[#5A6473]">Three gates &middot; all must clear</span>
 </div>
 </div>
 <div style="background: #FBFAF7;">
@@ -271,7 +271,7 @@
 <div class="flex items-center gap-3">
 <span class="status-dot"></span>
 <span class="data-label !text-white">Transparency Boundary</span>
-<span class="data-label !text-[#B9C0C9]">Open above &middot; proprietary below</span>
+<span class="data-label !text-[#5A6473]">Open above &middot; proprietary below</span>
 </div>
 </div>
 <div class="grid md:grid-cols-2" style="background: #FBFAF7;">
@@ -306,31 +306,5 @@
 </div>
 </section>
 
-<!-- ── Next step: see the product ──────────────────────────────────────── -->
-<section class="w-full" style="background: transparent; border-top: 1px solid rgba(0,0,0,0.08);">
-<div class="home-container max-w-site mx-auto px-8 py-20">
-<div class="max-w-5xl mx-auto hover-lift-rust overflow-hidden" style="background: linear-gradient(135deg, #171D25 0%, #222B36 58%, #2C3641 100%); box-shadow: 0 28px 80px rgba(23,29,37,0.18);">
-<div class="flex flex-col lg:flex-row lg:items-stretch">
-<div class="flex-1 px-8 py-9 md:px-10 md:py-10 lg:px-12 lg:py-11" style="border-right: 1px solid rgba(255,255,255,0.10);">
-<div class="flex items-center gap-3 flex-wrap mb-5">
-<span class="data-label" style="color: rgba(255,255,255,0.64); letter-spacing: 0.18em;">NEXT COMMAND</span>
-<span class="font-mono text-[11px] px-3 py-1" style="color: #FFD7BF; background: rgba(194,65,12,0.18); border: 1px solid rgba(194,65,12,0.28);">/PRODUCT</span>
-</div>
-<h2 class="text-3xl md:text-4xl lg:text-[3.15rem] font-noto font-bold leading-[1.02] mb-4" style="color: #F6F1E8;">Institutional-grade signal. Retail access.</h2>
-<p class="font-open text-base md:text-lg leading-relaxed max-w-2xl" style="color: rgba(233,237,242,0.82);">The engine is built to institutional standards, but access is not reserved for institutions. The next page shows how a retail subscriber can use the bot directly, what gets delivered, and what the terms look like in practice.</p>
-</div>
-<div class="lg:w-[22rem] px-8 py-9 md:px-10 md:py-10 lg:px-10 lg:py-11 flex flex-col justify-between" style="background: rgba(255,255,255,0.04);">
-<div>
-<span class="data-label" style="color: rgba(255,255,255,0.56);">Route</span>
-<p class="font-mono text-sm mt-2" style="color: #F6F1E8;">Method  &rarr;  Product</p>
-<p class="font-open text-sm leading-relaxed mt-4" style="color: rgba(233,237,242,0.72);">From rule logic to live access.</p>
-</div>
-<div class="mt-8">
-<a href="{{ROOT}}product.html" class="btn-light inline-flex items-center gap-3" style="padding-right: 1.1rem;"><span>SEE THE PRODUCT</span><span aria-hidden="true" style="font-size: 1.05rem;">&rarr;</span></a>
-<p class="data-label mt-4" style="color: rgba(255,255,255,0.46);">TRY IT YOURSELF.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
+<!-- ── Next step: see the product (routing card injected at build time) ─── -->
+{{ROUTING_CARD}}

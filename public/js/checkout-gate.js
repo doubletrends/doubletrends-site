@@ -10,7 +10,12 @@
   if (!continueBtn || !cancelBtn || !backdrop) return;
 
   function isCheckoutLink(link) {
-    return link && link.href && link.href.indexOf('stripe.com') !== -1;
+    if (!link || !link.href) return false;
+    try {
+      return new URL(link.href).host === 'buy.stripe.com';
+    } catch (_err) {
+      return false;
+    }
   }
 
   function openGate(href) {

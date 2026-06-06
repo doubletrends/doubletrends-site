@@ -262,7 +262,13 @@ function build() {
   );
 
   // ── 3. brief-demo.json — worker-exported public /brief fixtures ────────────
+  // Defensive boundary scrub: drop fields known to leak local state (source_csv
+  // is the dev's absolute backfill-CSV path) and abort if any string value
+  // still looks like an absolute filesystem path. Catches future backend
+  // additions that would silently ship a path to the CDN.
   const briefDemo = JSON.parse(fs.readFileSync(BACKEND_BRIEF_DEMO_ARTIFACT, 'utf8'));
+  delete briefDemo.source_csv;
+  assertNoPathLeak(briefDemo, 'brief-demo.json');
   fs.writeFileSync(path.join(OUT_DIR, 'brief-demo.json'), JSON.stringify(briefDemo, null, 2));
   console.log(`✓  brief-demo.json — ${Object.keys(briefDemo.briefs ?? {}).length} demo briefs`);
 
@@ -272,22 +278,48 @@ function build() {
   }
 }
 
+// Walk every string in an arbitrary JSON value and throw on anything that
+// looks like an absolute path (Windows drive letters or POSIX /Users//home/).
+// Used as a build-time tripwire before writing a public artifact.
+const ABSOLUTE_PATH_RE = /(?:[A-Za-z]:[\\/]|\/(?:Users|home|root|var|opt|etc)\/)/;
+function assertNoPathLeak(value, label, keyPath = '') {
+  if (typeof value === 'string') {
+    if (ABSOLUTE_PATH_RE.test(value)) {
+      throw new Error(`${label}: path-shaped value at ${keyPath || '<root>'} — ${value}`);
+    }
+    return;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item, i) => assertNoPathLeak(item, label, `${keyPath}[${i}]`));
+    return;
+  }
+  if (value && typeof value === 'object') {
+    for (const [k, v] of Object.entries(value)) {
+      assertNoPathLeak(v, label, keyPath ? `${keyPath}.${k}` : k);
+    }
+  }
+}
+
+function median(values) {
+  if (values.length === 0) return null;
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 0
+    ? (sorted[mid - 1] + sorted[mid]) / 2
+    : sorted[mid];
+}
+
 function computeMetrics(entries) {
-  const matured = (k) => entries.filter((e) => e.close_90d !== null && e[k] !== null);
   const pctReturn = (e, k) => (e[k] / e.signal_close - 1) * 100;
 
   const matured1y = entries.filter((e) => e.signal_close !== null && e.close_365d !== null);
   const returns1y = matured1y.map((e) => pctReturn(e, 'close_365d'));
-  const sorted1y = [...returns1y].sort((a, b) => a - b);
-  const median1y = sorted1y.length
-    ? sorted1y[Math.floor(sorted1y.length / 2)]
-    : null;
+  const median1y = median(returns1y);
   const positive1y = returns1y.filter((r) => r > 0).length;
 
   const matured90 = entries.filter((e) => e.signal_close !== null && e.close_90d !== null);
   const returns90 = matured90.map((e) => pctReturn(e, 'close_90d'));
-  const sorted90 = [...returns90].sort((a, b) => a - b);
-  const median90 = sorted90.length ? sorted90[Math.floor(sorted90.length / 2)] : null;
+  const median90 = median(returns90);
 
   return {
     total_signals: entries.length,

@@ -37,11 +37,31 @@ const pages = [
     src: 'index.html', root: '', priority: 1.0, kind: 'home',
     title: 'S&P 500 Signal for ETF Investors | DoubleTrends™',
     desc:  'A rules-based S&P 500 signal built for ETF investors using VOO, SPY, or IVV. Review the live replay, inspect every dated signal, and test the Telegram bot in your browser.',
+    routingCard: {
+      pill: '/METHOD',
+      headline: 'Now look under the hood.',
+      body: 'You have seen the outcome surface and the historical proof. The next page shows the decision stack itself: what the rule reads, how the market gets classified, and what has to clear before a signal is allowed to fire.',
+      route: 'Outcome  &rarr;  Method',
+      routeDesc: 'Move from signal evidence to execution logic.',
+      href: 'method.html',
+      cta: 'Enter how it works',
+      footerLabel: 'THE ENGINE BEHIND.',
+    },
   },
   {
     src: 'method.html', root: '', priority: 0.9, kind: 'webpage',
     title: 'How the DoubleTrends™ S&P 500 Signal Works',
     desc:  'See how the DoubleTrends™ S&P 500 signal works: dual-period Williams %R, drawdown features, VIX and macro anchors, four market regimes, and the point-in-time rules behind the track record.',
+    routingCard: {
+      pill: '/PRODUCT',
+      headline: 'Institutional-grade signal. Retail access.',
+      body: 'The engine is built to institutional standards, but access is not reserved for institutions. The next page shows how a retail subscriber can use the bot directly, what gets delivered, and what the terms look like in practice.',
+      route: 'Method  &rarr;  Product',
+      routeDesc: 'From rule logic to live access.',
+      href: 'product.html',
+      cta: 'SEE THE PRODUCT',
+      footerLabel: 'TRY IT YOURSELF.',
+    },
   },
   {
     src: 'product.html', root: '', priority: 0.9, kind: 'webpage',
@@ -152,19 +172,19 @@ const pages = [
     src: 'academy/sp-500-drawdowns.html', root: '../', priority: 0.8, kind: 'article',
     title: 'S&P 500 Drawdowns Since 1950: How Often Corrections and Bear Markets Happen | Academy',
     desc:  'How often the S&P 500 falls 5%, 10%, 20%, and 30% since 1950, how long recovery usually takes, and what those drawdown base rates mean for buying the dip.',
-    schema: { articleSection: 'Market History' },
+    schema: { articleSection: 'Market History', about: ['S&P 500 index', 'ETF investing', 'market drawdowns'] },
   },
   {
     src: 'academy/why-buying-the-dip-is-hard.html', root: '../', priority: 0.8, kind: 'article',
     title: 'Why Buying the Dip Is Hard: The Best Days Happen During Crashes | Academy',
     desc:  'Why buying the dip feels hardest when expected returns improve: the S&P 500\'s best days cluster inside crashes, and missing a few of them changes long-run results.',
-    schema: { articleSection: 'Investor Behavior' },
+    schema: { articleSection: 'Investor Behavior', about: ['S&P 500 index', 'ETF investing', 'buying the dip'] },
   },
   {
     src: 'academy/every-sp-500-bottom-since-2016.html', root: '../', priority: 0.8, kind: 'article',
     title: 'Every DoubleTrends™ S&P 500 Signal Since 2016 | Academy',
     desc:  'Every DoubleTrends™ signal on the S&P 500 since 2016, the regime and drawdown around each fire, and the forward returns that followed.',
-    schema: { articleSection: 'Track Record' },
+    schema: { articleSection: 'Track Record', about: ['S&P 500 index', 'ETF investing'] },
   },
 
   // ── academy: methods ─────────────────────────────────────────────────────
@@ -172,19 +192,19 @@ const pages = [
     src: 'academy/volume-profile-vwap.html', root: '../', priority: 0.7, kind: 'article',
     title: 'What Are Volume Profile and VWAP? | Academy',
     desc:  'A plain-English primer on Volume Profile and VWAP: what each tool measures, how institutional desks use them, and where they fit in market structure.',
-    schema: { articleSection: 'Liquidity' },
+    schema: { articleSection: 'Liquidity', about: ['S&P 500 index', 'ETF investing', 'market structure'] },
   },
   {
     src: 'academy/double-trend-exhaustion.html', root: '../', priority: 0.7, kind: 'article',
     title: 'What Is Double Trend Exhaustion? The DoubleTrends™ Signal Explained | Academy',
     desc:  'What double trend exhaustion means in DoubleTrends™: dual-period Williams %R on a short and long clock, both turning up out of deep oversold territory.',
-    schema: { articleSection: 'The Engine' },
+    schema: { articleSection: 'The Engine', about: ['S&P 500 index', 'ETF investing', 'oversold reversal'] },
   },
   {
     src: 'academy/maximum-drawdown.html', root: '../', priority: 0.7, kind: 'article',
     title: 'What Is Maximum Drawdown? Depth, Duration, and Sharpness | Academy',
     desc:  'What maximum drawdown means for market stress: drawdown depth from the trailing one-year high, duration since that high, and ten-day sharpness.',
-    schema: { articleSection: 'Stress Lens' },
+    schema: { articleSection: 'Stress Lens', about: ['S&P 500 index', 'ETF investing', 'market drawdowns'] },
   },
 
   // ── academy: macro anchors ──────────────────────────────────────────────
@@ -192,25 +212,25 @@ const pages = [
     src: 'academy/vix-percentile.html', root: '../', priority: 0.7, kind: 'article',
     title: 'What Is VIX Percentile? Reading Volatility Against Itself | Academy',
     desc:  'What VIX percentile means, why it is more useful than the raw VIX level, and how DoubleTrends™ uses it inside the market regime classifier.',
-    schema: { articleSection: 'Volatility' },
+    schema: { articleSection: 'Volatility', about: ['S&P 500 index', 'ETF investing', 'volatility'] },
   },
   {
     src: 'academy/fed-funds-rate.html', root: '../', priority: 0.7, kind: 'article',
     title: 'What Is the Fed Funds Rate and Why Does It Matter for Stocks? | Academy',
     desc:  'What the fed funds rate is, why its recent change matters more than the level, and how DoubleTrends™ uses it inside the bear-regime overlay.',
-    schema: { articleSection: 'Interest Rate' },
+    schema: { articleSection: 'Interest Rate', about: ['S&P 500 index', 'ETF investing', 'Federal Reserve policy'] },
   },
   {
     src: 'academy/unemployment.html', root: '../', priority: 0.7, kind: 'article',
     title: 'Why the Unemployment Rate Matters for Market Regimes | Academy',
     desc:  'Why the US unemployment rate lags but rarely gives false positives, how DoubleTrends™ reads its slope, and where it fits inside the bear overlay.',
-    schema: { articleSection: 'Labor' },
+    schema: { articleSection: 'Labor', about: ['S&P 500 index', 'ETF investing', 'labor market'] },
   },
   {
     src: 'academy/cpi-inflation.html', root: '../', priority: 0.7, kind: 'article',
     title: 'What CPI Inflation Tells You About Fed Pressure | Academy',
     desc:  'Why year-over-year CPI matters as context for Fed policy, and how DoubleTrends™ reads high inflation together with active tightening inside the bear gate.',
-    schema: { articleSection: 'Inflation' },
+    schema: { articleSection: 'Inflation', about: ['S&P 500 index', 'ETF investing', 'Federal Reserve policy', 'inflation'] },
   },
 ];
 

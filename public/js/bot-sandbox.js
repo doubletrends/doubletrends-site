@@ -63,13 +63,9 @@
 
   const TELEGRAM_HISTORY_CUTOFF_DATE = '2004-01-01';
   const TELEGRAM_HISTORY_CUTOFF_YEAR = TELEGRAM_HISTORY_CUTOFF_DATE.slice(0, 4);
-  const PUBLIC_BRIEF_DEMO_START_DATE = '2020-03-23';
-  const PUBLIC_BRIEF_DEMO_END_DATE = '2020-03-26';
-  const isPublicBriefDemoDate = (arg) =>
-    arg >= PUBLIC_BRIEF_DEMO_START_DATE && arg <= PUBLIC_BRIEF_DEMO_END_DATE;
-  const NO_BRIEF_FOR_DATE_MESSAGE =
-    `The public demo only exposes trading days from ${PUBLIC_BRIEF_DEMO_START_DATE} to ${PUBLIC_BRIEF_DEMO_END_DATE}. ` +
-    'Other dates are suppressed here on purpose. Try one of the demo dates above, or /history for the full signal record.';
+  // Demo window bounds (PUBLIC_BRIEF_DEMO_START_DATE / END_DATE) are derived
+  // from the loaded brief-demo.json below — the JSON is the single source of
+  // truth so the suppression range never drifts from the shipped fixtures.
 
   function isValidDateArg(arg) {
     return /^\d{4}-\d{2}-\d{2}$/.test(arg);
@@ -282,6 +278,13 @@
   ]);
 
   const briefsByDate = new Map(Object.entries(briefDemo.briefs ?? {}));
+  const PUBLIC_BRIEF_DEMO_START_DATE = briefDemo.start_date;
+  const PUBLIC_BRIEF_DEMO_END_DATE = briefDemo.end_date;
+  const isPublicBriefDemoDate = (arg) =>
+    arg >= PUBLIC_BRIEF_DEMO_START_DATE && arg <= PUBLIC_BRIEF_DEMO_END_DATE;
+  const NO_BRIEF_FOR_DATE_MESSAGE =
+    `The public demo only exposes trading days from ${PUBLIC_BRIEF_DEMO_START_DATE} to ${PUBLIC_BRIEF_DEMO_END_DATE}. ` +
+    'Other dates are suppressed here on purpose. Try one of the demo dates above, or /history for the full signal record.';
 
   function resolveBotMessages(text) {
     const { command, arg } = parseCommand(text);

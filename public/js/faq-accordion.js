@@ -15,6 +15,8 @@
   }
 
   function prepareContent(content, open) {
+    if (content.dataset.prepared === 'true') return;
+
     content.style.overflow = 'hidden';
     content.style.display = 'grid';
     content.style.gridTemplateRows = open ? '1fr' : '0fr';
@@ -25,6 +27,7 @@
     inner.style.minHeight = '0';
     while (content.firstChild) inner.appendChild(content.firstChild);
     content.appendChild(inner);
+    content.dataset.prepared = 'true';
   }
 
   function openDetails(details, content) {
