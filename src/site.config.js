@@ -35,7 +35,7 @@ const PUBLISHER = {
 const pages = [
   {
     src: 'index.html', root: '', priority: 1.0, kind: 'home',
-    title: 'S&P 500 Signal for ETF Investors | DoubleTrends™',
+    title: 'S&P 500 Signal for ETF Investors',
     desc:  'A rules-based S&P 500 signal built for ETF investors using VOO, SPY, or IVV. Review the live replay, inspect every dated signal, and test the Telegram bot in your browser.',
     routingCard: {
       pill: '/METHOD',
@@ -65,7 +65,7 @@ const pages = [
   },
   {
     src: 'product.html', root: '', priority: 0.9, kind: 'webpage',
-    title: 'DoubleTrends™ Pricing, Trial, and Telegram Delivery',
+    title: 'Pricing, Trial, and Telegram Delivery',
     desc:  'See DoubleTrends™ pricing at USD $149 per year, the 30-day free trial, refund rules, private Telegram delivery, and what subscribers receive before they buy.',
     schema: {
       faq: [
@@ -102,29 +102,29 @@ const pages = [
   },
   {
     src: 'academy/index.html', root: '../', priority: 0.9, kind: 'collection',
-    title: 'Academy — Research & Education | DoubleTrends™',
+    title: 'Academy — Research & Education',
     desc:  'Research notes on S&P 500 drawdowns and investor behavior, primers on the standard tools the engine uses (Williams %R, drawdown, volume profile), and one article per macro anchor (VIX, Fed funds, unemployment, CPI).',
   },
 
   // ── company ───────────────────────────────────────────────────────────────
   {
     src: 'company/mission.html', root: '../', priority: 0.5, kind: 'webpage',
-    title: 'Mission — DoubleTrends™',
+    title: 'Mission',
     desc:  'Why DoubleTrends™ exists and the principles behind it: one transparent, rule-based oversold-reversal signal — transparency over hype, education over dependency, narrow over vague.',
   },
   {
     src: 'company/consulting.html', root: '../', priority: 0.6, kind: 'services',
-    title: 'Consulting — DoubleTrends™',
+    title: 'Consulting',
     desc:  'The data engineering and quantitative research behind DoubleTrends™, available for custom projects: ML modelling, statistical analysis, forecasting, and data collection.',
   },
   {
     src: 'company/careers.html', root: '../', priority: 0.5, kind: 'webpage',
-    title: 'Careers — DoubleTrends™',
+    title: 'Careers',
     desc:  'The three long-term functions we expect to build around at DoubleTrends™: Quantitative Analyst, Data Engineer, and Audience & Partnerships Lead. Not currently hiring.',
   },
   {
     src: 'company/contact.html', root: '../', priority: 0.6, kind: 'contact',
-    title: 'Contact — DoubleTrends™',
+    title: 'Contact',
     desc:  'Contact DoubleTrends™ for product questions, data and quant service inquiries, research questions, partnerships, or company matters.',
   },
   {
@@ -136,53 +136,53 @@ const pages = [
   // ── legal ────────────────────────────────────────────────────────────────
   {
     src: 'legal/refund-policy.html', root: '../', priority: 0.4, kind: 'webpage',
-    title: 'Free Trial & Refunds — DoubleTrends™',
+    title: 'Free Trial & Refunds',
     desc:  'DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund within 14 days of any charge if no signal has fired.',
   },
   {
     src: 'legal/terms.html', root: '../', priority: 0.3, kind: 'webpage',
-    title: 'Terms of Service — DoubleTrends™',
+    title: 'Terms of Service',
     desc:  'The terms for using the DoubleTrends™ website and subscription: billing, acceptable use, disclaimers, and limitation of liability. Governed by Ontario law.',
   },
   {
     src: 'legal/privacy.html', root: '../', priority: 0.3, kind: 'webpage',
-    title: 'Privacy Policy — DoubleTrends™',
+    title: 'Privacy Policy',
     desc:  'How DoubleTrends™ handles your data: no cookies, no analytics, no tracking — only the minimum needed to bill via Stripe and deliver the Telegram signal.',
   },
   {
     src: 'legal/disclaimer.html', root: '../', priority: 0.3, kind: 'webpage',
-    title: 'Disclaimer — DoubleTrends™',
+    title: 'Disclaimer',
     desc:  'DoubleTrends™ provides educational, rules-based market information only — not financial, investment, trading, tax, or legal advice. Trading involves risk.',
   },
 
   // ── utility pages ────────────────────────────────────────────────────────
   {
     src: '404.html', root: '/', sitemap: false, kind: 'webpage', robots: 'noindex,follow',
-    title: '404 Not Found — DoubleTrends™',
+    title: '404 Not Found',
     desc:  'Page not found.',
   },
   {
     src: 'success.html', root: '', sitemap: false, kind: 'webpage', robots: 'noindex,follow',
-    title: 'You\'re Subscribed — DoubleTrends™',
+    title: 'You\'re Subscribed',
     desc:  'Your DoubleTrends™ subscription is active. Activate the Telegram bot to start receiving signals.',
   },
 
   // ── academy: articles ────────────────────────────────────────────────────
   {
     src: 'academy/sp-500-drawdowns.html', root: '../', priority: 0.8, kind: 'article',
-    title: 'S&P 500 Drawdowns Since 1950: How Often Corrections and Bear Markets Happen | Academy',
+    title: 'S&P 500 Drawdowns Since 1950: How Often Corrections and Bear Markets Happen',
     desc:  'How often the S&P 500 falls 5%, 10%, 20%, and 30% since 1950, how long recovery usually takes, and what those drawdown base rates mean for buying the dip.',
     schema: { articleSection: 'Market History', about: ['S&P 500 index', 'ETF investing', 'market drawdowns'] },
   },
   {
     src: 'academy/why-buying-the-dip-is-hard.html', root: '../', priority: 0.8, kind: 'article',
-    title: 'Why Buying the Dip Is Hard: The Best Days Happen During Crashes | Academy',
+    title: 'Why Buying the Dip Is Hard: The Best Days Happen During Crashes',
     desc:  'Why buying the dip feels hardest when expected returns improve: the S&P 500\'s best days cluster inside crashes, and missing a few of them changes long-run results.',
     schema: { articleSection: 'Investor Behavior', about: ['S&P 500 index', 'ETF investing', 'buying the dip'] },
   },
   {
     src: 'academy/every-sp-500-bottom-since-2016.html', root: '../', priority: 0.8, kind: 'article',
-    title: 'Every DoubleTrends™ S&P 500 Signal Since 2016 | Academy',
+    title: 'Every DoubleTrends™ S&P 500 Signal Since 2016',
     desc:  'Every DoubleTrends™ signal on the S&P 500 since 2016, the regime and drawdown around each fire, and the forward returns that followed.',
     schema: { articleSection: 'Track Record', about: ['S&P 500 index', 'ETF investing'] },
   },
@@ -190,19 +190,19 @@ const pages = [
   // ── academy: methods ─────────────────────────────────────────────────────
   {
     src: 'academy/volume-profile-vwap.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'What Are Volume Profile and VWAP? | Academy',
+    title: 'What Are Volume Profile and VWAP?',
     desc:  'A plain-English primer on Volume Profile and VWAP: what each tool measures, how institutional desks use them, and where they fit in market structure.',
     schema: { articleSection: 'Liquidity', about: ['S&P 500 index', 'ETF investing', 'market structure'] },
   },
   {
     src: 'academy/double-trend-exhaustion.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'What Is Double Trend Exhaustion? The DoubleTrends™ Signal Explained | Academy',
+    title: 'What Is Double Trend Exhaustion? The DoubleTrends™ Signal Explained',
     desc:  'What double trend exhaustion means in DoubleTrends™: dual-period Williams %R on a short and long clock, both turning up out of deep oversold territory.',
     schema: { articleSection: 'The Engine', about: ['S&P 500 index', 'ETF investing', 'oversold reversal'] },
   },
   {
     src: 'academy/maximum-drawdown.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'What Is Maximum Drawdown? Depth, Duration, and Sharpness | Academy',
+    title: 'What Is Maximum Drawdown? Depth, Duration, and Sharpness',
     desc:  'What maximum drawdown means for market stress: drawdown depth from the trailing one-year high, duration since that high, and ten-day sharpness.',
     schema: { articleSection: 'Stress Lens', about: ['S&P 500 index', 'ETF investing', 'market drawdowns'] },
   },
@@ -210,25 +210,25 @@ const pages = [
   // ── academy: macro anchors ──────────────────────────────────────────────
   {
     src: 'academy/vix-percentile.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'What Is VIX Percentile? Reading Volatility Against Itself | Academy',
+    title: 'What Is VIX Percentile? Reading Volatility Against Itself',
     desc:  'What VIX percentile means, why it is more useful than the raw VIX level, and how DoubleTrends™ uses it inside the market regime classifier.',
     schema: { articleSection: 'Volatility', about: ['S&P 500 index', 'ETF investing', 'volatility'] },
   },
   {
     src: 'academy/fed-funds-rate.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'What Is the Fed Funds Rate and Why Does It Matter for Stocks? | Academy',
+    title: 'What Is the Fed Funds Rate and Why Does It Matter for Stocks?',
     desc:  'What the fed funds rate is, why its recent change matters more than the level, and how DoubleTrends™ uses it inside the bear-regime overlay.',
     schema: { articleSection: 'Interest Rate', about: ['S&P 500 index', 'ETF investing', 'Federal Reserve policy'] },
   },
   {
     src: 'academy/unemployment.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'Why the Unemployment Rate Matters for Market Regimes | Academy',
+    title: 'Why the Unemployment Rate Matters for Market Regimes',
     desc:  'Why the US unemployment rate lags but rarely gives false positives, how DoubleTrends™ reads its slope, and where it fits inside the bear overlay.',
     schema: { articleSection: 'Labor', about: ['S&P 500 index', 'ETF investing', 'labor market'] },
   },
   {
     src: 'academy/cpi-inflation.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'What CPI Inflation Tells You About Fed Pressure | Academy',
+    title: 'What CPI Inflation Tells You About Fed Pressure',
     desc:  'Why year-over-year CPI matters as context for Fed policy, and how DoubleTrends™ reads high inflation together with active tightening inside the bear gate.',
     schema: { articleSection: 'Inflation', about: ['S&P 500 index', 'ETF investing', 'Federal Reserve policy', 'inflation'] },
   },

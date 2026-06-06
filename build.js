@@ -35,6 +35,7 @@ const {
 } = require('./src/brand.config');
 const { buildJsonLdScripts, canonicalFor: canonicalForRaw, pageDisplayName } = require('./src/schema');
 const canonicalFor = (src) => canonicalForRaw(SITE_URL, src);
+const SITE_TITLE_PREFIX = 'DoubleTrends™';
 
 // ─── Site config ────────────────────────────────────────────────────────────
 function todayInTimeZone(timeZone) {
@@ -116,6 +117,10 @@ function ensureDir(filePath) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
+function formatTitle(title) {
+  return `${SITE_TITLE_PREFIX} | ${title}`;
+}
+
 function socialExtraFor(page) {
   if (page.kind !== 'article') return '';
   const section = page.schema?.articleSection || 'Academy';
@@ -160,7 +165,7 @@ function renderPage(page) {
   });
   const html = replace(assembled, {
     ROOT:      page.root,
-    TITLE:     page.title,
+    TITLE:     formatTitle(page.title),
     DESC:      page.desc,
     CANONICAL: canonicalFor(page.src),
     SUBSCRIBE_URL,
