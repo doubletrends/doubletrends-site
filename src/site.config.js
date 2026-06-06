@@ -3,7 +3,7 @@ const SUBSCRIBE_URL = 'https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c';
 // Cloudflare Worker base URL (no trailing slash).
 const WORKER_URL = 'https://api.doubletrends.com';
 const OG_IMAGE = `${SITE_URL}/public/brand/og-image.png`;
-const OG_IMAGE_ALT = 'CDS logo and DoubleTrends tagline';
+const OG_IMAGE_ALT = 'CDS logo and DoubleTrends™ tagline';
 
 const PUBLISHER = {
   '@type': 'Organization',
@@ -35,18 +35,50 @@ const PUBLISHER = {
 const pages = [
   {
     src: 'index.html', root: '', priority: 1.0, kind: 'home',
-    title: 'DoubleTrends™ — S&P 500 Signals for ETF Investors',
-    desc:  'A rules-based S&P 500 signal for ETF investors. See the ten-year replay with every signal, try the Telegram bot in your browser, and view real /history forward returns. Built for VOO, SPY, IVV.',
+    title: 'S&P 500 Signal for ETF Investors | DoubleTrends™',
+    desc:  'A rules-based S&P 500 signal built for ETF investors using VOO, SPY, or IVV. Review the live replay, inspect every dated signal, and test the Telegram bot in your browser.',
   },
   {
     src: 'method.html', root: '', priority: 0.9, kind: 'webpage',
-    title: 'How It Works — DoubleTrends™',
-    desc:  'What the DoubleTrends™ rule actually looks at: dual-period Williams %R as the engine, derived price features, macro anchoring via VIX and FRED series, four-regime classification, and the point-in-time discipline behind the track record.',
+    title: 'How the DoubleTrends™ S&P 500 Signal Works',
+    desc:  'See how the DoubleTrends™ S&P 500 signal works: dual-period Williams %R, drawdown features, VIX and macro anchors, four market regimes, and the point-in-time rules behind the track record.',
   },
   {
     src: 'product.html', root: '', priority: 0.9, kind: 'webpage',
-    title: 'Product — DoubleTrends™',
-    desc:  'How the DoubleTrends™ subscription works in three steps, the $149/year pricing with a 30-day free trial and full-refund window, and answers to the questions investors ask before subscribing.',
+    title: 'DoubleTrends™ Pricing, Trial, and Telegram Delivery',
+    desc:  'See DoubleTrends™ pricing at USD $149 per year, the 30-day free trial, refund rules, private Telegram delivery, and what subscribers receive before they buy.',
+    schema: {
+      faq: [
+        {
+          q: 'What exactly do I receive?',
+          a: 'A Telegram direct message on signal day, plus a private bot you can query anytime for the current market read, signal history, and subscription status.',
+        },
+        {
+          q: 'How often will it fire?',
+          a: 'Rarely. Since 2016, the S&P 500 index version has produced a small number of signals. Some years have several and some have none.',
+        },
+        {
+          q: 'Is this financial advice?',
+          a: 'No. DoubleTrends™ provides educational, rules-based market information only. It is not a recommendation to buy, sell, or hold any security.',
+        },
+        {
+          q: 'What does DoubleTrends™ measure?',
+          a: 'A regime filter plus a dual Williams %R reversal rule on the daily S&P 500. It only fires in panic or bear regimes, with bear-market reversals filtered harder.',
+        },
+        {
+          q: 'Which assets are covered?',
+          a: 'The S&P 500 index today. ETF investors can express it with VOO, SPY, or IVV. Nasdaq 100 support, including QQQ, is planned.',
+        },
+        {
+          q: 'Does a signal mean I should buy immediately?',
+          a: 'No. A signal is a timing reference, not a personal recommendation. Some investors use it to review a planned contribution or staged entry, while others do nothing.',
+        },
+        {
+          q: 'How do I get access after paying?',
+          a: 'Right after checkout, you use a one-time activation link that opens the Telegram bot, binds your subscription to your Telegram account, and enables direct delivery.',
+        },
+      ],
+    },
   },
   {
     src: 'academy/index.html', root: '../', priority: 0.9, kind: 'collection',
@@ -118,57 +150,67 @@ const pages = [
   // ── academy: articles ────────────────────────────────────────────────────
   {
     src: 'academy/sp-500-drawdowns.html', root: '../', priority: 0.8, kind: 'article',
-    title: 'How Often Does the S&P 500 Dip — and How Deep? | Academy',
-    desc:  'Seventy-six years of S&P 500 data: how often corrections and bear markets hit, how deep they go, how long recovery takes — and what it means for buying the dip.',
+    title: 'S&P 500 Drawdowns Since 1950: How Often Corrections and Bear Markets Happen | Academy',
+    desc:  'How often the S&P 500 falls 5%, 10%, 20%, and 30% since 1950, how long recovery usually takes, and what those drawdown base rates mean for buying the dip.',
+    schema: { articleSection: 'Market History' },
   },
   {
     src: 'academy/why-buying-the-dip-is-hard.html', root: '../', priority: 0.8, kind: 'article',
-    title: 'Why Buying the Dip Is Hard — and How to Fix It | Academy',
-    desc:  'The best market days happen during crashes — all 10 of the S&P 500\'s best days since 2000 came while it was already down 10%+. Why dip-buying fails, and how a rule fixes it.',
+    title: 'Why Buying the Dip Is Hard: The Best Days Happen During Crashes | Academy',
+    desc:  'Why buying the dip feels hardest when expected returns improve: the S&P 500\'s best days cluster inside crashes, and missing a few of them changes long-run results.',
+    schema: { articleSection: 'Investor Behavior' },
   },
   {
     src: 'academy/every-sp-500-bottom-since-2016.html', root: '../', priority: 0.8, kind: 'article',
-    title: 'Every S&P 500 Bottom Since 2016 — the Pattern | Academy',
-    desc:  'Every DoubleTrends™ signal on the S&P 500 index since 2016, the drawdown at each, and the returns that followed — including an honest look at where it misfired.',
+    title: 'Every DoubleTrends™ S&P 500 Signal Since 2016 | Academy',
+    desc:  'Every DoubleTrends™ signal on the S&P 500 since 2016, the regime and drawdown around each fire, and the forward returns that followed.',
+    schema: { articleSection: 'Track Record' },
   },
 
   // ── academy: methods ─────────────────────────────────────────────────────
   {
     src: 'academy/volume-profile-vwap.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'Volume Profile & VWAP, Explained | Academy',
-    desc:  'A plain-English primer on two standard volume tools: Volume Profile (volume traded at each price level) and VWAP (the volume-weighted average price benchmark).',
+    title: 'What Are Volume Profile and VWAP? | Academy',
+    desc:  'A plain-English primer on Volume Profile and VWAP: what each tool measures, how institutional desks use them, and where they fit in market structure.',
+    schema: { articleSection: 'Liquidity' },
   },
   {
     src: 'academy/double-trend-exhaustion.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'DoubleTrends™: Double Trend Exhaustion Explained | Academy',
-    desc:  'How the DoubleTrends™ signal works: a double trend exhaustion model built on dual-period Williams %R, flagging when a selloff\'s downside momentum is exhausted.',
+    title: 'What Is Double Trend Exhaustion? The DoubleTrends™ Signal Explained | Academy',
+    desc:  'What double trend exhaustion means in DoubleTrends™: dual-period Williams %R on a short and long clock, both turning up out of deep oversold territory.',
+    schema: { articleSection: 'The Engine' },
   },
   {
     src: 'academy/maximum-drawdown.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'Maximum Drawdown — Depth, Duration, Sharpness | Academy',
-    desc:  'How drawdown works as a stress lens: depth from the trailing one-year high, duration since that high, and ten-day sharpness — the three price-based axes the engine reads.',
+    title: 'What Is Maximum Drawdown? Depth, Duration, and Sharpness | Academy',
+    desc:  'What maximum drawdown means for market stress: drawdown depth from the trailing one-year high, duration since that high, and ten-day sharpness.',
+    schema: { articleSection: 'Stress Lens' },
   },
 
   // ── academy: macro anchors ──────────────────────────────────────────────
   {
     src: 'academy/vix-percentile.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'VIX Percentile — Reading Volatility Against Itself | Academy',
-    desc:  'Why VIX percentile inside its own trailing one-year distribution is a more honest read of market stress than the raw level — and how it feeds the regime classifier.',
+    title: 'What Is VIX Percentile? Reading Volatility Against Itself | Academy',
+    desc:  'What VIX percentile means, why it is more useful than the raw VIX level, and how DoubleTrends™ uses it inside the market regime classifier.',
+    schema: { articleSection: 'Volatility' },
   },
   {
     src: 'academy/fed-funds-rate.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'Fed Funds Rate — The Price of Money, in Motion | Academy',
-    desc:  'Why the recent change in the federal funds rate over three and six months matters more than the level — and how it shows up in the bear regime overlay.',
+    title: 'What Is the Fed Funds Rate and Why Does It Matter for Stocks? | Academy',
+    desc:  'What the fed funds rate is, why its recent change matters more than the level, and how DoubleTrends™ uses it inside the bear-regime overlay.',
+    schema: { articleSection: 'Interest Rate' },
   },
   {
     src: 'academy/unemployment.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'Unemployment — The Cleanest Macro Deterioration Signal | Academy',
-    desc:  'Why the US unemployment rate lags but does not lie, how the engine reads its six-month change and trailing-MA crossover, and where it fits inside the bear overlay.',
+    title: 'Why the Unemployment Rate Matters for Market Regimes | Academy',
+    desc:  'Why the US unemployment rate lags but rarely gives false positives, how DoubleTrends™ reads its slope, and where it fits inside the bear overlay.',
+    schema: { articleSection: 'Labor' },
   },
   {
     src: 'academy/cpi-inflation.html', root: '../', priority: 0.7, kind: 'article',
-    title: 'CPI Inflation — Context Behind Every Fed Decision | Academy',
-    desc:  'Why year-over-year CPI matters as context for Fed policy, and how the combination of high inflation with active tightening forms the inflation_pressure bear-gate condition.',
+    title: 'What CPI Inflation Tells You About Fed Pressure | Academy',
+    desc:  'Why year-over-year CPI matters as context for Fed policy, and how DoubleTrends™ reads high inflation together with active tightening inside the bear gate.',
+    schema: { articleSection: 'Inflation' },
   },
 ];
 

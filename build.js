@@ -29,6 +29,7 @@ const {
   PUBLISHER,
   pages,
 } = require('./src/site.config');
+const { buildJsonLdScripts, pageDisplayName } = require('./src/schema');
 
 // ─── Site config ────────────────────────────────────────────────────────────
 function todayInTimeZone(timeZone) {
@@ -106,157 +107,12 @@ function canonicalFor(src) {
   return `${SITE_URL}/${src.replace(/index\.html$/, '')}`;
 }
 
-function pageDisplayName(page) {
-  return page.title
-    .replace(' — S&P 500 Signals for ETF Investors', '')
-    .replace(' | Academy', '')
-    .replace(' | DoubleTrends™', '')
-    .replace(' — DoubleTrends™', '')
-    .replace(' — Research & Education', '')
-    .replace(' — Identity & Construction | CDS', '');
-}
-
 function socialExtraFor(page) {
   if (page.kind !== 'article') return '';
+  const section = page.schema?.articleSection || 'Academy';
   return `  <meta property="article:published_time" content="${ARTICLE_PUBLISHED}" />
   <meta property="article:modified_time" content="${TODAY}" />
-  <meta property="article:section" content="Academy" />`;
-}
-
-function jsonLdFor(page) {
-  const canonical = canonicalFor(page.src);
-  const isArticle = page.kind === 'article';
-  const pageType = page.kind === 'contact'
-    ? 'ContactPage'
-    : page.kind === 'collection'
-      ? 'CollectionPage'
-      : 'WebPage';
-  const graph = [
-    PUBLISHER,
-    {
-      '@type': 'WebSite',
-      '@id': `${SITE_URL}/#website`,
-      url: SITE_URL,
-      name: 'DoubleTrends™',
-      description: 'Rules-based S&P 500 index alerts and research notes for ETF investors.',
-      publisher: { '@id': PUBLISHER['@id'] },
-      inLanguage: 'en-US',
-    },
-    {
-      '@type': pageType,
-      '@id': `${canonical}#webpage`,
-      url: canonical,
-      name: page.title,
-      description: page.desc,
-      isPartOf: { '@id': `${SITE_URL}/#website` },
-      about: { '@id': PUBLISHER['@id'] },
-      inLanguage: 'en-US',
-      dateModified: TODAY,
-    },
-    {
-      '@type': 'BreadcrumbList',
-      '@id': `${canonical}#breadcrumb`,
-      itemListElement: breadcrumbItems(page),
-    },
-  ];
-
-  if (page.kind === 'home') {
-    graph.push({
-      '@type': 'Service',
-      '@id': `${SITE_URL}/#service`,
-      name: 'DoubleTrends™ S&P 500 Signal',
-      serviceType: 'Rules-based S&P 500 index alert',
-      provider: { '@id': PUBLISHER['@id'] },
-      audience: {
-        '@type': 'Audience',
-        audienceType: 'ETF investors using S&P 500 exposure such as VOO, SPY, or IVV',
-      },
-      description: page.desc,
-      url: SITE_URL,
-    });
-  }
-
-  if (page.kind === 'services') {
-    graph.push({
-      '@type': 'Service',
-      '@id': `${canonical}#service`,
-      name: 'Data & Quant Services',
-      provider: { '@id': PUBLISHER['@id'] },
-      serviceType: 'Data engineering, quantitative research, machine learning, forecasting, and data collection',
-      description: page.desc,
-      url: canonical,
-    });
-  }
-
-  if (isArticle) {
-    graph.push({
-      '@type': 'Article',
-      '@id': `${canonical}#article`,
-      headline: page.title.replace(' | Academy', ''),
-      description: page.desc,
-      mainEntityOfPage: { '@id': `${canonical}#webpage` },
-      author: { '@id': PUBLISHER['@id'] },
-      publisher: { '@id': PUBLISHER['@id'] },
-      image: {
-        '@type': 'ImageObject',
-        url: OG_IMAGE,
-        width: 1200,
-        height: 630,
-      },
-      articleSection: 'Academy',
-      about: [
-        'S&P 500 index',
-        'ETF investing',
-        'market drawdowns',
-        'oversold reversal',
-      ],
-      isAccessibleForFree: true,
-      datePublished: ARTICLE_PUBLISHED,
-      dateModified: TODAY,
-      inLanguage: 'en-US',
-    });
-  }
-
-  return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2)
-    .replace(/</g, '\\u003c');
-}
-
-function breadcrumbItems(page) {
-  const parts = page.src.split('/');
-  const items = [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Home',
-      item: SITE_URL,
-    },
-  ];
-
-  if (parts[0] === 'academy') {
-    items.push({
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Academy',
-      item: `${SITE_URL}/academy/`,
-    });
-    if (page.src !== 'academy/index.html') {
-      items.push({
-        '@type': 'ListItem',
-        position: 3,
-        name: pageDisplayName(page),
-        item: canonicalFor(page.src),
-      });
-    }
-  } else if (page.src !== 'index.html') {
-    items.push({
-      '@type': 'ListItem',
-      position: 2,
-      name: pageDisplayName(page),
-      item: canonicalFor(page.src),
-    });
-  }
-
-  return items;
+  <meta property="article:section" content="${section}" />`;
 }
 
 // ─── Build pages ────────────────────────────────────────────────────────────────
@@ -292,7 +148,14 @@ for (const page of pages) {
     OG_IMAGE_ALT,
     SOCIAL_EXTRA: socialExtraFor(page),
     ROBOTS:    page.robots ?? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
-    JSONLD:    jsonLdFor(page),
+    JSONLD_SCRIPTS: buildJsonLdScripts({
+      page,
+      siteUrl: SITE_URL,
+      publisher: PUBLISHER,
+      ogImage: OG_IMAGE,
+      today: TODAY,
+      defaultArticlePublished: ARTICLE_PUBLISHED,
+    }),
     ...TRACK_RECORD,
   });
 

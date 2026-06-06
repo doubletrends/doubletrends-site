@@ -5,7 +5,7 @@
 <header class="article-hero article-hero-frame">
 <span class="tag-overline">Academy &middot; Stress Lens</span>
 <h1 class="article-title"> Maximum Drawdown </h1>
-<p class="lead"> Drawdown is the simplest honest measure of market stress: how far the index is trading below a recent high. The trick is not measuring depth &mdash; it is reading depth alongside <em>duration</em> and <em>sharpness</em>. The same 10% drop tells three completely different stories depending on whether it took two weeks or six months to get there, and whether the worst leg was concentrated or spread out. </p>
+<p class="lead"> Maximum drawdown measures how far the market has fallen below a recent high. In practice, that number becomes much more useful when you read it alongside <em>duration</em> and <em>sharpness</em>: the same 10% drop means something very different if it took two weeks instead of six months, or if the worst leg was sudden instead of gradual. </p>
 </header>
 
 <!-- What it is -->
@@ -69,6 +69,12 @@
 </div>
 </div>
 <p class="prose-p"> These shapes do not stand alone &mdash; they combine with VIX, Fed funds, unemployment, and CPI to produce the final regime read. Drawdown is the inside view: how stressed price is on its own. The macro anchors are the outside view: whether the rest of the world agrees. The exact thresholds that turn each shape on or off are part of the production rule and are not published. </p>
+<div class="mt-6">
+<div class="flex flex-wrap items-center gap-5">
+<a href="{{ROOT}}academy/vix-percentile.html" class="text-primary hover:underline font-noto text-sm font-semibold">See the volatility input that sits next to drawdown &rarr;</a>
+<a href="{{ROOT}}method.html" class="text-primary hover:underline font-noto text-sm font-semibold">See how drawdown feeds the regime classifier &rarr;</a>
+</div>
+</div>
 <div class="media-frame overflow-hidden mt-6">
 <img src="{{ROOT}}public/academy/mdd-3.png" alt="Drawdown thresholds and the regime classifier" class="w-full" />
 </div>
