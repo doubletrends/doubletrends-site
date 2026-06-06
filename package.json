@@ -20,6 +20,7 @@
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/syne": "^5.2.7",
     "lightweight-charts": "^4.2.3",
+    "live-server": "^1.2.2",
     "opentype.js": "^2.0.0",
     "sharp": "^0.34.5"
   }
