@@ -40,7 +40,7 @@ const FONT_PATH = require.resolve(
 const OUT_DIR = path.join(__dirname, 'public', 'brand');
 
 const COLOR = {
-  dark:  '#1E2530',
+  dark:  '#2A3340',
   light: '#FBFAF7',
   rust:  '#C2410C',
 };
@@ -420,12 +420,12 @@ async function main() {
   const logoDark  = buildLogo(font, { colorMode: 'dark',  fillViewBox: true });
 
   fs.writeFileSync(path.join(OUT_DIR, 'cds-logo.svg'), logoAuto + '\n');
-  console.log('✓ cds-logo.svg');
+  console.log('✓  cds-logo.svg');
 
   await rasterizeSquare(logoLight, path.join(OUT_DIR, 'cds-logo-light.png'), 512);
-  console.log('✓ cds-logo-light.png');
+  console.log('✓  cds-logo-light.png');
   await rasterizeSquare(logoDark,  path.join(OUT_DIR, 'cds-logo-dark.png'),  512);
-  console.log('✓ cds-logo-dark.png');
+  console.log('✓  cds-logo-dark.png');
 
   // ── Wordmark — [CDS] on square canvas ──
   const wordmarkAuto  = buildWordmark(font, { colorMode: 'auto'  });
@@ -433,30 +433,30 @@ async function main() {
   const wordmarkDark  = buildWordmark(font, { colorMode: 'dark'  });
 
   fs.writeFileSync(path.join(OUT_DIR, 'cds-wordmark.svg'), wordmarkAuto + '\n');
-  console.log('✓ cds-wordmark.svg');
+  console.log('✓  cds-wordmark.svg');
 
   await rasterizeSquare(wordmarkLight, path.join(OUT_DIR, 'cds-wordmark-light.png'), 1024);
-  console.log('✓ cds-wordmark-light.png');
+  console.log('✓  cds-wordmark-light.png');
   await rasterizeSquare(wordmarkDark,  path.join(OUT_DIR, 'cds-wordmark-dark.png'),  1024);
-  console.log('✓ cds-wordmark-dark.png');
+  console.log('✓  cds-wordmark-dark.png');
 
   // ── Favicon — small browser-tab PNGs + Stripe brand icon ──
   // Favicons use the natural geometry (small breathing room around brackets) — the
   // logo files are edge-to-edge, but browser tabs read better with a touch of margin.
   const faviconLight = buildLogo(font, { colorMode: 'light' });
   await rasterizeSquare(faviconLight, path.join(OUT_DIR, 'cds-favicon-32.png'),  32);
-  console.log('✓ cds-favicon-32.png');
+  console.log('✓  cds-favicon-32.png');
   await rasterizeSquare(faviconLight, path.join(OUT_DIR, 'cds-favicon-180.png'), 180);
-  console.log('✓ cds-favicon-180.png');
+  console.log('✓  cds-favicon-180.png');
 
   const logoStripe = buildLogo(font, { colorMode: 'light', scale: STRIPE_FAVICON_SCALE });
   await rasterizeSquare(logoStripe, path.join(OUT_DIR, 'cds-favicon-stripe.png'), 512);
-  console.log('✓ cds-favicon-stripe.png');
+  console.log('✓  cds-favicon-stripe.png');
 
   // ── Social ──
   const ogSvg = buildOgImage(font);
   await rasterizeNative(ogSvg, path.join(OUT_DIR, 'og-image.png'));
-  console.log('✓ og-image.png');
+  console.log('✓  og-image.png');
 
   console.log(`\nBrand assets generated in ${path.relative(__dirname, OUT_DIR)}/`);
 }
