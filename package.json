@@ -6,6 +6,7 @@
     "build": "node build.js",
     "brand": "node build-brand.js",
     "replay-data": "node build-replay-data.js",
+    "test:links": "node build.js && node scripts/test-links.js",
     "dev": "node build.js && npx live-server dist --port=8080 --open=index.html",
     "deploy": "node build.js && wrangler deploy"
   },
