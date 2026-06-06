@@ -11,13 +11,7 @@ function canonicalFor(siteUrl, src) {
 }
 
 function pageDisplayName(page) {
-  return page.title
-    .replace(' — S&P 500 Signals for ETF Investors', '')
-    .replace(' | Academy', '')
-    .replace(' | DoubleTrends™', '')
-    .replace(' — DoubleTrends™', '')
-    .replace(' — Research & Education', '')
-    .replace(' — Identity & Construction | CDS', '');
+  return page.title;
 }
 
 function pageTypeFor(kind) {
@@ -146,7 +140,7 @@ function buildSchemaNodes({ page, siteUrl, publisher, ogImage, today, defaultArt
     nodes.push({
       '@type': 'Article',
       '@id': `${canonical}#article`,
-      headline: page.title.replace(' | Academy', ''),
+      headline: page.title,
       description: page.desc,
       mainEntityOfPage: { '@id': `${canonical}#webpage` },
       author: { '@id': publisher['@id'] },
