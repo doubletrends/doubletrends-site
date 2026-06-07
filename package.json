@@ -12,7 +12,7 @@
     "test:metadata": "node build.js && node scripts/test-metadata.js",
     "test:registry": "node scripts/test-page-registry.js",
     "test:schema": "node build.js && node scripts/test-schema.js",
-    "dev": "node build.js && npx live-server dist --port=8080 --open=index.html",
+    "dev": "node build.js && node scripts/dev-server.js",
     "deploy": "node build.js && wrangler deploy"
   },
   "devDependencies": {
@@ -20,7 +20,6 @@
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/syne": "^5.2.7",
     "lightweight-charts": "^4.2.3",
-    "live-server": "^1.2.2",
     "opentype.js": "^2.0.0",
     "sharp": "^0.34.5"
   }
