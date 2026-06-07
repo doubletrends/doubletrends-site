@@ -100,6 +100,7 @@ function main() {
     if (!JSONLD_RE.test(html)) {
       errors.push(`${relFile}: missing JSON-LD script`);
     }
+
   }
 
   if (errors.length) {
