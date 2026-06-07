@@ -12,6 +12,7 @@ const TARGETS = [
 const TEXT_EXTS = new Set(['.md', '.js', '.html']);
 const TRADEMARK_LITERAL = 'DoubleTrends';
 const ALLOWED_SUFFIXES = ['™', '&trade;', '%E2%84%A2'];
+const ENTITY_SUFFIX = ' L.L.C.';
 
 function walk(targetPath) {
   const stat = fs.statSync(targetPath);
@@ -39,7 +40,10 @@ function lineNumberAt(text, index) {
 }
 
 function isAllowedSuffix(text, indexAfterLiteral) {
-  return ALLOWED_SUFFIXES.some((suffix) => text.startsWith(suffix, indexAfterLiteral));
+  return (
+    ALLOWED_SUFFIXES.some((suffix) => text.startsWith(suffix, indexAfterLiteral)) ||
+    text.startsWith(ENTITY_SUFFIX, indexAfterLiteral)
+  );
 }
 
 function main() {

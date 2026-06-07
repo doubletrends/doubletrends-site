@@ -8,9 +8,9 @@ const OG_IMAGE_ALT = 'CDS logo and DoubleTrends™ tagline';
 const PUBLISHER = {
   '@type': 'Organization',
   '@id': `${SITE_URL}/#organization`,
-  name: "DoubleTrends L.L.C",
+  name: "DoubleTrends L.L.C.",
   url: SITE_URL,
-  legalName: "DoubleTrends L.L.C",
+  legalName: "DoubleTrends L.L.C.",
   description: 'Operator of DoubleTrends™, a rules-based S&P 500 index signal and research site for ETF investors.',
   email: 'info@doubletrends.com',
   logo: {

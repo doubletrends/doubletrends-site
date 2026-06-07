@@ -367,7 +367,7 @@ function buildOgImage(font) {
   // Tagline
   const taglineSize = 28;
   const taglineY = 470;
-  const tagline = "DoubleTrends L.L.C · DoubleTrends™";
+  const tagline = "DoubleTrends L.L.C. · DoubleTrends™";
   const tCellW = glyphMetrics(font, 'C', taglineSize).advance;
   const tTotal = tCellW * tagline.length;
   const tStartX = (vbW - tTotal) / 2;

@@ -256,7 +256,7 @@ ${academyArticles}
 ## Entity Summary
 
 - Brand: DoubleTrends™
-- Operator: DoubleTrends L.L.C
+- Operator: DoubleTrends L.L.C.
 - Coverage: S&P 500 index
 - Intended audience: ETF investors using S&P 500 exposure such as VOO, SPY, or IVV
 - Delivery: Telegram alert
