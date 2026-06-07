@@ -206,7 +206,7 @@ This keeps shared partial links working from nested directories without manually
 - `npm run build`
   Build the site into `dist/`.
 - `npm run dev`
-  Build once, then serve `dist/` locally on `http://127.0.0.1:8080` with `live-server`.
+  Build once, then serve `dist/` locally on `http://127.0.0.1:8080` with the repo's built-in Node static server.
 - `npm run deploy`
   Run the site build, then deploy with Wrangler as a manual fallback path.
 
