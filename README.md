@@ -224,7 +224,7 @@ This keeps shared partial links working from nested directories without manually
 - `npm run test:links`
   Build the site and verify internal links, anchors, and unresolved placeholders in built HTML.
 - `npm run test:trademark`
-  Validate `DoubleTrends™` trademark usage across tracked text sources.
+  Validate brand and entity naming across tracked text sources.
 - `npm run test:metadata`
   Build the site and verify metadata completeness and title-prefix rules.
 - `npm run test:registry`
@@ -253,6 +253,14 @@ It also enforces:
 - `<title>`, `og:title`, and `twitter:title` must match
 - all three must start with `DoubleTrends™ | `
 - description, `og:description`, and `twitter:description` must match
+
+### Trademark and entity naming
+
+`test:trademark` enforces one naming rule across tracked source files:
+
+- brand references must use `DoubleTrends™`
+- the legal entity name is allowed only as `DoubleTrends L.L.C.`
+- an unmarked brand-name literal is not allowed unless it is immediately followed by ` L.L.C.`
 
 ### Page registry integrity
 
