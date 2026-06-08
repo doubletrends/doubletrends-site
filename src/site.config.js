@@ -23,6 +23,12 @@ const PUBLISHER = {
     '@type': 'Brand',
     name: 'DoubleTrends™',
   },
+  sameAs: [
+    'https://www.crunchbase.com/organization/doubletrends-l-l-c',
+    'https://wellfound.com/company/doubletrends-llc',
+    'https://www.producthunt.com/products/doubletrends',
+    'https://telegram-bot-list.com/bots/doubletrends-signal-bot',
+  ],
   knowsAbout: [
     'S&P 500 index',
     'ETF investing',
