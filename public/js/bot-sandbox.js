@@ -256,7 +256,7 @@
       `● Email: ${dash(row.email)}\n` +
       `● Stripe Customer: ${row.stripe_customer_id}\n` +
       `● Telegram ID: ${dash(row.telegram_user_id)}\n\n` +
-      '(Include these if contacting info@doubletrends.com.)'
+      '(Include these if contacting support@doubletrends.com.)'
     );
   }
 
