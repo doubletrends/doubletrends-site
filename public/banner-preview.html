@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Banner preview — DoubleTrends</title>
+<style>
+  :root {
+    --cream: #FBFAF7;
+    --dark:  #2A3340;
+    --muted: #5A6473;
+    --rust:  #C2410C;
+    --border: rgba(30, 37, 48, 0.10);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #F4F1EA; color: var(--dark); font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 48px 24px 96px; }
+  h1 { font-size: 28px; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .lead { color: var(--muted); margin: 0 0 32px; font-size: 14px; max-width: 720px; line-height: 1.55; }
+  .card { margin: 0 0 48px; }
+  .label {
+    display: inline-block; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  .title { font-size: 16px; font-weight: 600; margin: 0 0 6px; color: var(--dark); }
+  .desc  { color: var(--muted); font-size: 13px; margin: 0 0 14px; max-width: 880px; line-height: 1.55; }
+  .frame {
+    position: relative;
+    border: 1px solid var(--border);
+    background: #fff;
+    box-shadow: 0 12px 36px rgba(30, 37, 48, 0.06);
+    overflow: hidden;
+  }
+  .frame img { display: block; width: 100%; height: auto; }
+  .avatar-sim {
+    position: absolute;
+    left: 4%;
+    bottom: -4%;
+    width: 13%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: var(--dark);
+    border: 4px solid var(--cream);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cream);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  }
+  .meta { color: var(--muted); font-size: 11px; margin-top: 8px; }
+  .toggle {
+    display: inline-block; margin-bottom: 24px; font-size: 12px; color: var(--muted);
+    cursor: pointer; user-select: none; border: 1px solid var(--border); padding: 6px 10px;
+    background: #fff;
+  }
+  .toggle input { vertical-align: middle; margin-right: 6px; }
+  body.no-avatars .avatar-sim { display: none; }
+  .scale-row { display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap; }
+  .scale-item { flex: 0 0 auto; }
+  .scale-item .frame { width: var(--w); }
+  .scale-item .meta { text-align: left; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Banner — DoubleTrends</h1>
+    <p class="lead">
+      2080×520 (4:1) — oversized source so it can be cropped freely to any platform spec (LinkedIn 1584×396, X 1500×500, etc.).
+      Wordmark + tagline left, rust-bar skyline right, 234px side padding. Background is a two-column NDJSON signal feed at ~8% opacity, edge-to-edge.
+    </p>
+
+    <label class="toggle">
+      <input type="checkbox" id="avatar-toggle" checked />
+      Show avatar overlay simulation (bottom-left circle)
+    </label>
+
+    <div class="card">
+      <span class="label">cds-banner.svg · cds-banner.png</span>
+      <p class="title">Full size — 2080×520</p>
+      <div class="frame">
+        <img src="brand/cds-banner.svg" alt="DoubleTrends banner" />
+        <div class="avatar-sim">DT</div>
+      </div>
+      <div class="meta">brand/cds-banner.svg &middot; brand/cds-banner.png</div>
+    </div>
+
+    <div class="card">
+      <span class="label">og-image.svg · og-image.png</span>
+      <p class="title">Social card — 1200×630</p>
+      <p class="desc">Same visual language: NDJSON background, rust skyline tucked under wordmark + tagline. Standard OG/Twitter card dimensions, not scaled (platforms render at fixed aspect).</p>
+      <div class="frame" style="max-width: 600px;">
+        <img src="brand/og-image.svg" alt="DoubleTrends OG image" />
+      </div>
+      <div class="meta">brand/og-image.svg &middot; brand/og-image.png</div>
+    </div>
+
+    <div class="card">
+      <span class="label">Scale check</span>
+      <p class="title">How it reads at smaller widths</p>
+      <p class="desc">Real social headers display at narrower widths than the source file. These previews show what the texture/wordmark look like at common scales.</p>
+      <div class="scale-row">
+        <div class="scale-item" style="--w: 800px;">
+          <div class="frame"><img src="brand/cds-banner.svg" alt="800px" /></div>
+          <div class="meta">800px wide</div>
+        </div>
+        <div class="scale-item" style="--w: 500px;">
+          <div class="frame"><img src="brand/cds-banner.svg" alt="500px" /></div>
+          <div class="meta">500px wide</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('avatar-toggle').addEventListener('change', (e) => {
+      document.body.classList.toggle('no-avatars', !e.target.checked);
+    });
+  </script>
+</body>
+</html>

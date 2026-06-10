@@ -42,12 +42,12 @@
       </div>
     </div>
 
-    <!-- Favicon · browser + Stripe -->
+    <!-- Favicon · browser-tab PNGs -->
     <div class="terminal-shell p-6 md:p-8 lg:p-10">
       <span class="tag-overline">Favicon</span>
-      <h3 class="text-dark text-xl md:text-2xl font-noto font-bold mt-3 mb-4">Browser-tab and Stripe-specific PNGs</h3>
-      <p class="text-muted text-sm md:text-base leading-relaxed mb-6">Sized variants of the logo for places that can&rsquo;t consume SVG. The Stripe variant is padded to 85% so the bracket corners clear Stripe&rsquo;s circular crop on the checkout brand icon.</p>
-      <div class="grid grid-cols-3 gap-3">
+      <h3 class="text-dark text-xl md:text-2xl font-noto font-bold mt-3 mb-4">Browser-tab PNGs</h3>
+      <p class="text-muted text-sm md:text-base leading-relaxed mb-6">Sized variants of the logo for places that can&rsquo;t consume SVG. Transparent background so the host UI provides the tile.</p>
+      <div class="grid grid-cols-2 gap-3">
         <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex flex-col items-center justify-center gap-3 min-h-[180px]">
           <img src="public/brand/cds-favicon-32.png" alt="" style="width: 64px; height: 64px;" />
           <span class="data-label">32&times;32 &middot; legacy</span>
@@ -55,12 +55,6 @@
         <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex flex-col items-center justify-center gap-3 min-h-[180px]">
           <img src="public/brand/cds-favicon-180.png" alt="" style="width: 96px; height: 96px;" />
           <span class="data-label">180&times;180 &middot; apple-touch</span>
-        </div>
-        <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex flex-col items-center justify-center gap-3 min-h-[180px]">
-          <div style="width: 96px; height: 96px; border-radius: 50%; overflow: hidden; background: #FBFAF7;" class="flex items-center justify-center">
-            <img src="public/brand/cds-favicon-stripe.png" alt="" style="width: 96px; height: 96px;" />
-          </div>
-          <span class="data-label">512&times;512 &middot; stripe (cropped)</span>
         </div>
       </div>
     </div>
@@ -213,14 +207,13 @@ baselineY  = topY + letterTopAbove + K &times; armThickness</code></pre>
           </thead>
           <tbody>
             <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo.svg</td><td class="py-3 pr-6 text-muted">The [ ] mark &middot; auto color via prefers-color-scheme &middot; site header, footer, SVG favicon</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-light.png</td><td class="py-3 pr-6 text-muted">512&times;512 PNG &middot; dark glyphs &middot; for embeds where SVG isn&rsquo;t supported</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-dark.png</td><td class="py-3 pr-6 text-muted">512&times;512 PNG &middot; light glyphs &middot; dark backgrounds</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-light.png</td><td class="py-3 pr-6 text-muted">512&times;512 PNG &middot; dark glyphs on cream brand bg &middot; standalone tile for embeds where SVG isn&rsquo;t supported</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-dark.png</td><td class="py-3 pr-6 text-muted">512&times;512 PNG &middot; light glyphs on navy brand bg &middot; dark-mode standalone tile</td></tr>
             <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-wordmark.svg</td><td class="py-3 pr-6 text-muted">600&times;600 SVG &middot; [CDS] on square canvas &middot; auto color</td></tr>
             <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-wordmark-light.png</td><td class="py-3 pr-6 text-muted">1024&times;1024 PNG &middot; dark glyphs &middot; Google publisher logo (JSON-LD)</td></tr>
             <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-wordmark-dark.png</td><td class="py-3 pr-6 text-muted">1024&times;1024 PNG &middot; light glyphs &middot; dark backgrounds, Telegram avatar</td></tr>
             <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-favicon-32.png</td><td class="py-3 pr-6 text-muted">32&times;32 PNG &middot; legacy browser favicon</td></tr>
             <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-favicon-180.png</td><td class="py-3 pr-6 text-muted">180&times;180 PNG &middot; Apple touch icon</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-favicon-stripe.png</td><td class="py-3 pr-6 text-muted">512&times;512 PNG &middot; padded 85% &middot; Stripe checkout brand icon (circular crop)</td></tr>
             <tr><td class="font-mono py-3 pr-6 text-dark">og-image.png</td><td class="py-3 pr-6 text-muted">1200&times;630 social card &middot; OG and Twitter preview</td></tr>
           </tbody>
         </table>
