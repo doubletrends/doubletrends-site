@@ -47,6 +47,10 @@ const COLOR = {
 
 const BAR_HEIGHT = 4;   // viewBox units
 const BAR_LIFT   = 4;   // bar top sits BAR_LIFT above baseline; bar bottom = baseline
+const WORDMARK_TEXT = 'DoubleTrends';
+const WORDMARK_ACCENT_TEXT = 'Double';
+const OG_TAGLINE = 'DoubleTrends L.L.C. · Market Intelligence';
+const WORDMARK_BAR_WIDTH_RATIO = 0.36;
 
 // Uniform shrink for the Stripe checkout brand icon variant only, so bracket
 // corners clear Stripe's circular crop. 0.85 → 7.5% padding per side.
@@ -175,7 +179,24 @@ function styleBlock({ colorMode }) {
   return `<style>.g{fill:${fill}}</style>`;
 }
 
-// ─── Wordmark — [CDS] + rust bar ──────────────────────────────────────────
+function textAdvance(font, text, fontSize) {
+  let width = 0;
+  for (const ch of text) width += glyphMetrics(font, ch, fontSize).advance;
+  return width;
+}
+
+function textPathData(font, text, startX, baselineY, fontSize) {
+  const parts = [];
+  let x = startX;
+  for (const ch of text) {
+    const met = glyphMetrics(font, ch, fontSize);
+    parts.push(pathDataAt(met.glyph, x, baselineY, fontSize));
+    x += met.advance;
+  }
+  return parts.join(' ');
+}
+
+// ─── Wordmark — bracketed DoubleTrends + rust bar ──────────────────────────
 
 // Build the logo's path/bar/transform pieces for an arbitrary canvas + baseline.
 // Bar height is sized to BAR_HEIGHT at fontSize 26 (the logo base size).
@@ -237,9 +258,78 @@ function logoPieces(font, fontSize, baselineY, vbW) {
   };
 }
 
+function framedWordmarkPieces(font, text, fontSize, baselineY, vbW, {
+} = {}) {
+  const textW = textAdvance(font, text, fontSize);
+  const lMet = glyphMetrics(font, '[', fontSize);
+  const rMet = glyphMetrics(font, ']', fontSize);
+  const totalW = lMet.advance + textW + rMet.advance;
+  const startX = (vbW - totalW) / 2;
+
+  const lX = startX;
+  const textX = lX + lMet.advance;
+  const rX = textX + textW;
+
+  const textPath = textPathData(font, text, textX, baselineY, fontSize);
+  const accentText = text.slice(0, WORDMARK_ACCENT_TEXT.length);
+  const accentPath = textPathData(font, accentText, textX, baselineY, fontSize);
+  const accentWidth = textAdvance(font, accentText, fontSize);
+  const baseText = text.slice(WORDMARK_ACCENT_TEXT.length);
+  const basePath = textPathData(font, baseText, textX + accentWidth, baselineY, fontSize);
+  const lPath = pathDataAt(lMet.glyph, lX, baselineY, fontSize);
+  const rPath = pathDataAt(rMet.glyph, rX, baselineY, fontSize);
+
+  const lastChar = text[text.length - 1];
+  const prefixText = text.slice(0, -1);
+  const lastMet = glyphMetrics(font, lastChar, fontSize);
+  const lastX = textX + textAdvance(font, prefixText, fontSize);
+  const lastRight = lastX + lastMet.x2;
+  const rLeft = rX + rMet.x1;
+  const gapMid = (lastRight + rLeft) / 2;
+  const barX = lastX + (lastMet.advance / 2);
+  const barW = gapMid - barX;
+  const barH = fontSize * (BAR_HEIGHT / 26);
+  const letters = letterRange(font, fontSize, baselineY);
+  const barY = letters.bottom - barH;
+
+  const { K, ty, transform } = bracketScale(font, fontSize, baselineY);
+  const geom = extractBracketGeometry(font, '[', fontSize);
+  const bracketOuterTop = K * (baselineY + geom.outerTop) + ty;
+  const bracketOuterBottom = K * (baselineY + geom.outerBottom) + ty;
+
+  return {
+    textPath,
+    accentPath,
+    basePath,
+    lPath,
+    rPath,
+    bracketTransform: transform,
+    bar: { x: barX, y: barY, w: barW, h: barH },
+    bounds: {
+      left: Math.min(lX + lMet.x1, textX, rX + rMet.x1, barX),
+      top: Math.min(letters.top, bracketOuterTop, barY),
+      right: Math.max(textX + textW, rX + rMet.x2, barX + barW),
+      bottom: Math.max(letters.bottom, bracketOuterBottom, barY + barH),
+    },
+  };
+}
+
+function primaryWordmarkPieces(font, fontSize, baselineY, vbW) {
+  return framedWordmarkPieces(font, WORDMARK_TEXT, fontSize, baselineY, vbW);
+}
+
+function fitPrimaryWordmarkFontSize(font, initialFontSize, vbW, paddingX) {
+  const baselineY = 0;
+  const initialPieces = primaryWordmarkPieces(font, initialFontSize, baselineY, vbW);
+  const initialWidth = initialPieces.bounds.right - initialPieces.bounds.left;
+  const targetWidth = vbW - paddingX * 2;
+  if (initialWidth <= targetWidth) return initialFontSize;
+  return initialFontSize * (targetWidth / initialWidth);
+}
+
 function wordmarkSvg({ vbW, vbH, pieces, colorMode }) {
-  const { cdsPaths, lPath, rPath, bracketTransform, bar } = pieces;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="CDS">${styleBlock({ colorMode })}<g class="g"><path d="${cdsPaths.join(' ')}"/><g transform="${bracketTransform}"><path d="${lPath} ${rPath}"/></g></g><rect x="${bar.x.toFixed(3)}" y="${bar.y.toFixed(3)}" width="${bar.w.toFixed(3)}" height="${bar.h.toFixed(3)}" fill="${COLOR.rust}"/></svg>`;
+  const { accentPath, basePath, lPath, rPath, bracketTransform, bar } = pieces;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="${WORDMARK_TEXT}">${styleBlock({ colorMode })}<path d="${accentPath}" fill="${COLOR.rust}"/><g class="g"><path d="${basePath}"/><g transform="${bracketTransform}"><path d="${lPath} ${rPath}"/></g></g><rect x="${bar.x.toFixed(3)}" y="${bar.y.toFixed(3)}" width="${bar.w.toFixed(3)}" height="${bar.h.toFixed(3)}" fill="${COLOR.rust}"/></svg>`;
 }
 
 // Compute baselineY so the *full* wordmark height (letter visual top → letter
@@ -262,9 +352,9 @@ function centeredBaseline(font, fontSize, vbH) {
 // (Telegram channel, app icon, profile picture, etc.).
 function buildWordmark(font, { colorMode } = { colorMode: 'auto' }) {
   const vbSize   = 600;
-  const fontSize = 160;
+  const fontSize = fitPrimaryWordmarkFontSize(font, 74, vbSize, 28);
   const baselineY = centeredBaseline(font, fontSize, vbSize);
-  const pieces = logoPieces(font, fontSize, baselineY, vbSize);
+  const pieces = primaryWordmarkPieces(font, fontSize, baselineY, vbSize);
   return wordmarkSvg({ vbW: vbSize, vbH: vbSize, pieces, colorMode });
 }
 
@@ -311,15 +401,21 @@ function buildLogo(font, { colorMode, scale = 1, fillViewBox = false } = { color
   const geom = extractBracketGeometry(font, '[', fontSize);
   const xMin = leftX + lMet.x1;
   const xMax = rightX + rMet.x2;
-  const yMin = K * (baselineY + geom.outerTop) + ty;
-  const yMax = K * (baselineY + geom.outerBottom) + ty;
+  const bracketTop = K * (baselineY + geom.outerTop) + ty;
+  const bracketBottom = K * (baselineY + geom.outerBottom) + ty;
+  const yMin = Math.min(bracketTop, barY);
+  const yMax = Math.max(bracketBottom, barY + BAR_HEIGHT);
+  const artworkCx = (xMin + xMax) / 2;
+  const artworkCy = (yMin + yMax) / 2;
+  const dx = (vbW / 2) - artworkCx;
+  const dy = (vbH / 2) - artworkCy;
   const fillScale = fillViewBox
     ? Math.min(vbW / (xMax - xMin), vbH / (yMax - yMin))
     : 1;
   const finalScale = scale * fillScale;
 
   const cx = vbW / 2, cy = vbH / 2;
-  const inner = `<g class="g" transform="${transform}"><path d="${leftPath} ${rightPath}"/></g><rect x="${barX.toFixed(3)}" y="${barY.toFixed(3)}" width="${barW.toFixed(3)}" height="${BAR_HEIGHT}" fill="${COLOR.rust}"/>`;
+  const inner = `<g transform="translate(${dx.toFixed(3)} ${dy.toFixed(3)})"><g class="g" transform="${transform}"><path d="${leftPath} ${rightPath}"/></g><rect x="${barX.toFixed(3)}" y="${barY.toFixed(3)}" width="${barW.toFixed(3)}" height="${BAR_HEIGHT}" fill="${COLOR.rust}"/></g>`;
   const body = finalScale === 1
     ? inner
     : `<g transform="translate(${cx} ${cy}) scale(${finalScale.toFixed(5)}) translate(${-cx} ${-cy})">${inner}</g>`;
@@ -329,61 +425,26 @@ function buildLogo(font, { colorMode, scale = 1, fillViewBox = false } = { color
 // ─── OG image — 1200×630 with centered logo + tagline ─────────────────────
 function buildOgImage(font) {
   const vbW = 1200, vbH = 630;
-  const fontSize = 180;
-  const baselineY = 340;
-
-  const cellW  = glyphMetrics(font, '[', fontSize).advance;
-  const totalW = cellW * 5;
-  const startX = (vbW - totalW) / 2;
-
-  // CDS letter paths (no scaling)
-  const cdsPaths = ['C', 'D', 'S'].map((ch, i) => {
-    const x = startX + (i + 1) * cellW;
-    return pathDataAt(font.charToGlyph(ch), x, baselineY, fontSize);
-  });
-
-  // Bracket paths (wrapped in scale transform below)
-  const lX = startX + 0 * cellW;
-  const rX = startX + 4 * cellW;
-  const lPath = pathDataAt(font.charToGlyph('['), lX, baselineY, fontSize);
-  const rPath = pathDataAt(font.charToGlyph(']'), rX, baselineY, fontSize);
-
-  // Bar
-  const sCellX = startX + 3 * cellW;
-  const bCellX = startX + 4 * cellW;
-  const sMet   = glyphMetrics(font, 'S', fontSize);
-  const bMet   = glyphMetrics(font, ']', fontSize);
-  const sRight = sCellX + sMet.x2;
-  const bLeft  = bCellX + bMet.x1;
-  const gapMid = (sRight + bLeft) / 2;
-  const barX   = sCellX + cellW / 2;
-  const barW   = gapMid - barX;
-  const barH   = fontSize * (BAR_HEIGHT / 26);
-  const letters = letterRange(font, fontSize, baselineY);
-  const barY   = letters.bottom - barH;
-
-  const { transform } = bracketScale(font, fontSize, baselineY);
+  const fontSize = 118;
+  const baselineY = 286;
+  const pieces = primaryWordmarkPieces(font, fontSize, baselineY, vbW);
 
   // Tagline
   const taglineSize = 28;
   const taglineY = 470;
-  const tagline = "DoubleTrends L.L.C. · DoubleTrends™";
-  const tCellW = glyphMetrics(font, 'C', taglineSize).advance;
-  const tTotal = tCellW * tagline.length;
+  const tTotal = textAdvance(font, OG_TAGLINE, taglineSize);
   const tStartX = (vbW - tTotal) / 2;
-  const tPaths = [...tagline].map((ch, i) => {
-    const x = tStartX + i * tCellW;
-    return pathDataAt(font.charToGlyph(ch === ' ' ? ' ' : ch), x, taglineY, taglineSize);
-  });
+  const tPath = textPathData(font, OG_TAGLINE, tStartX, taglineY, taglineSize);
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="CDS — DoubleTrends™">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vbW} ${vbH}" role="img" aria-label="${WORDMARK_TEXT} — ${OG_TAGLINE}">
   <rect width="${vbW}" height="${vbH}" fill="${COLOR.light}"/>
   <g fill="${COLOR.dark}">
-    <path d="${cdsPaths.join(' ')}"/>
-    <g transform="${transform}"><path d="${lPath} ${rPath}"/></g>
+    <path d="${pieces.accentPath}" fill="${COLOR.rust}"/>
+    <path d="${pieces.basePath}"/>
+    <g transform="${pieces.bracketTransform}"><path d="${pieces.lPath} ${pieces.rPath}"/></g>
   </g>
-  <rect x="${barX.toFixed(3)}" y="${barY.toFixed(3)}" width="${barW.toFixed(3)}" height="${barH.toFixed(3)}" fill="${COLOR.rust}"/>
-  <path d="${tPaths.join(' ')}" fill="${COLOR.dark}" opacity="0.55"/>
+  <rect x="${pieces.bar.x.toFixed(3)}" y="${pieces.bar.y.toFixed(3)}" width="${pieces.bar.w.toFixed(3)}" height="${pieces.bar.h.toFixed(3)}" fill="${COLOR.rust}"/>
+  <path d="${tPath}" fill="${COLOR.dark}" opacity="0.55"/>
 </svg>`;
 }
 
@@ -427,7 +488,7 @@ async function main() {
   await rasterizeSquare(logoDark,  path.join(OUT_DIR, 'cds-logo-dark.png'),  512);
   console.log('✓  cds-logo-dark.png');
 
-  // ── Wordmark — [CDS] on square canvas ──
+  // ── Wordmark — bracketed DoubleTrends on square canvas ──
   const wordmarkAuto  = buildWordmark(font, { colorMode: 'auto'  });
   const wordmarkLight = buildWordmark(font, { colorMode: 'light' });
   const wordmarkDark  = buildWordmark(font, { colorMode: 'dark'  });
@@ -458,7 +519,7 @@ async function main() {
   await rasterizeNative(ogSvg, path.join(OUT_DIR, 'og-image.png'));
   console.log('✓  og-image.png');
 
-  console.log(`\nBrand assets generated in ${path.relative(__dirname, OUT_DIR)}/`);
+  console.log(`\nBrand assets refreshed in ${path.relative(__dirname, OUT_DIR)}/`);
 }
 
 main().catch((err) => {
