@@ -39,7 +39,7 @@ This repo builds the marketing site, academy pages, brand page, replay chart, hi
 - `build.js`
   Main site build. Assembles partials, injects config/placeholders, writes `dist/`, and generates `sitemap.xml` and `llms.txt`.
 - `build-brand.js`
-  Regenerates the CDS logo, wordmark, favicons, and OG image into `public/brand/`.
+  Regenerates the DoubleTrends™ logo, wordmark, favicons, banner, and OG image into `public/brand/`.
 - `build-replay-data.js`
   Rebuilds `public/replay/*.json` from backend artifacts and existing replay data.
 - `src/site.config.js`
