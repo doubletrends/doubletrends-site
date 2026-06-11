@@ -9,7 +9,7 @@ const TARGETS = [
 ];
 const TEXT_EXTS = new Set(['.md', '.js', '.html']);
 const TRADEMARK_LITERAL = 'DoubleTrends';
-const ALLOWED_SUFFIXES = ['™', '&trade;', '%E2%84%A2'];
+const ALLOWED_SUFFIXES = ['™', '&trade;', '%E2%84%A2', ']'];
 const ENTITY_SUFFIX = ' L.L.C.';
 
 function walk(targetPath) {
