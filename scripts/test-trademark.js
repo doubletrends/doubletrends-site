@@ -4,9 +4,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const TARGETS = [
   'README.md',
-  'build.js',
-  'build-brand.js',
-  'src',
+  'dist',
   path.join('public', 'js'),
 ];
 const TEXT_EXTS = new Set(['.md', '.js', '.html']);
