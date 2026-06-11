@@ -175,7 +175,7 @@ function styleBlock({ colorMode }) {
   return `<style>.g{fill:${fill}}</style>`;
 }
 
-// ─── Wordmark — bracketed DoubleTrends™ + rust bar ───────────────────────────
+// ─── Wordmark — bracketed DoubleTrends + rust bar ────────────────────────────
 
 function framedWordmarkPieces(font, text, fontSize, baselineY, vbW) {
   const textW = textAdvance(font, text, fontSize);

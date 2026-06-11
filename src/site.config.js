@@ -17,7 +17,7 @@ const PUBLISHER = {
     '@type': 'ImageObject',
     url: `${SITE_URL}/public/brand/wordmark-light.png`,
     width: 1024,
-    height: 1024,
+    height: 127,
   },
   brand: {
     '@type': 'Brand',
