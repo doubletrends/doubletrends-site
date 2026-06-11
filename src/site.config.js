@@ -3,7 +3,7 @@ const SUBSCRIBE_URL = 'https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c';
 // Cloudflare Worker base URL (no trailing slash).
 const WORKER_URL = 'https://api.doubletrends.com';
 const OG_IMAGE = `${SITE_URL}/public/brand/og-image.png`;
-const OG_IMAGE_ALT = 'CDS logo and DoubleTrends™ tagline';
+const OG_IMAGE_ALT = 'DoubleTrends™ wordmark and tagline';
 
 const PUBLISHER = {
   '@type': 'Organization',
@@ -15,7 +15,7 @@ const PUBLISHER = {
   email: 'info@doubletrends.com',
   logo: {
     '@type': 'ImageObject',
-    url: `${SITE_URL}/public/brand/cds-wordmark-light.png`,
+    url: `${SITE_URL}/public/brand/wordmark-light.png`,
     width: 1024,
     height: 1024,
   },
@@ -174,8 +174,8 @@ const pages = [
   }),
   page('brand.html', {
     priority: 0.3,
-    title: 'Brand — Identity & Construction | CDS',
-    desc:  'How the CDS logo and favicon are constructed: four geometric constraints that lock the rust bar to S, a bracket scale that aligns the inner cavity with the letter range, color palette, typography, and asset inventory.',
+    title: 'Brand — Identity & Construction | DoubleTrends™',
+    desc:  'How the DoubleTrends™ logo and favicon are constructed: four geometric constraints that lock the rust bar to S, a bracket scale that aligns the inner cavity with the letter range, color palette, typography, and asset inventory.',
   }),
 
   // ── legal ────────────────────────────────────────────────────────────────

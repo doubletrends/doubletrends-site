@@ -6,7 +6,7 @@
     <span class="tag-overline mb-3">Brand · Standards · v1</span>
     <h1 class="text-[2.75em] font-noto font-bold text-center text-grad-section leading-tight">Identity &amp; Construction</h1>
     <p class="text-muted text-2xl font-noto text-center mt-2 leading-snug">
-      The CDS mark is generated, not drawn. Every asset comes from <code class="font-mono text-lg" style="background:#FBFAF7; padding:1px 8px;">build-brand.js</code> &mdash; JetBrains Mono Bold for the letterforms, four locked geometric rules for the rust bar, paths for everything else.
+      The DoubleTrends mark is generated, not drawn. Every asset comes from <code class="font-mono text-lg" style="background:#FBFAF7; padding:1px 8px;">build-brand.js</code> &mdash; JetBrains Mono Bold for the letterforms, four locked geometric rules for the rust bar, paths for everything else.
     </p>
   </div>
 
@@ -18,26 +18,26 @@
       <h3 class="text-dark text-xl md:text-2xl font-noto font-bold mt-3 mb-4">The mark &mdash; [ ] with rust bar, no letters</h3>
       <p class="text-muted text-sm md:text-base leading-relaxed mb-6">The primary brand identity, edge-to-edge in a 32&times;32 viewBox. Used in the site header and footer, as the browser favicon, and anywhere the wordmark would be too wide. The rust bar sits at the position S would occupy.</p>
       <div class="grid md:grid-cols-2 gap-3">
-        <div class="border border-[rgba(30,37,48,0.1)] bg-light px-12 py-12 flex items-center justify-center min-h-[200px]">
-          <img src="public/brand/cds-logo.svg" alt="CDS logo · light" style="width: 160px; height: 160px;" />
+        <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex items-center justify-center min-h-[200px]">
+          <img src="public/brand/logo-light.png" alt="DoubleTrends logo · light tile" style="width: 160px; height: 160px;" />
         </div>
-        <div class="border border-[rgba(30,37,48,0.1)] bg-dark px-12 py-12 flex items-center justify-center min-h-[200px]">
-          <img src="public/brand/cds-logo-dark.png" alt="CDS logo · dark" style="width: 160px; height: 160px;" />
+        <div class="border border-[rgba(30,37,48,0.1)] bg-dark p-6 flex items-center justify-center min-h-[200px]">
+          <img src="public/brand/logo-dark.png" alt="DoubleTrends logo · dark tile" style="width: 160px; height: 160px;" />
         </div>
       </div>
     </div>
 
-    <!-- Wordmark · [CDS] -->
+    <!-- Wordmark · [DoubleTrends] -->
     <div class="terminal-shell p-6 md:p-8 lg:p-10">
       <span class="tag-overline">Wordmark</span>
-      <h3 class="text-dark text-xl md:text-2xl font-noto font-bold mt-3 mb-4">[CDS] on a square canvas</h3>
-      <p class="text-muted text-sm md:text-base leading-relaxed mb-6">The textual mark, vertically centered in a 600&times;600 viewBox so it can be cropped to any aspect ratio without re-aligning. Used for profile pictures, app icons, Telegram channel avatars, and Google&rsquo;s publisher logo in structured data.</p>
-      <div class="grid md:grid-cols-2 gap-3">
-        <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex items-center justify-center">
-          <img src="public/brand/cds-wordmark.svg" alt="CDS wordmark · light" style="width: 240px; height: 240px;" />
+      <h3 class="text-dark text-xl md:text-2xl font-noto font-bold mt-3 mb-4">[DoubleTrends] &mdash; content-sized canvas</h3>
+      <p class="text-muted text-sm md:text-base leading-relaxed mb-6">The textual mark. The viewBox is sized exactly to the content bounding box &mdash; no padding, no empty space. Used for profile pictures, Telegram channel avatars, and Google&rsquo;s publisher logo in structured data.</p>
+      <div class="flex flex-col gap-3">
+        <div class="border border-[rgba(30,37,48,0.1)] bg-light px-10 py-8 flex items-center justify-center">
+          <img src="public/brand/wordmark.svg" alt="DoubleTrends wordmark · light" style="width: 100%; max-width: 480px; height: auto;" />
         </div>
-        <div class="border border-[rgba(30,37,48,0.1)] bg-dark p-6 flex items-center justify-center">
-          <img src="public/brand/cds-wordmark-dark.png" alt="CDS wordmark · dark" style="width: 240px; height: 240px;" />
+        <div class="border border-[rgba(30,37,48,0.1)] bg-dark px-10 py-8 flex items-center justify-center">
+          <img src="public/brand/wordmark-dark.png" alt="DoubleTrends wordmark · dark" style="width: 100%; max-width: 480px; height: auto;" />
         </div>
       </div>
     </div>
@@ -49,12 +49,33 @@
       <p class="text-muted text-sm md:text-base leading-relaxed mb-6">Sized variants of the logo for places that can&rsquo;t consume SVG. Transparent background so the host UI provides the tile.</p>
       <div class="grid grid-cols-2 gap-3">
         <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex flex-col items-center justify-center gap-3 min-h-[180px]">
-          <img src="public/brand/cds-favicon-32.png" alt="" style="width: 64px; height: 64px;" />
+          <img src="public/brand/favicon-32.png" alt="" style="width: 64px; height: 64px;" />
           <span class="data-label">32&times;32 &middot; legacy</span>
         </div>
         <div class="border border-[rgba(30,37,48,0.1)] bg-light p-6 flex flex-col items-center justify-center gap-3 min-h-[180px]">
-          <img src="public/brand/cds-favicon-180.png" alt="" style="width: 96px; height: 96px;" />
+          <img src="public/brand/favicon-180.png" alt="" style="width: 96px; height: 96px;" />
           <span class="data-label">180&times;180 &middot; apple-touch</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social assets · OG image + banner -->
+    <div class="terminal-shell p-6 md:p-8 lg:p-10">
+      <span class="tag-overline">Social</span>
+      <h3 class="text-dark text-xl md:text-2xl font-noto font-bold mt-3 mb-4">OG image &amp; banner</h3>
+      <p class="text-muted text-sm md:text-base leading-relaxed mb-6">Both assets place the wordmark in a larger canvas with a faint NDJSON signal feed and a rust-bar skyline. The banner is oversized (2080&times;520) so it crops freely to any platform spec &mdash; LinkedIn 1584&times;396, X 1500&times;500, etc.</p>
+      <div class="flex flex-col gap-6">
+        <div>
+          <span class="data-label">og-image &middot; 1200&times;630 &middot; OG / Twitter card</span>
+          <div class="border border-[rgba(30,37,48,0.1)] mt-2 overflow-hidden">
+            <img src="public/brand/og-image.svg" alt="DoubleTrends OG image" style="width: 100%; height: auto; display: block;" />
+          </div>
+        </div>
+        <div>
+          <span class="data-label">banner &middot; 2080&times;520 &middot; wide social header (4:1)</span>
+          <div class="border border-[rgba(30,37,48,0.1)] mt-2 overflow-hidden">
+            <img src="public/brand/banner.svg" alt="DoubleTrends banner" style="width: 100%; height: auto; display: block;" />
+          </div>
         </div>
       </div>
     </div>
@@ -118,20 +139,6 @@
       <p class="text-muted text-sm md:text-base leading-relaxed">
         Side effect: arms scale with K too, so the brackets read slightly heavier than the unscaled font glyphs. Acceptable trade &mdash; alignment beats stroke purity.
       </p>
-    </div>
-
-    <!-- Construction · vertical centering -->
-    <div class="terminal-shell p-6 md:p-8 lg:p-10">
-      <span class="tag-overline">Construction · Vertical centering</span>
-      <h3 class="text-dark text-xl md:text-2xl font-noto font-bold mt-3 mb-4">The baseline isn&rsquo;t the visual center</h3>
-      <p class="text-muted text-sm md:text-base leading-relaxed mb-4">
-        Because cap height + S overshoot top occupies ~95% of the letter range and S overshoot bottom only ~5%, the wordmark&rsquo;s visual center sits below the typographic baseline. Naively setting <code class="font-mono text-xs" style="background:#FBFAF7; padding:1px 6px;">baselineY&nbsp;=&nbsp;vbH&nbsp;/&nbsp;2</code> produces a wordmark that looks shifted upward.
-      </p>
-      <p class="text-muted text-sm md:text-base leading-relaxed mb-4">The correct baseline:</p>
-      <pre class="code-block mb-2"><code>fullHeight = letterHeight + 2 &times; K &times; armThickness
-topY       = (vbH &minus; fullHeight) / 2
-baselineY  = topY + letterTopAbove + K &times; armThickness</code></pre>
-      <p class="fine-print">Where <code class="font-mono text-[0.7rem]" style="background:#FBFAF7; padding:1px 5px;">letterHeight</code> is S&rsquo;s visual top-to-bottom range and <code class="font-mono text-[0.7rem]" style="background:#FBFAF7; padding:1px 5px;">armThickness</code> is the bracket&rsquo;s pre-scale horizontal-arm thickness, both at the chosen fontSize.</p>
     </div>
 
     <!-- Color -->
@@ -206,15 +213,18 @@ baselineY  = topY + letterTopAbove + K &times; armThickness</code></pre>
             </tr>
           </thead>
           <tbody>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo.svg</td><td class="py-3 pr-6 text-muted">The [ ] mark &middot; auto color via prefers-color-scheme &middot; site header, footer, SVG favicon</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-light.png</td><td class="py-3 pr-6 text-muted">512&times;512 PNG &middot; dark glyphs on cream brand bg &middot; standalone tile for embeds where SVG isn&rsquo;t supported</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-logo-dark.png</td><td class="py-3 pr-6 text-muted">512&times;512 PNG &middot; light glyphs on navy brand bg &middot; dark-mode standalone tile</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-wordmark.svg</td><td class="py-3 pr-6 text-muted">600&times;600 SVG &middot; [CDS] on square canvas &middot; auto color</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-wordmark-light.png</td><td class="py-3 pr-6 text-muted">1024&times;1024 PNG &middot; dark glyphs &middot; Google publisher logo (JSON-LD)</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-wordmark-dark.png</td><td class="py-3 pr-6 text-muted">1024&times;1024 PNG &middot; light glyphs &middot; dark backgrounds, Telegram avatar</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-favicon-32.png</td><td class="py-3 pr-6 text-muted">32&times;32 PNG &middot; legacy browser favicon</td></tr>
-            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">cds-favicon-180.png</td><td class="py-3 pr-6 text-muted">180&times;180 PNG &middot; Apple touch icon</td></tr>
-            <tr><td class="font-mono py-3 pr-6 text-dark">og-image.png</td><td class="py-3 pr-6 text-muted">1200&times;630 social card &middot; OG and Twitter preview</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">logo.svg</td><td class="py-3 pr-6 text-muted">The [ ] mark &middot; auto color via prefers-color-scheme &middot; site header, footer, SVG favicon</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">logo-light.png</td><td class="py-3 pr-6 text-muted">512&times;512 PNG &middot; dark glyphs on cream brand bg &middot; standalone tile for embeds where SVG isn&rsquo;t supported</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">logo-dark.png</td><td class="py-3 pr-6 text-muted">512&times;512 PNG &middot; light glyphs on navy brand bg &middot; dark-mode standalone tile</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">wordmark.svg</td><td class="py-3 pr-6 text-muted">Content-sized SVG &middot; [DoubleTrends] &middot; auto color &middot; no padding</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">wordmark-light.png</td><td class="py-3 pr-6 text-muted">1024px wide PNG &middot; dark glyphs &middot; Google publisher logo (JSON-LD)</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">wordmark-dark.png</td><td class="py-3 pr-6 text-muted">1024px wide PNG &middot; light glyphs &middot; dark backgrounds, Telegram avatar</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">favicon-32.png</td><td class="py-3 pr-6 text-muted">32&times;32 PNG &middot; legacy browser favicon</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">favicon-180.png</td><td class="py-3 pr-6 text-muted">180&times;180 PNG &middot; Apple touch icon</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">og-image.svg</td><td class="py-3 pr-6 text-muted">1200&times;630 SVG &middot; OG / Twitter card &middot; light bg</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">og-image.png</td><td class="py-3 pr-6 text-muted">1200&times;630 PNG &middot; rasterized social card</td></tr>
+            <tr class="border-b border-[rgba(30,37,48,0.06)]"><td class="font-mono py-3 pr-6 text-dark">banner.svg</td><td class="py-3 pr-6 text-muted">2080&times;520 SVG &middot; wide social header (4:1) &middot; light bg</td></tr>
+            <tr><td class="font-mono py-3 pr-6 text-dark">banner.png</td><td class="py-3 pr-6 text-muted">2080&times;520 PNG &middot; rasterized banner</td></tr>
           </tbody>
         </table>
       </div>
