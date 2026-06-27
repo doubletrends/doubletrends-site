@@ -15,6 +15,7 @@ function pageDisplayName(page) {
 }
 
 function pageTypeFor(kind) {
+  if (kind === 'about') return 'AboutPage';
   if (kind === 'contact') return 'ContactPage';
   if (kind === 'collection') return 'CollectionPage';
   return 'WebPage';
@@ -73,22 +74,71 @@ function breadcrumbItems(page, siteUrl) {
   return items;
 }
 
+function isoDate(date) {
+  return `${date}T00:00:00+08:00`;
+}
+
+function shouldEmitJsonLd(page) {
+  return !(page.robots && page.robots.includes('noindex'));
+}
+
+function shouldIncludeOrganization(page) {
+  return page.kind === 'home' || page.kind === 'about';
+}
+
+function shouldIncludeWebSite(page) {
+  return page.kind === 'home';
+}
+
+function organizationNode(publisher) {
+  return {
+    '@type': 'Organization',
+    '@id': publisher['@id'],
+    name: publisher.name,
+    url: publisher.url,
+    legalName: publisher.legalName,
+    description: publisher.description,
+    email: publisher.email,
+    logo: publisher.logo,
+    brand: publisher.brand,
+    sameAs: publisher.sameAs,
+    knowsAbout: publisher.knowsAbout,
+  };
+}
+
+function organizationReference(publisher) {
+  return {
+    '@type': 'Organization',
+    '@id': publisher['@id'],
+    name: publisher.name,
+    url: publisher.url,
+    logo: publisher.logo,
+  };
+}
+
 function buildSchemaNodes({ page, siteUrl, publisher, ogImage, today, defaultArticlePublished }) {
+  if (!shouldEmitJsonLd(page)) return [];
+
   const canonical = canonicalFor(siteUrl, page.src);
   const schema = page.schema || {};
   const nodes = [];
+  const publisherRef = organizationReference(publisher);
 
-  nodes.push(publisher);
+  if (shouldIncludeOrganization(page)) {
+    nodes.push(organizationNode(publisher));
+  }
 
-  nodes.push({
-    '@type': 'WebSite',
-    '@id': `${siteUrl}/#website`,
-    url: siteUrl,
-    name: 'DoubleTrends™',
-    description: 'Rules-based S&P 500 index alerts and research notes for ETF investors.',
-    publisher: { '@id': publisher['@id'] },
-    inLanguage: 'en-US',
-  });
+  if (shouldIncludeWebSite(page)) {
+    nodes.push({
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: siteUrl,
+      name: 'DoubleTrends™',
+      description: 'Rules-based S&P 500 index alerts and research notes for ETF investors.',
+      publisher: { '@id': publisher['@id'] },
+      inLanguage: 'en-US',
+    });
+  }
 
   nodes.push({
     '@type': pageTypeFor(page.kind),
@@ -96,31 +146,18 @@ function buildSchemaNodes({ page, siteUrl, publisher, ogImage, today, defaultArt
     url: canonical,
     name: page.title,
     description: page.desc,
-    isPartOf: { '@id': `${siteUrl}/#website` },
-    about: { '@id': publisher['@id'] },
+    ...(shouldIncludeWebSite(page) ? { isPartOf: { '@id': `${siteUrl}/#website` } } : {}),
+    about: publisherRef,
     inLanguage: 'en-US',
-    dateModified: schema.dateModified || today,
+    dateModified: isoDate(schema.dateModified || today),
   });
 
-  nodes.push({
-    '@type': 'BreadcrumbList',
-    '@id': `${canonical}#breadcrumb`,
-    itemListElement: breadcrumbItems(page, siteUrl),
-  });
-
-  if (page.kind === 'home') {
+  const crumbs = breadcrumbItems(page, siteUrl);
+  if (crumbs.length >= 2) {
     nodes.push({
-      '@type': 'Service',
-      '@id': `${siteUrl}/#service`,
-      name: 'DoubleTrends™ S&P 500 Signal',
-      serviceType: 'Rules-based S&P 500 index alert',
-      provider: { '@id': publisher['@id'] },
-      audience: {
-        '@type': 'Audience',
-        audienceType: 'ETF investors using S&P 500 exposure such as VOO, SPY, or IVV',
-      },
-      description: page.desc,
-      url: siteUrl,
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: crumbs,
     });
   }
 
@@ -129,7 +166,7 @@ function buildSchemaNodes({ page, siteUrl, publisher, ogImage, today, defaultArt
       '@type': 'Service',
       '@id': `${canonical}#service`,
       name: 'Data & Quant Services',
-      provider: { '@id': publisher['@id'] },
+      provider: publisherRef,
       serviceType: 'Data engineering, quantitative research, machine learning, forecasting, and data collection',
       description: page.desc,
       url: canonical,
@@ -143,8 +180,8 @@ function buildSchemaNodes({ page, siteUrl, publisher, ogImage, today, defaultArt
       headline: page.title,
       description: page.desc,
       mainEntityOfPage: { '@id': `${canonical}#webpage` },
-      author: { '@id': publisher['@id'] },
-      publisher: { '@id': publisher['@id'] },
+      author: publisherRef,
+      publisher: publisherRef,
       image: {
         '@type': 'ImageObject',
         url: ogImage,
@@ -154,24 +191,9 @@ function buildSchemaNodes({ page, siteUrl, publisher, ogImage, today, defaultArt
       articleSection: schema.articleSection || 'Academy',
       about: schema.about || ['S&P 500 index', 'ETF investing'],
       isAccessibleForFree: true,
-      datePublished: schema.datePublished || defaultArticlePublished,
-      dateModified: schema.dateModified || today,
+      datePublished: isoDate(schema.datePublished || defaultArticlePublished),
+      dateModified: isoDate(schema.dateModified || today),
       inLanguage: 'en-US',
-    });
-  }
-
-  if (schema.faq?.length) {
-    nodes.push({
-      '@type': 'FAQPage',
-      '@id': `${canonical}#faq`,
-      mainEntity: schema.faq.map((item) => ({
-        '@type': 'Question',
-        name: item.q,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: item.a,
-        },
-      })),
     });
   }
 
@@ -179,7 +201,13 @@ function buildSchemaNodes({ page, siteUrl, publisher, ogImage, today, defaultArt
 }
 
 function buildJsonLdScripts(context) {
-  return buildSchemaNodes(context).map(toJsonLdScript).join('\n');
+  const graph = buildSchemaNodes(context);
+  if (!graph.length) return '';
+
+  return toJsonLdScript({
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  });
 }
 
 module.exports = {
