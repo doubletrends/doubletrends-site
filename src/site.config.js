@@ -111,38 +111,6 @@ const pages = [
     priority: 0.9,
     title: 'Pricing, Trial, and Telegram Delivery',
     desc:  'See DoubleTrends™ pricing at USD $149 per year, the 30-day free trial, refund rules, private Telegram delivery, and what subscribers receive before they buy.',
-    schema: {
-      faq: [
-        {
-          q: 'What exactly do I receive?',
-          a: 'A Telegram direct message on signal day, plus a private bot you can query anytime for the current market read, signal history, and subscription status.',
-        },
-        {
-          q: 'How often will it fire?',
-          a: 'Rarely. Since 2016, the S&P 500 index version has produced a small number of signals. Some years have several and some have none.',
-        },
-        {
-          q: 'Is this financial advice?',
-          a: 'No. DoubleTrends™ provides educational, rules-based market information only. It is not a recommendation to buy, sell, or hold any security.',
-        },
-        {
-          q: 'What does DoubleTrends™ measure?',
-          a: 'A regime filter plus a dual Williams %R reversal rule on the daily S&P 500. It only fires in panic or bear regimes, with bear-market reversals filtered harder.',
-        },
-        {
-          q: 'Which assets are covered?',
-          a: 'The S&P 500 index today. ETF investors can express it with VOO, SPY, or IVV. Nasdaq 100 support, including QQQ, is planned.',
-        },
-        {
-          q: 'Does a signal mean I should buy immediately?',
-          a: 'No. A signal is a timing reference, not a personal recommendation. Some investors use it to review a planned contribution or staged entry, while others do nothing.',
-        },
-        {
-          q: 'How do I get access after paying?',
-          a: 'Right after checkout, you use a one-time activation link that opens the Telegram bot, binds your subscription to your Telegram account, and enables direct delivery.',
-        },
-      ],
-    },
   }),
   page('academy/index.html', {
     priority: 0.9,
@@ -153,6 +121,7 @@ const pages = [
 
   // ── company ───────────────────────────────────────────────────────────────
   companyPage('mission', {
+    kind: 'about',
     title: 'Mission',
     desc:  'Why DoubleTrends™ exists and the principles behind it: one transparent, rule-based oversold-reversal signal — transparency over hype, education over dependency, narrow over vague.',
   }),
