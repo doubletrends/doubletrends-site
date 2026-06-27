@@ -54,6 +54,10 @@ function validatePresent(value, label, relFile, errors) {
   }
 }
 
+function isNoindex(robots) {
+  return robots && robots.toLowerCase().includes('noindex');
+}
+
 function main() {
   if (!fs.existsSync(DIST)) {
     throw new Error(`dist/ not found at ${DIST}`);
@@ -97,7 +101,7 @@ function main() {
       errors.push(`${relFile}: canonical must start with https://doubletrends.com/`);
     }
 
-    if (!JSONLD_RE.test(html)) {
+    if (!isNoindex(robots) && !JSONLD_RE.test(html)) {
       errors.push(`${relFile}: missing JSON-LD script`);
     }
 

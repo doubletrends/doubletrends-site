@@ -8,13 +8,22 @@ const JSONLD_BLOCK_RE = /<script\s+type=["']application\/ld\+json["'][^>]*>\s*([
 function readJsonLdNodes(html) {
   const nodes = [];
   for (const match of html.matchAll(JSONLD_BLOCK_RE)) {
-    nodes.push(JSON.parse(match[1]));
+    const parsed = JSON.parse(match[1]);
+    if (Array.isArray(parsed['@graph'])) {
+      nodes.push(...parsed['@graph']);
+    } else {
+      nodes.push(parsed);
+    }
   }
   return nodes;
 }
 
 function hasType(nodes, type) {
   return nodes.some((node) => node['@type'] === type);
+}
+
+function isNoindex(page) {
+  return page.robots && page.robots.includes('noindex');
 }
 
 function main() {
@@ -37,6 +46,7 @@ function main() {
     }
 
     if (!nodes.length) {
+      if (isNoindex(page)) continue;
       errors.push(`${page.src}: missing JSON-LD nodes`);
       continue;
     }

@@ -62,6 +62,42 @@ function breadcrumbItems(page, siteUrl) {
     return items;
   }
 
+  if (parts[0] === 'company') {
+    items.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Company',
+      item: `${siteUrl}/company/`,
+    });
+    if (page.src !== 'company/index.html') {
+      items.push({
+        '@type': 'ListItem',
+        position: 3,
+        name: pageDisplayName(page),
+        item: canonicalFor(siteUrl, page.src),
+      });
+    }
+    return items;
+  }
+
+  if (parts[0] === 'legal') {
+    items.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Legal',
+      item: `${siteUrl}/legal/`,
+    });
+    if (page.src !== 'legal/index.html') {
+      items.push({
+        '@type': 'ListItem',
+        position: 3,
+        name: pageDisplayName(page),
+        item: canonicalFor(siteUrl, page.src),
+      });
+    }
+    return items;
+  }
+
   if (page.src !== 'index.html') {
     items.push({
       '@type': 'ListItem',
@@ -83,7 +119,7 @@ function shouldEmitJsonLd(page) {
 }
 
 function shouldIncludeOrganization(page) {
-  return page.kind === 'home' || page.kind === 'about';
+  return page.src === 'index.html' || page.src === 'company/index.html';
 }
 
 function shouldIncludeWebSite(page) {
