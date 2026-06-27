@@ -5,7 +5,7 @@ const ROOT = path.join(__dirname, '..');
 const SRC_PAGES = path.join(ROOT, 'src', 'pages');
 const { pages } = require('../src/site.config');
 
-const ALLOWED_KINDS = new Set(['home', 'webpage', 'collection', 'services', 'contact', 'article']);
+const ALLOWED_KINDS = new Set(['home', 'webpage', 'collection', 'services', 'contact', 'about', 'article']);
 
 function rootFor(src) {
   const depth = src.split('/').length - 1;
@@ -79,8 +79,13 @@ function main() {
       }
     }
 
-    if (page.kind === 'collection' && !page.src.startsWith('academy/')) {
-      errors.push(`${page.src}: collection pages must live under academy/`);
+    if (
+      page.kind === 'collection' &&
+      !page.src.startsWith('academy/') &&
+      !page.src.startsWith('company/') &&
+      !page.src.startsWith('legal/')
+    ) {
+      errors.push(`${page.src}: collection pages must live under academy/, company/, or legal/`);
     }
   }
 

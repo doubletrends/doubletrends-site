@@ -118,6 +118,18 @@ const pages = [
     title: 'Academy — Research & Education',
     desc:  'Research notes on S&P 500 drawdowns and investor behavior, primers on the standard tools the engine uses (Williams %R, drawdown, volume profile), and one article per macro anchor (VIX, Fed funds, unemployment, CPI).',
   }),
+  page('company/index.html', {
+    priority: 0.6,
+    kind: 'collection',
+    title: 'Company — Mission, Services, and Contact',
+    desc:  'The company side of DoubleTrends™: mission, consulting services, hiring roadmap, and contact information.',
+  }),
+  page('legal/index.html', {
+    priority: 0.4,
+    kind: 'collection',
+    title: 'Legal — Terms, Privacy, Refunds, and Disclaimer',
+    desc:  'The operating documents for DoubleTrends™: Terms of Service, Privacy Policy, Refund Policy, and Disclaimer.',
+  }),
 
   // ── company ───────────────────────────────────────────────────────────────
   companyPage('mission', {
