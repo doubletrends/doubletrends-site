@@ -39,7 +39,6 @@ const COLORS = {
 const FONTS = {
   noto: ['"Syne"', 'sans-serif'],            // Display
   open: ['"DM Sans"', 'sans-serif'],         // Body
-  exo:  ['"DM Sans"', 'sans-serif'],         // Body (alias)
   mono: ['"JetBrains Mono"', 'monospace'],   // Data / code / eyebrows
 };
 
