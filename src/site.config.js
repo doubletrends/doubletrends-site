@@ -145,7 +145,7 @@ const pages = [
   }),
   companyPage('careers', {
     title: 'Careers',
-    desc:  'The three long-term functions we expect to build around at DoubleTrends™: Quantitative Analyst, Data Engineer, and Audience & Partnerships Lead. Not currently hiring.',
+    desc:  'The three functions DoubleTrends™ is building around: Quantitative Analyst, Data Engineer, and Audience & Partnerships Lead. Open applications accepted.',
   }),
   companyPage('contact', {
     priority: 0.6,

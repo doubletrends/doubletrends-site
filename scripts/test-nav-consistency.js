@@ -3,6 +3,12 @@
 // match the sub-page's own hero overline category.
 //
 // Source of truth: sub-page hero overline ("Section · Category" → "Category").
+//
+// Pages listed in NAV_EXCLUDED are intentionally unlisted (the page exists at
+// its URL but is not surfaced in nav, footer, or section index).
+const NAV_EXCLUDED = new Set([
+  'company/brand.html',
+]);
 
 const fs   = require('fs');
 const path = require('path');
@@ -104,6 +110,7 @@ function main() {
   let checked  = 0;
 
   for (const [canonPath, expected] of Object.entries(truth)) {
+    if (NAV_EXCLUDED.has(canonPath)) continue;
     const dir   = canonPath.split('/')[0];
     const cards = cardMaps[dir] ?? {};
     checked++;
