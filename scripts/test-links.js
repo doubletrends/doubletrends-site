@@ -1,27 +1,13 @@
-const fs = require('fs');
+const fs   = require('fs');
 const path = require('path');
+const { DIST, walk, relPosix, report } = require('./test-utils');
 
-const DIST = path.join(__dirname, '..', 'dist');
-const HTML_EXT = '.html';
-const ATTR_RE = /\b(?:href|src)=["']([^"'#][^"']*|#[^"']*)["']/gi;
-const ID_RE = /\bid=["']([^"']+)["']/gi;
-const PLACEHOLDER_RE = /\{\{[A-Z0-9_]+\}\}/g;
-const COMMENT_RE = /<!--[\s\S]*?-->/g;
+const HTML_EXT        = '.html';
+const ATTR_RE         = /\b(?:href|src)=["']([^"'#][^"']*|#[^"']*)["']/gi;
+const ID_RE           = /\bid=["']([^"']+)["']/gi;
+const PLACEHOLDER_RE  = /\{\{[A-Z0-9_]+\}\}/g;
+const COMMENT_RE      = /<!--[\s\S]*?-->/g;
 const IGNORE_PREFIXES = ['http://', 'https://', 'mailto:', 'tel:', 'javascript:'];
-
-function walk(dir) {
-  const out = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) out.push(...walk(full));
-    else out.push(full);
-  }
-  return out;
-}
-
-function toPosix(relPath) {
-  return relPath.split(path.sep).join('/');
-}
 
 function fileIds(html) {
   const ids = new Set();
@@ -36,36 +22,28 @@ function shouldIgnore(value) {
 function splitTarget(value) {
   const hashIndex = value.indexOf('#');
   if (hashIndex === -1) return { pathname: value, hash: '' };
-  return {
-    pathname: value.slice(0, hashIndex),
-    hash: value.slice(hashIndex + 1),
-  };
+  return { pathname: value.slice(0, hashIndex), hash: value.slice(hashIndex + 1) };
 }
 
 function resolvePath(fromFile, rawPath) {
   if (!rawPath) return fromFile;
-  if (rawPath.startsWith('/')) {
-    return path.join(DIST, rawPath.slice(1));
-  }
+  if (rawPath.startsWith('/')) return path.join(DIST, rawPath.slice(1));
   return path.resolve(path.dirname(fromFile), rawPath);
 }
 
 function main() {
-  if (!fs.existsSync(DIST)) {
-    throw new Error(`dist/ not found at ${DIST}`);
-  }
+  if (!fs.existsSync(DIST)) throw new Error(`dist/ not found at ${DIST}`);
 
-  const files = walk(DIST);
-  const htmlFiles = files.filter((file) => file.endsWith(HTML_EXT));
-  const htmlByFile = new Map(htmlFiles.map((file) => [file, fs.readFileSync(file, 'utf8')]));
-  const idsByFile = new Map([...htmlByFile.entries()].map(([file, html]) => [file, fileIds(html)]));
+  const htmlFiles  = walk(DIST).filter((f) => f.endsWith(HTML_EXT));
+  const htmlByFile = new Map(htmlFiles.map((f) => [f, fs.readFileSync(f, 'utf8')]));
+  const idsByFile  = new Map([...htmlByFile.entries()].map(([f, html]) => [f, fileIds(html)]));
   const errors = [];
 
   for (const [file, html] of htmlByFile.entries()) {
-    const relFile = toPosix(path.relative(DIST, file));
-    const htmlWithoutComments = html.replace(COMMENT_RE, '');
+    const relFile = relPosix(file, DIST);
+    const stripped = html.replace(COMMENT_RE, '');
 
-    for (const match of htmlWithoutComments.matchAll(PLACEHOLDER_RE)) {
+    for (const match of stripped.matchAll(PLACEHOLDER_RE)) {
       errors.push(`${relFile}: unresolved placeholder ${match[0]}`);
     }
 
@@ -75,15 +53,13 @@ function main() {
 
       if (value.startsWith('#')) {
         const id = value.slice(1);
-        if (id && !idsByFile.get(file).has(id)) {
-          errors.push(`${relFile}: missing in-page anchor #${id}`);
-        }
+        if (id && !idsByFile.get(file).has(id)) errors.push(`${relFile}: missing in-page anchor #${id}`);
         continue;
       }
 
       const { pathname, hash } = splitTarget(value);
-      const target = resolvePath(file, pathname);
-      const targetRel = toPosix(path.relative(DIST, target));
+      const target    = resolvePath(file, pathname);
+      const targetRel = relPosix(target, DIST);
 
       if (!fs.existsSync(target)) {
         errors.push(`${relFile}: missing target ${value} -> ${targetRel}`);
@@ -96,20 +72,12 @@ function main() {
           continue;
         }
         const ids = idsByFile.get(target) ?? fileIds(fs.readFileSync(target, 'utf8'));
-        if (!ids.has(hash)) {
-          errors.push(`${relFile}: missing anchor ${value}`);
-        }
+        if (!ids.has(hash)) errors.push(`${relFile}: missing anchor ${value}`);
       }
     }
   }
 
-  if (errors.length) {
-    console.error(`Broken link test failed with ${errors.length} issue(s):\n`);
-    for (const error of errors) console.error(`- ${error}`);
-    process.exit(1);
-  }
-
-  console.log(`Link test passed across ${htmlFiles.length} HTML files.`);
+  report(errors, 'Link test', `Link test passed — ${htmlFiles.length} HTML files checked.`);
 }
 
 main();

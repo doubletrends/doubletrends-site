@@ -1,10 +1,9 @@
-const fs = require('fs');
+const fs   = require('fs');
 const path = require('path');
-
-const ROOT = path.join(__dirname, '..');
-const SRC_PAGES = path.join(ROOT, 'src', 'pages');
 const { pages } = require('../src/site.config');
+const { report } = require('./test-utils');
 
+const SRC_PAGES    = path.join(__dirname, '..', 'src', 'pages');
 const ALLOWED_KINDS = new Set(['home', 'webpage', 'collection', 'services', 'contact', 'about', 'article']);
 
 function rootFor(src) {
@@ -13,7 +12,7 @@ function rootFor(src) {
 }
 
 function main() {
-  const seen = new Set();
+  const seen   = new Set();
   const errors = [];
 
   for (const page of pages) {
@@ -41,8 +40,7 @@ function main() {
       errors.push(`${page.src}: src must use repo-relative POSIX-style paths`);
     }
 
-    const srcPath = path.join(SRC_PAGES, page.src);
-    if (!fs.existsSync(srcPath)) {
+    if (!fs.existsSync(path.join(SRC_PAGES, page.src))) {
       errors.push(`${page.src}: missing source file at src/pages/${page.src}`);
     }
 
@@ -89,13 +87,7 @@ function main() {
     }
   }
 
-  if (errors.length) {
-    console.error(`Page registry test failed with ${errors.length} issue(s):\n`);
-    for (const error of errors) console.error(`- ${error}`);
-    process.exit(1);
-  }
-
-  console.log(`Page registry test passed across ${pages.length} entries.`);
+  report(errors, 'Page registry test', `Page registry test passed — ${pages.length} entries checked.`);
 }
 
 main();
