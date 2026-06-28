@@ -31,6 +31,9 @@ This repo builds the marketing site, academy pages, brand page, replay chart, hi
   Shared layout, head, header, footer, style partials, and reusable HTML fragments.
 - `public/`
   Static assets copied into the final build, including replay JSON, fonts, images, and browser-side JS.
+  - `public/js/accordion.js` — site-wide `<details>` accordion animation (260ms grid-template-rows + opacity). Loaded on every page via `layout.html`. Replaces the former per-page `faq-accordion.js`.
+  - `public/js/footer-menu.js` — mobile footer tab switcher only (accordion logic consolidated into `accordion.js`).
+  - `public/js/bot-sandbox.js` — powers the interactive Telegram bot demo on the product page.
 - `dist/`
   Generated output. Safe to treat as build artifact.
 
@@ -231,6 +234,12 @@ This keeps shared partial links working from nested directories without manually
   Validate `src/site.config.js` page registry integrity.
 - `npm run test:schema`
   Build the site and verify JSON-LD rules for article and non-article pages.
+- `npm run test:overlines`
+  Verify every page in academy, company, and legal carries a correctly formatted overline matching its section.
+- `npm run test:nav`
+  Verify every sub-page that appears in nav dropdowns also appears in the matching footer column and index card, and vice versa.
+- `npm run test:headings`
+  Verify heading hierarchy consistency across company pages.
 
 ## Test Contracts
 
@@ -274,6 +283,20 @@ It also enforces:
 - valid priority ranges
 - expected `root` derivation
 - article pages living under `academy/`
+
+### Overline consistency
+
+`test:overlines` checks every HTML page under `academy/`, `company/`, and `legal/` for a `.tag-overline` element whose text matches the expected section prefix (e.g. `Academy ·`, `Company ·`, `Legal ·`).
+
+### Nav / footer / index consistency
+
+`test:nav` cross-checks three surfaces for each sub-page — nav dropdown, footer column, and section index card — and fails if a page appears in one but not the others.
+
+Pages intentionally excluded from navigation (but still built and accessible) are listed in the `NAV_EXCLUDED` set at the top of `scripts/test-nav-consistency.js`. Add a page's canonical path there to suppress the nav-consistency check for it without removing it from the build or sitemap.
+
+### Heading consistency
+
+`test:headings` checks that company pages follow a consistent heading hierarchy.
 
 ### Schema rules
 
@@ -378,6 +401,14 @@ That runs:
 2. `wrangler deploy`
 
 `wrangler.jsonc` remains the Worker/assets deployment config source in the repo, with `dist/` as the asset directory.
+
+## Nav Bar Glass Effect
+
+The nav bar uses a frosted-glass look via a `::before` pseudo-element rather than `backdrop-filter` on the `<header>` element itself. This is intentional: applying `backdrop-filter` directly to the header makes it a backdrop root, which prevents child elements (like the dropdown panel) from having their own working `backdrop-filter`. By delegating the blur to `::before`, the header is not a backdrop root and the dropdown can composite independently against the page content behind it.
+
+- Nav bar blur: defined in `.site-header::before` in `src/_partials/styles/primitives.html`
+- Dropdown blur: defined in `.nav-dropdown-panel` in the same file
+- Header inline style: border and shadow only — no `backdrop-filter`
 
 ## Reading Map
 

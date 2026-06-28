@@ -355,6 +355,17 @@
       font-weight: 600;
     }
 
+    /* ── Nav bar glass (via ::before so children can use their own backdrop-filter) */
+    .site-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: rgba(255,255,255,0.60);
+      -webkit-backdrop-filter: blur(60px) saturate(1.8);
+      backdrop-filter: blur(60px) saturate(1.8);
+    }
+
     /* ── Nav dropdowns (desktop) ────────────────────────────── */
     .nav-plain-link {
       display: inline-flex;
@@ -386,15 +397,21 @@
       transform: rotate(180deg);
     }
     .nav-dropdown-panel {
-      display: none;
       position: absolute;
       top: calc(100% + 4px);
       left: 0;
-      background: #FFFFFF;
+      background: rgba(255,255,255,0.88);
+      -webkit-backdrop-filter: blur(50px) saturate(1.6);
+      backdrop-filter: blur(50px) saturate(1.6);
       border: 1px solid rgba(30,37,48,0.10);
       box-shadow: 0 24px 60px rgba(30,37,48,0.12);
       min-width: 220px;
       z-index: 50;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(-4px);
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s 0.18s;
     }
     .nav-dropdown--right .nav-dropdown-panel {
       left: auto;
@@ -411,7 +428,11 @@
     }
     .nav-dropdown:hover .nav-dropdown-panel,
     .nav-dropdown:focus-within .nav-dropdown-panel {
-      display: block;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s 0s;
     }
     .nav-dropdown-index {
       display: block;
