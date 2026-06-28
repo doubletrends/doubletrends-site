@@ -22,20 +22,22 @@ const fs   = require('fs');
 const path = require('path');
 const {
   SITE_URL,
+  SITE_NAME,
+  SITE_DESCRIPTION,
   SUBSCRIBE_URL,
   WORKER_URL,
   OG_IMAGE,
   OG_IMAGE_ALT,
   PUBLISHER,
+  ARTICLE_PUBLISHED,
   pages,
 } = require('./src/site.config');
 const {
   COLORS: BRAND_COLORS,
   FONTS: BRAND_FONTS,
 } = require('./src/brand.config');
-const { buildJsonLdScripts, canonicalFor: canonicalForRaw, pageDisplayName } = require('./src/schema');
+const { buildJsonLdScripts, canonicalFor: canonicalForRaw, pageDisplayName, isoDate } = require('./src/schema');
 const canonicalFor = (src) => canonicalForRaw(SITE_URL, src);
-const SITE_TITLE_PREFIX = 'DoubleTrends™';
 
 // ─── Site config ────────────────────────────────────────────────────────────
 function todayInTimeZone(timeZone) {
@@ -50,7 +52,6 @@ function todayInTimeZone(timeZone) {
 }
 
 const TODAY = todayInTimeZone('Asia/Shanghai');
-const ARTICLE_PUBLISHED = '2026-05-25';
 
 // ─── Track-record numbers from the backfill ─────────────────────────────────
 // Read once at build start so {{TR_*}} placeholders resolve to real numbers in
@@ -118,14 +119,14 @@ function ensureDir(filePath) {
 }
 
 function formatTitle(title) {
-  return `${SITE_TITLE_PREFIX} | ${title}`;
+  return `${SITE_NAME} | ${title}`;
 }
 
 function socialExtraFor(page) {
   if (page.kind !== 'article') return '';
   const section = page.schema?.articleSection || 'Academy';
-  return `  <meta property="article:published_time" content="${ARTICLE_PUBLISHED}" />
-  <meta property="article:modified_time" content="${TODAY}" />
+  return `  <meta property="article:published_time" content="${isoDate(ARTICLE_PUBLISHED)}" />
+  <meta property="article:modified_time" content="${isoDate(TODAY)}" />
   <meta property="article:section" content="${section}" />`;
 }
 
@@ -178,6 +179,8 @@ function renderPage(page) {
     JSONLD_SCRIPTS: buildJsonLdScripts({
       page,
       siteUrl: SITE_URL,
+      siteName: SITE_NAME,
+      siteDescription: SITE_DESCRIPTION,
       publisher: PUBLISHER,
       ogImage: OG_IMAGE,
       today: TODAY,

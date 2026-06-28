@@ -1,29 +1,22 @@
-const fs = require('fs');
+const fs   = require('fs');
 const path = require('path');
 const { pages } = require('../src/site.config');
+const { DIST, isNoindex, report } = require('./test-utils');
 
-const DIST = path.join(__dirname, '..', 'dist');
 const JSONLD_BLOCK_RE = /<script\s+type=["']application\/ld\+json["'][^>]*>\s*([\s\S]*?)\s*<\/script>/gi;
 
 function readJsonLdNodes(html) {
   const nodes = [];
   for (const match of html.matchAll(JSONLD_BLOCK_RE)) {
     const parsed = JSON.parse(match[1]);
-    if (Array.isArray(parsed['@graph'])) {
-      nodes.push(...parsed['@graph']);
-    } else {
-      nodes.push(parsed);
-    }
+    if (Array.isArray(parsed['@graph'])) nodes.push(...parsed['@graph']);
+    else nodes.push(parsed);
   }
   return nodes;
 }
 
 function hasType(nodes, type) {
   return nodes.some((node) => node['@type'] === type);
-}
-
-function isNoindex(page) {
-  return page.robots && page.robots.includes('noindex');
 }
 
 function main() {
@@ -46,7 +39,7 @@ function main() {
     }
 
     if (!nodes.length) {
-      if (isNoindex(page)) continue;
+      if (isNoindex(page.robots)) continue;
       errors.push(`${page.src}: missing JSON-LD nodes`);
       continue;
     }
@@ -65,20 +58,16 @@ function main() {
       errors.push(`${page.src}: non-article page must not emit Article schema`);
     }
 
-    if (page.src.startsWith('academy/') && page.src !== 'academy/index.html') {
+    // All sectioned sub-pages (academy, company, legal) must emit BreadcrumbList.
+    const isSubPage = (prefix) => page.src.startsWith(prefix) && page.src !== `${prefix}index.html`;
+    if (isSubPage('academy/') || isSubPage('company/') || isSubPage('legal/')) {
       if (!hasType(nodes, 'BreadcrumbList')) {
-        errors.push(`${page.src}: academy content page must emit BreadcrumbList schema`);
+        errors.push(`${page.src}: sectioned sub-page must emit BreadcrumbList schema`);
       }
     }
   }
 
-  if (errors.length) {
-    console.error(`Schema test failed with ${errors.length} issue(s):\n`);
-    for (const error of errors) console.error(`- ${error}`);
-    process.exit(1);
-  }
-
-  console.log(`Schema test passed across ${pages.length} pages.`);
+  report(errors, 'Schema test', `Schema test passed — ${pages.length} pages checked.`);
 }
 
 main();

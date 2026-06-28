@@ -158,7 +158,7 @@ function organizationReference(publisher) {
   };
 }
 
-function buildSchemaNodes({ page, siteUrl, publisher, ogImage, today, defaultArticlePublished }) {
+function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher, ogImage, today, defaultArticlePublished }) {
   if (!shouldEmitJsonLd(page)) return [];
 
   const canonical = canonicalFor(siteUrl, page.src);
@@ -175,8 +175,8 @@ function buildSchemaNodes({ page, siteUrl, publisher, ogImage, today, defaultArt
       '@type': 'WebSite',
       '@id': `${siteUrl}/#website`,
       url: siteUrl,
-      name: 'DoubleTrends™',
-      description: 'Rules-based S&P 500 index alerts and research notes for ETF investors.',
+      name: siteName,
+      description: siteDescription,
       publisher: { '@id': publisher['@id'] },
       inLanguage: 'en-US',
     });
@@ -186,7 +186,7 @@ function buildSchemaNodes({ page, siteUrl, publisher, ogImage, today, defaultArt
     '@type': pageTypeFor(page.kind),
     '@id': `${canonical}#webpage`,
     url: canonical,
-    name: page.title,
+    name: `${siteName} | ${page.title}`,
     description: page.desc,
     ...(shouldIncludeWebSite(page) ? { isPartOf: { '@id': `${siteUrl}/#website` } } : {}),
     about: publisherRef,
@@ -256,4 +256,5 @@ module.exports = {
   buildJsonLdScripts,
   canonicalFor,
   pageDisplayName,
+  isoDate,
 };

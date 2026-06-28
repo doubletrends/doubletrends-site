@@ -253,12 +253,19 @@ const pages = [
   }),
 ];
 
+const SITE_NAME = 'DoubleTrends™';
+const SITE_DESCRIPTION = 'Rules-based S&P 500 index alerts and research notes for ETF investors.';
+const ARTICLE_PUBLISHED = '2026-05-25';
+
 module.exports = {
   SITE_URL,
+  SITE_NAME,
+  SITE_DESCRIPTION,
   SUBSCRIBE_URL,
   WORKER_URL,
   OG_IMAGE,
   OG_IMAGE_ALT,
   PUBLISHER,
+  ARTICLE_PUBLISHED,
   pages,
 };

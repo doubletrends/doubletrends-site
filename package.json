@@ -6,7 +6,7 @@
     "build": "node build.js",
     "brand": "node build-brand.js",
     "replay-data": "node build-replay-data.js",
-    "test": "npm run test:links && npm run test:trademark && npm run test:metadata && npm run test:registry && npm run test:schema && npm run test:overlines && npm run test:nav-consistency && npm run test:headings",
+    "test": "node build.js && node scripts/test-links.js && node scripts/test-trademark.js && node scripts/test-metadata.js && node scripts/test-page-registry.js && node scripts/test-schema.js && node scripts/test-overlines.js && node scripts/test-nav-consistency.js && node scripts/test-heading-consistency.js",
     "test:links": "node build.js && node scripts/test-links.js",
     "test:trademark": "node scripts/test-trademark.js",
     "test:metadata": "node build.js && node scripts/test-metadata.js",
