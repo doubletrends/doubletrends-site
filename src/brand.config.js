@@ -4,7 +4,7 @@
  * Single source of truth for brand tokens. Consumed at build time by:
  *   - build.js → injects {{TAILWIND_COLORS}} / {{TAILWIND_FONTS}} into
  *     _partials/tailwind.html so the Tailwind Play CDN sees the same values.
- *   - build.js → drives the auto-generated Token Registry on brand.html
+ *   - build.js → drives the auto-generated Token Registry on company/brand.html
  *     so the page that documents the standard literally renders it.
  *
  * The post-trim shape:

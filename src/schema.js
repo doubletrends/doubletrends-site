@@ -14,6 +14,12 @@ function pageDisplayName(page) {
   return page.title;
 }
 
+function breadcrumbLabel(page) {
+  const title = pageDisplayName(page);
+  const sep = title.indexOf(' — ');
+  return sep !== -1 ? title.slice(0, sep) : title;
+}
+
 function pageTypeFor(kind) {
   if (kind === 'about') return 'AboutPage';
   if (kind === 'contact') return 'ContactPage';
@@ -55,7 +61,7 @@ function breadcrumbItems(page, siteUrl) {
       items.push({
         '@type': 'ListItem',
         position: 3,
-        name: pageDisplayName(page),
+        name: breadcrumbLabel(page),
         item: canonicalFor(siteUrl, page.src),
       });
     }
@@ -73,7 +79,7 @@ function breadcrumbItems(page, siteUrl) {
       items.push({
         '@type': 'ListItem',
         position: 3,
-        name: pageDisplayName(page),
+        name: breadcrumbLabel(page),
         item: canonicalFor(siteUrl, page.src),
       });
     }
@@ -91,7 +97,7 @@ function breadcrumbItems(page, siteUrl) {
       items.push({
         '@type': 'ListItem',
         position: 3,
-        name: pageDisplayName(page),
+        name: breadcrumbLabel(page),
         item: canonicalFor(siteUrl, page.src),
       });
     }
@@ -213,7 +219,7 @@ function buildSchemaNodes({ page, siteUrl, publisher, ogImage, today, defaultArt
     nodes.push({
       '@type': 'Article',
       '@id': `${canonical}#article`,
-      headline: page.title,
+      headline: schema.headline || page.title,
       description: page.desc,
       mainEntityOfPage: { '@id': `${canonical}#webpage` },
       author: publisherRef,
