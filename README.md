@@ -32,8 +32,10 @@ This repo builds the marketing site, academy pages, brand page, replay chart, hi
 - `public/`
   Static assets copied into the final build, including replay JSON, fonts, images, and browser-side JS.
   - `public/js/accordion.js` — site-wide `<details>` accordion animation (260ms grid-template-rows + opacity). Loaded on every page via `layout.html`. Replaces the former per-page `faq-accordion.js`.
+  - `public/js/canvas-grid.js` — animated square grid decorating section banners. Loaded on every page via `layout.html`.
   - `public/js/footer-menu.js` — mobile footer tab switcher only (accordion logic consolidated into `accordion.js`).
   - `public/js/bot-sandbox.js` — powers the interactive Telegram bot demo on the product page.
+  - `public/js/story-strip.js` — homepage story-strip carousel. Loaded only on `index.html`.
 - `dist/`
   Generated output. Safe to treat as build artifact.
 
@@ -406,7 +408,7 @@ That runs:
 
 The nav bar uses a frosted-glass look via a `::before` pseudo-element rather than `backdrop-filter` on the `<header>` element itself. This is intentional: applying `backdrop-filter` directly to the header makes it a backdrop root, which prevents child elements (like the dropdown panel) from having their own working `backdrop-filter`. By delegating the blur to `::before`, the header is not a backdrop root and the dropdown can composite independently against the page content behind it.
 
-- Nav bar blur: defined in `.site-header::before` in `src/_partials/styles/primitives.html`
+- Nav bar blur: defined in `.site-header::before` in `src/_partials/styles/nav.html`
 - Dropdown blur: defined in `.nav-dropdown-panel` in the same file
 - Header inline style: border and shadow only — no `backdrop-filter`
 
