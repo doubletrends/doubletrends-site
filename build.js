@@ -89,7 +89,7 @@ const read = (name) => fs.readFileSync(path.join(partialsDir, name), 'utf8');
 
 const layout = read('layout.html');
 const routingCardTemplate = read('routing-card.html');
-const styles = ['primitives', 'layouts', 'responsive']
+const styles = ['base', 'typography', 'buttons', 'accordion', 'footer', 'cards', 'nav', 'layouts', 'responsive']
   .map((segment) => fs.readFileSync(path.join(partialsDir, 'styles', `${segment}.html`), 'utf8'))
   .join('');
 const tailwind = replace(read('tailwind.html'), {
