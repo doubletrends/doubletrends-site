@@ -1,6 +1,6 @@
 (function () {
   var SQ = 20, GAP = 4, TILE = SQ + GAP;
-  var ALPHA = 0.10;
+  var ALPHA = 0.20;
   var SWAP_INTERVAL = 200;
   var FADE_MS = 500;
 
