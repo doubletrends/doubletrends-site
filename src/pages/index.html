@@ -17,12 +17,12 @@
 </div>
 </div>
 </section>
-<section id="track-record" class="w-full" style="background: transparent; border-top: 1px solid rgba(0,0,0,0.08);">
+<section id="track-record" class="w-full" style="background: transparent;">
 <div class="home-container max-w-site mx-auto px-8 py-20">
 <div class="flex flex-col">
 <span class="tag-overline mb-5">See It Live</span>
-<h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05] mb-5"> Ten years. Every dip. </h2>
-<p class="font-open text-lg leading-relaxed max-w-3xl" style="color: #5A6473;"> This is a point-in-time replay of the DoubleTrends&trade; S&amp;P 500 signal from July 2016 onward. The rule fired at every major stress point in that window including the 2018 Q4 drawdown, the COVID crash, the 2022 bear-market low, the 2025 tariff crash, and the March-April 2026 Iran war selloff. </p>
+<h2 class="section-heading mb-5"> Ten years. Every dip. </h2>
+<p class="section-body max-w-3xl"> This is a point-in-time replay of the DoubleTrends&trade; S&amp;P 500 signal from July 2016 onward. The rule fired at every major stress point in that window including the 2018 Q4 drawdown, the COVID crash, the 2022 bear-market low, the 2025 tariff crash, and the March-April 2026 Iran war selloff. </p>
 </div>
 <div aria-hidden="true" style="height: 0.75rem;"></div>
 <div id="replay-shell" class="terminal-shell relative overflow-hidden isolate">
@@ -47,7 +47,7 @@
 </div>
 <div id="chart" class="w-full" data-replay-src="{{ROOT}}public/replay/sp500.json" style="height: 480px;"></div>
 <div class="relative overflow-hidden">
-<div class="flex items-center justify-between gap-4 flex-wrap px-5 py-4" style="border-top: 1px solid rgba(30,37,48,0.10); background: rgba(251,250,247,0.82);">
+<div class="terminal-footer flex items-center justify-between gap-4 flex-wrap px-5 py-4">
 <div class="flex items-center gap-4 flex-wrap">
 <button id="replayBtn" class="btn-light" type="button"><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L9 5.5L0 11Z"/></svg>Replay</button>
 <button id="fastForwardBtn" class="btn-dark" type="button"><svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L6 5.5L0 11Z"/><path d="M7 0L13 5.5L7 11Z"/></svg>Fast forward</button>
@@ -66,12 +66,12 @@
 <p class="data-label mt-4" style="color: #5A6473;"> Point-in-time causal replay: on each date the system only sees data available back then, not future frames. </p>
 </div>
 </section>
-<section id="history" class="decor-banner relative w-full overflow-hidden" style="background: #FBFAF7;">
+<section id="history" class="decor-banner relative w-full overflow-hidden">
 <div class="home-container relative z-10 max-w-site mx-auto px-8 py-20">
 <div class="flex flex-col max-w-3xl">
 <span class="tag-overline mb-5">Historical Returns</span>
-<h2 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05] mb-5"> Signal fired. Real returns. </h2>
-<p class="font-open text-lg leading-relaxed max-w-3xl" style="color: #5A6473;"> This table shows every DoubleTrends&trade; signal since 2004 with the 90-day, 1-year, and 2-year forward returns from the S&amp;P 500. Subscribers receive the full record signal by signal, with each outcome shown as it stands. </p>
+<h2 class="section-heading mb-5"> Signal fired. Real returns. </h2>
+<p class="section-body max-w-3xl"> This table shows every DoubleTrends&trade; signal since 2004 with the 90-day, 1-year, and 2-year forward returns from the S&amp;P 500. Subscribers receive the full record signal by signal, with each outcome shown as it stands. </p>
 </div>
 <div aria-hidden="true" style="height: 0.75rem;"></div>
 <div class="terminal-shell overflow-hidden">
@@ -98,7 +98,7 @@
 </tbody>
 </table>
 </div>
-<div class="px-5 py-3 flex items-center justify-between gap-4 flex-wrap" style="border-top: 1px solid rgba(30,37,48,0.10); background: rgba(251,250,247,0.82);">
+<div class="terminal-footer px-5 py-3 flex items-center justify-between gap-4 flex-wrap">
 <span class="data-label" id="history-summary" style="color: #5A6473;">&mdash;</span>
 <span class="data-label" style="color: #5A6473;">Forward returns computed at query time. <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--gain-rgb), 1);"></span> positive, <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--loss-rgb), 1);"></span> negative, <em>pending</em> not yet matured.</span>
 </div>
