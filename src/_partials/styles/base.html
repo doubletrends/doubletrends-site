@@ -1,0 +1,33 @@
+  <style>
+    /* Brand semantic colors — single source of truth for gain/loss tints used
+       in history-table.js (return cells) and replay-chart.js (candle bodies).
+       Mirrors the regime CSS-var pattern on #replay-shell; lives on :root so
+       any consumer can read via getComputedStyle(documentElement). */
+    :root {
+      --gain-rgb: 46, 158, 123;
+      --loss-rgb: 200, 65, 59;
+    }
+    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: #FBFAF7;
+    }
+    /* Site texture: a fine grid with a crosshair node at each intersection, held in a
+       fixed viewport overlay that fades top→down (strong at the top of the screen, gone
+       by ~70%). Tunables: tile = background-size; grid faintness = first path stroke alpha
+       (0.05); crosshair strength = second path stroke alpha (0.20); fade reach = mask stop. */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 0V24M0 12H24' stroke='rgba(30,37,48,0.05)' stroke-width='1'/%3E%3Cpath d='M12 8V16M8 12H16' stroke='rgba(30,37,48,0.20)' stroke-width='1.2'/%3E%3C/svg%3E");
+      background-size: 24px 24px;
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+              mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+  </style>
