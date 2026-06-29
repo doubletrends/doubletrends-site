@@ -323,6 +323,58 @@
       background: #5A6473;
     }
 
+    /* ── Home hero ───────────────────────────────────────────────── */
+    .home-hero { background-color: #2A3340; }
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+    .hero-top {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    .hero-top-grid {
+      display: grid;
+      grid-template-columns: 60fr 30fr 10fr;
+      gap: 0 3.5rem;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-bottom { flex: 0 0 auto; }
+    .hero-lede {
+      font-size: 1.1rem;
+      color: rgba(251,250,247,0.82);
+      max-width: 34rem;
+    }
+    .hero-ai-panel { padding-left: 3rem; }
+    .ask-ai-heading {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      line-height: 1.3;
+      color: rgba(251,250,247,0.88);
+      margin-bottom: 0.6rem;
+      white-space: nowrap;
+    }
+    .hero-strip-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+    }
+    .hero-strip-label {
+      color: rgba(251,250,247,0.40);
+      font-size: 1.4em;
+    }
+    .hero-strip-disclaimer {
+      color: rgba(251,250,247,0.26);
+      margin-top: 0.75rem;
+    }
+
     /* ── Overline / category tag ─────────────────────────────────── */
     .tag-overline {
       font-family: 'JetBrains Mono', monospace;

@@ -14,26 +14,45 @@
   }
 
   function initSection(section) {
-    var w = section.offsetWidth, h = section.offsetHeight;
-    if (!w || !h) return;
-
     var canvas = document.createElement('canvas');
-    canvas.width = w; canvas.height = h;
     canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;-webkit-mask-image:linear-gradient(to right,transparent 0%,transparent 50%,rgba(0,0,0,0.15) 60%,rgba(0,0,0,0.45) 75%,rgba(0,0,0,0.70) 90%,rgba(0,0,0,0.80) 100%);mask-image:linear-gradient(to right,transparent 0%,transparent 50%,rgba(0,0,0,0.15) 60%,rgba(0,0,0,0.45) 75%,rgba(0,0,0,0.70) 90%,rgba(0,0,0,0.80) 100%);';
     section.insertBefore(canvas, section.firstChild);
 
     var ctx = canvas.getContext('2d');
-    var cols = Math.ceil(w / TILE);
-    var rows = Math.ceil(h / TILE);
+    var w = 0;
+    var h = 0;
+    var cols = 0;
+    var rows = 0;
     var squares = {};
     var fades = [];
     var rafId = null;
+    var resizeRafId = null;
 
-    for (var c = 0; c < cols; c++) {
-      var p = prob(c / (cols - 1 || 1));
-      for (var r = 0; r < rows; r++) {
-        if (Math.random() < p) squares[c + ',' + r] = ALPHA;
+    function seedSquares() {
+      squares = {};
+      fades = [];
+      for (var c = 0; c < cols; c++) {
+        var p = prob(c / (cols - 1 || 1));
+        for (var r = 0; r < rows; r++) {
+          if (Math.random() < p) squares[c + ',' + r] = ALPHA;
+        }
       }
+    }
+
+    function resize() {
+      var nextW = section.offsetWidth;
+      var nextH = section.offsetHeight;
+      if (!nextW || !nextH) return;
+      if (nextW === w && nextH === h) return;
+
+      w = nextW;
+      h = nextH;
+      canvas.width = w;
+      canvas.height = h;
+      cols = Math.ceil(w / TILE);
+      rows = Math.ceil(h / TILE);
+      seedSquares();
+      if (!rafId) rafId = requestAnimationFrame(render);
     }
 
     function render(now) {
@@ -57,9 +76,10 @@
       rafId = fades.length ? requestAnimationFrame(render) : null;
     }
 
-    render(performance.now());
+    resize();
 
     function swap() {
+      if (!cols || !rows) return;
       var fadingKeys = {};
       for (var i = 0; i < fades.length; i++) fadingKeys[fades[i].key] = true;
       var stable = Object.keys(squares).filter(function (k) { return !fadingKeys[k]; });
@@ -81,10 +101,24 @@
       if (!rafId) rafId = requestAnimationFrame(render);
     }
 
-    var swapsPerTick = Math.max(1, Math.ceil(rows / 3));
     setInterval(function () {
+      var swapsPerTick = Math.max(1, Math.ceil(rows / 3));
       for (var i = 0; i < swapsPerTick; i++) swap();
     }, SWAP_INTERVAL);
+
+    function requestResize() {
+      if (resizeRafId) return;
+      resizeRafId = requestAnimationFrame(function () {
+        resizeRafId = null;
+        resize();
+      });
+    }
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(requestResize).observe(section);
+    } else {
+      window.addEventListener('resize', requestResize);
+    }
   }
 
   document.querySelectorAll('.decor-banner:not(.decor-banner-dark)').forEach(initSection);

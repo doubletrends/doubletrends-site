@@ -1,111 +1,219 @@
-<section class="decor-banner decor-banner-dark home-hero relative w-full min-h-screen flex items-center overflow-hidden" style="background-color: #2A3340;">
-<img src="{{ROOT}}public/product/hero-1.png" alt="" aria-hidden="true"
-     class="home-decor-img absolute inset-y-0 right-0 h-full w-2/3 object-cover object-right pointer-events-none"
- />
-<div class="home-hero-content relative z-10 w-full pt-32 pb-20">
-<div class="home-container max-w-site mx-auto px-8 flex flex-col gap-9">
-<span class="tag-overline">Private Alerts &middot; S&amp;P 500 Index</span>
-<div class="max-w-4xl">
-<h1 class="text-5xl md:text-7xl lg:text-[5.6rem] font-bold font-noto leading-[0.98] text-grad-hero mb-7"> Know which dip is the one to buy. </h1>
-<p class="text-lg md:text-xl font-open leading-relaxed text-dark max-w-3xl"> DoubleTrends&trade; is a rules-based S&amp;P 500 signal for long-term ETF investors in VOO, SPY, and IVV. You get one Telegram alert on the day the rule fires, plus a private bot for the live market read on any other day. </p>
-</div>
-<div class="flex flex-wrap gap-3">
-<a href="#track-record" class="btn-light">See it live</a>
-<a href="#history" class="btn-outline">Historical Returns</a>
-</div>
-<p class="data-label" style="color: #FBFAF7;"> Rules-based S&amp;P 500 index signal. Educational market information only. Not financial, investment, or trading advice. </p>
-</div>
-</div>
+<!-- ══════════════════════════════════════════════════════════════
+     HERO
+     ══════════════════════════════════════════════════════════════ -->
+<section class="decor-banner decor-banner-dark home-hero relative w-full h-screen overflow-hidden">
+  <img src="{{ROOT}}public/product/hero-1.png" alt="" aria-hidden="true"
+       class="home-decor-img absolute inset-y-0 right-0 h-full w-2/3 object-cover object-right pointer-events-none" />
+
+  <div class="relative z-10 h-full home-container max-w-site mx-auto px-8">
+    <div class="hero-inner">
+
+      <!-- Top: brand + ask AI -->
+      <div class="hero-top">
+        <div class="hero-top-grid">
+
+          <!-- Brand / who we are -->
+          <div class="flex flex-col gap-5">
+            <span class="tag-overline">Market Regime &middot; Quantitative Research</span>
+            <h1 class="text-2xl md:text-4xl lg:text-[2.8rem] font-bold font-noto leading-[0.98] text-grad-hero">Discipline over Hype.</h1>
+            <p class="hero-lede font-open leading-relaxed">
+              We are a quantitative market research firm focused on one goal, and one goal only: helping S&amp;P 500 investors navigate selloffs with discipline, clarity, and evidence. Our mission is to replace noise with rules, hype with research, and reactive decisions with a calmer framework for understanding market stress.
+            </p>
+            <div class="flex gap-4">
+              <a href="#track-record" class="hero-btn">View Signal</a>
+              <a href="#history" class="hero-btn">Historical Returns</a>
+            </div>
+          </div>
+
+          <!-- Ask AI -->
+          <div class="hero-ai-panel flex flex-col">
+            <p class="ask-ai-heading">Ask your favorite AI about us</p>
+            <div class="flex flex-col gap-2">
+              <a href="https://claude.ai/new?q=Explain+to+me+how+retail+investors+should+easily+understand+the+institutional+rules+behind+the+DoubleTrends%E2%84%A2+signal%3F" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-ai">
+                <img src="{{ROOT}}public/product/icon-claude.svg" alt="" aria-hidden="true">
+                Ask Claude
+              </a>
+              <a href="https://chatgpt.com/?q=Explain+to+me+how+retail+investors+should+easily+understand+the+institutional+rules+behind+the+DoubleTrends%E2%84%A2+signal%3F" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-ai">
+                <img src="{{ROOT}}public/product/icon-chatgpt.svg" alt="" aria-hidden="true">
+                Ask ChatGPT
+              </a>
+              <a href="https://www.google.com/search?udm=50&q=Explain+to+me+how+retail+investors+should+easily+understand+the+institutional+rules+behind+the+DoubleTrends%E2%84%A2+signal%3F" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-ai">
+                <img src="{{ROOT}}public/product/icon-gemini.svg" alt="" aria-hidden="true">
+                Ask Gemini
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Bottom: story strip -->
+      <div class="hero-bottom">
+        <div class="hero-strip-head">
+          <span class="data-label hero-strip-label">Featured</span>
+        </div>
+        <div class="story-carousel" data-story-carousel>
+          <div class="story-carousel-frame">
+            <button class="hero-btn hero-btn-nav story-carousel-btn-prev" type="button" data-story-prev aria-label="Show previous stories">
+              <span aria-hidden="true">&larr;</span>
+            </button>
+            <div class="story-viewport">
+              <div class="story-strip">
+
+                <a href="{{ROOT}}academy/" class="story-card">
+                  <div class="story-card-media"><img src="{{ROOT}}public/company/quant.png" alt="" loading="lazy" /></div>
+                  <div class="story-card-body">
+                    <span class="story-card-tag">Academy</span>
+                  </div>
+                </a>
+
+                <a href="{{ROOT}}method.html" class="story-card">
+                  <div class="story-card-media"><img src="{{ROOT}}public/academy/dtep-1.png" alt="" loading="lazy" /></div>
+                  <div class="story-card-body">
+                    <span class="story-card-tag">How It Works</span>
+                  </div>
+                </a>
+
+                <a href="{{ROOT}}academy/maximum-drawdown.html" class="story-card">
+                  <div class="story-card-media"><img src="{{ROOT}}public/academy/mdd-1.png" alt="" loading="lazy" /></div>
+                  <div class="story-card-body">
+                    <span class="story-card-tag">Maximum Drawdown</span>
+                  </div>
+                </a>
+
+                <a href="{{ROOT}}academy/volume-profile-vwap.html" class="story-card">
+                  <div class="story-card-media"><img src="{{ROOT}}public/academy/volume-profile.png" alt="" loading="lazy" /></div>
+                  <div class="story-card-body">
+                    <span class="story-card-tag">Volume Profile</span>
+                  </div>
+                </a>
+
+                <a href="{{ROOT}}company/mission.html" class="story-card">
+                  <div class="story-card-media"><img src="{{ROOT}}public/company/office.png" alt="" loading="lazy" /></div>
+                  <div class="story-card-body">
+                    <span class="story-card-tag">Company</span>
+                  </div>
+                </a>
+
+                <a href="{{ROOT}}product.html" class="story-card">
+                  <div class="story-card-media"><img src="{{ROOT}}public/product/pricing.jpg" alt="" loading="lazy" /></div>
+                  <div class="story-card-body">
+                    <span class="story-card-tag">Pricing</span>
+                  </div>
+                </a>
+
+              </div>
+            </div>
+            <button class="hero-btn hero-btn-nav story-carousel-btn-next" type="button" data-story-next aria-label="Show next stories">
+              <span aria-hidden="true">&rarr;</span>
+            </button>
+          </div>
+        </div>
+        <p class="data-label hero-strip-disclaimer">Rules-based S&amp;P 500 index signal. Educational market information only. Not financial, investment, or trading advice.</p>
+      </div>
+
+    </div>
+  </div>
 </section>
-<section id="track-record" class="w-full" style="background: transparent;">
-<div class="home-container max-w-site mx-auto px-8 py-20">
-<div class="flex flex-col">
-<span class="tag-overline mb-5">See It Live</span>
-<h2 class="section-heading mb-5"> Ten years. Every dip. </h2>
-<p class="section-body max-w-3xl"> This is a point-in-time replay of the DoubleTrends&trade; S&amp;P 500 signal from July 2016 onward. The rule fired at every major stress point in that window including the 2018 Q4 drawdown, the COVID crash, the 2022 bear-market low, the 2025 tariff crash, and the March-April 2026 Iran war selloff. </p>
-</div>
-<div aria-hidden="true" style="height: 0.75rem;"></div>
-<div id="replay-shell" class="terminal-shell relative overflow-hidden isolate">
-<div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-4">
-<div class="flex items-center gap-3 flex-wrap">
-<span class="status-dot"></span>
-<span class="data-label !text-white">DoubleTrends™ Signal Terminal (S&amp;P 500 &middot; Since 2016)</span>
-</div>
-</div>
-<div class="relative overflow-hidden">
-<div class="flex items-center justify-between gap-4 flex-wrap px-5 py-3" style="border-bottom: 1px solid rgba(30,37,48,0.10);">
-<div class="flex items-center gap-2 flex-wrap">
-<span class="status-pill" id="replay-state-pill"><span class="status-dot"></span>Live replay</span>
-<span class="status-pill">Public data only</span>
-</div>
-<div class="flex items-center gap-2 flex-wrap">
-<span class="status-pill" id="signal-pill">Signals: <b style="color:#C2410C;">0</b></span>
-<span class="status-pill" id="date-pill">Date: <b style="color:#C2410C;">&mdash;</b></span>
-</div>
-</div>
-<div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(var(--replay-alert-rgb), var(--replay-flash-alpha)); transition: opacity 0.45s ease;"></div>
-</div>
-<div id="chart" class="w-full" data-replay-src="{{ROOT}}public/replay/sp500.json" style="height: 480px;"></div>
-<div class="relative overflow-hidden">
-<div class="terminal-footer flex items-center justify-between gap-4 flex-wrap px-5 py-4">
-<div class="flex items-center gap-4 flex-wrap">
-<button id="replayBtn" class="btn-light" type="button"><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L9 5.5L0 11Z"/></svg>Replay</button>
-<button id="fastForwardBtn" class="btn-dark" type="button"><svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L6 5.5L0 11Z"/><path d="M7 0L13 5.5L7 11Z"/></svg>Fast forward</button>
-<span class="data-label" id="status">loading...</span>
-</div>
-<div class="flex items-center gap-4 flex-wrap">
-<span class="data-label"><span class="replay-legend-swatch" data-regime="calm"></span> Calm</span>
-<span class="data-label"><span class="replay-legend-swatch" data-regime="correction"></span> Correction</span>
-<span class="data-label"><span class="replay-legend-swatch" data-regime="panic"></span> Panic</span>
-<span class="data-label"><span class="replay-legend-swatch" data-regime="bear"></span> Bear</span>
-</div>
-</div>
-<div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(var(--replay-alert-rgb), var(--replay-flash-alpha)); transition: opacity 0.45s ease;"></div>
-</div>
-</div>
-<p class="data-label mt-4" style="color: #5A6473;"> Point-in-time causal replay: on each date the system only sees data available back then, not future frames. </p>
-</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SIGNAL REPLAY
+     ══════════════════════════════════════════════════════════════ -->
+<section id="track-record" class="w-full">
+  <div class="home-container max-w-site mx-auto px-8 py-20">
+    <div class="flex flex-col">
+      <span class="tag-overline mb-5">Signal Replay</span>
+      <h2 class="section-heading mb-5">S&amp;P 500 &middot; 2016–present</h2>
+      <p class="section-body max-w-3xl">Point-in-time replay of the DoubleTrends&trade; signal from July 2016 onward. On each date, the system only sees data available at that point — no future information. The rule fired at every major stress event in this window: 2018 Q4, the COVID crash, the 2022 bear-market low, the 2025 tariff crash, and the March–April 2026 Iran war selloff.</p>
+    </div>
+    <div aria-hidden="true" style="height: 0.75rem;"></div>
+    <div id="replay-shell" class="terminal-shell relative overflow-hidden isolate">
+      <div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-4">
+        <div class="flex items-center gap-3 flex-wrap">
+          <span class="status-dot"></span>
+          <span class="data-label !text-white">DoubleTrends™ Signal Terminal (S&amp;P 500 &middot; Since 2016)</span>
+        </div>
+      </div>
+      <div class="relative overflow-hidden">
+        <div class="flex items-center justify-between gap-4 flex-wrap px-5 py-3" style="border-bottom: 1px solid rgba(30,37,48,0.10);">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="status-pill" id="replay-state-pill"><span class="status-dot"></span>Live replay</span>
+            <span class="status-pill">Public data only</span>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="status-pill" id="signal-pill">Signals: <b style="color:#C2410C;">0</b></span>
+            <span class="status-pill" id="date-pill">Date: <b style="color:#C2410C;">&mdash;</b></span>
+          </div>
+        </div>
+        <div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(var(--replay-alert-rgb), var(--replay-flash-alpha)); transition: opacity 0.45s ease;"></div>
+      </div>
+      <div id="chart" class="w-full" data-replay-src="{{ROOT}}public/replay/sp500.json" style="height: 480px;"></div>
+      <div class="relative overflow-hidden">
+        <div class="terminal-footer flex items-center justify-between gap-4 flex-wrap px-5 py-4">
+          <div class="flex items-center gap-4 flex-wrap">
+            <button id="replayBtn" class="btn-light" type="button"><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L9 5.5L0 11Z"/></svg>Replay</button>
+            <button id="fastForwardBtn" class="btn-dark" type="button"><svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L6 5.5L0 11Z"/><path d="M7 0L13 5.5L7 11Z"/></svg>Fast forward</button>
+            <span class="data-label" id="status">loading...</span>
+          </div>
+          <div class="flex items-center gap-4 flex-wrap">
+            <span class="data-label"><span class="replay-legend-swatch" data-regime="calm"></span> Calm</span>
+            <span class="data-label"><span class="replay-legend-swatch" data-regime="correction"></span> Correction</span>
+            <span class="data-label"><span class="replay-legend-swatch" data-regime="panic"></span> Panic</span>
+            <span class="data-label"><span class="replay-legend-swatch" data-regime="bear"></span> Bear</span>
+          </div>
+        </div>
+        <div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(var(--replay-alert-rgb), var(--replay-flash-alpha)); transition: opacity 0.45s ease;"></div>
+      </div>
+    </div>
+    <p class="data-label mt-4" style="color: #5A6473;">Point-in-time causal replay: on each date the system only sees data available back then, not future frames.</p>
+  </div>
 </section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SIGNAL HISTORY
+     ══════════════════════════════════════════════════════════════ -->
 <section id="history" class="decor-banner relative w-full overflow-hidden">
-<div class="home-container relative z-10 max-w-site mx-auto px-8 py-20">
-<div class="flex flex-col max-w-3xl">
-<span class="tag-overline mb-5">Historical Returns</span>
-<h2 class="section-heading mb-5"> Signal fired. Real returns. </h2>
-<p class="section-body max-w-3xl"> This table shows every DoubleTrends&trade; signal since 2004 with the 90-day, 1-year, and 2-year forward returns from the S&amp;P 500. Subscribers receive the full record signal by signal, with each outcome shown as it stands. </p>
-</div>
-<div aria-hidden="true" style="height: 0.75rem;"></div>
-<div class="terminal-shell overflow-hidden">
-<div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-3">
-<div class="flex items-center gap-3">
-<span class="status-dot"></span>
-<span class="data-label !text-white">DoubleTrends™ Signal History (S&amp;P 500 &middot; Since 2004)</span>
-</div>
-</div>
-<div id="history-table-wrap" class="overflow-x-auto" style="background: #FBFAF7;">
-<table id="history-table" class="w-full text-sm font-mono" style="border-collapse: collapse;">
-<thead>
-<tr style="border-bottom: 1px solid rgba(30,37,48,0.10);">
-<th class="text-left px-5 py-3 font-semibold" style="color: #5A6473;">Signal Date</th>
-<th class="text-left px-3 py-3 font-semibold" style="color: #5A6473;">Regime</th>
-<th class="text-right px-3 py-3 font-semibold" style="color: #5A6473;">Market Close</th>
-<th class="text-right px-3 py-3 font-semibold" style="color: #5A6473;">90d Return</th>
-<th class="text-right px-3 py-3 font-semibold" style="color: #5A6473;">1y Return</th>
-<th class="text-right px-5 py-3 font-semibold" style="color: #5A6473;">2y Return</th>
-</tr>
-</thead>
-<tbody id="history-table-body">
-<tr><td colspan="6" class="px-5 py-6 text-center" style="color: #5A6473;">loading...</td></tr>
-</tbody>
-</table>
-</div>
-<div class="terminal-footer px-5 py-3 flex items-center justify-between gap-4 flex-wrap">
-<span class="data-label" id="history-summary" style="color: #5A6473;">&mdash;</span>
-<span class="data-label" style="color: #5A6473;">Forward returns computed at query time. <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--gain-rgb), 1);"></span> positive, <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--loss-rgb), 1);"></span> negative, <em>pending</em> not yet matured.</span>
-</div>
-</div>
-</div>
+  <div class="home-container relative z-10 max-w-site mx-auto px-8 py-20">
+    <div class="flex flex-col max-w-3xl">
+      <span class="tag-overline mb-5">Signal History</span>
+      <h2 class="section-heading mb-5">All signals &middot; 2004–present</h2>
+      <p class="section-body max-w-3xl">Every DoubleTrends&trade; signal since 2004 with 90-day, 1-year, and 2-year forward S&amp;P 500 returns. Outcomes shown as they stand at query time; pending entries have not yet matured.</p>
+    </div>
+    <div aria-hidden="true" style="height: 0.75rem;"></div>
+    <div class="terminal-shell overflow-hidden">
+      <div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-3">
+        <div class="flex items-center gap-3">
+          <span class="status-dot"></span>
+          <span class="data-label !text-white">DoubleTrends™ Signal History (S&amp;P 500 &middot; Since 2004)</span>
+        </div>
+      </div>
+      <div id="history-table-wrap" class="overflow-x-auto" style="background: #FBFAF7;">
+        <table id="history-table" class="w-full text-sm font-mono" style="border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 1px solid rgba(30,37,48,0.10);">
+              <th class="text-left px-5 py-3 font-semibold" style="color: #5A6473;">Signal Date</th>
+              <th class="text-left px-3 py-3 font-semibold" style="color: #5A6473;">Regime</th>
+              <th class="text-right px-3 py-3 font-semibold" style="color: #5A6473;">Market Close</th>
+              <th class="text-right px-3 py-3 font-semibold" style="color: #5A6473;">90d Return</th>
+              <th class="text-right px-3 py-3 font-semibold" style="color: #5A6473;">1y Return</th>
+              <th class="text-right px-5 py-3 font-semibold" style="color: #5A6473;">2y Return</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body">
+            <tr><td colspan="6" class="px-5 py-6 text-center" style="color: #5A6473;">loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="terminal-footer px-5 py-3 flex items-center justify-between gap-4 flex-wrap">
+        <span class="data-label" id="history-summary" style="color: #5A6473;">&mdash;</span>
+        <span class="data-label" style="color: #5A6473;">Forward returns computed at query time. <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--gain-rgb), 1);"></span> positive, <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--loss-rgb), 1);"></span> negative, <em>pending</em> not yet matured.</span>
+      </div>
+    </div>
+  </div>
 </section>
+
 {{ROUTING_CARD}}
 <script src="{{ROOT}}public/js/lightweight-charts.standalone.production.js"></script>
 <script src="{{ROOT}}public/js/replay-chart.js"></script>
 <script src="{{ROOT}}public/js/history-table.js"></script>
+<script src="{{ROOT}}public/js/story-strip.js"></script>

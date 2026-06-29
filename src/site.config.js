@@ -79,8 +79,8 @@ const pages = [
   page('index.html', {
     priority: 1.0,
     kind: 'home',
-    title: 'S&P 500 Signal for ETF Investors',
-    desc:  'A rules-based S&P 500 signal built for ETF investors using VOO, SPY, or IVV. Review the live replay, inspect every dated signal, and test the Telegram bot in your browser.',
+    title: 'Discipline over Hype',
+    desc:  'A quantitative S&P 500 market regime signal for ETF investors. Rules over noise, discipline over hype — live replay and full signal history from 2016.',
     routingCard: {
       pill: '/METHOD',
       headline: 'Now look under the hood.',
@@ -254,7 +254,7 @@ const pages = [
 ];
 
 const SITE_NAME = 'DoubleTrends™';
-const SITE_DESCRIPTION = 'Rules-based S&P 500 index alerts and research notes for ETF investors.';
+const SITE_DESCRIPTION = 'Rules-based S&P 500 market regime signal and quantitative research for ETF investors.';
 const ARTICLE_PUBLISHED = '2026-05-25';
 
 module.exports = {
