@@ -25,5 +25,16 @@
       /* Footer navigation links */
       .foot-link       { @apply text-muted text-xs transition-colors; }
       .foot-link:hover { @apply text-dark; }
+      /* Section headings — shared across index/method/product */
+      .section-heading {
+        @apply text-4xl md:text-5xl font-noto font-bold leading-[1.05];
+        background-image: linear-gradient(140deg, #1E2530 0%, #5A6473 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .section-body { @apply font-open text-lg leading-relaxed; color: #5A6473; }
+      .panel-heading { @apply font-noto font-semibold text-lg md:text-xl mb-3; color: #C2410C; }
+      .panel-body    { @apply font-open text-sm leading-relaxed; color: #5A6473; }
     }
   </style>
