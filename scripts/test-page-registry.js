@@ -4,7 +4,7 @@ const { pages } = require('../src/site.config');
 const { report } = require('./test-utils');
 
 const SRC_PAGES    = path.join(__dirname, '..', 'src', 'pages');
-const ALLOWED_KINDS = new Set(['home', 'webpage', 'collection', 'services', 'contact', 'about', 'article']);
+const ALLOWED_KINDS = new Set(['home', 'webpage', 'collection', 'services', 'contact', 'about', 'article', 'product']);
 
 function rootFor(src) {
   const depth = src.split('/').length - 1;

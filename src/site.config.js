@@ -109,8 +109,15 @@ const pages = [
   }),
   page('product.html', {
     priority: 0.9,
+    kind: 'product',
     title: 'Pricing, Trial, and Telegram Delivery',
-    desc:  'See DoubleTrends™ pricing at USD $149 per year, the 30-day free trial, refund rules, private Telegram delivery, and what subscribers receive before they buy.',
+    desc:  'DoubleTrends™ costs USD $12.42 per month, billed annually at $149/year. Includes a 30-day free trial, private Telegram delivery, and a refund window.',
+    schema: {
+      productName: 'DoubleTrends™ Annual Signal Subscription',
+      price: '149.00',
+      monthlyPrice: 12.42,
+      priceCurrency: 'USD',
+    },
   }),
   page('academy/index.html', {
     priority: 0.9,

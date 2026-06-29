@@ -215,6 +215,38 @@ function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher,
     });
   }
 
+  if (page.kind === 'product') {
+    nodes.push({
+      '@type': 'Product',
+      '@id': `${canonical}#product`,
+      name: schema.productName || page.title,
+      description: page.desc,
+      brand: { '@type': 'Brand', name: 'DoubleTrends™' },
+      offers: {
+        '@type': 'Offer',
+        url: canonical,
+        price: schema.price || '149.00',
+        priceCurrency: schema.priceCurrency || 'USD',
+        availability: 'https://schema.org/InStock',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: schema.monthlyPrice || 12.42,
+          priceCurrency: schema.priceCurrency || 'USD',
+          referenceQuantity: {
+            '@type': 'QuantitativeValue',
+            value: '1',
+            unitCode: 'MON',
+          },
+          billingDuration: {
+            '@type': 'QuantitativeValue',
+            value: '12',
+            unitCode: 'MON',
+          },
+        },
+      },
+    });
+  }
+
   if (page.kind === 'article') {
     nodes.push({
       '@type': 'Article',
