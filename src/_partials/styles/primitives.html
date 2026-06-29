@@ -86,6 +86,28 @@
     }
     .btn-dark:hover { background: #1E2530; transform: translateY(-1px); }
 
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #FBFAF7;
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.75rem;
+      border: 1px solid rgba(251,250,247,0.40);
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+    }
+    .btn-outline:hover {
+      border-color: #FBFAF7;
+      background: rgba(251,250,247,0.08);
+      transform: translateY(-1px);
+    }
+
     /* ── Accordion ──────────────────────────────────────────────── */
     details[open] summary .acc-icon { transform: rotate(180deg); }
     #faq details {
@@ -361,9 +383,9 @@
       position: absolute;
       inset: 0;
       z-index: -1;
-      background: rgba(255,255,255,0.60);
-      -webkit-backdrop-filter: blur(60px) saturate(1.8);
-      backdrop-filter: blur(60px) saturate(1.8);
+      background: rgba(255,255,255,0.80);
+      -webkit-backdrop-filter: blur(35px) saturate(1.6);
+      backdrop-filter: blur(35px) saturate(1.6);
     }
 
     /* ── Nav dropdowns (desktop) ────────────────────────────── */
@@ -400,11 +422,11 @@
       position: absolute;
       top: calc(100% + 4px);
       left: 0;
-      background: rgba(255,255,255,0.88);
-      -webkit-backdrop-filter: blur(50px) saturate(1.6);
-      backdrop-filter: blur(50px) saturate(1.6);
+      background: rgba(255,255,255,0.80);
+      -webkit-backdrop-filter: blur(35px) saturate(1.6);
+      backdrop-filter: blur(35px) saturate(1.6);
       border: 1px solid rgba(30,37,48,0.10);
-      box-shadow: 0 24px 60px rgba(30,37,48,0.12);
+      box-shadow: 0 10px 20px rgba(30,37,48,0.10);
       min-width: 220px;
       z-index: 50;
       opacity: 0;
