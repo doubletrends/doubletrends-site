@@ -1,8 +1,8 @@
 # DoubleTrends™ Frontend
 
-Static frontend for `doubletrends.com`.
+Marketing site for DoubleTrends™, served at  `doubletrends.com`.
 
-This repo builds the marketing site, academy pages, brand page, replay chart, history table, and the public bot/brief sandbox. Output is written to `dist/` and deployed as a Cloudflare Worker static asset site.
+Static HTML/CSS/JS — no framework. A Node.js build step injects partials and generates metadata; the output is deployed as a Cloudflare Worker (Static Assets).
 
 ## Deployment
 
@@ -230,91 +230,7 @@ This keeps shared partial links working from nested directories without manually
 
 ### Tests
 
-- `npm run test`
-  Run the full frontend validation suite.
-- `npm run test:links`
-  Build the site and verify internal links, anchors, and unresolved placeholders in built HTML.
-- `npm run test:trademark`
-  Validate brand and entity naming across tracked text sources.
-- `npm run test:metadata`
-  Build the site and verify metadata completeness and title-prefix rules.
-- `npm run test:registry`
-  Validate `src/site.config.js` page registry integrity.
-- `npm run test:schema`
-  Build the site and verify JSON-LD rules for article and non-article pages.
-- `npm run test:overlines`
-  Verify every page in academy, company, and legal carries a correctly formatted overline matching its section.
-- `npm run test:nav`
-  Verify every sub-page that appears in nav dropdowns also appears in the matching footer column and index card, and vice versa.
-- `npm run test:headings`
-  Verify heading hierarchy consistency across company pages.
-
-## Test Contracts
-
-### Metadata completeness
-
-`test:metadata` checks each built HTML page for:
-
-- `<title>`
-- meta description
-- robots meta
-- canonical link
-- `og:title`
-- `og:description`
-- `twitter:title`
-- `twitter:description`
-- at least one JSON-LD block
-
-It also enforces:
-
-- `<title>`, `og:title`, and `twitter:title` must match
-- all three must start with `DoubleTrends™ | `
-- description, `og:description`, and `twitter:description` must match
-
-### Trademark and entity naming
-
-`test:trademark` enforces one naming rule across tracked source files:
-
-- brand references must use `DoubleTrends™`
-- the legal entity name is allowed only as `DoubleTrends L.L.C.`
-- an unmarked brand-name literal is not allowed unless it is immediately followed by ` L.L.C.`
-
-### Page registry integrity
-
-`test:registry` checks `src/site.config.js` for:
-
-- unique `src` values
-- valid `.html` output paths
-- source-file existence under `src/pages/`
-- valid `kind`
-- required `title` and `desc`
-- valid priority ranges
-- expected `root` derivation
-- article pages living under `academy/`
-
-### Overline consistency
-
-`test:overlines` checks every HTML page under `academy/`, `company/`, and `legal/` for a `.tag-overline` element whose text matches the expected section prefix (e.g. `Academy ·`, `Company ·`, `Legal ·`).
-
-### Nav / footer / index consistency
-
-`test:nav` cross-checks three surfaces for each sub-page — nav dropdown, footer column, and section index card — and fails if a page appears in one but not the others.
-
-Pages intentionally excluded from navigation (but still built and accessible) are listed in the `NAV_EXCLUDED` set at the top of `scripts/test-nav-consistency.js`. Add a page's canonical path there to suppress the nav-consistency check for it without removing it from the build or sitemap.
-
-### Heading consistency
-
-`test:headings` checks that company pages follow a consistent heading hierarchy.
-
-### Schema rules
-
-`test:schema` checks built JSON-LD for:
-
-- article pages must emit `Article`
-- article pages must declare `schema.articleSection`
-- article pages must declare non-empty `schema.about`
-- non-article pages must not emit `Article`
-- academy content pages must emit breadcrumbs
+- `npm run test` — run the full validation suite (see [`scripts/README.md`](scripts/README.md) for individual commands and contracts)
 
 ## Local Workflow
 
