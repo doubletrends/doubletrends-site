@@ -4,6 +4,12 @@ Static frontend for `doubletrends.com`.
 
 This repo builds the marketing site, academy pages, brand page, replay chart, history table, and the public bot/brief sandbox. Output is written to `dist/` and deployed as a Cloudflare Worker static asset site.
 
+## Deployment
+
+Wired to the GitHub repo — a commit and push to `main` auto-deploys to `doubletrends.com` via the Cloudflare Git integration.
+
+`npm run deploy` (`node build.js` → `wrangler deploy`) is available for quicker change visualization without a Git push.
+
 ## Overview
 
 ### What this repo is
@@ -370,39 +376,6 @@ This repo is frontend-only, but it depends on data artifacts from the sibling ba
 - brief-demo export source: `../doubletrends-backend/worker/src/export_public_brief_demo.ts`
 
 If `doubletrends-backend` is missing or stale, `npm run replay-data` can fail or produce outdated frontend demo data.
-
-## Deployment
-
-There are two deployment paths for this repo.
-
-### 1. Git-driven production deploy
-
-The primary production path is Cloudflare's Git-connected deployment flow.
-
-When configured in Cloudflare, a push to the tracked branch triggers a production deploy automatically. In that setup, day-to-day releases do not require running `wrangler deploy` locally.
-
-### 2. Manual Wrangler deploy
-
-Wrangler remains available as a manual fallback.
-
-Use it when you need to:
-
-- redeploy without going through Git
-- verify deployment config locally
-- recover from a dashboard-side or automation issue
-
-Run:
-
-```bash
-npm run deploy
-```
-
-That runs:
-
-1. `node build.js`
-2. `wrangler deploy`
-
-`wrangler.jsonc` remains the Worker/assets deployment config source in the repo, with `dist/` as the asset directory.
 
 ## Nav Bar Glass Effect
 
