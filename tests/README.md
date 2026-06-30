@@ -1,4 +1,4 @@
-# scripts/
+# tests/
 
 Frontend validation suite. All scripts are invoked via `npm run test:*`; `npm run test` runs them all.
 

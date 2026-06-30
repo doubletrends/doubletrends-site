@@ -230,7 +230,7 @@ This keeps shared partial links working from nested directories without manually
 
 ### Tests
 
-- `npm run test` — run the full validation suite (see [`scripts/README.md`](scripts/README.md) for individual commands and contracts)
+- `npm run test` — run the full validation suite (see [`tests/README.md`](tests/README.md) for individual commands and contracts)
 
 ## Local Workflow
 
