@@ -230,7 +230,7 @@ This keeps shared partial links working from nested directories without manually
 
 ### Tests
 
-- `npm test`
+- `npm run test`
   Run the full frontend validation suite.
 - `npm run test:links`
   Build the site and verify internal links, anchors, and unresolved placeholders in built HTML.
@@ -339,7 +339,7 @@ http://127.0.0.1:8080
 4. Before shipping config or content changes, run:
 
 ```bash
-npm test
+npm run test
 ```
 
 ## Replay Data
