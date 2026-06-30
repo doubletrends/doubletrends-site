@@ -15,10 +15,11 @@
     "test:overlines": "node build.js && node scripts/test-overlines.js",
     "test:nav-consistency": "node build.js && node scripts/test-nav-consistency.js",
     "test:headings": "node build.js && node scripts/test-heading-consistency.js",
-    "dev": "node build.js && node scripts/dev-server.js",
+    "dev": "node build.js && wrangler dev",
     "deploy": "node build.js && wrangler deploy"
   },
   "devDependencies": {
+    "wrangler": "^4",
     "@fontsource/dm-sans": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/syne": "^5.2.7",
