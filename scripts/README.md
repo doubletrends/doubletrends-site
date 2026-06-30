@@ -1,0 +1,56 @@
+# scripts/
+
+Frontend validation suite. All scripts are invoked via `npm run test:*`; `npm run test` runs them all.
+
+## Commands
+
+- `npm run test` — run the full suite
+- `npm run test:links` — verify internal links, anchors, and unresolved placeholders in built HTML
+- `npm run test:trademark` — validate brand and entity naming across tracked text sources
+- `npm run test:metadata` — verify metadata completeness and title-prefix rules
+- `npm run test:registry` — validate `src/site.config.js` page registry integrity
+- `npm run test:schema` — verify JSON-LD rules for article and non-article pages
+- `npm run test:overlines` — verify every academy/company/legal page carries a correctly formatted overline
+- `npm run test:nav` — verify nav dropdown, footer column, and section index card are in sync for every sub-page
+- `npm run test:headings` — verify heading hierarchy consistency across company pages
+
+## Contracts
+
+### Metadata completeness (`test:metadata`)
+
+Checks each built HTML page for: `<title>`, meta description, robots meta, canonical link, `og:title`, `og:description`, `twitter:title`, `twitter:description`, and at least one JSON-LD block.
+
+Also enforces:
+
+- `<title>`, `og:title`, and `twitter:title` must match and start with `DoubleTrends™ | `
+- description, `og:description`, and `twitter:description` must match
+
+### Trademark and entity naming (`test:trademark`)
+
+- Brand references must use `DoubleTrends™`
+- Legal entity name is allowed only as `DoubleTrends L.L.C.`
+- An unmarked brand-name literal is not allowed unless immediately followed by ` L.L.C.`
+
+### Page registry integrity (`test:registry`)
+
+Checks `src/site.config.js` for: unique `src` values, valid `.html` output paths, source-file existence under `src/pages/`, valid `kind`, required `title` and `desc`, valid priority ranges, expected `root` derivation, and article pages living under `academy/`.
+
+### Overline consistency (`test:overlines`)
+
+Checks every HTML page under `academy/`, `company/`, and `legal/` for a `.tag-overline` element whose text matches the expected section prefix (e.g. `Academy ·`, `Company ·`, `Legal ·`).
+
+### Nav / footer / index consistency (`test:nav`)
+
+Cross-checks nav dropdown, footer column, and section index card for each sub-page — fails if a page appears in one but not the others.
+
+Pages intentionally excluded from navigation are listed in the `NAV_EXCLUDED` set at the top of `test-nav-consistency.js`. Add a page's canonical path there to suppress the check without removing it from the build or sitemap.
+
+### Heading consistency (`test:headings`)
+
+Checks that company pages follow a consistent heading hierarchy.
+
+### Schema rules (`test:schema`)
+
+- Article pages must emit `Article`, declare `schema.articleSection`, and declare non-empty `schema.about`
+- Non-article pages must not emit `Article`
+- Academy content pages must emit breadcrumbs
