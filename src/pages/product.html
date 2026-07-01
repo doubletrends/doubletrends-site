@@ -1,193 +1,88 @@
-<!-- Sandbox styles. Used only on this page; co-located instead of in the
-     shared styles partial. -->
 <style>
-  .chat-shell {
-    background: #FBFAF7;
-    border: 1px solid rgba(30,37,48,0.10);
-    box-shadow: 0 24px 70px rgba(30,37,48,0.10);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    min-height: 520px;
-  }
-  .chat-header {
-    background: #1E2530;
-    color: #FFFFFF;
-    padding: 0.9rem 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .chat-avatar {
-    width: 2.4rem;
-    height: 2.4rem;
-    background: #FFFFFF;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .chat-avatar img {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-  .chat-header-meta { display: flex; flex-direction: column; line-height: 1.2; }
-  .chat-header-name { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: #FFFFFF; }
-  .chat-header-sub  { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: #5A6473; margin-top: 0.15rem; }
-  .chat-log {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    padding: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-    max-height: 600px;
-    background: #5A6473;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.08),
-      inset 0 -1px 0 rgba(0,0,0,0.10),
-      inset 0 0 24px rgba(30,37,48,0.14);
-  }
-  .chat-row { display: flex; }
-  .chat-row-bot  { justify-content: flex-start; }
-  .chat-row-user { justify-content: flex-end; }
-  .chat-bubble {
-    max-width: 78%;
-    padding: 0.7rem 0.95rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.92rem;
-    line-height: 1.5;
-    color: #1E2530;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    will-change: transform, opacity;
-    position: relative;
-    border-radius: 0;
-  }
-  .chat-bubble-bot  {
-    background: #FFFFFF;
-    border: 1px solid rgba(30,37,48,0.10);
-    box-shadow: 0 1px 2px rgba(30,37,48,0.04);
-  }
-  .chat-bubble-user {
-    background: #1E2530;
-    color: #FFFFFF;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.88rem;
-  }
-  .chat-bubble-typing {
-    background: #E9EDF2;
-    border: 1px solid rgba(30,37,48,0.08);
-    box-shadow: 0 1px 2px rgba(30,37,48,0.03);
-    padding: 0.55rem 0.75rem;
-    min-width: 3.2rem;
-  }
-  .chat-typing {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-  .chat-typing-dot {
-    width: 0.42rem;
-    height: 0.42rem;
-    border-radius: 999px;
-    background: rgba(90,100,115,0.6);
-    animation: chatTypingPulse 900ms ease-in-out infinite;
-  }
-  .chat-typing-dot:nth-child(2) { animation-delay: 120ms; }
-  .chat-typing-dot:nth-child(3) { animation-delay: 240ms; }
-  .chat-bubble pre {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.74rem;
-    line-height: 1.4;
-    background: #FBFAF7;
-    border: 1px solid rgba(30,37,48,0.08);
-    padding: 0.6rem;
-    margin: 0.35rem 0;
-    overflow-x: auto;
-    white-space: pre;
-  }
-  .chat-controls {
-    background: #FFFFFF;
-    border-top: 1px solid rgba(30,37,48,0.10);
-    padding: 0.9rem 1.2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-  .chat-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .cmd-chip {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.74rem;
-    padding: 0.4rem 0.7rem;
-    background: rgba(194,65,12,0.06);
-    border: 1px solid rgba(194,65,12,0.18);
-    color: #C2410C;
-    cursor: pointer;
-    transition: background 0.12s ease, border-color 0.12s ease;
-  }
-  .cmd-chip:hover { background: rgba(194,65,12,0.12); border-color: rgba(194,65,12,0.35); }
-  .chat-input-row { display: flex; gap: 0.5rem; align-items: stretch; }
-  .cmd-input {
-    flex: 1 1 auto;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.88rem;
-    padding: 0.65rem 0.85rem;
-    border: 1px solid rgba(30,37,48,0.18);
-    background: #FFFFFF;
-    color: #1E2530;
-    outline: none;
-    transition: border-color 0.12s ease;
-  }
-  .cmd-input:focus { border-color: #C2410C; }
-  .cmd-send {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.65rem 1.2rem;
+  .live-pulse-dot {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
     background: #C2410C;
-    color: #FFFFFF;
-    border: none;
-    cursor: pointer;
-    transition: background 0.12s ease;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+    animation: livePulse 1s ease-out infinite;
   }
-  .cmd-send:hover { background: #9A330A; }
-  @keyframes chatTypingPulse {
-    0%, 60%, 100% { opacity: 0.3; transform: translateY(0) scale(0.92); }
-    30% { opacity: 1; transform: translateY(-2px) scale(1); }
+  @keyframes livePulse {
+    0%   { box-shadow: 0 0 0 0 rgba(194,65,12,0.45); }
+    100% { box-shadow: 0 0 0 10px rgba(194,65,12,0); }
+  }
+  .product-img-frame {
+    border: 1px solid rgba(30,37,48,0.10);
+    border-top: 9px solid #C2410C;
+    box-shadow: 0 10px 30px rgba(30,37,48,0.25);
+  }
+  .product-img-frame:hover {
+    box-shadow: 0 15px 40px rgba(30,37,48,0.50);
+  }
+  .status-dot-pulse {
+    animation: statusPulse 1s ease-out infinite;
+  }
+  @keyframes statusPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(194,65,12,0.45); }
+    100% { box-shadow: 0 0 0 5px rgba(194,65,12,0); }
+  }
+  #pricing .product-panel,
+  #pricing .terminal-shell {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
   }
 </style>
-
-<section id="pricing" class="w-full min-h-screen flex items-center" style="background: transparent;">
-<div class="home-container w-full max-w-site mx-auto px-8 pt-24 pb-10">
+<section id="try" class="relative w-full overflow-hidden min-h-screen flex items-center" style="background: transparent;">
+<div class="home-container relative z-10 max-w-site mx-auto px-8 py-24">
+<div class="flex flex-col mb-5 max-w-3xl">
+<span class="tag-overline mb-5">Subscriber Portal</span>
+<h2 class="section-heading mb-5" style="display:flex;align-items:center;gap:0.65rem;"><span class="live-pulse-dot"></span>Live, 24/7, 365.</h2>
+<p class="section-body max-w-3xl"> Oversold alert, DoubleTrends&trade; signal &mdash; in your portal, every trading day. Regime classification, VIX, Fed Funds, CPI, and unemployment &mdash; live and always on.</p>
+</div>
+<div style="display: flex; gap: 1.5rem;">
+<figure style="flex: 0 0 auto; margin: 0;">
+<div class="directory-banner product-img-frame hover-lift-rust" style="aspect-ratio: auto;">
+<img src="{{ROOT}}public/product/webapp1.png" alt="Market Brief — daily regime and macro context" style="height: 518px; width: auto; display: block;" />
+</div>
+<figcaption class="fine-print mt-3">Market Brief &mdash; live regime classification, VIX, macro context, and signal status</figcaption>
+</figure>
+<figure style="flex: 0 0 auto; margin: 0;">
+<div class="directory-banner product-img-frame hover-lift-rust" style="aspect-ratio: auto;">
+<img src="{{ROOT}}public/product/webapp2.png" alt="Signal Terminal — 20-year signal track record" style="height: 518px; width: auto; display: block;" />
+</div>
+<figcaption class="fine-print mt-3">Signal Terminal &mdash; 20 years of price history, regime overlay, every alert and signal, live</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="pricing" class="decor-banner relative w-full min-h-screen flex items-center overflow-hidden">
+<div class="home-container w-full max-w-site mx-auto px-8 py-20">
 <div class="flex flex-col mb-6 max-w-3xl">
 <span class="tag-overline mb-5">Pricing</span>
-<h2 class="section-heading"> One signal. One subscription. </h2>
-<p class="section-body mt-5">DoubleTrends&trade; costs USD $12.42 per month, billed annually, and starts with a 30-day free trial. It is a narrow, rules-based S&amp;P 500 signal built for long-term ETF investors who want disciplined timing when the market gets hard.</p>
+<h2 class="section-heading"> More than just a signal. </h2>
+<p class="section-body mt-5">One subscription unlocks the full system: live subscriber portal, same-day alerts, daily market context, and 20 years of signal history.</p>
 </div>
 <div class="grid lg:grid-cols-[1fr_0.9fr] gap-6 items-stretch">
 <div class="product-panel hover-lift-rust p-6 flex flex-col justify-between">
 <div>
 <div class="flex items-center justify-between gap-4 flex-wrap mb-6">
-<span class="data-label">Annual access</span>
-<span class="status-pill"><span class="status-dot"></span>S&amp;P 500 active</span>
+<span class="data-label" style="font-size: 1.05rem;">Billed annually</span>
+<span class="status-pill" style="font-size: 0.74rem; padding: 0.5rem 0.84rem;"><span class="status-dot status-dot-pulse"></span>S&amp;P 500 active</span>
 </div>
 <div class="flex items-end gap-2 mb-2">
 <span class="data-value">USD $12.42</span>
-<span class="data-label mb-2">/month</span>
+<span class="data-label mb-2" style="font-size:0.93rem;">/month</span>
 </div>
-<p class="data-label mb-2">Billed annually &middot; $149/year</p>
+<p class="data-label mb-2" style="font-size: 0.81rem;"><span style="font-family:'Syne',sans-serif;font-weight:600;text-transform:none;">USD $149</span>/year</p>
 <p class="font-open text-sm font-semibold mb-2" style="color: #C2410C;">Start with 30 days free</p>
-<p class="panel-body max-w-md">A rules-based signal for the moments when long-term investors hesitate most. Standing decision system, live regime context, and a private channel every day.</p>
 <ul class="grid sm:grid-cols-2 gap-3 my-5 font-open text-sm" style="color: #5A6473;">
-<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Rules-Based</li>
-<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Visible Track Record</li>
-<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Private Telegram</li>
-<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Trial + Refund</li>
+<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Oversold Alert</li>
+<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">DoubleTrends&trade; Signal</li>
+<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Subscriber Portal</li>
+<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Dedicated Terminal</li>
 </ul>
 <a href="{{SUBSCRIBE_URL}}" class="btn-light">Start your free trial</a>
 <p class="fine-print mt-5 leading-relaxed">Try it free for 30 days. Cancel before the trial ends and you pay nothing. If a paid term begins and no signal has been delivered, a refund window still applies.</p>
@@ -198,28 +93,24 @@
 <span class="data-label">What you are paying for</span>
 <div class="mt-5 flex flex-col">
 <div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Daily monitoring</span>
-<span class="data-label">Every day</span>
+<span class="font-noto text-dark font-semibold">Early warning before the signal</span>
+<span class="data-label">Oversold Alert</span>
 </div>
 <div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Rules-based trigger</span>
-<span class="data-label">Rule based</span>
+<span class="font-noto text-dark font-semibold">Exhaustion reversal signal</span>
+<span class="data-label">DoubleTrends&trade; Signal</span>
 </div>
 <div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Same-day alert</span>
-<span class="data-label">Direct DM</span>
+<span class="font-noto text-dark font-semibold">20-year track record</span>
+<span class="data-label">Subscriber Portal</span>
 </div>
 <div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Regime context</span>
-<span class="data-label">Calm to bear</span>
-</div>
-<div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">24/7 model access</span>
-<span class="data-label">MARKET BRIEF</span>
+<span class="font-noto text-dark font-semibold">Live market context</span>
+<span class="data-label">Dedicated Terminal</span>
 </div>
 <div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10); border-bottom: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Subscriber access</span>
-<span class="data-label">Private bot</span>
+<span class="font-noto text-dark font-semibold">Free trial for 30 days</span>
+<span class="data-label">Full Refund</span>
 </div>
 </div>
 </div>
@@ -228,47 +119,12 @@
 </div>
 </div>
 </section>
-<section id="try" class="decor-banner relative w-full overflow-hidden">
-<div class="home-container relative z-10 max-w-site mx-auto px-8 py-20">
-<div class="flex flex-col mb-10 max-w-3xl">
-<span class="tag-overline mb-5">How We Deliver</span>
-<h2 class="section-heading mb-5"> Private when it matters. Quiet when it doesn&apos;t. </h2>
-<p class="section-body max-w-3xl"> DoubleTrends&trade; is delivered through a private Telegram bot. When the rule fires, the alert is sent to you as a direct message, not posted to a public channel, newsletter, or noisy feed. </p>
-<p class="section-body max-w-3xl mt-4"> This is what you will receive after you pay. The sandbox below uses the same Telegram delivery format you will use as a subscriber. </p>
-</div>
-<div class="max-w-3xl">
-<div class="chat-shell">
-<div class="chat-header">
-<div class="chat-avatar"><img src="{{ROOT}}public/brand/logo-light.png" alt="DoubleTrends™ logo" /></div>
-<div class="chat-header-meta">
-<span class="chat-header-name">DoubleTrends&trade; Signal Bot</span>
-<span class="chat-header-sub">Sandbox &middot; historical replay</span>
-</div>
-</div>
-<div id="chat-log" class="chat-log" aria-live="polite"></div>
-<div class="chat-controls">
-<div id="command-chips" class="chat-chips">
-<button type="button" class="cmd-chip" data-cmd="/status">/status</button>
-<button type="button" class="cmd-chip" data-cmd="/brief 2020-03-23">/brief 2020-03-23 <span style="opacity:0.7;">(watch)</span></button>
-<button type="button" class="cmd-chip" data-cmd="/brief 2020-03-26">/brief 2020-03-26 <span style="opacity:0.7;">(signal)</span></button>
-<button type="button" class="cmd-chip" data-cmd="/history">/history</button>
-</div>
-<form id="command-form" class="chat-input-row" autocomplete="off">
-<input id="command-input" type="text" class="cmd-input" placeholder="Type a command (e.g. /brief 2020-03-23 to 2020-03-26)" aria-label="Bot command" />
-<button type="submit" class="cmd-send">Send</button>
-</form>
-</div>
-</div>
-<p class="fine-print mt-5"> Demo only. Live subscribers receive the same private Telegram format, including signal-day alerts and on-demand replies. </p>
-</div>
-</div>
-</section>
 <section id="access-flow" class="relative w-full overflow-hidden" style="background: transparent;">
 <div class="home-container relative z-10 max-w-site mx-auto px-8 py-20">
 <div class="flex flex-col mb-12">
 <span class="tag-overline mb-5">Activation</span>
-<h2 class="section-heading mb-5"> Three steps. Then you&apos;re live. </h2>
-<p class="section-body max-w-3xl"> Getting access is simple: start the trial, connect Telegram once, and the signal starts reaching you in the same interface shown above. No dashboard setup, no installation, and no waiting for manual activation. </p>
+<h2 class="section-heading mb-5">No registration. Ready as is.</h2>
+<p class="section-body max-w-3xl">Every website today wants you to register &mdash; pick a username, create a password, hit the length requirement, add the special character. Difficult to track, easy to forget. Not here. At DoubleTrends, there is no registration. Your checkout email = your account.</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 <div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
@@ -281,22 +137,22 @@
 </div>
 <div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
 <div class="step-marker mb-8">02</div>
-<h3 class="text-dark font-noto font-semibold text-lg mb-3">Connect Telegram</h3>
-<p class="panel-body"> Open the one-time activation link and bind your Telegram account. </p>
+<h3 class="text-dark font-noto font-semibold text-lg mb-3">Sign in</h3>
+<p class="panel-body"> Check your email for a magic link. One click and you are in &mdash; no password required. </p>
 <div class="mt-8 pt-5" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="data-label">One-time link &middot; Private bot</span>
+<span class="data-label">Magic link &middot; No password</span>
 </div>
 </div>
 <div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
 <div class="step-marker mb-8">03</div>
 <h3 class="text-dark font-noto font-semibold text-lg mb-3">You&apos;re live</h3>
-<p class="panel-body"> Signal alerts and on-demand bot commands are available immediately. </p>
+<p class="panel-body"> Market Brief, Signal Terminal, and same-day portal alerts are available immediately. </p>
 <div class="mt-8 pt-5" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="data-label">Alerts &middot; Briefs &middot; History</span>
+<span class="data-label">Brief &middot; Terminal &middot; Account</span>
 </div>
 </div>
 </div>
-<p class="fine-print mt-8 max-w-3xl"> No dashboard. No installation. No waiting for setup. </p>
+<p class="fine-print mt-8 max-w-3xl"> No registration. No setup. Checkout and you are ready to go. </p>
 </div>
 </section>
 <section id="refund" class="decor-banner relative w-full overflow-hidden">
@@ -335,7 +191,7 @@
 <details class="card-border px-5 py-4" open>
 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> What exactly do I receive? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">A Telegram DM on signal day, plus a bot you can query anytime. You get the current market read with regime and macro context, the signal history since 2004, and your subscription status.</p>
+<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">A same-day alert in your portal on signal day, plus the complete live picture. The Market Brief shows today&apos;s regime classification, VIX, Fed Funds, CPI, and unemployment with live alert and signal status. The Signal Terminal charts 20 years of S&amp;P 500 price history with every oversold alert and signal marked on the chart, regime-colored bar by bar &mdash; updated every trading day.</p>
 </details>
 <details class="card-border px-5 py-4">
 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> How often will it fire? <span class="acc-icon data-label transition-transform">⌄</span>
@@ -365,9 +221,8 @@
 <details class="card-border px-5 py-4">
 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> How do I get access after paying? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">Right after checkout, you tap a one-time activation link that opens the Telegram bot. It binds your subscription to your Telegram account, then sends signals directly to you.</p>
+<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">Right after checkout, you receive a magic-link email. Click it to sign in to the subscriber portal at app.doubletrends.com. No password, no app to install &mdash; access is immediate.</p>
 </details>
 </div>
 </div>
 </section>
-<script src="{{ROOT}}public/js/bot-sandbox.js"></script>

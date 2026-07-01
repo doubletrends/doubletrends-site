@@ -1,5 +1,6 @@
 const SITE_URL = 'https://doubletrends.com';
 const SUBSCRIBE_URL = 'https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c';
+const PORTAL_URL = 'https://app.doubletrends.com/brief';
 // Cloudflare Worker base URL (no trailing slash).
 const WORKER_URL = 'https://api.doubletrends.com';
 const OG_IMAGE = `${SITE_URL}/public/brand/og-image.png`;
@@ -269,6 +270,7 @@ module.exports = {
   SITE_NAME,
   SITE_DESCRIPTION,
   SUBSCRIBE_URL,
+  PORTAL_URL,
   WORKER_URL,
   OG_IMAGE,
   OG_IMAGE_ALT,
