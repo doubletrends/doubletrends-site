@@ -1,4 +1,4 @@
-﻿<header class="site-header fixed top-0 left-0 right-0 z-30"
+<header class="site-header fixed top-0 left-0 right-0 z-30"
         style="box-shadow: var(--shadow-nav);">
   <nav class="w-full max-w-site mx-auto flex items-center justify-between gap-4 px-6 h-16">
 
@@ -68,10 +68,43 @@
       <a href="{{PORTAL_URL}}" class="button-rust ml-2 !px-4 !py-2 text-[0.65rem]" target="_blank" rel="noopener">Subscriber Portal</a>
     </div>
 
-    <div class="flex lg:hidden items-center gap-1.5 shrink-0">
-      <a href="{{ROOT}}method.html" class="button-rust-mobile">How It Works</a>
-      <a href="{{ROOT}}product.html" class="button-dark-mobile">Pricing</a>
-      <a href="{{PORTAL_URL}}" class="button-dark-mobile" target="_blank" rel="noopener">Portal</a>
+    <div class="flex lg:hidden items-center shrink-0">
+      <button class="mobile-menu-btn" type="button" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+        <svg class="menu-icon-open" width="22" height="15" viewBox="0 0 22 15" fill="none" aria-hidden="true">
+          <rect width="22" height="2" rx="1" fill="currentColor"/>
+          <rect y="6.5" width="22" height="2" rx="1" fill="currentColor"/>
+          <rect y="13" width="22" height="2" rx="1" fill="currentColor"/>
+        </svg>
+        <svg class="menu-icon-close" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:none">
+          <line x1="1" y1="1" x2="15" y2="15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="15" y1="1" x2="1" y2="15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
   </nav>
+
+  <div class="mobile-menu-panel" id="mobile-menu" aria-label="Navigation">
+    <a href="{{ROOT}}index.html" class="mobile-menu-link">Home</a>
+    <a href="{{ROOT}}method.html" class="mobile-menu-link">How It Works</a>
+    <a href="{{ROOT}}product.html" class="mobile-menu-link">Pricing</a>
+    <a href="{{ROOT}}academy/index.html" class="mobile-menu-link">Academy</a>
+    <a href="{{ROOT}}company/index.html" class="mobile-menu-link">Company</a>
+  </div>
 </header>
+<script>
+(function(){
+  var btn=document.getElementById('mobile-menu-btn');
+  var panel=document.getElementById('mobile-menu');
+  if(!btn||!panel)return;
+  function setOpen(o){
+    panel.classList.toggle('is-open',o);
+    btn.setAttribute('aria-expanded',String(o));
+    btn.setAttribute('aria-label',o?'Close menu':'Open menu');
+    btn.querySelector('.menu-icon-open').style.display=o?'none':'';
+    btn.querySelector('.menu-icon-close').style.display=o?'':'none';
+  }
+  btn.addEventListener('click',function(){setOpen(!panel.classList.contains('is-open'));});
+  panel.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setOpen(false);});});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false);});
+})();
+</script>

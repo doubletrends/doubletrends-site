@@ -1,4 +1,4 @@
-﻿  <style>
+  <style>
     /* ══════════════════════════════════════════════════════════════
        Page Layout Patterns
        ══════════════════════════════════════════════════════════════ */
@@ -10,18 +10,20 @@
       border: 1px solid rgba(var(--color-dark-rgb),0.10);
       box-shadow: var(--shadow-card);
     }
-    .page-shell {
+    .page-shell,
+    .directory-shell {
       width: 100%;
       max-width: 1320px;
       margin-left: auto;
       margin-right: auto;
-      padding: 8rem 1.5rem 4rem;
+      padding: 6rem 1.5rem 4rem;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
     @media (min-width: 768px) {
-      .page-shell {
+      .page-shell,
+      .directory-shell {
         padding-left: 3rem;
         padding-right: 3rem;
       }
@@ -85,7 +87,7 @@
       max-width: 1040px;
       margin-left: auto;
       margin-right: auto;
-      padding: 8rem 1.5rem 5rem;
+      padding: 6rem 1.5rem 5rem;
     }
     @media (min-width: 768px) {
       .article-page {
@@ -171,22 +173,6 @@
         linear-gradient(180deg, var(--color-white) 0%, var(--color-light) 100%);
       border: 1px solid rgba(var(--color-dark-rgb),0.10);
       box-shadow: var(--shadow-card);
-    }
-    .directory-shell {
-      width: 100%;
-      max-width: 1320px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 8rem 1.5rem 4rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    @media (min-width: 768px) {
-      .directory-shell {
-        padding-left: 3rem;
-        padding-right: 3rem;
-      }
     }
     .directory-hero {
       width: 100%;
