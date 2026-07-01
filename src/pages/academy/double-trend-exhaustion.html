@@ -1,4 +1,4 @@
-<!-- ARTICLE: The DoubleTrends™ Signal — Williams %R, doubled -->
+﻿<!-- ARTICLE: The DoubleTrends™ Signal — Williams %R, doubled -->
 <article class="article-page">
 
 <!-- Header -->
@@ -10,12 +10,12 @@
 
 <!-- Origin & formula -->
 <section class="article-section">
-<span class="section-overline">The math behind the line</span>
+<span class="tag-overline">The math behind the line</span>
 <h2 class="article-h2"> Williams %R, in one formula </h2>
 <p class="prose-p mb-4"> Larry Williams introduced %R in 1973 as a momentum oscillator for futures markets. The whole indicator collapses to a single equation: </p>
 <div class="terminal-shell flex flex-col mb-6">
 <div class="p-5">
-<p class="font-mono text-sm leading-relaxed" style="color: #1E2530;"> %R<sub>n</sub> &nbsp;=&nbsp; ((HighestHigh<sub>n</sub> &minus; Close) &nbsp;/&nbsp; (HighestHigh<sub>n</sub> &minus; LowestLow<sub>n</sub>)) &times; &minus;100 </p>
+<p class="font-mono text-sm leading-relaxed" style="color: var(--color-dark);"> %R<sub>n</sub> &nbsp;=&nbsp; ((HighestHigh<sub>n</sub> &minus; Close) &nbsp;/&nbsp; (HighestHigh<sub>n</sub> &minus; LowestLow<sub>n</sub>)) &times; &minus;100 </p>
 </div>
 </div>
 <p class="prose-p mb-4"> Read in English: take the highest high over the past <em>n</em> bars and the lowest low over the same window. Where does today's close sit inside that range? Express it as a percentage, then flip the sign so the indicator is bounded between &minus;100 (close at the low) and 0 (close at the high). </p>
@@ -24,7 +24,7 @@
 
 <!-- Reading it -->
 <section class="article-section">
-<span class="section-overline">How to read it</span>
+<span class="tag-overline">How to read it</span>
 <h2 class="article-h2"> Close to &minus;100 means exhausted </h2>
 <p class="prose-p mb-4"> The convention is that %R values near &minus;100 indicate an oversold market &mdash; the close is pinned to the bottom of its recent range &mdash; and values near 0 indicate an overbought market. Practitioners typically draw two horizontal threshold lines (commonly &minus;80 and &minus;20) and treat readings beyond them as the working extremes. </p>
 <p class="prose-p mb-4"> Williams %R is in the same family as RSI and Stochastics. All three answer the same general question (&ldquo;is price stretched relative to its recent range?&rdquo;) with slightly different math. %R uses the simplest version: the close inside the high-low envelope, no internal smoothing, no rate-of-change calculation. That simplicity is part of why it is durable. </p>
@@ -35,7 +35,7 @@
 
 <!-- The single-timeframe problem -->
 <section class="article-section">
-<span class="section-overline">The single-timeframe problem</span>
+<span class="tag-overline">The single-timeframe problem</span>
 <h2 class="article-h2"> Noisy or laggy &mdash; pick one </h2>
 <p class="prose-p mb-4"> Run %R on a single window and you are forced into a tradeoff. A short window reacts quickly. It catches every minor pullback, including the ones that mean nothing, and it pings into &ldquo;oversold&rdquo; on routine 2&ndash;3% dips. A long window ignores small wobbles but lags badly: by the time the indicator confirms an oversold turn, the bounce is already weeks old. </p>
 <p class="prose-p"> This is the same dilemma every momentum tool faces. The honest answer is that no single window length is right for both noise rejection and timeliness. You either accept false alarms, or you accept being late. </p>
@@ -43,7 +43,7 @@
 
 <!-- Smoothing -->
 <section class="article-section">
-<span class="section-overline">Smoothing</span>
+<span class="tag-overline">Smoothing</span>
 <h2 class="article-h2"> EMA over the raw line </h2>
 <p class="prose-p mb-4"> Raw Williams %R is jagged. A single down day can push it from &minus;60 to &minus;95 and back. Acting on the raw value means acting on noise. The standard fix is to smooth %R with an exponential moving average (EMA), which weights recent values more heavily than older ones. An EMA dampens day-to-day chop without adding much lag &mdash; the line still bends at the same time, it just stops shaking. </p>
 <p class="prose-p"> The DoubleTrends&trade; engine smooths both of its %R lines this way. The shapes do not change, but the noise floor drops, and the threshold crossings become meaningful. </p>
@@ -51,7 +51,7 @@
 
 <!-- Two timeframes -->
 <section class="article-section">
-<span class="section-overline">Two timeframes, not one</span>
+<span class="tag-overline">Two timeframes, not one</span>
 <h2 class="article-h2"> The short clock and the long clock </h2>
 <p class="prose-p mb-4"> The core idea of DoubleTrends&trade; is to stop picking between &ldquo;noisy and fast&rdquo; vs &ldquo;clean and slow&rdquo; &mdash; and to require both at once. The engine runs %R on two windows and smooths each: </p>
 <div class="terminal-shell flex flex-col mb-6">
@@ -60,7 +60,7 @@
 <span class="data-label">Short clock</span>
 </div>
 <div class="flex-1 min-w-0">
-<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> A shorter %R window, smoothed. Reads short-horizon momentum &mdash; catches the near-term stretch and the near-term turn. </p>
+<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> A shorter %R window, smoothed. Reads short-horizon momentum &mdash; catches the near-term stretch and the near-term turn. </p>
 </div>
 </div>
 <div class="px-5 py-4 flex items-start gap-4 flex-wrap">
@@ -68,7 +68,7 @@
 <span class="data-label">Long clock</span>
 </div>
 <div class="flex-1 min-w-0">
-<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> A longer %R window, smoothed. Reads the broader trend &mdash; stretches only on persistent weakness, not on a three-day wobble. </p>
+<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> A longer %R window, smoothed. Reads the broader trend &mdash; stretches only on persistent weakness, not on a three-day wobble. </p>
 </div>
 </div>
 </div>
@@ -80,7 +80,7 @@
 
 <!-- The buy reversal -->
 <section class="article-section">
-<span class="section-overline">The trigger</span>
+<span class="tag-overline">The trigger</span>
 <h2 class="article-h2"> Oversold first, then the turn </h2>
 <p class="prose-p mb-4"> Deep-oversold by itself is a warning, not a signal. Markets can stay oversold for weeks. The actual DoubleTrends&trade; trigger is the <em>exit</em>: the bar where both smoothed %R values rise back above the deep-oversold threshold after having sat below it on the prior bar. </p>
 <p class="prose-p mb-4"> That moment &mdash; not the descent into oversold &mdash; is what gets passed up to the regime gate and the confirmation gate. This matters because waiting for the turn instead of the entry kills a class of false alarms automatically. Markets that go deeply oversold and stay there do not fire. Only the ones that bend back up do. </p>
@@ -91,7 +91,7 @@
 
 <!-- Only the oversold side -->
 <section class="article-section">
-<span class="section-overline">Why only the oversold side</span>
+<span class="tag-overline">Why only the oversold side</span>
 <h2 class="article-h2"> A dip-buying tool, not a top-caller </h2>
 <p class="prose-p mb-4"> Williams %R is symmetric &mdash; it computes overbought extremes near 0 as cleanly as oversold extremes near &minus;100. DoubleTrends&trade; ignores the overbought half entirely. The reason is empirical: on broad-index daily charts, oversold reversals carry strong forward expected returns; overbought reversals do not. Markets can stay overbought for years (look at any structural bull run) without producing exploitable reversals. The asymmetry of long-only equity drift is the reason. </p>
 <p class="prose-p"> So the engine reads only the side where the math has historically paid. It is a dip-buying tool, not a top-calling tool. </p>
@@ -99,14 +99,14 @@
 
 <!-- From signal to product -->
 <section class="article-section">
-<span class="section-overline">From engine to product</span>
+<span class="tag-overline">From engine to product</span>
 <h2 class="article-h2"> The reversal is one of three gates </h2>
 <p class="prose-p mb-4"> A raw reversal candidate by itself is not the customer-facing signal. The full product layers two more gates on top: a four-state regime classifier that throws out reversals in calm or correction markets, and a confirmation gate that requires more evidence in bear regimes than in panic regimes. </p>
 <p class="prose-p"> Williams %R, doubled, is what fires the candidate. The regime classifier decides whether to listen. The confirmation gate decides whether the candidate is strong enough to publish. </p>
 <div class="mt-6">
 <div class="flex flex-wrap items-center gap-5">
-<a href="{{ROOT}}method.html" class="text-primary hover:underline font-noto text-sm font-semibold">See the full three-gate flow &rarr;</a>
-<a href="{{ROOT}}academy/vix-percentile.html" class="text-primary hover:underline font-noto text-sm font-semibold">See how VIX percentile feeds the regime gate &rarr;</a>
+<a href="{{ROOT}}method.html" class="text-primary hover:underline font-open text-sm font-semibold">See the full three-gate flow &rarr;</a>
+<a href="{{ROOT}}academy/vix-percentile.html" class="text-primary hover:underline font-open text-sm font-semibold">See how VIX percentile feeds the regime gate &rarr;</a>
 </div>
 </div>
 </section>
@@ -115,7 +115,7 @@
 <section class="cta-panel article-cta">
 <h3 class="text-dark font-noto font-bold text-2xl mb-3">Get the signal, not the screen-watching.</h3>
 <p class="prose-p mb-6"> DoubleTrends&trade; tracks the S&amp;P 500 index every day and sends a single alert when the dual Williams %R reversal clears its regime and confirmation gates &mdash; built for ETF investors using funds such as VOO, SPY, or IVV. The goal is not to guess the exact bottom. It is to make the moment visible when the rule says selling has exhausted itself. </p>
-<a href="{{ROOT}}product.html" class="btn-light">See the product</a>
+<a href="{{ROOT}}product.html" class="button-rust">See the product</a>
 </section>
 
 <!-- Reference & method -->

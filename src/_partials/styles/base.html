@@ -1,17 +1,38 @@
-  <style>
+﻿  <style>
     /* Brand semantic colors — single source of truth for gain/loss tints used
        in history-table.js (return cells) and replay-chart.js (candle bodies).
        Mirrors the regime CSS-var pattern on #replay-shell; lives on :root so
        any consumer can read via getComputedStyle(documentElement). */
     :root {
-      --gain-rgb: 46, 158, 123;
-      --loss-rgb: 200, 65, 59;
+      /* Brand palette */
+      --color-white: #FFFFFF;
+      --color-rust: #C2410C;
+      --color-dark: #2A3340;
+      --color-muted: #5A6473;
+      --color-light: #FBFAF7;
+      /* RGB channels for rgba() usage */
+      --color-rust-rgb: 194, 65, 12;
+      --color-dark-rgb: 42, 51, 64;
+      --color-light-rgb: 251, 250, 247;
+      /* Signal gain/loss */
+      --color-gain: #2E9E7B;
+      --color-loss: #C8413B;
+      --color-gain-rgb: 46, 158, 123;
+      --color-loss-rgb: 200, 65, 59;
+      /* Shadows */
+      --shadow-card: 0 10px 30px rgba(var(--color-dark-rgb),0.2);
+      --shadow-card-hover: 0 15px 40px rgba(var(--color-dark-rgb),0.3);
+      --shadow-section: 0 -5px 40px rgba(var(--color-dark-rgb),0.05), 0 5px 40px rgba(var(--color-dark-rgb),0.05);
+      --shadow-nav: 0 10px 20px rgba(var(--color-dark-rgb),0.10);
+      /* Gradients */
+      --gradient-text: linear-gradient(140deg, var(--color-dark) 0%, var(--color-muted) 100%);
+      --gradient-text-hero: linear-gradient(160deg, var(--color-dark) 10%, var(--color-muted) 100%);
     }
     html { scroll-behavior: smooth; }
     * { box-sizing: border-box; }
     body {
       font-family: 'DM Sans', sans-serif;
-      background-color: #FBFAF7;
+      background-color: var(--color-light);
     }
     /* Site texture: a fine grid with a crosshair node at each intersection, held in a
        fixed viewport overlay that fades top→down (strong at the top of the screen, gone

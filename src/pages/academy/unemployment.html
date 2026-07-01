@@ -1,4 +1,4 @@
-<!-- ARTICLE: Unemployment — the cleanest macro deterioration signal -->
+﻿<!-- ARTICLE: Unemployment — the cleanest macro deterioration signal -->
 <article class="article-page">
 
 <!-- Header -->
@@ -10,7 +10,7 @@
 
 <!-- What it is -->
 <section class="article-section">
-<span class="section-overline">What it measures</span>
+<span class="tag-overline">What it measures</span>
 <h2 class="article-h2"> The civilian unemployment rate </h2>
 <p class="prose-p mb-4"> The Bureau of Labor Statistics publishes the unemployment rate (UNRATE in FRED) on the first Friday of each month. It comes from the Current Population Survey of about 60,000 households. The math is simple: the number of unemployed people, divided by the labor force (employed plus actively seeking work), expressed as a percentage. </p>
 <p class="prose-p"> Anyone who has worked even one hour for pay in the survey reference week is &ldquo;employed.&rdquo; Anyone available for work and actively looking is &ldquo;unemployed.&rdquo; Anyone neither working nor looking (retired, in school, discouraged) is not in the labor force at all. The rate captures only the first two categories. </p>
@@ -18,7 +18,7 @@
 
 <!-- Lag, but honest -->
 <section class="article-section">
-<span class="section-overline">Lag, but honest</span>
+<span class="tag-overline">Lag, but honest</span>
 <h2 class="article-h2"> It moves late, and that is the point </h2>
 <p class="prose-p mb-4"> Unemployment is a famously lagging indicator. The economy weakens, companies stop hiring, then hours get cut, then layoffs begin, then the unemployment rate finally ticks up. By the time the print actually moves, the deterioration has been in motion for weeks or months. </p>
 <p class="prose-p mb-4"> This is exactly what makes it useful. Leading indicators are forecasts &mdash; some of which are wrong. Coincident indicators are noisy &mdash; some weeks the print bounces around for survey reasons. Unemployment lags, but it does not give you false positives. When it actually turns higher, something has actually broken. The signal is rare, and when it fires it is real. </p>
@@ -27,7 +27,7 @@
 
 <!-- Change, not level -->
 <section class="article-section">
-<span class="section-overline">Change, not level</span>
+<span class="tag-overline">Change, not level</span>
 <h2 class="article-h2"> Where the rate is going matters more than where it is </h2>
 <p class="prose-p mb-4"> A 4.5% unemployment rate, on its own, tells you almost nothing. The 1990s low was 3.8%. The 2009 high was 10%. The 2020 spike hit 14.7%. The structural baseline shifts across cycles, and the level is meaningless without context. </p>
 <p class="prose-p mb-4"> The honest read is the slope. A rate that has risen meaningfully over the past several months is a different macro environment from one that has been flat for two years &mdash; even though the current value might be identical. The engine therefore reads unemployment in two complementary ways: as recent change over a meaningful look-back, and as the current rate's position against its trailing one-year average. </p>
@@ -36,7 +36,7 @@
 
 <!-- How the engine uses it -->
 <section class="article-section">
-<span class="section-overline">How the engine uses it</span>
+<span class="tag-overline">How the engine uses it</span>
 <h2 class="article-h2"> One source of pressure in the bear overlay </h2>
 <p class="prose-p mb-4"> Unemployment, like fed funds, is part of the bear overlay rather than the calm-vs-correction-vs-panic baseline. Bear regimes are slow, macro-driven, and persistent &mdash; exactly the environment where a deteriorating labor market provides supporting evidence. Inside the bear gate, the engine looks for at least one form of macro pressure, and labor-market deterioration is one source. </p>
 <p class="prose-p mb-4"> The conditions are intentionally modest. Labor data moves slowly; a small but real change in the trailing months is not dramatic in the popular sense, but historically it is the threshold where the trend has actually turned rather than wobbled. Waiting for a larger move means waiting until the bear is already obvious to everyone &mdash; which is too late for a regime classifier to do useful work. </p>
@@ -45,12 +45,12 @@
 
 <!-- One input of four -->
 <section class="article-section">
-<span class="section-overline">One input of four</span>
+<span class="tag-overline">One input of four</span>
 <p class="prose-p"> Unemployment is one of four macro anchors. VIX percentile reads volatility. Fed funds change reads policy. CPI reads inflation context. None of them decides a signal on its own. Together with the price-based features, they tell the regime classifier whether the market environment around any given Williams %R reversal is calm noise or genuine stress. </p>
 <div class="mt-6">
 <div class="flex flex-wrap items-center gap-5">
-<a href="{{ROOT}}method.html" class="text-primary hover:underline font-noto text-sm font-semibold">See how all four anchors combine &rarr;</a>
-<a href="{{ROOT}}academy/fed-funds-rate.html" class="text-primary hover:underline font-noto text-sm font-semibold">See the policy input that often turns before labor does &rarr;</a>
+<a href="{{ROOT}}method.html" class="text-primary hover:underline font-open text-sm font-semibold">See how all four anchors combine &rarr;</a>
+<a href="{{ROOT}}academy/fed-funds-rate.html" class="text-primary hover:underline font-open text-sm font-semibold">See the policy input that often turns before labor does &rarr;</a>
 </div>
 </div>
 </section>
@@ -59,7 +59,7 @@
 <section class="cta-panel article-cta">
 <h3 class="text-dark font-noto font-bold text-2xl mb-3">Labor is one input, not a forecast.</h3>
 <p class="prose-p mb-6"> DoubleTrends&trade; reads unemployment alongside three other macro anchors and dual-timeframe price momentum &mdash; and only fires when all of them line up. One alert when the rule clears, for ETF investors using funds such as VOO, SPY, or IVV. </p>
-<a href="{{ROOT}}product.html" class="btn-light">See the product</a>
+<a href="{{ROOT}}product.html" class="button-rust">See the product</a>
 </section>
 
 <!-- Method -->

@@ -1,27 +1,45 @@
-  <style>
+﻿  <style>
     .hairline   { border-top:  1px solid rgba(0,0,0,0.08); }
     .hairline-v { border-left: 1px solid rgba(0,0,0,0.08); }
     .card-border {
-      background: #FFFFFF;
+      background: var(--color-white);
       border: 1px solid rgba(0,0,0,0.08);
-      box-shadow: 0 10px 28px rgba(30,37,48,0.045);
+      box-shadow: var(--shadow-card);
     }
-    .hover-lift-rust {
+    .hover-lift-norust,
+    .button-rust,
+    .button-dark,
+    .button-hero {
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+    }
+    .hover-lift-norust:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-card-hover);
+    }
+    .button-rust:hover,
+    .button-dark:hover,
+    .button-hero:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+    .hover-lift-rust,
+    .button-social {
       transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
     }
     .hover-lift-rust:hover {
-      transform: translateY(-2px);
-      border-color: #C2410C;
-      box-shadow: 0 24px 60px rgba(30,37,48,0.10);
+      transform: translateY(-1px);
+      border-color: var(--color-rust);
+      box-shadow: var(--shadow-card-hover);
+    }
+    .button-social:hover {
+      transform: translateY(-1px);
+      border-color: var(--color-rust);
     }
     .terminal-shell {
       background:
         linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,247,244,0.98)),
-        #FFFFFF;
-      border: 1px solid rgba(30,37,48,0.14);
-      box-shadow:
-        0 24px 70px rgba(30,37,48,0.10),
-        0 1px 0 rgba(255,255,255,0.9) inset;
+        var(--color-white);
+      border: 1px solid rgba(var(--color-dark-rgb),0.10);
+      box-shadow: var(--shadow-card);
     }
     #replay-shell {
       --replay-calm-rgb: 46, 158, 123;
@@ -37,22 +55,22 @@
       --replay-flash-alpha: 0.16;
     }
     .terminal-bar {
-      background: #1E2530;
+      background: var(--color-dark);
       border-bottom: 1px solid rgba(255,255,255,0.08);
-      color: #FFFFFF;
+      color: var(--color-white);
     }
     .terminal-footer {
-      border-top: 1px solid rgba(30,37,48,0.10);
-      background: rgba(251,250,247,0.82);
+      border-top: 1px solid rgba(var(--color-dark-rgb),0.10);
+      background: rgba(var(--color-light-rgb),0.82);
     }
     .status-pill {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
       padding: 0.42rem 0.7rem;
-      border: 1px solid rgba(30,37,48,0.10);
+      border: 1px solid rgba(var(--color-dark-rgb),0.10);
       background: rgba(255,255,255,0.72);
-      color: #1E2530;
+      color: var(--color-dark);
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.62rem;
       letter-spacing: 0.1em;
@@ -62,8 +80,8 @@
     .status-dot {
       width: 0.42rem;
       height: 0.42rem;
-      background: #C2410C;
-      box-shadow: 0 0 0 3px rgba(194,65,12,0.14);
+      background: var(--color-rust);
+      box-shadow: 0 0 0 3px rgba(var(--color-rust-rgb),0.14);
       display: inline-block;
     }
     .replay-legend-swatch {
@@ -86,14 +104,14 @@
     }
     .metric-tile {
       background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(30,37,48,0.10);
-      box-shadow: 0 10px 30px rgba(30,37,48,0.05);
+      border: 1px solid rgba(var(--color-dark-rgb),0.10);
+      box-shadow: var(--shadow-card);
     }
     .product-panel {
       background:
-        linear-gradient(180deg, #FFFFFF 0%, #FBFAF7 100%);
-      border: 1px solid rgba(30,37,48,0.10);
-      box-shadow: 0 18px 46px rgba(30,37,48,0.07);
+        linear-gradient(180deg, var(--color-white) 0%, var(--color-light) 100%);
+      border: 1px solid rgba(var(--color-dark-rgb),0.10);
+      box-shadow: var(--shadow-card);
     }
 
     /* ── Homepage story card strip ───────────────────────────── */
@@ -114,36 +132,6 @@
       align-items: stretch;
       gap: 0.85rem;
       justify-content: flex-start;
-    }
-    .story-carousel-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(251,250,247,0.28);
-      background: rgba(251,250,247,0.06);
-      color: #FBFAF7;
-      cursor: pointer;
-      transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease, opacity 0.14s ease;
-    }
-    .story-carousel-btn:hover:not(:disabled) {
-      transform: translateY(-1px);
-      border-color: rgba(251,250,247,0.8);
-      background: rgba(251,250,247,0.12);
-    }
-    .story-carousel-btn:disabled {
-      opacity: 0.38;
-      cursor: default;
-    }
-    .story-carousel-btn-side {
-      width: 1.35rem;
-      min-width: 1.35rem;
-      padding: 0;
-      align-self: stretch;
-    }
-    .story-carousel-btn span {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.92rem;
-      line-height: 1;
     }
     .story-viewport {
       overflow: hidden;
@@ -167,21 +155,21 @@
       flex: 0 0 var(--story-card-width);
       display: flex;
       flex-direction: column;
-      background: #FFFFFF;
-      border: 1px solid rgba(30,37,48,0.10);
-      box-shadow: 0 10px 28px rgba(30,37,48,0.045);
+      background: var(--color-white);
+      border: 1px solid rgba(var(--color-dark-rgb),0.10);
+      box-shadow: var(--shadow-card);
       color: inherit;
       transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
     }
     .story-card:hover {
-      transform: translateY(-2px);
-      border-color: #C2410C;
-      box-shadow: 0 20px 52px rgba(30,37,48,0.10);
+      transform: translateY(-1px);
+      border-color: var(--color-rust);
+      box-shadow: var(--shadow-card-hover);
     }
     .story-card-media {
       aspect-ratio: 4 / 3;
       overflow: hidden;
-      background: linear-gradient(135deg, #1E2530 0%, #2C3641 100%);
+      background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-dark) 100%);
     }
     .story-card-media img {
       width: 100%;
@@ -204,13 +192,13 @@
       font-size: 0.52rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #C2410C;
+      color: var(--color-rust);
     }
     .story-card-title {
       font-family: 'Syne', sans-serif;
       font-size: 0.95rem;
       font-weight: 700;
-      color: #1E2530;
+      color: var(--color-dark);
       line-height: 1.25;
     }
   </style>

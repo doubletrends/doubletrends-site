@@ -1,4 +1,4 @@
-<!-- ══════════════════════════════════════════════════════════════ CAREERS ═══════════════════════════════════════════════════════════════ -->
+﻿<!-- ══════════════════════════════════════════════════════════════ CAREERS ═══════════════════════════════════════════════════════════════ -->
 <section class="page-shell">
 
 <!-- Hero -->
@@ -28,7 +28,7 @@
 <div class="px-6 pb-6 md:px-8 md:pb-8" style="border-top: 1px solid rgba(30,37,48,0.08);">
 <div class="grid md:grid-cols-2 gap-6 mt-4">
 <div>
-<span class="data-label" style="color: #5A6473;">What you'd do</span>
+<span class="data-label" style="color: var(--color-muted);">What you'd do</span>
 <ul class="mt-3 space-y-2 text-muted text-sm leading-relaxed list-disc pl-4">
 <li>Analyze signal quality across market regimes, time windows, and failure cases, with a clear view of what is robust and what is conditional</li>
 <li>Measure hit rate, forward return shape, drawdown behavior, and false-positive patterns across the full history</li>
@@ -39,7 +39,7 @@
 </ul>
 </div>
 <div>
-<span class="data-label" style="color: #5A6473;">What we'd look for</span>
+<span class="data-label" style="color: var(--color-muted);">What we'd look for</span>
 <ul class="mt-3 space-y-2 text-muted text-sm leading-relaxed list-disc pl-4">
 <li>Degree in statistics, applied mathematics, finance, physics, computer science, or a similarly rigorous quantitative field</li>
 <li>3+ years in quantitative analysis, market research, or similarly analytical work where the standard of proof actually mattered</li>
@@ -71,7 +71,7 @@
 <div class="px-6 pb-6 md:px-8 md:pb-8" style="border-top: 1px solid rgba(30,37,48,0.08);">
 <div class="grid md:grid-cols-2 gap-6 mt-4">
 <div>
-<span class="data-label" style="color: #5A6473;">What you'd do</span>
+<span class="data-label" style="color: var(--color-muted);">What you'd do</span>
 <ul class="mt-3 space-y-2 text-muted text-sm leading-relaxed list-disc pl-4">
 <li>Monitor macro conditions — VIX, Fed policy, labor, inflation — and maintain an ongoing read of where the market sits in the regime framework</li>
 <li>Document signal performance in real time: what fired, what the context was, and what the outcome was as it matures</li>
@@ -82,7 +82,7 @@
 </ul>
 </div>
 <div>
-<span class="data-label" style="color: #5A6473;">What we'd look for</span>
+<span class="data-label" style="color: var(--color-muted);">What we'd look for</span>
 <ul class="mt-3 space-y-2 text-muted text-sm leading-relaxed list-disc pl-4">
 <li>Degree in economics, finance, statistics, or a similarly analytical field</li>
 <li>2+ years tracking macro or equity markets in a research, analysis, or editorial capacity where accuracy mattered more than volume</li>
@@ -114,7 +114,7 @@
 <div class="px-6 pb-6 md:px-8 md:pb-8" style="border-top: 1px solid rgba(30,37,48,0.08);">
 <div class="grid md:grid-cols-2 gap-6 mt-4">
 <div>
-<span class="data-label" style="color: #5A6473;">What you'd do</span>
+<span class="data-label" style="color: var(--color-muted);">What you'd do</span>
 <ul class="mt-3 space-y-2 text-muted text-sm leading-relaxed list-disc pl-4">
 <li>Maintain and extend the end-to-end signal pipeline, from Python-side computation through Worker-side ingestion, persistence, and delivery</li>
 <li>Own TypeScript and SQL work inside a Cloudflare Worker architecture that handles Stripe, Telegram, internal endpoints, and D1 reads/writes</li>
@@ -125,7 +125,7 @@
 </ul>
 </div>
 <div>
-<span class="data-label" style="color: #5A6473;">What we'd look for</span>
+<span class="data-label" style="color: var(--color-muted);">What we'd look for</span>
 <ul class="mt-3 space-y-2 text-muted text-sm leading-relaxed list-disc pl-4">
 <li>Degree in computer science, engineering, mathematics, or a related technical field</li>
 <li>3+ years building production systems in a data-heavy environment, ideally where reliability and auditability were non-negotiable</li>
@@ -154,15 +154,15 @@
 <form id="careers-form" class="flex flex-col gap-5" novalidate>
 <div class="grid md:grid-cols-2 gap-4">
 <div class="flex flex-col gap-2">
-<label class="data-label" for="cf-name">Full name <span style="color:#C2410C;" aria-hidden="true">*</span></label>
+<label class="data-label" for="cf-name">Full name <span style="color:var(--color-rust);" aria-hidden="true">*</span></label>
 <input id="cf-name" name="name" type="text" required class="careers-input" placeholder="Jane Smith" autocomplete="name" />
 </div>
 <div class="flex flex-col gap-2">
-<label class="data-label" for="cf-email">Email <span style="color:#C2410C;" aria-hidden="true">*</span></label>
+<label class="data-label" for="cf-email">Email <span style="color:var(--color-rust);" aria-hidden="true">*</span></label>
 <input id="cf-email" name="email" type="email" required class="careers-input" placeholder="jane@example.com" autocomplete="email" />
 </div>
 <div class="flex flex-col gap-2">
-<label class="data-label" for="cf-role">Role of interest <span style="color:#C2410C;" aria-hidden="true">*</span></label>
+<label class="data-label" for="cf-role">Role of interest <span style="color:var(--color-rust);" aria-hidden="true">*</span></label>
 <select id="cf-role" name="role" required class="careers-input careers-select">
 <option value="">Select a role&hellip;</option>
 <option>Quantitative Analyst</option>
@@ -172,7 +172,7 @@
 </select>
 </div>
 <div class="flex flex-col gap-2">
-<label class="data-label" for="cf-cv">CV or r&eacute;sum&eacute; link <span style="color:#C2410C;" aria-hidden="true">*</span> <span class="text-muted" style="font-style: normal;">(Google Drive, Dropbox, or any hosted PDF)</span></label>
+<label class="data-label" for="cf-cv">CV or r&eacute;sum&eacute; link <span style="color:var(--color-rust);" aria-hidden="true">*</span> <span class="text-muted" style="font-style: normal;">(Google Drive, Dropbox, or any hosted PDF)</span></label>
 <input id="cf-cv" name="cv" type="url" required class="careers-input" placeholder="https://drive.google.com/&hellip;" />
 </div>
 <div class="flex flex-col gap-2">
@@ -189,9 +189,9 @@
 <textarea id="cf-note" name="note" rows="6" class="careers-input careers-textarea" placeholder="A short note covering relevant work and why DoubleTrends™ is a fit."></textarea>
 </div>
 <div class="flex flex-col gap-3">
-<p id="cf-error" class="data-label" style="color: #C2410C; display: none;"></p>
+<p id="cf-error" class="data-label" style="color: var(--color-rust); display: none;"></p>
 <div class="flex items-center gap-5 flex-wrap">
-<button type="submit" class="btn-light">Send application</button>
+<button type="submit" class="button-rust">Send application</button>
 </div>
 </div>
 </form>
@@ -205,13 +205,13 @@
   padding: 0.65rem 0.85rem;
   border: 1px solid rgba(30,37,48,0.18);
   background: #FFFFFF;
-  color: #1E2530;
+  color: var(--color-dark);
   outline: none;
   transition: border-color 0.12s ease;
   appearance: none;
   -webkit-appearance: none;
 }
-.careers-input:focus { border-color: #C2410C; }
+.careers-input:focus { border-color: var(--color-rust); }
 .careers-input::placeholder { color: #A0AABA; }
 .careers-select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%235A6473' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
@@ -224,7 +224,7 @@
 .careers-role-summary { cursor: pointer; user-select: none; list-style: none; }
 .careers-role-summary::-webkit-details-marker { display: none; }
 .careers-role-summary::marker { display: none; }
-.careers-chevron { transition: transform 0.22s ease; color: #5A6473; }
+.careers-chevron { transition: transform 0.22s ease; color: var(--color-muted); }
 .careers-role[open] > .careers-role-summary .careers-chevron { transform: rotate(180deg); }
 </style>
 <script>
