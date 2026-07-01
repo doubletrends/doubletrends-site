@@ -1,8 +1,9 @@
+.claude/
+dist/
+node_modules/
+.wrangler/
 __pycache__/
 *.pyc
-node_modules/
-dist/
-.wrangler/
 .claude/
 .dev.vars
 .dev.vars.*

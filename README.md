@@ -10,6 +10,28 @@ Wired to the GitHub repo — a commit and push to `main` auto-deploys to `double
 
 `npm run deploy` (`node build.js` → `wrangler deploy`) is available for quicker change visualization without a Git push.
 
+## Scripts
+
+### Build and dev
+
+- `npm run build`
+  Build the site into `dist/`.
+- `npm run dev`
+  Build once, then serve `dist/` locally on `http://127.0.0.1` with the repo's built-in Node static server.
+- `npm run deploy`
+  Run the site build, then deploy with Wrangler as a manual fallback path.
+
+### Data and brand
+
+- `npm run replay-data`
+  Rebuild replay JSON artifacts in `public/replay/`.
+- `npm run brand`
+  Regenerate brand assets in `public/brand/`.
+
+### Tests
+
+- `npm run test` — run the full validation suite (see [`tests/README.md`](tests/README.md) for individual commands and contracts)
+
 ## Overview
 
 ### What this repo is
@@ -209,54 +231,6 @@ Examples:
 - `rootFor('company/contact.html')` -> `'../'`
 
 This keeps shared partial links working from nested directories without manually repeating `root` on every page entry.
-
-## Scripts
-
-### Build and dev
-
-- `npm run build`
-  Build the site into `dist/`.
-- `npm run dev`
-  Build once, then serve `dist/` locally on `http://127.0.0.1:8080` with the repo's built-in Node static server.
-- `npm run deploy`
-  Run the site build, then deploy with Wrangler as a manual fallback path.
-
-### Data and brand
-
-- `npm run replay-data`
-  Rebuild replay JSON artifacts in `public/replay/`.
-- `npm run brand`
-  Regenerate brand assets in `public/brand/`.
-
-### Tests
-
-- `npm run test` — run the full validation suite (see [`tests/README.md`](tests/README.md) for individual commands and contracts)
-
-## Local Workflow
-
-1. Install dependencies:
-
-```bash
-npm install
-```
-
-2. Start the local site:
-
-```bash
-npm run dev
-```
-
-3. Open:
-
-```text
-http://127.0.0.1:8080
-```
-
-4. Before shipping config or content changes, run:
-
-```bash
-npm run test
-```
 
 ## Replay Data
 
