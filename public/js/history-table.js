@@ -15,8 +15,8 @@
   // future translucent uses can drop alpha at the call site.
   const rootStyle = getComputedStyle(document.documentElement);
   const cssVar = (name) => rootStyle.getPropertyValue(name).trim();
-  const COLOR_GAIN = `rgba(${cssVar('--gain-rgb')}, 1)`;
-  const COLOR_LOSS = `rgba(${cssVar('--loss-rgb')}, 1)`;
+  const COLOR_GAIN = `rgba(${cssVar('--color-gain-rgb')}, 1)`;
+  const COLOR_LOSS = `rgba(${cssVar('--color-loss-rgb')}, 1)`;
   const COLOR_PENDING = '#5A6473';  // brand `muted`
 
   function formatReturn(base, future) {
