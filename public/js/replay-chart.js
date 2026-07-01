@@ -106,8 +106,8 @@
   // chart stays in sync with history-table.js without a second source of truth.
   const rootStyle = getComputedStyle(document.documentElement);
   const cssVarRoot = (name) => rootStyle.getPropertyValue(name).trim();
-  const colorGain = `rgba(${cssVarRoot('--gain-rgb')}, 1)`;
-  const colorLoss = `rgba(${cssVarRoot('--loss-rgb')}, 1)`;
+  const colorGain = `rgba(${cssVarRoot('--color-gain-rgb')}, 1)`;
+  const colorLoss = `rgba(${cssVarRoot('--color-loss-rgb')}, 1)`;
 
   const series = chart.addCandlestickSeries({
     upColor: colorGain,
