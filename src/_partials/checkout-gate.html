@@ -7,7 +7,7 @@
   <div id="checkout-gate-backdrop" class="absolute inset-0"
        style="background: rgba(30,37,48,0.55); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);"></div>
   <div class="relative w-full max-w-lg bg-white p-8 md:p-10"
-       style="border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 30px 80px rgba(30,37,48,0.28);">
+       style="border: 1px solid rgba(0,0,0,0.1); box-shadow: var(--shadow-card);">
     <span class="tag-overline" style="font-size: 0.72rem;">A note before checkout</span>
     <h2 id="checkout-gate-title" class="font-noto font-bold text-2xl text-dark mt-3 mb-4 leading-tight">
       We&rsquo;d rather you go in informed.
@@ -26,8 +26,8 @@
       By clicking &ldquo;Agree and continue,&rdquo; you confirm you have fully read the above policies and accept them.
     </p>
     <div class="flex flex-col sm:flex-row gap-3 sm:justify-end">
-      <button type="button" id="checkout-gate-cancel" class="btn-dark justify-center">Go back</button>
-      <a id="checkout-gate-continue" href="#" class="btn-light justify-center">Agree and continue</a>
+      <button type="button" id="checkout-gate-cancel" class="button-dark justify-center">Go back</button>
+      <a id="checkout-gate-continue" href="#" class="button-rust justify-center">Agree and continue</a>
     </div>
   </div>
 </div>

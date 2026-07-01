@@ -1,4 +1,4 @@
-<!-- ══════════════════════════════════════════════════════════════
+﻿<!-- ══════════════════════════════════════════════════════════════
      HERO
      ══════════════════════════════════════════════════════════════ -->
 <section class="decor-banner decor-banner-dark home-hero relative w-full h-screen overflow-hidden">
@@ -20,8 +20,8 @@
               We are a quantitative market research firm focused on one goal, and one goal only: helping S&amp;P 500 investors navigate selloffs with discipline, clarity, and evidence. Our mission is to replace noise with rules, hype with research, and reactive decisions with a calmer framework for understanding market stress.
             </p>
             <div class="flex gap-4">
-              <a href="#track-record" class="hero-btn">View Signal</a>
-              <a href="#history" class="hero-btn">Historical Returns</a>
+              <a href="#track-record" class="button-hero">View Signal</a>
+              <a href="#history" class="button-hero">Historical Returns</a>
             </div>
           </div>
 
@@ -29,15 +29,15 @@
           <div class="hero-ai-panel flex flex-col">
             <p class="ask-ai-heading">Ask your favorite AI about us</p>
             <div class="flex flex-col gap-2">
-              <a href="https://claude.ai/new?q=Explain+to+me+how+retail+investors+should+easily+understand+the+institutional+rules+behind+the+DoubleTrends%E2%84%A2+signal%3F" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-ai">
+              <a href="https://claude.ai/new?q=Explain+to+me+how+retail+investors+should+easily+understand+the+institutional+rules+behind+the+DoubleTrends%E2%84%A2+signal%3F" target="_blank" rel="noopener noreferrer" class="button-hero button-hero-ai">
                 <img src="{{ROOT}}public/product/icon-claude.svg" alt="" aria-hidden="true">
                 Ask Claude
               </a>
-              <a href="https://chatgpt.com/?q=Explain+to+me+how+retail+investors+should+easily+understand+the+institutional+rules+behind+the+DoubleTrends%E2%84%A2+signal%3F" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-ai">
+              <a href="https://chatgpt.com/?q=Explain+to+me+how+retail+investors+should+easily+understand+the+institutional+rules+behind+the+DoubleTrends%E2%84%A2+signal%3F" target="_blank" rel="noopener noreferrer" class="button-hero button-hero-ai">
                 <img src="{{ROOT}}public/product/icon-chatgpt.svg" alt="" aria-hidden="true">
                 Ask ChatGPT
               </a>
-              <a href="https://www.google.com/search?udm=50&q=Explain+to+me+how+retail+investors+should+easily+understand+the+institutional+rules+behind+the+DoubleTrends%E2%84%A2+signal%3F" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-ai">
+              <a href="https://www.google.com/search?udm=50&q=Explain+to+me+how+retail+investors+should+easily+understand+the+institutional+rules+behind+the+DoubleTrends%E2%84%A2+signal%3F" target="_blank" rel="noopener noreferrer" class="button-hero button-hero-ai">
                 <img src="{{ROOT}}public/product/icon-gemini.svg" alt="" aria-hidden="true">
                 Ask Gemini
               </a>
@@ -54,7 +54,7 @@
         </div>
         <div class="story-carousel" data-story-carousel>
           <div class="story-carousel-frame">
-            <button class="hero-btn hero-btn-nav story-carousel-btn-prev" type="button" data-story-prev aria-label="Show previous stories">
+            <button class="button-hero button-hero-arrow story-carousel-btn-prev" type="button" data-story-prev aria-label="Show previous stories">
               <span aria-hidden="true">&larr;</span>
             </button>
             <div class="story-viewport">
@@ -96,7 +96,7 @@
                 </a>
 
                 <a href="{{ROOT}}product.html" class="story-card">
-                  <div class="story-card-media"><img src="{{ROOT}}public/product/pricing.jpg" alt="" loading="lazy" /></div>
+                  <div class="story-card-media"><img src="{{ROOT}}public/product/webapp1.png" alt="" loading="lazy" /></div>
                   <div class="story-card-body">
                     <span class="story-card-tag">Pricing</span>
                   </div>
@@ -104,7 +104,7 @@
 
               </div>
             </div>
-            <button class="hero-btn hero-btn-nav story-carousel-btn-next" type="button" data-story-next aria-label="Show next stories">
+            <button class="button-hero button-hero-arrow story-carousel-btn-next" type="button" data-story-next aria-label="Show next stories">
               <span aria-hidden="true">&rarr;</span>
             </button>
           </div>
@@ -141,8 +141,8 @@
             <span class="status-pill">Public data only</span>
           </div>
           <div class="flex items-center gap-2 flex-wrap">
-            <span class="status-pill" id="signal-pill">Signals: <b style="color:#C2410C;">0</b></span>
-            <span class="status-pill" id="date-pill">Date: <b style="color:#C2410C;">&mdash;</b></span>
+            <span class="status-pill" id="signal-pill">Signals: <b style="color:var(--color-rust);">0</b></span>
+            <span class="status-pill" id="date-pill">Date: <b style="color:var(--color-rust);">&mdash;</b></span>
           </div>
         </div>
         <div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(var(--replay-alert-rgb), var(--replay-flash-alpha)); transition: opacity 0.45s ease;"></div>
@@ -151,8 +151,8 @@
       <div class="relative overflow-hidden">
         <div class="terminal-footer flex items-center justify-between gap-4 flex-wrap px-5 py-4">
           <div class="flex items-center gap-4 flex-wrap">
-            <button id="replayBtn" class="btn-light" type="button"><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L9 5.5L0 11Z"/></svg>Replay</button>
-            <button id="fastForwardBtn" class="btn-dark" type="button"><svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L6 5.5L0 11Z"/><path d="M7 0L13 5.5L7 11Z"/></svg>Fast forward</button>
+            <button id="replayBtn" class="button-rust" type="button"><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L9 5.5L0 11Z"/></svg>Replay</button>
+            <button id="fastForwardBtn" class="button-dark" type="button"><svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L6 5.5L0 11Z"/><path d="M7 0L13 5.5L7 11Z"/></svg>Fast forward</button>
             <span class="data-label" id="status">loading...</span>
           </div>
           <div class="flex items-center gap-4 flex-wrap">
@@ -165,7 +165,7 @@
         <div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(var(--replay-alert-rgb), var(--replay-flash-alpha)); transition: opacity 0.45s ease;"></div>
       </div>
     </div>
-    <p class="data-label mt-4" style="color: #5A6473;">Point-in-time causal replay: on each date the system only sees data available back then, not future frames.</p>
+    <p class="data-label mt-4" style="color: var(--color-muted);">Point-in-time causal replay: on each date the system only sees data available back then, not future frames.</p>
   </div>
 </section>
 
@@ -187,26 +187,26 @@
           <span class="data-label !text-white">DoubleTrends™ Signal History (S&amp;P 500 &middot; Since 2004)</span>
         </div>
       </div>
-      <div id="history-table-wrap" class="overflow-x-auto" style="background: #FBFAF7;">
+      <div id="history-table-wrap" class="overflow-x-auto" style="background: var(--color-light);">
         <table id="history-table" class="w-full text-sm font-mono" style="border-collapse: collapse;">
           <thead>
             <tr style="border-bottom: 1px solid rgba(30,37,48,0.10);">
-              <th class="text-left px-5 py-3 font-semibold" style="color: #5A6473;">Signal Date</th>
-              <th class="text-left px-3 py-3 font-semibold" style="color: #5A6473;">Regime</th>
-              <th class="text-right px-3 py-3 font-semibold" style="color: #5A6473;">Market Close</th>
-              <th class="text-right px-3 py-3 font-semibold" style="color: #5A6473;">90d Return</th>
-              <th class="text-right px-3 py-3 font-semibold" style="color: #5A6473;">1y Return</th>
-              <th class="text-right px-5 py-3 font-semibold" style="color: #5A6473;">2y Return</th>
+              <th class="text-left px-5 py-3 font-semibold" style="color: var(--color-muted);">Signal Date</th>
+              <th class="text-left px-3 py-3 font-semibold" style="color: var(--color-muted);">Regime</th>
+              <th class="text-right px-3 py-3 font-semibold" style="color: var(--color-muted);">Market Close</th>
+              <th class="text-right px-3 py-3 font-semibold" style="color: var(--color-muted);">90d Return</th>
+              <th class="text-right px-3 py-3 font-semibold" style="color: var(--color-muted);">1y Return</th>
+              <th class="text-right px-5 py-3 font-semibold" style="color: var(--color-muted);">2y Return</th>
             </tr>
           </thead>
           <tbody id="history-table-body">
-            <tr><td colspan="6" class="px-5 py-6 text-center" style="color: #5A6473;">loading...</td></tr>
+            <tr><td colspan="6" class="px-5 py-6 text-center" style="color: var(--color-muted);">loading...</td></tr>
           </tbody>
         </table>
       </div>
       <div class="terminal-footer px-5 py-3 flex items-center justify-between gap-4 flex-wrap">
-        <span class="data-label" id="history-summary" style="color: #5A6473;">&mdash;</span>
-        <span class="data-label" style="color: #5A6473;">Forward returns computed at query time. <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--gain-rgb), 1);"></span> positive, <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--loss-rgb), 1);"></span> negative, <em>pending</em> not yet matured.</span>
+        <span class="data-label" id="history-summary" style="color: var(--color-muted);">&mdash;</span>
+        <span class="data-label" style="color: var(--color-muted);">Forward returns computed at query time. <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--color-gain-rgb), 1);"></span> positive, <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--color-loss-rgb), 1);"></span> negative, <em>pending</em> not yet matured.</span>
       </div>
     </div>
   </div>

@@ -1,9 +1,9 @@
-<style>
+﻿<style>
   .live-pulse-dot {
     display: inline-block;
     width: 1.25rem;
     height: 1.25rem;
-    background: #C2410C;
+    background: var(--color-rust);
     border-radius: 50%;
     margin-right: 0.5rem;
     flex-shrink: 0;
@@ -15,11 +15,11 @@
   }
   .product-img-frame {
     border: 1px solid rgba(30,37,48,0.10);
-    border-top: 9px solid #C2410C;
-    box-shadow: 0 10px 30px rgba(30,37,48,0.25);
+    border-top: 9px solid var(--color-rust);
+    box-shadow: var(--shadow-card);
   }
   .product-img-frame:hover {
-    box-shadow: 0 15px 40px rgba(30,37,48,0.50);
+    box-shadow: var(--shadow-card-hover);
   }
   .status-dot-pulse {
     animation: statusPulse 1s ease-out infinite;
@@ -76,15 +76,15 @@
 <span class="data-value">USD $12.42</span>
 <span class="data-label mb-2" style="font-size:0.93rem;">/month</span>
 </div>
-<p class="data-label mb-2" style="font-size: 0.81rem;"><span style="font-family:'Syne',sans-serif;font-weight:600;text-transform:none;">USD $149</span>/year</p>
-<p class="font-open text-sm font-semibold mb-2" style="color: #C2410C;">Start with 30 days free</p>
-<ul class="grid sm:grid-cols-2 gap-3 my-5 font-open text-sm" style="color: #5A6473;">
+<p class="data-label mb-2" style="font-size: 0.81rem;"><span class="font-noto font-semibold" style="text-transform:none;">USD $149</span>/year</p>
+<p class="font-open text-sm font-semibold mb-2" style="color: var(--color-rust);">Start with 30 days free</p>
+<ul class="grid sm:grid-cols-2 gap-3 my-5 font-open text-sm" style="color: var(--color-muted);">
 <li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Oversold Alert</li>
 <li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">DoubleTrends&trade; Signal</li>
 <li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Subscriber Portal</li>
 <li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Dedicated Terminal</li>
 </ul>
-<a href="{{SUBSCRIBE_URL}}" class="btn-light">Start your free trial</a>
+<a href="{{SUBSCRIBE_URL}}" class="button-rust">Start your free trial</a>
 <p class="fine-print mt-5 leading-relaxed">Try it free for 30 days. Cancel before the trial ends and you pay nothing. If a paid term begins and no signal has been delivered, a refund window still applies.</p>
 </div>
 </div>
@@ -177,7 +177,7 @@
 </div>
 </div>
 <div class="mt-8">
-<a href="{{ROOT}}legal/refund-policy.html" class="btn-light">See full policy</a>
+<a href="{{ROOT}}legal/refund-policy.html" class="button-rust">See full policy</a>
 </div>
 </div>
 </section>
@@ -191,37 +191,37 @@
 <details class="card-border px-5 py-4" open>
 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> What exactly do I receive? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">A same-day alert in your portal on signal day, plus the complete live picture. The Market Brief shows today&apos;s regime classification, VIX, Fed Funds, CPI, and unemployment with live alert and signal status. The Signal Terminal charts 20 years of S&amp;P 500 price history with every oversold alert and signal marked on the chart, regime-colored bar by bar &mdash; updated every trading day.</p>
+<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">A same-day alert in your portal on signal day, plus the complete live picture. The Market Brief shows today&apos;s regime classification, VIX, Fed Funds, CPI, and unemployment with live alert and signal status. The Signal Terminal charts 20 years of S&amp;P 500 price history with every oversold alert and signal marked on the chart, regime-colored bar by bar &mdash; updated every trading day.</p>
 </details>
 <details class="card-border px-5 py-4">
 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> How often will it fire? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">Rarely. Since 2016, the S&amp;P 500 index version has produced {{TR_SIGNAL_COUNT}} signals. Some years have several; some have none. That is the point.</p>
+<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">Rarely. Since 2016, the S&amp;P 500 index version has produced {{TR_SIGNAL_COUNT}} signals. Some years have several; some have none. That is the point.</p>
 </details>
 <details class="card-border px-5 py-4">
 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> Is this financial advice? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">No. DoubleTrends™ is educational, rules-based market information only. It is not a recommendation to buy, sell, or hold any security.</p>
+<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">No. DoubleTrends™ is educational, rules-based market information only. It is not a recommendation to buy, sell, or hold any security.</p>
 </details>
 <details class="card-border px-5 py-4">
 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> What does DoubleTrends™ measure? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">A regime filter plus a dual Williams %R reversal rule on the daily S&amp;P 500. It only fires in panic or bear regimes, with bear-market reversals filtered harder.</p>
+<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">A regime filter plus a dual Williams %R reversal rule on the daily S&amp;P 500. It only fires in panic or bear regimes, with bear-market reversals filtered harder.</p>
 </details>
 <details class="card-border px-5 py-4">
 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> Which assets are covered? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">The S&amp;P 500 index today. ETF investors can express it with VOO, SPY, or IVV. Nasdaq 100 support, including QQQ, is planned.</p>
+<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">The S&amp;P 500 index today. ETF investors can express it with VOO, SPY, or IVV. Nasdaq 100 support, including QQQ, is planned.</p>
 </details>
 <details class="card-border px-5 py-4">
 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> Does a signal mean I should buy immediately? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">No. A signal is a timing reference, not a personal recommendation. Some investors use it to review a planned contribution or staged entry; others do nothing.</p>
+<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">No. A signal is a timing reference, not a personal recommendation. Some investors use it to review a planned contribution or staged entry; others do nothing.</p>
 </details>
 <details class="card-border px-5 py-4">
 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> How do I get access after paying? <span class="acc-icon data-label transition-transform">⌄</span>
 </summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: #5A6473; border-top: 1px solid rgba(0,0,0,0.08);">Right after checkout, you receive a magic-link email. Click it to sign in to the subscriber portal at app.doubletrends.com. No password, no app to install &mdash; access is immediate.</p>
+<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">Right after checkout, you receive a magic-link email. Click it to sign in to the subscriber portal at app.doubletrends.com. No password, no app to install &mdash; access is immediate.</p>
 </details>
 </div>
 </div>

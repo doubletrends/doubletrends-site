@@ -1,10 +1,10 @@
-  <style>
-    .btn-light {
+﻿  <style>
+    .button-rust {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      color: #ffffff;
-      background: #C2410C;
+      color: var(--color-white);
+      background: var(--color-rust);
       font-family: 'DM Sans', sans-serif;
       font-size: 0.68rem;
       font-weight: 600;
@@ -13,16 +13,15 @@
       padding: 0.8rem 1.75rem;
       border: none;
       cursor: pointer;
-      transition: background 0.15s ease, transform 0.1s ease;
+      transition: transform 0.1s ease;
     }
-    .btn-light:hover { background: #9A330A; transform: translateY(-1px); }
 
-    .btn-dark {
+    .button-dark {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      color: #FFFFFF;
-      background: #2C3641;
+      color: var(--color-white);
+      background: var(--color-dark);
       font-family: 'DM Sans', sans-serif;
       font-size: 0.68rem;
       font-weight: 600;
@@ -31,30 +30,7 @@
       padding: 0.8rem 1.75rem;
       border: none;
       cursor: pointer;
-      transition: background 0.15s ease, transform 0.1s ease;
-    }
-    .btn-dark:hover { background: #1E2530; transform: translateY(-1px); }
-
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #FBFAF7;
-      background: transparent;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.8rem 1.75rem;
-      border: 1px solid rgba(251,250,247,0.40);
-      cursor: pointer;
-      transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
-    }
-    .btn-outline:hover {
-      border-color: #FBFAF7;
-      background: rgba(251,250,247,0.08);
-      transform: translateY(-1px);
+      transition: transform 0.1s ease;
     }
 
     .social-box-grid {
@@ -62,16 +38,16 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.75rem;
     }
-    .social-logo-link {
+    .button-social {
       min-height: 3.4rem;
       padding: 0.75rem 0.9rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.65rem;
-      color: #1E2530;
-      background: #FFFFFF;
-      border: 1px solid rgba(30,37,48,0.14);
+      color: var(--color-dark);
+      background: var(--color-white);
+      border: 1px solid rgba(var(--color-dark-rgb),0.10);
       font-family: 'DM Sans', sans-serif;
       font-size: 0.7rem;
       font-weight: 600;
@@ -79,13 +55,10 @@
       text-transform: uppercase;
       transition: color 0.15s ease, border-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
     }
-    .social-logo-link:hover {
-      color: #C2410C;
-      border-color: #C2410C;
-      transform: translateY(-1px);
-      box-shadow: 0 14px 34px rgba(30,37,48,0.08);
+    .button-social:hover {
+      color: var(--color-rust);
     }
-    .social-logo-link svg {
+    .button-social svg {
       width: 1.2rem;
       height: 1.2rem;
       flex: 0 0 auto;
@@ -98,21 +71,21 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: #1E2530;
-      color: #FFFFFF;
+      background: var(--color-dark);
+      color: var(--color-white);
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.66rem;
       font-weight: 600;
     }
 
     /* ── Hero glass button ───────────────────────────────────────── */
-    .hero-btn {
+    .button-hero {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      color: #FBFAF7;
-      background: rgba(251,250,247,0.06);
+      color: var(--color-light);
+      background: rgba(var(--color-light-rgb),0.06);
       backdrop-filter: blur(30px);
       -webkit-backdrop-filter: blur(30px);
       font-family: 'DM Sans', sans-serif;
@@ -121,37 +94,36 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 0.8rem 1.75rem;
-      border: 1px solid rgba(251,250,247,0.28);
+      border: 1px solid rgba(var(--color-light-rgb),0.28);
       cursor: pointer;
       transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
     }
-    .hero-btn:hover:not(:disabled) {
-      border-color: rgba(251,250,247,0.70);
-      background: rgba(251,250,247,0.12);
-      transform: translateY(-1px);
+    .button-hero:hover:not(:disabled) {
+      border-color: rgba(var(--color-light-rgb),0.70);
+      background: rgba(var(--color-light-rgb),0.12);
     }
-    .hero-btn:disabled {
+    .button-hero:disabled {
       cursor: default;
-      color: rgba(251,250,247,0.28);
-      border-color: rgba(251,250,247,0.10);
-      background: rgba(251,250,247,0.02);
+      color: rgba(var(--color-light-rgb),0.28);
+      border-color: rgba(var(--color-light-rgb),0.10);
+      background: rgba(var(--color-light-rgb),0.02);
     }
 
     /* Carousel nav arrows: narrow, full-height */
-    .hero-btn-nav {
+    .button-hero-arrow {
       width: 1.35rem;
       min-width: 1.35rem;
       padding: 0;
       align-self: stretch;
     }
-    .hero-btn-nav span {
+    .button-hero-arrow span {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.92rem;
       line-height: 1;
     }
 
-    /* AI deep-link buttons: full-width, matches hero-btn typography */
-    .hero-btn-ai {
+    /* AI deep-link buttons: full-width */
+    .button-hero-ai {
       width: 100%;
       justify-content: flex-start;
       font-family: 'DM Sans', sans-serif;
@@ -162,7 +134,7 @@
       gap: 0.75rem;
       text-transform: uppercase;
     }
-    .hero-btn-ai img {
+    .button-hero-ai img {
       width: 1.75rem;
       height: 1.75rem;
       flex: 0 0 auto;
@@ -170,5 +142,5 @@
       opacity: 0.88;
       transition: opacity 0.15s ease;
     }
-    .hero-btn-ai:hover:not(:disabled) img { opacity: 1; }
+    .button-hero-ai:hover:not(:disabled) img { opacity: 1; }
   </style>

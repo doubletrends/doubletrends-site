@@ -1,4 +1,4 @@
-<!-- ════════════════════════════════════════════════════════ HOW IT WORKS ════════════════════════════════════════════════════════ -->
+﻿<!-- ════════════════════════════════════════════════════════ HOW IT WORKS ════════════════════════════════════════════════════════ -->
 <!-- ── Foundation: Williams %R (with dtep-1 decor) — serves as page hero ─ -->
 <section id="foundation" class="decor-banner decor-banner-dark relative w-full min-h-screen flex items-center overflow-hidden" style="background: #2A3340; border-bottom: 1px solid rgba(255,255,255,0.10);">
 <img src="{{ROOT}}public/product/method-1.png" alt="" aria-hidden="true"
@@ -8,12 +8,12 @@
 <div class="flex flex-col max-w-3xl mb-10">
 <span class="tag-overline mb-5">How It Works &middot; Foundation</span>
 <h1 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05] mb-5"> The engine: Williams %R, doubled. </h1>
-<p class="font-open text-lg leading-relaxed" style="color: #FBFAF7;"> DoubleTrends&trade; works in three layers: a dual-timeframe Williams %R reversal, a market-regime classifier, and a confirmation gate. Williams %R is the engine underneath that stack: a momentum oscillator developed in the 1970s that measures where the current close sits inside the recent high-low range. </p>
+<p class="font-open text-lg leading-relaxed" style="color: var(--color-light);"> DoubleTrends&trade; works in three layers: a dual-timeframe Williams %R reversal, a market-regime classifier, and a confirmation gate. Williams %R is the engine underneath that stack: a momentum oscillator developed in the 1970s that measures where the current close sits inside the recent high-low range. </p>
 </div>
 <div class="max-w-3xl">
 <h3 class="text-dark text-xl md:text-2xl font-noto font-bold mb-3"> Why two timeframes, not one. </h3>
-<p class="font-open text-base leading-relaxed mb-4" style="color: #FBFAF7;"> A single-period oscillator is too noisy. A short window catches every dip, including ones that don&rsquo;t matter; a long window catches the deep ones but lags badly. So we run Williams %R on two timeframes at once &mdash; one short, one long &mdash; and smooth each to take out day-to-day chop. </p>
-<p class="font-open text-base leading-relaxed" style="color: #FBFAF7;"> A reversal candidate exists only when both timeframes agree the market is deeply oversold, and both start turning back up. The name <em>DoubleTrends™</em> refers to exactly this: two trend signals, both pointing the same way. </p>
+<p class="font-open text-base leading-relaxed mb-4" style="color: var(--color-light);"> A single-period oscillator is too noisy. A short window catches every dip, including ones that don&rsquo;t matter; a long window catches the deep ones but lags badly. So we run Williams %R on two timeframes at once &mdash; one short, one long &mdash; and smooth each to take out day-to-day chop. </p>
+<p class="font-open text-base leading-relaxed" style="color: var(--color-light);"> A reversal candidate exists only when both timeframes agree the market is deeply oversold, and both start turning back up. The name <em>DoubleTrends™</em> refers to exactly this: two trend signals, both pointing the same way. </p>
 </div>
 </div>
 </section>
@@ -26,7 +26,7 @@
 <h2 class="section-heading mb-5"> A momentum oscillator, alone, doesn&rsquo;t make money. </h2>
 <p class="section-body mb-5"> Every trading day, millions of chart-watchers, in the US, Japan, China, and every other market with a screen &mdash; if not two or six screens &mdash; run RSI, MACD, Bollinger Bands, Fibonacci retracements, Elliott Waves, and whatever pattern they can fit into a screenshot. They post their setups. They explain their conviction. They claim, in earnest, to have figured it out. </p>
 <p class="section-body"> If indicators alone were enough to call market bottoms, every one of them would be rich. </p>
-<p class="text-3xl md:text-4xl font-noto font-bold leading-tight my-8" style="color: #C2410C; letter-spacing: 0.02em;"> THEY. ARE. NOT. </p>
+<p class="text-3xl md:text-4xl font-noto font-bold leading-tight my-8" style="color: var(--color-rust); letter-spacing: 0.02em;"> THEY. ARE. NOT. </p>
 <p class="section-body"> They fail because indicators alone have no context. A Williams %R reversal in a calm market means nothing; the same reversal in a panic means everything. With nothing telling them which is which, they fire on every oversold reading they see. Most of those are just routine pullbacks that resolve themselves quickly &mdash; noise, not opportunity. </p>
 </div>
 </div>
@@ -106,44 +106,44 @@
 <div class="flex items-center gap-3">
 <span class="status-dot"></span>
 <span class="data-label !text-white">Regime Classification</span>
-<span class="data-label !text-[#5A6473]">Four states &middot; macro &times; price</span>
+<span class="data-label !text-[var(--color-muted)]">Four states &middot; macro &times; price</span>
 </div>
 </div>
-<div class="overflow-x-auto" style="background: #FBFAF7;">
+<div class="overflow-x-auto" style="background: var(--color-light);">
 <table class="w-full text-sm font-mono" style="border-collapse: collapse;">
 <thead>
 <tr style="border-bottom: 1px solid rgba(30,37,48,0.10);">
-<th class="text-left px-5 py-3 font-semibold" style="color: #5A6473;">Regime</th>
-<th class="text-left px-3 py-3 font-semibold" style="color: #5A6473;">Character</th>
-<th class="text-left px-3 py-3 font-semibold" style="color: #5A6473;">Signal eligible?</th>
+<th class="text-left px-5 py-3 font-semibold" style="color: var(--color-muted);">Regime</th>
+<th class="text-left px-3 py-3 font-semibold" style="color: var(--color-muted);">Character</th>
+<th class="text-left px-3 py-3 font-semibold" style="color: var(--color-muted);">Signal eligible?</th>
 </tr>
 </thead>
 <tbody>
 <tr style="border-bottom: 1px solid rgba(30,37,48,0.06);">
-<td class="px-5 py-3 font-semibold" style="color: #1E2530;">&#x1F7E2; calm</td>
-<td class="px-3 py-3" style="color: #5A6473;">low stress, near highs</td>
-<td class="px-3 py-3" style="color: #5A6473;">no &mdash; selloffs are noise</td>
+<td class="px-5 py-3 font-semibold" style="color: var(--color-dark);">&#x1F7E2; calm</td>
+<td class="px-3 py-3" style="color: var(--color-muted);">low stress, near highs</td>
+<td class="px-3 py-3" style="color: var(--color-muted);">no &mdash; selloffs are noise</td>
 </tr>
 <tr style="border-bottom: 1px solid rgba(30,37,48,0.06);">
-<td class="px-5 py-3 font-semibold" style="color: #1E2530;">&#x1F7E1; correction</td>
-<td class="px-3 py-3" style="color: #5A6473;">off the highs, contained</td>
-<td class="px-3 py-3" style="color: #5A6473;">no &mdash; benign pullbacks</td>
+<td class="px-5 py-3 font-semibold" style="color: var(--color-dark);">&#x1F7E1; correction</td>
+<td class="px-3 py-3" style="color: var(--color-muted);">off the highs, contained</td>
+<td class="px-3 py-3" style="color: var(--color-muted);">no &mdash; benign pullbacks</td>
 </tr>
 <tr style="border-bottom: 1px solid rgba(30,37,48,0.06);">
-<td class="px-5 py-3 font-semibold" style="color: #1E2530;">&#x1F7E0; panic</td>
-<td class="px-3 py-3" style="color: #5A6473;">acute drop + vol spike</td>
-<td class="px-3 py-3" style="color: #5A6473;">yes &mdash; this is the asymmetry</td>
+<td class="px-5 py-3 font-semibold" style="color: var(--color-dark);">&#x1F7E0; panic</td>
+<td class="px-3 py-3" style="color: var(--color-muted);">acute drop + vol spike</td>
+<td class="px-3 py-3" style="color: var(--color-muted);">yes &mdash; this is the asymmetry</td>
 </tr>
 <tr>
-<td class="px-5 py-3 font-semibold" style="color: #1E2530;">&#x1F534; bear</td>
-<td class="px-3 py-3" style="color: #5A6473;">chronic, prolonged, macro stress</td>
-<td class="px-3 py-3" style="color: #5A6473;">yes &mdash; filtered hard</td>
+<td class="px-5 py-3 font-semibold" style="color: var(--color-dark);">&#x1F534; bear</td>
+<td class="px-3 py-3" style="color: var(--color-muted);">chronic, prolonged, macro stress</td>
+<td class="px-3 py-3" style="color: var(--color-muted);">yes &mdash; filtered hard</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="terminal-footer px-5 py-3 flex items-center">
-<span class="data-label" style="color: #5A6473;"> The first two regimes hold most of the calendar. The last two are where the rule does its work. </span>
+<span class="data-label" style="color: var(--color-muted);"> The first two regimes hold most of the calendar. The last two are where the rule does its work. </span>
 </div>
 </div>
 <p class="section-body mt-8 max-w-3xl"> Bear deserves a note. Bear markets have the deepest selloffs, but they also have the most fake bottoms &mdash; the V-bounces that look like recovery and then resume falling. So while bear-regime reversals can fire, they have to clear a harder confirmation bar than panic-regime reversals. The product is willing to wait. </p>
@@ -167,51 +167,51 @@
 <div class="flex items-center gap-3">
 <span class="status-dot"></span>
 <span class="data-label !text-white">Signal Decision Flow</span>
-<span class="data-label !text-[#5A6473]">Three gates &middot; all must clear</span>
+<span class="data-label !text-[var(--color-muted)]">Three gates &middot; all must clear</span>
 </div>
 </div>
-<div style="background: #FBFAF7;">
+<div style="background: var(--color-light);">
 <div class="px-5 py-4 flex items-start gap-4 flex-wrap" style="border-top: 1px solid rgba(30,37,48,0.06);">
 <div style="min-width: 7rem;">
 <span class="data-label">Gate 1</span>
-<div class="font-mono text-sm mt-1" style="color: #1E2530;">Engine</div>
+<div class="font-mono text-sm mt-1" style="color: var(--color-dark);">Engine</div>
 </div>
 <div class="flex-1 min-w-0">
-<p class="font-mono text-sm" style="color: #1E2530;">Both smoothed Williams %R timeframes oversold &amp; turning up?</p>
+<p class="font-mono text-sm" style="color: var(--color-dark);">Both smoothed Williams %R timeframes oversold &amp; turning up?</p>
 <div class="flex gap-6 flex-wrap mt-2 font-mono text-xs">
-<span style="color: #C8413B;">no &mdash;&gt; wait</span>
-<span style="color: #2E9E7B;">yes &mdash;&gt; continue</span>
+<span style="color: var(--color-loss);">no &mdash;&gt; wait</span>
+<span style="color: var(--color-gain);">yes &mdash;&gt; continue</span>
 </div>
 </div>
 </div>
 <div class="px-5 py-4 flex items-start gap-4 flex-wrap" style="border-top: 1px solid rgba(30,37,48,0.06);">
 <div style="min-width: 7rem;">
 <span class="data-label">Gate 2</span>
-<div class="font-mono text-sm mt-1" style="color: #1E2530;">Regime</div>
+<div class="font-mono text-sm mt-1" style="color: var(--color-dark);">Regime</div>
 </div>
 <div class="flex-1 min-w-0">
-<p class="font-mono text-sm" style="color: #1E2530;">Regime = panic or bear?</p>
+<p class="font-mono text-sm" style="color: var(--color-dark);">Regime = panic or bear?</p>
 <div class="flex gap-6 flex-wrap mt-2 font-mono text-xs">
-<span style="color: #C8413B;">calm / correction &mdash;&gt; reversal ignored</span>
-<span style="color: #2E9E7B;">panic / bear &mdash;&gt; continue</span>
+<span style="color: var(--color-loss);">calm / correction &mdash;&gt; reversal ignored</span>
+<span style="color: var(--color-gain);">panic / bear &mdash;&gt; continue</span>
 </div>
 </div>
 </div>
 <div class="px-5 py-4 flex items-start gap-4 flex-wrap" style="border-top: 1px solid rgba(30,37,48,0.06);">
 <div style="min-width: 7rem;">
 <span class="data-label">Gate 3</span>
-<div class="font-mono text-sm mt-1" style="color: #1E2530;">Confirmation</div>
+<div class="font-mono text-sm mt-1" style="color: var(--color-dark);">Confirmation</div>
 </div>
 <div class="flex-1 min-w-0">
-<p class="font-mono text-sm" style="color: #1E2530;">Reversal confirmation cleared? Bear clears a harder bar than panic.</p>
+<p class="font-mono text-sm" style="color: var(--color-dark);">Reversal confirmation cleared? Bear clears a harder bar than panic.</p>
 <div class="flex gap-6 flex-wrap mt-2 font-mono text-xs">
-<span style="color: #C8413B;">no &mdash;&gt; wait for confirmation</span>
-<span style="color: #2E9E7B;">yes &mdash;&gt; fire</span>
+<span style="color: var(--color-loss);">no &mdash;&gt; wait for confirmation</span>
+<span style="color: var(--color-gain);">yes &mdash;&gt; fire</span>
 </div>
 </div>
 </div>
 <div class="px-5 py-4 text-center" style="border-top: 1px solid rgba(30,37,48,0.10); background: rgba(194,65,12,0.08);">
-<span class="font-mono text-sm font-bold" style="color: #C2410C; letter-spacing: 0.15em;">SIGNAL FIRES</span>
+<span class="font-mono text-sm font-bold" style="color: var(--color-rust); letter-spacing: 0.15em;">SIGNAL FIRES</span>
 </div>
 </div>
 </div>
@@ -247,13 +247,13 @@
 <div class="flex items-center gap-3">
 <span class="status-dot"></span>
 <span class="data-label !text-white">Transparency Boundary</span>
-<span class="data-label !text-[#5A6473]">Open above &middot; proprietary below</span>
+<span class="data-label !text-[var(--color-muted)]">Open above &middot; proprietary below</span>
 </div>
 </div>
-<div class="grid md:grid-cols-2" style="background: #FBFAF7;">
+<div class="grid md:grid-cols-2" style="background: var(--color-light);">
 <div class="px-5 py-5 md:border-r" style="border-bottom: 1px solid rgba(30,37,48,0.06); border-right-color: rgba(30,37,48,0.06);">
-<span class="data-label" style="color: #2E9E7B;">What we show</span>
-<ul class="mt-3 font-mono text-sm leading-relaxed" style="color: #1E2530; list-style: none; padding: 0; margin: 0;">
+<span class="data-label" style="color: var(--color-gain);">What we show</span>
+<ul class="mt-3 font-mono text-sm leading-relaxed" style="color: var(--color-dark); list-style: none; padding: 0; margin: 0;">
 <li>&middot; the five inputs (price, VIX, Fed funds, unemployment, CPI)</li>
 <li>&middot; the four regimes (calm, correction, panic, bear)</li>
 <li>&middot; the three signal gates and their order</li>
@@ -263,8 +263,8 @@
 </ul>
 </div>
 <div class="px-5 py-5" style="border-bottom: 1px solid rgba(30,37,48,0.06);">
-<span class="data-label" style="color: #C8413B;">What we keep close</span>
-<ul class="mt-3 font-mono text-sm leading-relaxed" style="color: #1E2530; list-style: none; padding: 0; margin: 0;">
+<span class="data-label" style="color: var(--color-loss);">What we keep close</span>
+<ul class="mt-3 font-mono text-sm leading-relaxed" style="color: var(--color-dark); list-style: none; padding: 0; margin: 0;">
 <li>&middot; exact numerical thresholds</li>
 <li>&middot; cutoff percentiles per input</li>
 <li>&middot; drawdown depth / duration bands</li>
@@ -275,7 +275,7 @@
 </div>
 </div>
 <div class="terminal-footer px-5 py-3 flex items-center">
-<span class="data-label" style="color: #5A6473;"> Everything you need to evaluate the rule. Nothing you need to replicate it. </span>
+<span class="data-label" style="color: var(--color-muted);"> Everything you need to evaluate the rule. Nothing you need to replicate it. </span>
 </div>
 </div>
 <p class="section-body mt-8 max-w-3xl"> The proof of the rule is not in the parameter values we could publish &mdash; it is in the track record you can already see. Every signal since 2004, every forward return, every miss. That is the audit. </p>

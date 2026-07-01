@@ -1,49 +1,12 @@
 <!-- ══════════════════════════════════════════════════════ CHECKOUT SUCCESS ═══════════════════════════════════════════════════════ -->
 <section class="page-shell-narrow">
-<div class="page-hero w-full flex flex-col items-center p-8 md:p-12 mb-12 max-w-3xl text-center">
-<span class="tag-overline mb-3">Payment received</span>
-<h1 class="text-[2.75em] font-noto font-bold text-center text-grad-section leading-tight"> You're subscribed </h1>
-<p class="text-muted text-2xl font-noto text-center mt-2 leading-snug"> Thank you for subscribing to DoubleTrends™. We're preparing your one-time activation link for our Telegram bot. </p>
-</div>
-
-<div class="w-full max-w-3xl flex flex-col gap-6">
-<div class="product-panel p-8 md:p-10 flex flex-col items-center text-center">
-
-<!-- State: verifying (default) -->
-<div id="state-loading" class="flex flex-col items-center">
-<span class="status-pill"><span class="status-dot"></span>Preparing your access</span>
-<p class="text-muted text-sm leading-relaxed mt-6 max-w-xl"> This usually takes a few seconds while we confirm your payment. Please keep this tab open — your activation link will appear here automatically. </p>
-</div>
-
-<!-- State: ready (activation deep link available) -->
-<div id="state-ready" class="hidden flex-col items-center">
-<span class="tag-overline text-center block">Activate your access</span>
-<p class="text-muted text-sm leading-relaxed mt-4 max-w-xl"> Tap below to open our Telegram bot. It will confirm your subscription, bind it to your Telegram account, and start delivering signals there. </p>
-<a id="invite-link" href="#" target="_blank" rel="noopener" class="mt-8 block">
-<button class="btn-light">Activate in Telegram</button>
-</a>
-<p class="fine-print mt-6 max-w-xl"> Used the wrong Telegram account, or need to re-bind later? Email <a class="underline" href="mailto:support@doubletrends.com?subject=DoubleTrends%E2%84%A2%20access">support@doubletrends.com</a> with the email you used at checkout. </p>
-</div>
-
-<!-- State: pending too long / error -->
-<div id="state-pending" class="hidden flex-col items-center">
-<span class="status-pill"><span class="status-dot"></span>Still setting up</span>
-<p class="text-muted text-sm leading-relaxed mt-6 max-w-xl"> Your payment went through, but your activation link is taking longer than usual to generate. It can take a minute or two. You can keep waiting, or retry below. </p>
-<button id="retry-btn" class="btn-dark mt-8">Check again</button>
-<p class="fine-print mt-6 max-w-xl"> If it still doesn't appear, email <a class="underline" href="mailto:support@doubletrends.com?subject=DoubleTrends%E2%84%A2%20access">support@doubletrends.com</a> with the email you used at checkout and we'll activate it manually. </p>
-</div>
-
-<!-- State: no session id in URL -->
-<div id="state-nosession" class="hidden flex-col items-center">
-<span class="tag-overline text-center block">Nothing to verify</span>
-<p class="text-muted text-sm leading-relaxed mt-4 max-w-xl"> We couldn't find a checkout reference in this link. If you've just paid, return to the page Stripe redirected you to. If you need help, email <a class="underline" href="mailto:support@doubletrends.com?subject=DoubleTrends%E2%84%A2%20access">support@doubletrends.com</a>. </p>
-</div>
-
+<div class="w-full max-w-3xl">
+<div class="product-panel p-8 md:p-12 flex flex-col items-center text-center gap-6">
+  <span class="tag-overline">Payment received</span>
+  <h1 class="text-[2.75em] font-noto font-bold text-grad-section leading-tight">You're subscribed.</h1>
+  <p class="text-muted text-2xl font-open leading-snug">Your checkout email is your account. No setup, no registration — the portal is ready now.</p>
+  <a href="{{PORTAL_URL}}" class="button-rust mt-2" target="_blank" rel="noopener">Go to Subscriber Portal</a>
+  <p class="fine-print max-w-xl">Questions? Email <a class="underline" href="mailto:support@doubletrends.com?subject=DoubleTrends%E2%84%A2%20access">support@doubletrends.com</a> with the email you used at checkout.</p>
 </div>
 </div>
 </section>
-
-<script>
-  window.DOUBLETRENDS_WORKER_URL = "{{WORKER_URL}}";
-</script>
-<script src="{{ROOT}}public/js/access-success.js"></script>

@@ -1,4 +1,4 @@
-<!-- ARTICLE: Maximum Drawdown — depth, duration, and sharpness -->
+﻿<!-- ARTICLE: Maximum Drawdown — depth, duration, and sharpness -->
 <article class="article-page">
 
 <!-- Header -->
@@ -10,7 +10,7 @@
 
 <!-- What it is -->
 <section class="article-section">
-<span class="section-overline">What drawdown actually is</span>
+<span class="tag-overline">What drawdown actually is</span>
 <h2 class="article-h2"> Depth from a trailing high </h2>
 <p class="prose-p mb-4"> The drawdown on any given day is just one subtraction: today's close, expressed as a percentage below the highest close inside some lookback window. Pick a window, find the high, compare to today, report the percentage. </p>
 <p class="prose-p mb-6"> The crucial choice is the window. Drawdown from an <em>all-time</em> high tells you something about long-run market memory but reacts slowly; drawdown from a <em>10-day</em> high reacts instantly but is mostly noise. The DoubleTrends&trade; engine measures drawdown from a trailing one-year high. One year is long enough to ignore weekly chop and short enough that the &ldquo;recent peak&rdquo; is still relevant to today's market psychology. </p>
@@ -21,17 +21,17 @@
 
 <!-- Duration -->
 <section class="article-section">
-<span class="section-overline">The second axis</span>
+<span class="tag-overline">The second axis</span>
 <h2 class="article-h2"> Duration changes the meaning </h2>
 <p class="prose-p mb-4"> Depth alone is misleading. Consider two markets both sitting at &minus;15%: </p>
 <div class="grid md:grid-cols-2 gap-4 mb-6">
 <div class="product-panel p-6">
-<h3 class="font-noto font-semibold text-lg mb-3" style="color: #C2410C;">Down 15% in three weeks</h3>
-<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> A sudden shock. Forced de-risking, vol spiking, headlines screaming. This is the panic pattern, where buying-the-dip has historically paid. </p>
+<h3 class="font-noto font-semibold text-lg mb-3" style="color: var(--color-rust);">Down 15% in three weeks</h3>
+<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> A sudden shock. Forced de-risking, vol spiking, headlines screaming. This is the panic pattern, where buying-the-dip has historically paid. </p>
 </div>
 <div class="product-panel p-6">
-<h3 class="font-noto font-semibold text-lg mb-3" style="color: #C2410C;">Down 15% over seven months</h3>
-<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> A grinding bleed. Earnings revisions, macro deterioration, structural selling. This is the bear pattern, where false bottoms are common. </p>
+<h3 class="font-noto font-semibold text-lg mb-3" style="color: var(--color-rust);">Down 15% over seven months</h3>
+<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> A grinding bleed. Earnings revisions, macro deterioration, structural selling. This is the bear pattern, where false bottoms are common. </p>
 </div>
 </div>
 <p class="prose-p mb-4"> The depth is identical. The market is structurally different. The discipline is to look at both axes at once &mdash; depth and duration &mdash; instead of letting the percentage speak alone. </p>
@@ -43,7 +43,7 @@
 
 <!-- Sharpness -->
 <section class="article-section">
-<span class="section-overline">The third axis</span>
+<span class="tag-overline">The third axis</span>
 <h2 class="article-h2"> Sharpness: how brutal was the worst stretch </h2>
 <p class="prose-p mb-4"> Depth and duration describe the envelope of the selloff. Sharpness describes its texture. Two drawdowns can be the same depth and duration but feel very different if one was a steady glide down and the other was a single, vicious week. </p>
 <p class="prose-p"> The engine captures this by looking at the worst ten-day stretch within the trailing month. A market that has just absorbed a brutal ten-day leg down is being repriced by panic flow, even if the headline drawdown is modest. A market that drifted to the same depth over months has not. </p>
@@ -51,28 +51,28 @@
 
 <!-- The classifier -->
 <section class="article-section">
-<span class="section-overline">How the engine uses these</span>
+<span class="tag-overline">How the engine uses these</span>
 <h2 class="article-h2"> Three numbers, one regime read </h2>
 <p class="prose-p mb-4"> Depth, duration, and sharpness are not the final answer. They are three of the inputs the regime classifier reads to decide whether a market is in calm, correction, panic, or bear. The shape of how they combine: </p>
 <div class="terminal-shell flex flex-col mb-6">
 <div class="px-5 py-4" style="border-bottom: 1px solid rgba(30,37,48,0.06);">
-<p class="font-mono text-sm mb-1" style="color: #1E2530;"> shallow depth, calm sharpness </p>
-<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> Calm or correction. No signal eligibility &mdash; the engine refuses to fire here. </p>
+<p class="font-mono text-sm mb-1" style="color: var(--color-dark);"> shallow depth, calm sharpness </p>
+<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> Calm or correction. No signal eligibility &mdash; the engine refuses to fire here. </p>
 </div>
 <div class="px-5 py-4" style="border-bottom: 1px solid rgba(30,37,48,0.06);">
-<p class="font-mono text-sm mb-1" style="color: #1E2530;"> off the recent ceiling + acute sharpness </p>
-<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> Panic candidate. The engine becomes eligible to fire on a Williams %R reversal. </p>
+<p class="font-mono text-sm mb-1" style="color: var(--color-dark);"> off the recent ceiling + acute sharpness </p>
+<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> Panic candidate. The engine becomes eligible to fire on a Williams %R reversal. </p>
 </div>
 <div class="px-5 py-4">
-<p class="font-mono text-sm mb-1" style="color: #1E2530;"> deep depth + long duration + macro pressure </p>
-<p class="font-open text-sm leading-relaxed" style="color: #5A6473;"> Bear regime. Fires allowed, but only after a harder confirmation bar. </p>
+<p class="font-mono text-sm mb-1" style="color: var(--color-dark);"> deep depth + long duration + macro pressure </p>
+<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> Bear regime. Fires allowed, but only after a harder confirmation bar. </p>
 </div>
 </div>
 <p class="prose-p"> These shapes do not stand alone &mdash; they combine with VIX, Fed funds, unemployment, and CPI to produce the final regime read. Drawdown is the inside view: how stressed price is on its own. The macro anchors are the outside view: whether the rest of the world agrees. The exact thresholds that turn each shape on or off are part of the production rule and are not published. </p>
 <div class="mt-6">
 <div class="flex flex-wrap items-center gap-5">
-<a href="{{ROOT}}academy/vix-percentile.html" class="text-primary hover:underline font-noto text-sm font-semibold">See the volatility input that sits next to drawdown &rarr;</a>
-<a href="{{ROOT}}method.html" class="text-primary hover:underline font-noto text-sm font-semibold">See how drawdown feeds the regime classifier &rarr;</a>
+<a href="{{ROOT}}academy/vix-percentile.html" class="text-primary hover:underline font-open text-sm font-semibold">See the volatility input that sits next to drawdown &rarr;</a>
+<a href="{{ROOT}}method.html" class="text-primary hover:underline font-open text-sm font-semibold">See how drawdown feeds the regime classifier &rarr;</a>
 </div>
 </div>
 <div class="media-frame overflow-hidden mt-6">
@@ -84,7 +84,7 @@
 <section class="cta-panel article-cta">
 <h3 class="text-dark font-noto font-bold text-2xl mb-3">From &ldquo;how deep&rdquo; to &ldquo;now.&rdquo;</h3>
 <p class="prose-p mb-6"> Drawdown describes the environment. DoubleTrends&trade; turns the dip thesis into a dated alert &mdash; one message when the rule's three gates clear on the S&amp;P 500 index. Built for ETF investors using funds such as VOO, SPY, or IVV. </p>
-<a href="{{ROOT}}product.html" class="btn-light">See the product</a>
+<a href="{{ROOT}}product.html" class="button-rust">See the product</a>
 </section>
 
 <!-- Method -->

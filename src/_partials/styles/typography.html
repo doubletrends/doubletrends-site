@@ -1,12 +1,12 @@
-  <style>
+﻿  <style>
     .text-grad-hero {
-      background-image: linear-gradient(160deg, #1E2530 10%, #5A6473 100%);
+      background-image: var(--gradient-text-hero);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .text-grad-section {
-      background-image: linear-gradient(140deg, #1E2530 0%, #5A6473 100%);
+      background-image: var(--gradient-text);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -16,23 +16,53 @@
       font-size: 0.62rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #5A6473;
+      color: var(--color-muted);
     }
     .data-value {
       font-family: 'Syne', sans-serif;
       font-weight: 700;
       font-size: 2.25rem;
-      color: #1E2530;
+      color: var(--color-dark);
       line-height: 1;
     }
     .code-block {
       font-family: 'JetBrains Mono', 'Courier New', monospace;
       font-size: 0.75rem;
-      background: #FBFAF7;
-      color: #1E2530;
+      background: var(--color-light);
+      color: var(--color-dark);
       padding: 1.25rem;
       border: 1px solid rgba(0,0,0,0.08);
       overflow-x: auto;
       white-space: pre-wrap;
+    }
+    .tag-overline {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.2rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-rust);
+    }
+    .hero-lede {
+      font-size: 1.1rem;
+      color: rgba(var(--color-light-rgb),0.82);
+      max-width: 34rem;
+    }
+    .ask-ai-heading {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      line-height: 1.3;
+      color: rgba(var(--color-light-rgb),0.88);
+      margin-bottom: 0.6rem;
+      white-space: nowrap;
+    }
+    .hero-strip-label {
+      color: rgba(var(--color-light-rgb),0.40);
+      font-size: 1.4em;
+    }
+    .hero-strip-disclaimer {
+      color: rgba(var(--color-light-rgb),0.26);
+      margin-top: 0.75rem;
     }
   </style>
