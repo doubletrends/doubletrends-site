@@ -30,9 +30,9 @@ const EXISTING_SP500 = path.join(__dirname, 'public', 'replay', 'sp500.json');
 const OUT_DIR = path.join(__dirname, 'public', 'replay');
 
 // Chart trim: the homepage replay starts on 2016-07-01 so the visible window
-// matches the homepage copy. History table trim: 2004 — matches the Telegram bot's
-// TELEGRAM_HISTORY_CUTOFF_DATE so the homepage and /history command agree.
-// Backfill itself goes back to 1995.
+// matches the homepage copy. History table trim: 2004 — matches HISTORY_CUTOFF_DATE
+// in the backend's worker/src/brief.ts so the homepage and the portal's
+// /api/history endpoint agree. Backfill itself goes back to 1995.
 const CHART_START_DATE = '2016-07-01';
 const HISTORY_START_DATE = '2004-01-01';
 
@@ -91,7 +91,7 @@ function addDaysISO(iso, days) {
   return d.toISOString().slice(0, 10);
 }
 
-// Mirrors the D1 query in worker/src/telegram.ts /history:
+// Mirrors the D1 query in the backend's worker/src/webapp.ts /api/history:
 //   first trading day at or after signal_date + N calendar days.
 function findCloseAtOrAfter(rowsAsc, targetISO) {
   for (const r of rowsAsc) {
