@@ -1,0 +1,20 @@
+# Served from the assets root by Cloudflare Workers static assets.
+# Anything not listed keeps the platform default (max-age=0, must-revalidate),
+# which is what HTML and the daily-rebuilt replay JSON need.
+
+# Font files never change under the same name — the filename encodes family
+# and weight, so a redesign ships new files. Safe to cache forever.
+/public/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Brand assets keep stable names across rebuilds (build-brand.js), so a
+# rebrand WOULD go stale under immutable. One day bounds that exposure while
+# still skipping the per-navigation revalidation of the header/footer wordmark.
+/public/brand/*
+  Cache-Control: public, max-age=86400
+
+# site.css is unhashed, so fresh HTML can reference stale CSS for up to
+# max-age after a deploy. Five minutes caps that mismatch window while
+# covering same-session navigation.
+/public/css/site.css
+  Cache-Control: public, max-age=300

@@ -313,3 +313,6 @@ console.log('✓  public/ copied');
 
 fs.copyFileSync(path.join(__dirname, 'src', 'robots.txt'), path.join(DIST, 'robots.txt'));
 console.log('✓  robots.txt copied');
+
+fs.copyFileSync(path.join(__dirname, 'src', '_headers'), path.join(DIST, '_headers'));
+console.log('✓  _headers copied');
