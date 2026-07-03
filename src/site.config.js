@@ -28,7 +28,6 @@ const PUBLISHER = {
     'https://www.crunchbase.com/organization/doubletrends-l-l-c',
     'https://wellfound.com/company/doubletrends-llc',
     'https://www.producthunt.com/products/doubletrends',
-    'https://telegram-bot-list.com/bots/doubletrends-signal-bot',
   ],
   knowsAbout: [
     'S&P 500 index',
@@ -111,8 +110,8 @@ const pages = [
   page('product.html', {
     priority: 0.9,
     kind: 'product',
-    title: 'Pricing, Trial, and Telegram Delivery',
-    desc:  'DoubleTrends™ costs USD $12.42 per month, billed annually at $149/year. Includes a 30-day free trial, private Telegram delivery, and a refund window.',
+    title: 'Pricing, Trial, and Subscriber Portal',
+    desc:  'DoubleTrends™ costs USD $12.42 per month, billed annually at $149/year. Includes a 30-day free trial, a live subscriber portal with same-day alerts, and a refund window.',
     schema: {
       productName: 'DoubleTrends™ Annual Signal Subscription',
       price: '149.00',
@@ -179,7 +178,7 @@ const pages = [
   }),
   legalPage('privacy', {
     title: 'Privacy Policy',
-    desc:  'How DoubleTrends™ handles your data: no cookies, no analytics, no tracking — only the minimum needed to bill via Stripe and deliver the Telegram signal.',
+    desc:  'How DoubleTrends™ handles your data: no cookies, no analytics, no tracking — only the minimum needed to bill via Stripe and authenticate subscriber portal access.',
   }),
   legalPage('disclaimer', {
     title: 'Disclaimer',
@@ -198,7 +197,7 @@ const pages = [
     sitemap: false,
     robots: 'noindex,follow',
     title: 'You\'re Subscribed',
-    desc:  'Your DoubleTrends™ subscription is active. Activate the Telegram bot to start receiving signals.',
+    desc:  'Your DoubleTrends™ subscription is active. Check your email for the magic link to access the subscriber portal.',
   }),
 
   // ── academy: articles ────────────────────────────────────────────────────
