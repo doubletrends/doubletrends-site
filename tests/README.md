@@ -11,7 +11,7 @@ Frontend validation suite. All scripts are invoked via `npm run test:*`; `npm ru
 - `npm run test:registry` — validate `src/site.config.js` page registry integrity
 - `npm run test:schema` — verify JSON-LD rules for article and non-article pages
 - `npm run test:overlines` — verify every academy/company/legal page carries a correctly formatted overline
-- `npm run test:nav` — verify nav dropdown, footer column, and section index card are in sync for every sub-page
+- `npm run test:nav-consistency` — verify nav dropdown, footer column, and section index card are in sync for every sub-page
 - `npm run test:headings` — verify heading hierarchy consistency across company pages
 
 ## Contracts
@@ -39,7 +39,7 @@ Checks `src/site.config.js` for: unique `src` values, valid `.html` output paths
 
 Checks every HTML page under `academy/`, `company/`, and `legal/` for a `.tag-overline` element whose text matches the expected section prefix (e.g. `Academy ·`, `Company ·`, `Legal ·`).
 
-### Nav / footer / index consistency (`test:nav`)
+### Nav / footer / index consistency (`test:nav-consistency`)
 
 Cross-checks nav dropdown, footer column, and section index card for each sub-page — fails if a page appears in one but not the others.
 
