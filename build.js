@@ -35,6 +35,7 @@ const {
   pages,
 } = require('./src/site.config');
 const { buildJsonLdScripts, canonicalFor: canonicalForRaw, pageDisplayName, isoDate } = require('./src/schema');
+const { COLORS } = require('./src/brand.config');
 const canonicalFor = (src) => canonicalForRaw(SITE_URL, src);
 
 // ─── Site config ────────────────────────────────────────────────────────────
@@ -189,6 +190,7 @@ function renderPage(page) {
     TITLE:     formatTitle(page.title),
     DESC:      page.desc,
     CANONICAL: canonicalFor(page.src),
+    THEME_COLOR: COLORS.light,
     SUBSCRIBE_URL,
     PORTAL_URL,
     WORKER_URL,
@@ -259,7 +261,7 @@ const academyArticles = pages
 
 const llms = `# DoubleTrends™
 
-DoubleTrends™ is a rules-based S&P 500 index signal for ETF investors. It tracks the S&P 500 index and sends a Telegram alert when its oversold-reversal rule fires. The site also publishes research notes on drawdowns, market exhaustion, investor behavior, and market-structure tools.
+DoubleTrends™ is a rules-based S&P 500 index signal for ETF investors. It tracks the S&P 500 index and publishes a same-day alert to the subscriber portal when its oversold-reversal rule fires. The site also publishes research notes on drawdowns, market exhaustion, investor behavior, and market-structure tools.
 
 Important: the content is educational market information only. It is not financial, investment, trading, tax, or legal advice, and it is not a recommendation to buy, sell, or hold any security.
 
@@ -283,7 +285,7 @@ ${academyArticles}
 - Operator: DoubleTrends L.L.C.
 - Coverage: S&P 500 index
 - Intended audience: ETF investors using S&P 500 exposure such as VOO, SPY, or IVV
-- Delivery: Telegram alert
+- Delivery: subscriber portal with same-day alerts
 - Signal type: low-frequency, rules-based oversold reversal
 - Contact: info@doubletrends.com
 `;
