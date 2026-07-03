@@ -31,6 +31,19 @@ function resolvePath(fromFile, rawPath) {
   return path.resolve(path.dirname(fromFile), rawPath);
 }
 
+// Mirror Cloudflare's auto-trailing-slash asset resolution: a directory path
+// serves its index.html, an extensionless path serves path + ".html".
+// Returns the file that would be served, or null.
+function resolveAsset(target) {
+  if (fs.existsSync(target)) {
+    if (!fs.statSync(target).isDirectory()) return target;
+    const index = path.join(target, 'index.html');
+    return fs.existsSync(index) ? index : null;
+  }
+  const withHtml = `${target}.html`;
+  return fs.existsSync(withHtml) ? withHtml : null;
+}
+
 function main() {
   if (!fs.existsSync(DIST)) throw new Error(`dist/ not found at ${DIST}`);
 
@@ -58,20 +71,20 @@ function main() {
       }
 
       const { pathname, hash } = splitTarget(value);
-      const target    = resolvePath(file, pathname);
-      const targetRel = relPosix(target, DIST);
+      const target   = resolvePath(file, pathname);
+      const resolved = resolveAsset(target);
 
-      if (!fs.existsSync(target)) {
-        errors.push(`${relFile}: missing target ${value} -> ${targetRel}`);
+      if (!resolved) {
+        errors.push(`${relFile}: missing target ${value} -> ${relPosix(target, DIST)}`);
         continue;
       }
 
       if (hash) {
-        if (!target.endsWith(HTML_EXT)) {
+        if (!resolved.endsWith(HTML_EXT)) {
           errors.push(`${relFile}: anchor target is not HTML ${value}`);
           continue;
         }
-        const ids = idsByFile.get(target) ?? fileIds(fs.readFileSync(target, 'utf8'));
+        const ids = idsByFile.get(resolved) ?? fileIds(fs.readFileSync(resolved, 'utf8'));
         if (!ids.has(hash)) errors.push(`${relFile}: missing anchor ${value}`);
       }
     }

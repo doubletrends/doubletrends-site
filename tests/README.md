@@ -21,6 +21,10 @@ Frontend validation suite. All scripts are invoked via `npm run test:*`; `npm ru
 
 Checks each built HTML page for: `<title>`, meta description, robots meta, canonical link, `og:title`, `og:description`, `twitter:title`, `twitter:description`, and at least one JSON-LD block.
 
+### Internal links (`test:links`)
+
+Link targets are resolved the way Cloudflare's auto-trailing-slash asset handling serves them: an extensionless path resolves to `path.html`, a directory path to its `index.html`. The build rewrites internal `.html` hrefs to this extensionless form; the test validates the rewritten output.
+
 Also enforces:
 
 - `<title>`, `og:title`, and `twitter:title` must match and start with `DoubleTrends™ | `

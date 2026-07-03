@@ -94,9 +94,10 @@ At a high level it:
 2. Compiles the CSS sources in `src/styles/` into a single minified `dist/public/css/site.css` via the Tailwind CLI
 3. Reads page templates from `src/pages/`
 4. Resolves placeholders like `{{ROOT}}`, `{{TITLE}}`, `{{DESC}}`, and `{{CANONICAL}}`
-5. Writes final HTML into `dist/`
-6. Generates `sitemap.xml` and `llms.txt`
-7. Copies static assets from `public/`
+5. Rewrites internal `.html` hrefs to the extensionless URLs Cloudflare serves with 200 (`method.html` → `method`, `academy/index.html` → `academy/`) — templates keep authoring plain `.html` file paths
+6. Writes final HTML into `dist/`
+7. Generates `sitemap.xml` and `llms.txt`
+8. Copies static assets from `public/`
 
 ### Metadata model
 
