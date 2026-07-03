@@ -44,7 +44,6 @@ Wired to the GitHub repo — a commit and push to `main` auto-deploys to `double
 
 - Main marketing pages
 - Academy pages
-- Brand page
 - Replay chart and history table
 - SEO outputs such as `sitemap.xml` and `llms.txt`
 
