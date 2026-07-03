@@ -27,7 +27,6 @@ const {
   SITE_DESCRIPTION,
   SUBSCRIBE_URL,
   PORTAL_URL,
-  WORKER_URL,
   OG_IMAGE,
   OG_IMAGE_ALT,
   PUBLISHER,
@@ -59,14 +58,10 @@ const TODAY = todayInTimeZone('Asia/Shanghai');
 const HISTORY_PATH = path.join(__dirname, 'public', 'replay', 'history.json');
 const history = JSON.parse(fs.readFileSync(HISTORY_PATH, 'utf8'));
 const tr = history.metrics_since_replay_start;
-const trAll = history.metrics;
-const replayStartYear = (history.replay_start_date || tr.first_signal).slice(0, 4);
 const TRACK_RECORD = {
   TR_SIGNAL_COUNT: String(tr.total_signals),
-  TR_SIGNAL_COUNT_TOTAL: String(trAll.total_signals),
   TR_MEDIAN_1Y_PCT: `+${tr.median_1y_pct}%`,
   TR_POSITIVE_1Y: `${tr.positive_1y_count} of ${tr.matured_1y_count}`,
-  TR_REPLAY_RANGE: `${replayStartYear}–${tr.last_signal.slice(0, 4)}`,
 };
 
 // ─── Prepare output directory ────────────────────────────────────────────────
@@ -193,7 +188,6 @@ function renderPage(page) {
     THEME_COLOR: COLORS.light,
     SUBSCRIBE_URL,
     PORTAL_URL,
-    WORKER_URL,
     OG_TYPE:   page.kind === 'article' ? 'article' : 'website',
     OG_IMAGE,
     OG_IMAGE_ALT,
