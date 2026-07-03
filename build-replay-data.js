@@ -2,25 +2,18 @@
  * build-replay-data.js
  *
  * Reads ../doubletrends-backend/signal/backfill/fast/backfill_fast.csv and
- * emits the JSON artifacts the homepage chart and the /try sandbox
- * page consume:
+ * emits the JSON artifacts the homepage chart and history table consume:
  *
  *   public/replay/sp500.json     OHLC (from the existing file) enriched with
  *                                regime/watch/setup/signal per candle, plus the
  *                                authoritative signals list. Chart reads this.
  *   public/replay/history.json   One entry per signal fire (unique signal_date)
- *                                with 90d/1y/2y forward closes — same shape the
- *                                /history Telegram command produces server-side.
- *   public/replay/brief-demo.json
- *                                Trimmed BriefSnapshot fixtures for the public
- *                                /brief sandbox window, exported by the backend
- *                                worker TypeScript.
+ *                                with 90d/1y/2y forward closes.
  *
  * The backfill CSV only stores `close`. OHL comes from the existing sp500.json
  * (originally sourced from yfinance) — we join the two by date.
  */
 
-const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
@@ -35,17 +28,6 @@ const BACKEND_CSV = path.resolve(
 );
 const EXISTING_SP500 = path.join(__dirname, 'public', 'replay', 'sp500.json');
 const OUT_DIR = path.join(__dirname, 'public', 'replay');
-const BACKEND_WORKER_DIR = path.resolve(__dirname, '..', 'doubletrends-backend', 'worker');
-const BACKEND_BRIEF_DEMO_SCRIPT = path.join(
-  BACKEND_WORKER_DIR,
-  'src',
-  'export_public_brief_demo.ts',
-);
-const BACKEND_BRIEF_DEMO_ARTIFACT = path.join(
-  BACKEND_WORKER_DIR,
-  'artifacts',
-  'public-brief-demo.json',
-);
 
 // Chart trim: the homepage replay starts on 2016-07-01 so the visible window
 // matches the homepage copy. History table trim: 2004 — matches the Telegram bot's
@@ -102,31 +84,6 @@ function normalizeRow(r) {
   };
 }
 
-// Pack the row into the BriefSnapshot shape the ported brief.ts formatters
-// expect (close → close_value, vix → vix_value, etc., booleans → 0/1).
-function toBriefSnapshot(row) {
-  return {
-    ticker: row.ticker,
-    display_name: row.display_name,
-    as_of_date: row.as_of_date,
-    updated_at: row.updated_at,
-    close_value: row.close,
-    regime: row.regime,
-    watch_active: row.watch_active ? 1 : 0,
-    setup_active: row.setup_active ? 1 : 0,
-    signal_active: row.signal_active ? 1 : 0,
-    signal_date: row.signal_date,
-    vix_value: row.vix,
-    fedfunds_value: row.fedfunds,
-    unrate_value: row.unrate,
-    cpi_value: row.cpi,
-    open_at: row.open_at,
-    minutes_after_open: row.minutes_after_open,
-    closed_at: row.closed_at,
-    minutes_after_close: row.minutes_after_close,
-  };
-}
-
 // ─── Date math for /history forward returns ───────────────────────────────────
 function addDaysISO(iso, days) {
   const d = new Date(`${iso}T00:00:00Z`);
@@ -157,25 +114,6 @@ function build() {
         `only, the OHLC the chart renders comes from this file.`,
     );
   }
-  if (!fs.existsSync(BACKEND_BRIEF_DEMO_SCRIPT)) {
-    throw new Error(
-      `Backend brief demo exporter not found at ${BACKEND_BRIEF_DEMO_SCRIPT} — ` +
-        `check that doubletrends-backend is checked out beside doubletrends-frontend.`,
-    );
-  }
-
-  childProcess.execFileSync(
-    'node',
-    ['--import', 'tsx', BACKEND_BRIEF_DEMO_SCRIPT],
-    { cwd: BACKEND_WORKER_DIR, stdio: 'inherit' },
-  );
-  if (!fs.existsSync(BACKEND_BRIEF_DEMO_ARTIFACT)) {
-    throw new Error(
-      `Backend brief demo artifact not found at ${BACKEND_BRIEF_DEMO_ARTIFACT} ` +
-        `after running the worker exporter.`,
-    );
-  }
-
   const csvText = fs.readFileSync(BACKEND_CSV, 'utf8');
   const rows = parseCSV(csvText).map(normalizeRow);
   rows.sort((a, b) => a.as_of_date.localeCompare(b.as_of_date));
@@ -261,42 +199,9 @@ function build() {
       `median 1y return ${metrics_since_replay_start.median_1y_pct}% / all-time ${metrics.median_1y_pct}%`,
   );
 
-  // ── 3. brief-demo.json — worker-exported public /brief fixtures ────────────
-  // Defensive boundary scrub: drop fields known to leak local state (source_csv
-  // is the dev's absolute backfill-CSV path) and abort if any string value
-  // still looks like an absolute filesystem path. Catches future backend
-  // additions that would silently ship a path to the CDN.
-  const briefDemo = JSON.parse(fs.readFileSync(BACKEND_BRIEF_DEMO_ARTIFACT, 'utf8'));
-  delete briefDemo.source_csv;
-  assertNoPathLeak(briefDemo, 'brief-demo.json');
-  fs.writeFileSync(path.join(OUT_DIR, 'brief-demo.json'), JSON.stringify(briefDemo, null, 2));
-  console.log(`✓  brief-demo.json — ${Object.keys(briefDemo.briefs ?? {}).length} demo briefs`);
-
   const legacyScenariosPath = path.join(OUT_DIR, 'scenarios.json');
   if (fs.existsSync(legacyScenariosPath)) {
     fs.rmSync(legacyScenariosPath, { force: true });
-  }
-}
-
-// Walk every string in an arbitrary JSON value and throw on anything that
-// looks like an absolute path (Windows drive letters or POSIX /Users//home/).
-// Used as a build-time tripwire before writing a public artifact.
-const ABSOLUTE_PATH_RE = /(?:[A-Za-z]:[\\/]|\/(?:Users|home|root|var|opt|etc)\/)/;
-function assertNoPathLeak(value, label, keyPath = '') {
-  if (typeof value === 'string') {
-    if (ABSOLUTE_PATH_RE.test(value)) {
-      throw new Error(`${label}: path-shaped value at ${keyPath || '<root>'} — ${value}`);
-    }
-    return;
-  }
-  if (Array.isArray(value)) {
-    value.forEach((item, i) => assertNoPathLeak(item, label, `${keyPath}[${i}]`));
-    return;
-  }
-  if (value && typeof value === 'object') {
-    for (const [k, v] of Object.entries(value)) {
-      assertNoPathLeak(v, label, keyPath ? `${keyPath}.${k}` : k);
-    }
   }
 }
 

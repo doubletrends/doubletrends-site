@@ -242,10 +242,8 @@ The homepage replay chart and history table read from `public/replay/`.
   OHLC candles plus regime/watch/setup/signal state and authoritative signal dates.
 - `public/replay/history.json`
   Signal history entries with forward-return snapshots.
-- `public/replay/brief-demo.json`
-  Public demo fixtures for the brief sandbox.
 
-The replay build is intentionally coupled to the backend repo, because the frontend should display the same signal history and demo payload shape the backend system produces.
+The replay build is intentionally coupled to the backend repo, because the frontend should display the same signal history the backend system produces.
 
 ## Brand Assets
 
@@ -263,7 +261,6 @@ This repo is frontend-only, but it depends on data artifacts from the sibling ba
 
 - expected sibling path: `../doubletrends-backend`
 - replay-data input CSV: `../doubletrends-backend/signal/backfill/fast/backfill_fast.csv`
-- brief-demo export source: `../doubletrends-backend/worker/src/export_public_brief_demo.ts`
 
 If `doubletrends-backend` is missing or stale, `npm run replay-data` can fail or produce outdated frontend demo data.
 
