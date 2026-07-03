@@ -133,6 +133,26 @@ function replace(template, vars) {
   );
 }
 
+// Rewrite internal .html hrefs to the extensionless form Cloudflare's
+// auto-trailing-slash asset handling serves with 200 (method.html → method,
+// academy/index.html → academy/), so in-site navigation skips the 307 and
+// links agree with the canonical URLs. Sources keep authoring plain .html
+// file paths. External URLs, in-page anchors, and non-.html targets pass
+// through untouched. A bare index.html link becomes ./ to stay resolvable.
+function extensionlessLinks(html) {
+  return html.replace(/href="([^"]*)"/g, (attr, value) => {
+    if (/^[a-z][a-z0-9+.-]*:/i.test(value) || value.startsWith('//') || value.startsWith('#')) {
+      return attr;
+    }
+    const [, pathname, suffix = ''] = value.match(/^([^#?]*)([#?].*)?$/);
+    if (!pathname.endsWith('.html')) return attr;
+    const out = pathname.endsWith('index.html')
+      ? pathname.slice(0, -'index.html'.length) || './'
+      : pathname.slice(0, -'.html'.length);
+    return `href="${out}${suffix}"`;
+  });
+}
+
 function ensureDir(filePath) {
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -208,7 +228,7 @@ function renderPage(page) {
   });
 
   ensureDir(outPath);
-  fs.writeFileSync(outPath, html, 'utf8');
+  fs.writeFileSync(outPath, extensionlessLinks(html), 'utf8');
   console.log(`✓  ${page.src}`);
   return true;
 }

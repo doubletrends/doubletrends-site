@@ -37,9 +37,14 @@ function decode(str) {
     .trim();
 }
 
-// Strip the leading ../ that section sub-pages use to reference dist assets.
+// Normalize a built-page href to its dist file path: strip the leading ../
+// that section sub-pages use, then undo the build's extensionless link
+// rewrite (directory → index.html, extensionless → + ".html").
 function normDist(href) {
-  return href.replace(/^\.\.\//, '');
+  const p = href.replace(/^\.\.\//, '').replace(/^\.\//, '');
+  if (p === '' || p.endsWith('/')) return `${p}index.html`;
+  if (!/\.[a-z0-9]+$/i.test(p)) return `${p}.html`;
+  return p;
 }
 
 function isNoindex(robotsStr) {
