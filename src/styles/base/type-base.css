@@ -1,5 +1,4 @@
-  <style>
-    .text-grad-hero {
+﻿    .text-grad-hero {
       background-image: var(--gradient-text-hero);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -65,4 +64,3 @@
       color: rgba(var(--color-light-rgb),0.26);
       margin-top: 0.75rem;
     }
-  </style>

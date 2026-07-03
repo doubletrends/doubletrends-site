@@ -1,0 +1,17 @@
+﻿    :root {
+      /* Brand palette */
+      --color-white: #FFFFFF;
+      --color-rust: #C2410C;
+      --color-dark: #2A3340;
+      --color-muted: #5A6473;
+      --color-light: #FBFAF7;
+      /* RGB channels for rgba() usage */
+      --color-rust-rgb: 194, 65, 12;
+      --color-dark-rgb: 42, 51, 64;
+      --color-light-rgb: 251, 250, 247;
+      /* Signal gain/loss */
+      --color-gain: #2E9E7B;
+      --color-loss: #C8413B;
+      --color-gain-rgb: 46, 158, 123;
+      --color-loss-rgb: 200, 65, 59;
+    }

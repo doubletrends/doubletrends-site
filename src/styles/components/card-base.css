@@ -1,0 +1,46 @@
+﻿    .hairline   { border-top:  1px solid rgba(0,0,0,0.08); }
+    .hairline-v { border-left: 1px solid rgba(0,0,0,0.08); }
+    .card-border {
+      background: var(--color-white);
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: var(--shadow-card);
+    }
+    .hover-lift-norust,
+    .button-rust,
+    .button-dark,
+    .button-hero {
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+    }
+    .hover-lift-norust:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-card-hover);
+    }
+    .button-rust:hover,
+    .button-dark:hover,
+    .button-hero:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+    .hover-lift-rust,
+    .button-social {
+      transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+    }
+    .hover-lift-rust:hover {
+      transform: translateY(-1px);
+      border-color: var(--color-rust);
+      box-shadow: var(--shadow-card-hover);
+    }
+    .button-social:hover {
+      transform: translateY(-1px);
+      border-color: var(--color-rust);
+    }
+    .metric-tile {
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(var(--color-dark-rgb),0.10);
+      box-shadow: var(--shadow-card);
+    }
+    .product-panel {
+      background:
+        linear-gradient(180deg, var(--color-white) 0%, var(--color-light) 100%);
+      border: 1px solid rgba(var(--color-dark-rgb),0.10);
+      box-shadow: var(--shadow-card);
+    }

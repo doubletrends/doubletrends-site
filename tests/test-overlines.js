@@ -89,7 +89,7 @@ function main() {
     }
   }
 
-  report(errors, 'Overline test', `Overline test passed — ${filesChecked} files checked across ${Object.keys(SECTIONS).length} sections.`);
+  report(errors, 'Overline test');
 }
 
 main();

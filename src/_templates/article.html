@@ -1,0 +1,107 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     ACADEMY ARTICLE TEMPLATE
+     Copy this file to src/pages/academy/<slug>.html and fill in every
+     <!-- FILL: --> marker. Delete optional blocks you don't need.
+     Register the new page in src/site.config.js (kind: 'article').
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<!-- ARTICLE: FILL: one-line internal description -->
+<article class="article-page">
+
+<!-- ── Header ──────────────────────────────────────────────────────────────── -->
+<header class="article-hero article-hero-frame">
+<span class="tag-overline">Academy &middot; <!-- FILL: category label (e.g. "Market History") --></span>
+<h1 class="article-title"><!-- FILL: article title --></h1>
+<p class="lead"><!-- FILL: 2–3 sentence lead that states the core insight up front --></p>
+</header>
+
+<!-- ── Section (prose only) ─────────────────────────────────────────────────
+     Use for narrative-first sections. article-h2 / article-h3 are optional.  -->
+<section class="article-section">
+<span class="tag-overline"><!-- FILL: section label --></span>
+<h2 class="article-h2"><!-- FILL: section heading (optional — remove if label is enough) --></h2>
+<p class="prose-p mb-4"><!-- FILL: body paragraph --></p>
+<p class="prose-p"><!-- FILL: body paragraph --></p>
+</section>
+
+<!-- ── Section (terminal / data table) ──────────────────────────────────────
+     Use terminal-shell for structured data rows. Each row: label + prose.    -->
+<section class="article-section">
+<span class="tag-overline"><!-- FILL: section label --></span>
+<p class="prose-p mb-8"><!-- FILL: intro sentence before the table --></p>
+<div class="terminal-shell flex flex-col">
+
+  <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 p-5" style="border-bottom: 1px solid rgba(0,0,0,0.08);">
+    <div class="sm:w-52 shrink-0 flex items-baseline gap-3">
+      <span class="data-value" style="font-size: 1.6rem; color: var(--color-dark);"><!-- FILL: metric --></span>
+      <span class="data-label"><!-- FILL: unit / label --></span>
+    </div>
+    <p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"><!-- FILL: explanation --></p>
+  </div>
+
+  <!-- Repeat the row block above for each data point. Last row omits the border-bottom style. -->
+
+</div>
+<p class="data-label mt-5" style="color: var(--color-muted);"><!-- FILL: footnote / methodology note for the table --></p>
+</section>
+
+<!-- ── Section (side-by-side panels) ────────────────────────────────────────
+     Use product-panel cards for two-column comparisons.                      -->
+<section class="article-section">
+<span class="tag-overline"><!-- FILL: section label --></span>
+<p class="prose-p mb-8"><!-- FILL: intro sentence --></p>
+<div class="flex flex-col md:flex-row gap-6 mb-8">
+  <div class="md:w-1/2 product-panel p-6">
+    <h3 class="text-dark font-noto font-semibold text-lg mb-3"><!-- FILL: panel A heading --></h3>
+    <p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"><!-- FILL: panel A body --></p>
+  </div>
+  <div class="md:w-1/2 product-panel p-6">
+    <h3 class="text-dark font-noto font-semibold text-lg mb-3"><!-- FILL: panel B heading --></h3>
+    <p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"><!-- FILL: panel B body --></p>
+  </div>
+</div>
+</section>
+
+<!-- ── Section (HTML table) ─────────────────────────────────────────────────
+     Use table-shell for tabular data (e.g. historical episodes).             -->
+<section class="article-section">
+<span class="tag-overline"><!-- FILL: section label --></span>
+<p class="prose-p mb-5"><!-- FILL: intro sentence --></p>
+<div class="table-shell">
+  <table class="w-full font-open text-sm" style="color: var(--color-dark); border-collapse: collapse;">
+    <tbody>
+      <tr style="border-bottom: 1px solid rgba(0,0,0,0.08);">
+        <td class="p-3"><!-- FILL: row label --></td>
+        <td class="p-3 text-right data-label" style="color: var(--color-rust);"><!-- FILL: value --></td>
+      </tr>
+      <!-- Repeat tr block; last row omits border-bottom -->
+    </tbody>
+  </table>
+</div>
+<p class="data-label mt-4" style="color: var(--color-muted);"><!-- FILL: table footnote --></p>
+</section>
+
+<!-- ── Section (inline link to related article) ──────────────────────────── -->
+<section class="article-section">
+<span class="tag-overline"><!-- FILL: section label --></span>
+<p class="prose-p mb-4"><!-- FILL: body --></p>
+<div class="mt-6">
+  <a href="{{ROOT}}academy/<!-- FILL: slug -->.html" class="text-primary hover:underline font-open text-sm font-semibold"><!-- FILL: link text --> &rarr;</a>
+</div>
+</section>
+
+<!-- ── CTA panel ─────────────────────────────────────────────────────────── -->
+<section class="cta-panel article-cta">
+<h3 class="text-dark font-noto font-bold text-2xl mb-3"><!-- FILL: CTA heading --></h3>
+<p class="prose-p mb-6"><!-- FILL: CTA body (1–2 sentences) --></p>
+<a href="{{ROOT}}product.html" class="button-rust">See the product</a>
+</section>
+
+<!-- ── Methodology ───────────────────────────────────────────────────────── -->
+<section class="hairline pt-6">
+<p class="data-label mb-3">Data &amp; method</p>
+<p class="fine-print"><!-- FILL: data source, date range, definitions, standard disclaimer -->
+  Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results.
+</p>
+</section>
+
+</article>

@@ -1,7 +1,7 @@
 /**
  * build.js
- * Assembles final HTML by injecting _partials into each page template, and
- * generates sitemap.xml from the same page list.
+ * Assembles final HTML by injecting _partials into each page template,
+ * builds the site stylesheet via Tailwind CLI, and generates sitemap.xml.
  *
  * Placeholders (replaced in head / header / footer / layout):
  *   {{ROOT}}       - relative path to site root (e.g. "" or "../")
@@ -20,6 +20,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 const {
   SITE_URL,
   SITE_NAME,
@@ -33,10 +34,6 @@ const {
   ARTICLE_PUBLISHED,
   pages,
 } = require('./src/site.config');
-const {
-  COLORS: BRAND_COLORS,
-  FONTS: BRAND_FONTS,
-} = require('./src/brand.config');
 const { buildJsonLdScripts, canonicalFor: canonicalForRaw, pageDisplayName, isoDate } = require('./src/schema');
 const canonicalFor = (src) => canonicalForRaw(SITE_URL, src);
 
@@ -88,23 +85,49 @@ fs.mkdirSync(DIST, { recursive: true });
 const partialsDir = path.join(__dirname, 'src', '_partials');
 const read = (name) => fs.readFileSync(path.join(partialsDir, name), 'utf8');
 
-const layout = read('layout.html');
+const layout              = read('layout.html');
 const routingCardTemplate = read('routing-card.html');
-const styles = ['base', 'typography', 'buttons', 'accordion', 'footer', 'cards', 'nav', 'layouts', 'responsive']
-  .map((segment) => fs.readFileSync(path.join(partialsDir, 'styles', `${segment}.html`), 'utf8'))
-  .join('');
-const tailwind = replace(read('tailwind.html'), {
-  TAILWIND_COLORS: JSON.stringify(BRAND_COLORS, null, 2),
-  TAILWIND_FONTS:  JSON.stringify(BRAND_FONTS, null, 2),
-});
-const head   = replace(read('head.html'), {
-  FONTS: read('fonts.html'),
-  TAILWIND: tailwind,
-  STYLES: styles,
-});
-const header = read('header.html');
-const footer = read('footer.html');
-const checkoutGate = read('checkout-gate.html');
+const head                = read('head.html');
+const header              = read('header.html');
+const footer              = read('footer.html');
+const checkoutGate        = read('checkout-gate.html');
+
+// ─── Build CSS ───────────────────────────────────────────────────────────────
+// Concatenate entry.css (Tailwind directives + @layer components) with all
+// CSS source files, run Tailwind CLI to produce a single minified file.
+// Paths are relative to src/styles/ — subdirectory prefix encodes the layer.
+const CSS_SEGMENTS = [
+  'tokens/font-face', 'tokens/colors', 'tokens/shadows', 'tokens/gradients',
+  'base/reset-global', 'base/type-base',
+  'components/button-base', 'components/accordion-base', 'components/footer-base',
+  'components/card-base', 'components/terminal-base', 'components/story-card', 'components/nav-base',
+  'layouts/page-shell', 'layouts/article-layout', 'layouts/directory-layout', 'layouts/hero-layout',
+  'layouts/responsive-mobile',
+];
+const stylesDir   = path.join(__dirname, 'src', 'styles');
+const entryCSS    = fs.readFileSync(path.join(stylesDir, 'entry.css'), 'utf8');
+const customCSS   = CSS_SEGMENTS
+  .map((s) => fs.readFileSync(path.join(stylesDir, `${s}.css`), 'utf8'))
+  .join('\n');
+const cssInputTmp = path.join(__dirname, 'src', 'styles', '.build-input.css');
+const cssOut      = path.join(DIST, 'public', 'css', 'site.css');
+fs.mkdirSync(path.dirname(cssOut), { recursive: true });
+fs.writeFileSync(cssInputTmp, entryCSS + '\n' + customCSS, 'utf8');
+try {
+  execFileSync(
+    process.execPath,
+    [
+      path.join(__dirname, 'node_modules', 'tailwindcss', 'lib', 'cli.js'),
+      '-i', cssInputTmp,
+      '-o', cssOut,
+      '--minify',
+    ],
+    { stdio: 'inherit' },
+  );
+} finally {
+  fs.unlinkSync(cssInputTmp);
+}
+console.log('✓  public/css/site.css generated');
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function replace(template, vars) {
@@ -131,10 +154,6 @@ function socialExtraFor(page) {
   <meta property="article:section" content="${section}" />`;
 }
 
-// Render a single page: inject the layout slots, resolve placeholders, write
-// to dist. Returns true on success, false if the source file is missing.
-// Slot contents (head/header/footer) carry placeholders themselves, so we
-// inject them first and resolve the merged result in a second pass.
 function renderRoutingCard(card, root) {
   if (!card) return '';
   return replace(routingCardTemplate, {
@@ -198,7 +217,7 @@ function renderPage(page) {
   return true;
 }
 
-// ─── Build pages ────────────────────────────────────────────────────────────────
+// ─── Build pages ─────────────────────────────────────────────────────────────
 let built = 0;
 for (const page of pages) {
   if (renderPage(page)) built++;
@@ -206,7 +225,7 @@ for (const page of pages) {
 
 console.log(`\nBuild complete — ${built} pages written.`);
 
-// ─── Generate sitemap.xml ────────────────────────────────────────────────────────
+// ─── Generate sitemap.xml ────────────────────────────────────────────────────
 const urls = pages
   .filter((p) => p.sitemap !== false)
   .map((p) => `  <url>

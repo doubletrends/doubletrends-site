@@ -67,13 +67,14 @@ function walkCards(html) {
   return cards;
 }
 
-function report(errors, label, passMessage) {
+function report(errors, label) {
+  const green = '\x1b[32m', red = '\x1b[31m', reset = '\x1b[0m';
   if (errors.length) {
-    console.error(`${label} failed — ${errors.length} issue(s):\n`);
-    for (const e of errors) console.error(`  - ${e}`);
+    console.error(`  ${red}✗ FAILED${reset}  ${label}: ${errors.length} error(s)`);
+    for (const e of errors) console.error(`    - ${e}`);
     process.exit(1);
   }
-  console.log(passMessage);
+  console.log(`  ${green}✓ PASS${reset}  ${label}`);
 }
 
 module.exports = { ROOT, DIST, SECTIONS, walk, relPosix, decode, normDist, isNoindex, walkCards, report };
