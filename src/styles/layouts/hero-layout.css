@@ -1,0 +1,28 @@
+﻿    .home-hero { background-color: #2A3340; }
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+    .hero-top {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    .hero-top-grid {
+      display: grid;
+      grid-template-columns: 60fr 30fr 10fr;
+      gap: 0 3.5rem;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-bottom { flex: 0 0 auto; }
+    .hero-ai-panel { padding-left: 3rem; }
+    .hero-strip-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+    }

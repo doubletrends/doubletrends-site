@@ -1,80 +1,78 @@
-  <!-- Fonts: self-hosted brand typography -->
-  <style>
+﻿  <style>
     @font-face {
       font-family: 'Syne';
-      src: url('{{ROOT}}public/fonts/syne/syne-400.woff2') format('woff2');
+      src: url('../fonts/syne/syne-400.woff2') format('woff2');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Syne';
-      src: url('{{ROOT}}public/fonts/syne/syne-600.woff2') format('woff2');
+      src: url('../fonts/syne/syne-600.woff2') format('woff2');
       font-weight: 600;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Syne';
-      src: url('{{ROOT}}public/fonts/syne/syne-700.woff2') format('woff2');
+      src: url('../fonts/syne/syne-700.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Syne';
-      src: url('{{ROOT}}public/fonts/syne/syne-800.woff2') format('woff2');
+      src: url('../fonts/syne/syne-800.woff2') format('woff2');
       font-weight: 800;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'DM Sans';
-      src: url('{{ROOT}}public/fonts/dm-sans/dm-sans-300.woff2') format('woff2');
+      src: url('../fonts/dm-sans/dm-sans-300.woff2') format('woff2');
       font-weight: 300;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'DM Sans';
-      src: url('{{ROOT}}public/fonts/dm-sans/dm-sans-400.woff2') format('woff2');
+      src: url('../fonts/dm-sans/dm-sans-400.woff2') format('woff2');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'DM Sans';
-      src: url('{{ROOT}}public/fonts/dm-sans/dm-sans-400-italic.woff2') format('woff2');
+      src: url('../fonts/dm-sans/dm-sans-400-italic.woff2') format('woff2');
       font-weight: 400;
       font-style: italic;
       font-display: swap;
     }
     @font-face {
       font-family: 'DM Sans';
-      src: url('{{ROOT}}public/fonts/dm-sans/dm-sans-500.woff2') format('woff2');
+      src: url('../fonts/dm-sans/dm-sans-500.woff2') format('woff2');
       font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'DM Sans';
-      src: url('{{ROOT}}public/fonts/dm-sans/dm-sans-600.woff2') format('woff2');
+      src: url('../fonts/dm-sans/dm-sans-600.woff2') format('woff2');
       font-weight: 600;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'JetBrains Mono';
-      src: url('{{ROOT}}public/fonts/jetbrains-mono/jetbrains-mono-400.woff2') format('woff2');
+      src: url('../fonts/jetbrains-mono/jetbrains-mono-400.woff2') format('woff2');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'JetBrains Mono';
-      src: url('{{ROOT}}public/fonts/jetbrains-mono/jetbrains-mono-600.woff2') format('woff2');
+      src: url('../fonts/jetbrains-mono/jetbrains-mono-600.woff2') format('woff2');
       font-weight: 600;
       font-style: normal;
       font-display: swap;
     }
-  </style>

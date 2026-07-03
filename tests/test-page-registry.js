@@ -87,7 +87,7 @@ function main() {
     }
   }
 
-  report(errors, 'Page registry test', `Page registry test passed — ${pages.length} entries checked.`);
+  report(errors, 'Page registry test');
 }
 
 main();

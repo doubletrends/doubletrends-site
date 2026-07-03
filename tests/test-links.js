@@ -77,7 +77,7 @@ function main() {
     }
   }
 
-  report(errors, 'Link test', `Link test passed — ${htmlFiles.length} HTML files checked.`);
+  report(errors, 'Link test');
 }
 
 main();

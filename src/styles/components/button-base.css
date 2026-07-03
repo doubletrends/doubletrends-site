@@ -1,5 +1,4 @@
-  <style>
-    .button-rust {
+﻿    .button-rust {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -143,4 +142,3 @@
       transition: opacity 0.15s ease;
     }
     .button-hero-ai:hover:not(:disabled) img { opacity: 1; }
-  </style>

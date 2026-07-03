@@ -67,7 +67,7 @@ function main() {
     }
   }
 
-  report(errors, 'Schema test', `Schema test passed — ${pages.length} pages checked.`);
+  report(errors, 'Schema test');
 }
 
 main();

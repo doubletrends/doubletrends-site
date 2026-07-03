@@ -46,7 +46,7 @@ function main() {
     }
   }
 
-  report(errors, 'Heading consistency test', `Heading consistency test passed — ${checked} company pages checked.`);
+  report(errors, 'Heading consistency test');
 }
 
 main();

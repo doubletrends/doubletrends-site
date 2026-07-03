@@ -85,7 +85,7 @@ function main() {
     }
   }
 
-  report(errors, 'Metadata test', `Metadata test passed — ${htmlFiles.length} HTML files checked.`);
+  report(errors, 'Metadata test');
 }
 
 main();

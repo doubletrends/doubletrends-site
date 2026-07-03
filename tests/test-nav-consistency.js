@@ -130,7 +130,7 @@ function main() {
     }
   }
 
-  report(errors, 'Nav consistency test', `Nav consistency test passed — ${checked} pages checked across nav, footer, and index cards.`);
+  report(errors, 'Nav consistency test');
 }
 
 main();

@@ -48,7 +48,7 @@ function main() {
     }
   }
 
-  report(errors, 'Trademark test', `Trademark test passed — ${files.length} text files checked.`);
+  report(errors, 'Trademark test');
 }
 
 main();
