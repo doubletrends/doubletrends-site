@@ -7,7 +7,10 @@ function toJsonLdScript(node) {
 }
 
 function canonicalFor(siteUrl, src) {
-  return `${siteUrl}/${src.replace(/index\.html$/, '')}`;
+  // Extensionless: Cloudflare's auto-trailing-slash asset handling serves
+  // /method (200) and 307-redirects /method.html — declared URLs must match
+  // the served form. Directory indexes keep their trailing slash.
+  return `${siteUrl}/${src.replace(/index\.html$/, '').replace(/\.html$/, '')}`;
 }
 
 function pageDisplayName(page) {
