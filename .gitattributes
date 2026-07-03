@@ -1,4 +1,4 @@
-# All text files normalize to LF in the repo; checkout uses native EOL per platform.
+# All text files normalize to LF in the repo and check out as LF on every platform.
 * text=auto eol=lf
 
 # Common binary asset extensions — explicit so auto-detection never misfires.
