@@ -13,6 +13,7 @@ Frontend validation suite. All scripts are invoked via `npm run test:*`; `npm ru
 - `npm run test:overlines` — verify every academy/company/legal page carries a correctly formatted overline
 - `npm run test:nav-consistency` — verify nav dropdown, footer column, and section index card are in sync for every sub-page
 - `npm run test:headings` — verify heading hierarchy consistency across company pages
+- `npm run test:brand-tokens` — verify the hand-mirrored brand token copies agree with `src/brand.config.js`
 
 ## Contracts
 
@@ -48,6 +49,17 @@ Pages intentionally excluded from navigation are listed in the `NAV_EXCLUDED` se
 ### Heading consistency (`test:headings`)
 
 Checks that company pages follow a consistent heading hierarchy.
+
+### Brand token consistency (`test:brand-tokens`)
+
+`src/brand.config.js` is the reference copy of the brand tokens; the same values are intentionally hand-mirrored (plain CSS stays greppable) in:
+
+- `src/styles/tokens/colors.css` — COLORS and SEMANTIC gain/loss (hex + rgb triples)
+- `src/styles/components/terminal-base.css` — REGIMES bands, legend alpha, signal flash
+- `build-brand.js` — the COLOR map driving generated brand assets
+- `src/_partials/routing-card.html` — the DARK_SURFACE gradient and text colors
+
+The test parses each mirror from source (no build needed) and fails if any copy disagrees with `brand.config.js`. When changing a token, update the reference and its mirror(s) together.
 
 ### Schema rules (`test:schema`)
 
