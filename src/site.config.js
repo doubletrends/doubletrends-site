@@ -158,12 +158,6 @@ const pages = [
     title: 'Contact',
     desc:  'Contact DoubleTrends™ for product questions, data and quant service inquiries, research questions, partnerships, or company matters.',
   }),
-  companyPage('brand', {
-    priority: 0.3,
-    title: 'Brand',
-    desc:  'How the DoubleTrends™ logo and favicon are constructed: four geometric constraints that lock the rust bar to S, a bracket scale that aligns the inner cavity with the letter range, color palette, typography, and asset inventory.',
-  }),
-
   // ── legal ────────────────────────────────────────────────────────────────
   legalPage('refund-policy', {
     priority: 0.4,

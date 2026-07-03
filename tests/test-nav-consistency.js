@@ -7,7 +7,6 @@
 // Pages listed in NAV_EXCLUDED are intentionally unlisted (the page exists at
 // its URL but is not surfaced in nav, footer, or section index).
 const NAV_EXCLUDED = new Set([
-  'company/brand.html',
   'legal/disclaimer.html',
   'legal/privacy.html',
   'legal/refund-policy.html',
