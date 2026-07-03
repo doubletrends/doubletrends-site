@@ -1,13 +1,24 @@
 /**
  * brand.config.js
  *
- * Single source of truth for brand tokens. Consumed at build time by:
- *   - build.js → injects {{TAILWIND_COLORS}} / {{TAILWIND_FONTS}} into
- *     _partials/tailwind.html so the Tailwind Play CDN sees the same values.
- *   - build.js → drives the auto-generated Token Registry on company/brand.html
- *     so the page that documents the standard literally renders it.
+ * Brand token registry. The only live consumer is tailwind.config.js
+ * (COLORS → color utilities like bg-primary / text-dark, FONTS →
+ * font-noto / font-open / font-mono). Everything else here is the
+ * reference copy of values that are hand-mirrored elsewhere:
  *
- * The post-trim shape:
+ *   COLORS       ↔ src/styles/tokens/colors.css (--color-rust/dark/light/muted;
+ *                  note: `primary` here is `--color-rust` there)
+ *                ↔ build-brand.js COLOR map (dark / light / rust)
+ *   SEMANTIC     ↔ colors.css --color-gain / --color-loss (+ -rgb triples)
+ *   REGIMES,     ↔ the #replay-shell custom-property block in
+ *   REGIME_ALPHA_LEGEND,   src/styles/components/terminal-base.css
+ *   SIGNAL_FLASH
+ *   DARK_SURFACE ↔ inline styles in src/_partials/routing-card.html
+ *
+ * tests/test-brand-tokens.js fails the suite if any mirror drifts from
+ * this file — change a value here and in its mirror(s) together.
+ *
+ * Token notes:
  *   COLORS       — the documented brand palette (4 tokens). What used to be
  *                  "working palette" (bright, primary-h, muted-dim, gray-d)
  *                  collapsed into the four canonical names after the audit
@@ -15,8 +26,9 @@
  *                  muted-dim and muted, etc. The hover-darkening on .btn-light
  *                  and .cmd-send keeps the literal #9A330A inline because it
  *                  is an implementation detail, not a brand token.
- *   FONTS        — three faces (Syne / DM Sans / JetBrains Mono). Merriweather
- *                  was loaded but never referenced; removed in trim.
+ *   FONTS        — three faces (Syne / DM Sans / JetBrains Mono). The `noto` /
+ *                  `open` keys are historical class names, kept to avoid a
+ *                  site-wide rename.
  *   DARK_SURFACE — the dark-bevel gradient + companion text colors used on
  *                  the routing-card panels at the foot of index.html and
  *                  method.html. Accepted as designed; named so they stop
@@ -52,9 +64,9 @@ const DARK_SURFACE = {
 };
 
 // Regime palette. Stored as RGB triples (not hex) because consumers compose
-// them with variable alpha for chart bands, legends, etc.
-// Currently lives as CSS custom properties on #replay-shell in
-// _partials/styles/primitives.html — not yet wired from this config.
+// them with variable alpha for chart bands, legends, etc. Mirrored as CSS
+// custom properties on #replay-shell in styles/components/terminal-base.css;
+// the mirror is enforced by tests/test-brand-tokens.js.
 const REGIMES = {
   calm:       { rgb: '46, 158, 123', hex: '#2E9E7B', alphaBand: 0.07 },
   correction: { rgb: '234, 179, 8',  hex: '#EAB308', alphaBand: 0.10 },

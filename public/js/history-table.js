@@ -11,8 +11,8 @@
   };
 
   // Read brand semantic colors from :root so the table stays in sync with
-  // primitives.html / brand.config.js. Composed as rgba() with full alpha;
-  // future translucent uses can drop alpha at the call site.
+  // styles/tokens/colors.css / brand.config.js. Composed as rgba() with full
+  // alpha; future translucent uses can drop alpha at the call site.
   const rootStyle = getComputedStyle(document.documentElement);
   const cssVar = (name) => rootStyle.getPropertyValue(name).trim();
   const COLOR_GAIN = `rgba(${cssVar('--color-gain-rgb')}, 1)`;

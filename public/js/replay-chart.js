@@ -102,8 +102,9 @@
   });
 
   // Candle colors come from the brand semantic tokens on :root (see
-  // primitives.html). Read at series-init time and composed as rgba so the
-  // chart stays in sync with history-table.js without a second source of truth.
+  // styles/tokens/colors.css). Read at series-init time and composed as rgba
+  // so the chart stays in sync with history-table.js without a second source
+  // of truth.
   const rootStyle = getComputedStyle(document.documentElement);
   const cssVarRoot = (name) => rootStyle.getPropertyValue(name).trim();
   const colorGain = `rgba(${cssVarRoot('--color-gain-rgb')}, 1)`;
