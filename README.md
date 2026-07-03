@@ -59,10 +59,8 @@ Wired to the GitHub repo — a commit and push to `main` auto-deploys to `double
   Shared layout, head, header, footer, style partials, and reusable HTML fragments.
 - `public/`
   Static assets copied into the final build, including replay JSON, fonts, images, and browser-side JS.
-  - `public/js/accordion.js` — site-wide `<details>` accordion animation (260ms grid-template-rows + opacity). Loaded on every page via `layout.html`. Replaces the former per-page `faq-accordion.js`.
+  - `public/js/accordion.js` — site-wide `<details>` accordion animation (260ms grid-template-rows + opacity). Loaded on every page via `layout.html`.
   - `public/js/canvas-grid.js` — animated square grid decorating section banners. Loaded on every page via `layout.html`.
-  - `public/js/footer-menu.js` — mobile footer tab switcher only (accordion logic consolidated into `accordion.js`).
-  - `public/js/bot-sandbox.js` — powers the interactive Telegram bot demo on the product page.
   - `public/js/story-strip.js` — homepage story-strip carousel. Loaded only on `index.html`.
 - `dist/`
   Generated output. Safe to treat as build artifact.
