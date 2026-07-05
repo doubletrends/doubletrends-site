@@ -1,0 +1,47 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     LEGAL PAGE TEMPLATE
+     Copy this file to src/pages/legal/<slug>.html and fill in every
+     <!-- FILL: --> marker. Delete optional blocks you don't need.
+     Register the new page in src/site.config.js via legalPage('<slug>', {...}).
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<!-- LEGAL: FILL: one-line internal description (e.g. "Refund Policy") -->
+<section class="page-shell">
+
+<!-- ── Hero ─────────────────────────────────────────────────────────────────── -->
+<div class="page-hero page-hero-center">
+<span class="tag-overline mb-3">Legal &middot; <!-- FILL: document name (e.g. "Refund Policy") --></span>
+<h1 class="page-title"><!-- FILL: document title --></h1>
+<p class="data-label mt-5">Last updated: <!-- FILL: date (e.g. "June 6, 2026") --></p>
+</div>
+
+<!-- ── Body ─────────────────────────────────────────────────────────────────── -->
+<div class="page-content-legal">
+
+<!-- ── Section with numbered paragraphs ─────────────────────────────────────
+     Standard pattern: h2 heading + one or more numbered prose-p paragraphs.
+     Defined terms use <strong class="text-dark">Term</strong>.
+     Internal legal cross-links: <a href="{{ROOT}}legal/<slug>.html" class="text-primary hover:underline">...</a> -->
+<div>
+<h2 class="article-h2">1. <!-- FILL: section title --></h2>
+<p class="prose-p">1.1. <!-- FILL: paragraph text --></p>
+<p class="prose-p">1.2. <!-- FILL: paragraph text --></p>
+</div>
+
+<div>
+<h2 class="article-h2">2. <!-- FILL: section title --></h2>
+<p class="prose-p">2.1. <!-- FILL: paragraph text --></p>
+<p class="prose-p">2.2. <!-- FILL: paragraph text --></p>
+</div>
+
+<!-- ── Section with a definition list (optional) ─────────────────────────────
+     Use when a section enumerates lettered sub-items (e.g. "you may: (a)…").
+     Delete this block if not needed. -->
+<div>
+<h2 class="article-h2">3. <!-- FILL: section title --></h2>
+<p class="prose-p">3.1. <!-- FILL: intro sentence -->: (a) <!-- FILL: item -->; (b) <!-- FILL: item -->; and (c) <!-- FILL: item -->.</p>
+</div>
+
+<!-- Add further <div> / <h2> / <p class="prose-p"> blocks for each section. -->
+
+</div><!-- end page-content-legal -->
+</section>
