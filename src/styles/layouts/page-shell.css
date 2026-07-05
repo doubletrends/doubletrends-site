@@ -1,4 +1,12 @@
-﻿    .page-hero {
+﻿    .home-container {
+      width: 100%;
+      max-width: 1320px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    .page-hero {
       background:
         linear-gradient(180deg, rgba(255,255,255,0.96), rgba(247,245,240,0.96)),
         var(--color-white);

@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       colors: COLORS,
       fontFamily: FONTS,
-      maxWidth: { site: '1200px', hero: '1000px' },
+      maxWidth: { site: '1320px', hero: '1000px' },
     },
   },
 };
