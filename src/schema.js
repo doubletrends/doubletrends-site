@@ -161,7 +161,7 @@ function organizationReference(publisher) {
   };
 }
 
-function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher, ogImage, today, defaultArticlePublished }) {
+function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher, ogImage, today, defaultArticlePublished, formattedTitle }) {
   if (!shouldEmitJsonLd(page)) return [];
 
   const canonical = canonicalFor(siteUrl, page.src);
@@ -189,10 +189,9 @@ function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher,
     '@type': pageTypeFor(page.kind),
     '@id': `${canonical}#webpage`,
     url: canonical,
-    name: `${siteName} | ${page.title}`,
+    name: formattedTitle || `${siteName} | ${page.title}`,
     description: page.desc,
     ...(shouldIncludeWebSite(page) ? { isPartOf: { '@id': `${siteUrl}/#website` } } : {}),
-    about: publisherRef,
     inLanguage: 'en-US',
     dateModified: isoDate(schema.dateModified || today),
   });

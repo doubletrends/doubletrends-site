@@ -158,8 +158,15 @@ function ensureDir(filePath) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
-function formatTitle(title) {
-  return `${SITE_NAME} | ${title}`;
+function formatTitle(page) {
+  // Articles: use the long descriptive headline already defined per article.
+  // Home: brand first (it IS the brand page). All others: content first.
+  const label = (page.kind === 'article' && page.schema?.headline)
+    ? page.schema.headline
+    : page.title;
+  return page.src === 'index.html'
+    ? `${SITE_NAME} | ${label}`
+    : `${label} | ${SITE_NAME}`;
 }
 
 function socialExtraFor(page) {
@@ -202,7 +209,7 @@ function renderPage(page) {
   });
   const html = replace(assembled, {
     ROOT:      page.root,
-    TITLE:     formatTitle(page.title),
+    TITLE:     formatTitle(page),
     DESC:      page.desc,
     CANONICAL: canonicalFor(page.src),
     THEME_COLOR: COLORS.light,
@@ -222,6 +229,7 @@ function renderPage(page) {
       ogImage: OG_IMAGE,
       today: TODAY,
       defaultArticlePublished: ARTICLE_PUBLISHED,
+      formattedTitle: formatTitle(page),
     }),
     ...TRACK_RECORD,
     ROUTING_CARD: renderRoutingCard(page.routingCard, page.root),
@@ -246,6 +254,7 @@ const urls = pages
   .filter((p) => p.sitemap !== false)
   .map((p) => `  <url>
     <loc>${canonicalFor(p.src)}</loc>
+    <lastmod>${TODAY}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>${(p.priority ?? 0.7).toFixed(1)}</priority>
   </url>`)
