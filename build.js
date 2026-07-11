@@ -262,6 +262,21 @@ ${urls}
 fs.writeFileSync(path.join(DIST, 'sitemap.xml'), sitemap, 'utf8');
 console.log('✓  sitemap.xml generated');
 
+// ─── Generate _redirects ─────────────────────────────────────────────────────
+// Cloudflare's built-in .html stripping issues 307 (temporary) redirects.
+// Explicit 301 (permanent) redirects take precedence and fix the SEO problem:
+// Google stops re-crawling .html URLs and passes PageRank to the canonical form.
+const redirectLines = pages
+  .filter((p) => p.src !== '404.html')
+  .map((p) => {
+    const from = `/${p.src}`;
+    const to   = canonicalFor(p.src).slice(SITE_URL.length) || '/';
+    return `${from} ${to} 301`;
+  });
+
+fs.writeFileSync(path.join(DIST, '_redirects'), redirectLines.join('\n') + '\n', 'utf8');
+console.log('✓  _redirects generated');
+
 // ─── Generate llms.txt ───────────────────────────────────────────────────────
 const primaryPages = pages
   .filter((p) => p.sitemap !== false && p.kind !== 'article')
