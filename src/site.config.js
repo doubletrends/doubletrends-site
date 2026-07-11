@@ -36,8 +36,14 @@ const PUBLISHER = {
   ],
 };
 
+function outPathFor(src) {
+  if (src === 'index.html' || src === '404.html' || src.endsWith('/index.html')) return src;
+  return src.replace(/\.html$/, '/index.html');
+}
+
 function rootFor(src) {
-  const depth = src.split('/').length - 1;
+  const out = outPathFor(src);
+  const depth = out.split('/').length - 1;
   return depth === 0 ? '' : '../'.repeat(depth);
 }
 

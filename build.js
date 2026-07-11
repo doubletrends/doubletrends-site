@@ -153,20 +153,18 @@ function extensionlessLinks(html) {
   });
 }
 
+function outPathFor(src) {
+  if (src === 'index.html' || src === '404.html' || src.endsWith('/index.html')) return src;
+  return src.replace(/\.html$/, '/index.html');
+}
+
 function ensureDir(filePath) {
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
 function formatTitle(page) {
-  // Articles: use the long descriptive headline already defined per article.
-  // Home: brand first (it IS the brand page). All others: content first.
-  const label = (page.kind === 'article' && page.schema?.headline)
-    ? page.schema.headline
-    : page.title;
-  return page.src === 'index.html'
-    ? `${SITE_NAME} | ${label}`
-    : `${label} | ${SITE_NAME}`;
+  return `${SITE_NAME} | ${page.title}`;
 }
 
 function socialExtraFor(page) {
@@ -193,7 +191,7 @@ function renderRoutingCard(card, root) {
 
 function renderPage(page) {
   const srcPath = path.join(__dirname, 'src', 'pages', page.src);
-  const outPath = path.join(DIST, page.src);
+  const outPath = path.join(DIST, outPathFor(page.src));
 
   if (!fs.existsSync(srcPath)) {
     console.warn(`⚠  Missing source: ${page.src}`);
@@ -254,7 +252,6 @@ const urls = pages
   .filter((p) => p.sitemap !== false)
   .map((p) => `  <url>
     <loc>${canonicalFor(p.src)}</loc>
-    <lastmod>${TODAY}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>${(p.priority ?? 0.7).toFixed(1)}</priority>
   </url>`)
