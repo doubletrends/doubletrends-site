@@ -19,9 +19,9 @@ function pageDisplayName(page) {
 }
 
 function breadcrumbLabel(page) {
-  const title = pageDisplayName(page);
-  const sep = title.indexOf(' — ');
-  return sep !== -1 ? title.slice(0, sep) : title;
+  // The breadcrumb leaf names the page itself. Prefer the short crumb (the
+  // visible <h1>); fall back to the full title for pages that don't set one.
+  return page.crumb || page.title;
 }
 
 function pageTypeFor(kind) {
@@ -112,7 +112,7 @@ function breadcrumbItems(page, siteUrl) {
     items.push({
       '@type': 'ListItem',
       position: 2,
-      name: pageDisplayName(page),
+      name: breadcrumbLabel(page),
       item: canonicalFor(siteUrl, page.src),
     });
   }
@@ -254,7 +254,7 @@ function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher,
     nodes.push({
       '@type': 'Article',
       '@id': `${canonical}#article`,
-      headline: schema.headline || page.title,
+      headline: page.title,
       description: page.desc,
       mainEntityOfPage: { '@id': `${canonical}#webpage` },
       author: publisherRef,
@@ -265,7 +265,7 @@ function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher,
         width: 1200,
         height: 630,
       },
-      articleSection: schema.articleSection || 'Academy',
+      articleSection: page.section || 'Academy',
       about: schema.about || ['S&P 500 index', 'ETF investing'],
       isAccessibleForFree: true,
       datePublished: isoDate(schema.datePublished || defaultArticlePublished),

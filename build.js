@@ -171,7 +171,7 @@ function formatTitle(page) {
 
 function socialExtraFor(page) {
   if (page.kind !== 'article') return '';
-  const section = page.schema?.articleSection || 'Academy';
+  const section = page.section || 'Academy';
   return `  <meta property="article:published_time" content="${isoDate(ARTICLE_PUBLISHED)}" />
   <meta property="article:modified_time" content="${isoDate(TODAY)}" />
   <meta property="article:section" content="${section}" />`;
@@ -286,15 +286,33 @@ fs.writeFileSync(path.join(DIST, '_redirects'), redirectLines.join('\n') + '\n',
 console.log('✓  _redirects generated');
 
 // ─── Generate llms.txt ───────────────────────────────────────────────────────
-const primaryPages = pages
-  .filter((p) => p.sitemap !== false && p.kind !== 'article')
-  .map((p) => `- ${pageDisplayName(p)}: ${canonicalFor(p.src)}\n  ${p.desc}`)
-  .join('\n');
+// Group published pages into sections that mirror the site's breadcrumb
+// structure — top-level pages, then Academy / Company / Legal — so llms.txt,
+// the nav, and the JSON-LD BreadcrumbList all share one section model. Primary
+// Pages holds the marketing pages plus each section's index (the breadcrumb
+// position-2 landings); the sub-sections list only their deeper children.
+const LLMS_SECTIONS = [
+  { key: 'main',    heading: 'Primary Pages' },
+  { key: 'academy', heading: 'Academy' },
+  { key: 'company', heading: 'Company' },
+  { key: 'legal',   heading: 'Legal' },
+];
 
-const academyArticles = pages
-  .filter((p) => p.kind === 'article')
-  .map((p) => `- ${pageDisplayName(p)}: ${canonicalFor(p.src)}\n  ${p.desc}`)
-  .join('\n');
+function llmsSectionKey(src) {
+  const prefix = src.split('/')[0];
+  const isSection = ['academy', 'company', 'legal'].includes(prefix);
+  return isSection && !src.endsWith('index.html') ? prefix : 'main';
+}
+
+const llmsSections = LLMS_SECTIONS
+  .map(({ key, heading }) => {
+    const entries = pages
+      .filter((p) => p.sitemap !== false && llmsSectionKey(p.src) === key)
+      .map((p) => `- ${pageDisplayName(p)}: ${canonicalFor(p.src)}\n  ${p.desc}`)
+      .join('\n');
+    return `## ${heading}\n\n${entries}`;
+  })
+  .join('\n\n');
 
 const llms = `# DoubleTrends™
 
@@ -302,13 +320,7 @@ DoubleTrends™ is a rules-based S&P 500 index signal for ETF investors. It trac
 
 Important: the content is educational market information only. It is not financial, investment, trading, tax, or legal advice, and it is not a recommendation to buy, sell, or hold any security.
 
-## Primary Pages
-
-${primaryPages}
-
-## Academy Articles
-
-${academyArticles}
+${llmsSections}
 
 ## Machine-Readable Data
 
