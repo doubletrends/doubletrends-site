@@ -67,6 +67,6 @@ The test parses each mirror from source (no build needed) and fails if any copy 
 
 ### Schema rules (`test:schema`)
 
-- Article pages must emit `Article`, declare `schema.articleSection`, and declare non-empty `schema.about`
+- Article pages must emit `Article`, declare `section`, and declare non-empty `schema.about`
 - Non-article pages must not emit `Article`
 - Academy content pages must emit breadcrumbs

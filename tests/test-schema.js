@@ -48,8 +48,8 @@ function main() {
       if (!hasType(nodes, 'Article')) {
         errors.push(`${page.src}: article page must emit Article schema`);
       }
-      if (!page.schema?.articleSection) {
-        errors.push(`${page.src}: article page must declare schema.articleSection`);
+      if (!page.section) {
+        errors.push(`${page.src}: article page must declare section`);
       }
       if (!Array.isArray(page.schema?.about) || page.schema.about.length === 0) {
         errors.push(`${page.src}: article page must declare non-empty schema.about`);
