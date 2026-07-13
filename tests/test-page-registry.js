@@ -6,9 +6,10 @@ const { report } = require('./test-utils');
 const SRC_PAGES    = path.join(__dirname, '..', 'src', 'pages');
 const ALLOWED_KINDS = new Set(['home', 'webpage', 'collection', 'services', 'contact', 'about', 'article', 'product']);
 
+// Pages are emitted flat: method.html → dist/method.html (output path = source
+// path), so root depth is derived straight from the source path.
 function outPathFor(src) {
-  if (src === 'index.html' || src === '404.html' || src.endsWith('/index.html')) return src;
-  return src.replace(/\.html$/, '/index.html');
+  return src;
 }
 
 function rootFor(src) {

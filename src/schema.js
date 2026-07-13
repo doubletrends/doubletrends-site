@@ -7,9 +7,10 @@ function toJsonLdScript(node) {
 }
 
 function canonicalFor(siteUrl, src) {
-  // Extensionless: Cloudflare's auto-trailing-slash asset handling serves
-  // /method (200) and 307-redirects /method.html — declared URLs must match
-  // the served form. Directory indexes keep their trailing slash.
+  // Pages are emitted flat (method.html → dist/method.html) and Cloudflare
+  // serves them at their extensionless URL with 200: /method is canonical,
+  // /method.html 301-redirects to it. Directory indexes (academy/index.html)
+  // keep their trailing slash and serve at /academy/.
   return `${siteUrl}/${src.replace(/index\.html$/, '').replace(/\.html$/, '')}`;
 }
 
