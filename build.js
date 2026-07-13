@@ -133,12 +133,12 @@ function replace(template, vars) {
   );
 }
 
-// Rewrite internal .html hrefs to the extensionless form Cloudflare's
-// auto-trailing-slash asset handling serves with 200 (method.html → method,
-// academy/index.html → academy/), so in-site navigation skips the 307 and
-// links agree with the canonical URLs. Sources keep authoring plain .html
-// file paths. External URLs, in-page anchors, and non-.html targets pass
-// through untouched. A bare index.html link becomes ./ to stay resolvable.
+// Rewrite internal .html hrefs to the extensionless form Cloudflare's asset
+// handling serves with 200 (method.html → method, academy/index.html →
+// academy/), so in-site navigation skips the 307 and links agree with the
+// canonical URLs. Sources keep authoring plain .html file paths. External URLs,
+// in-page anchors, and non-.html targets pass through untouched. A bare
+// index.html link becomes ./ to stay resolvable.
 function extensionlessLinks(html) {
   return html.replace(/href="([^"]*)"/g, (attr, value) => {
     if (/^[a-z][a-z0-9+.-]*:/i.test(value) || value.startsWith('//') || value.startsWith('#')) {
@@ -153,9 +153,11 @@ function extensionlessLinks(html) {
   });
 }
 
+// Pages are emitted flat: method.html → dist/method.html. Cloudflare serves
+// each at its extensionless URL (/method) with 200, so the output path is just
+// the source path.
 function outPathFor(src) {
-  if (src === 'index.html' || src === '404.html' || src.endsWith('/index.html')) return src;
-  return src.replace(/\.html$/, '/index.html');
+  return src;
 }
 
 function ensureDir(filePath) {

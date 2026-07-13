@@ -36,9 +36,11 @@ const PUBLISHER = {
   ],
 };
 
+// Pages are emitted flat: method.html → dist/method.html. Cloudflare serves
+// each at its extensionless URL (/method) with 200, so the output path is just
+// the source path.
 function outPathFor(src) {
-  if (src === 'index.html' || src === '404.html' || src.endsWith('/index.html')) return src;
-  return src.replace(/\.html$/, '/index.html');
+  return src;
 }
 
 function rootFor(src) {
