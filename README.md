@@ -115,6 +115,61 @@ DoubleTrends™ | {page.title}
 
 That prefix is applied centrally in `build.js`, so `page.title` in `src/site.config.js` should contain only the page-specific portion.
 
+## URLs, Serving, and SEO
+
+This is the model that ties together file output, how Cloudflare serves it, and what we publish to crawlers. Getting it wrong reintroduces Google Search Console "Page with redirect" errors, so it is documented in full.
+
+Every page has three distinct identities. Keep them separate:
+
+| Identity | Example (for "method") | Where it lives |
+| --- | --- | --- |
+| **Source of truth** (file) | `dist/method.html` | build output only — never linked or published |
+| **Canonical URL** (served 200) | `/method` | canonical tag, sitemap, llms.txt, JSON-LD, Open Graph, internal links |
+| **Alternate spellings** | `/method.html`, `/method/` | only as `_redirects` sources → redirect to the canonical |
+
+### Source of truth
+
+Pages are authored as `.html` files under `src/pages/` and emitted **flat** to `dist/` — `method.html` → `dist/method.html`, `academy/cpi-inflation.html` → `dist/academy/cpi-inflation.html`. One source file = one page = one URL. Flat output is what `outPathFor(src)` returns (identity) in `build.js`; `src/site.config.js` and `tests/test-page-registry.js` mirror it so `rootFor` derives `{{ROOT}}` depth from the same path.
+
+> Do **not** emit pages as `<slug>/index.html`. That was tried (commit `90032ff`) on the assumption Cloudflare would serve `/method` directly with 200. It does not — see below.
+
+### What Cloudflare actually does
+
+Cloudflare (Workers Static Assets) serves each asset at **one** canonical URL and **redirects every other spelling to it**:
+
+- A `.html` file is served at its **extensionless** URL with a **200**. The `.html` URL itself **always redirects** — `/method.html` never returns 200.
+- A `<dir>/index.html` file is served at `/<dir>/` (trailing slash) with a **200**. `/dir` (no slash) redirects to `/dir/`.
+
+So the canonical served form is:
+
+- leaf page `foo.html` → `/foo` (no slash)
+- directory index `dir/index.html` → `/dir/` (slash)
+- root `index.html` → `/`
+
+This is the platform default, not something we configure: Workers Static Assets defaults to the `auto-trailing-slash` HTML-handling mode, which serves individual files without a trailing slash and folder index files with one — exactly the scheme above. See [Workers Static Assets · HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/).
+
+This repo deploys as a **Cloudflare Worker (Static Assets)**, whose built-in redirects are **307 (temporary)** — verified both against the doc above and by curling our own `/404.html` (excluded from `_redirects`, so no rule of ours), which returns `307 → /404`. Note this differs from **classic Cloudflare Pages**, which issues **308 (permanent)** for the same normalization; the 307-vs-308 distinction is why the `_redirects` upgrade below matters here (see next section).
+
+### `canonicalFor()` — one source for every URL we publish
+
+`canonicalFor(siteUrl, src)` in `src/schema.js` computes the canonical served URL from a source path (strip `index.html`, then strip `.html`). It is the **single source** feeding the canonical tag, `sitemap.xml` `<loc>`, `llms.txt` links, JSON-LD, and the `_redirects` targets. Because they all call the same function, they cannot drift. The published URL is always the served-200 form — **never the `.html` file path**. (A sitemap `<loc>` or canonical pointing at `.html` is a redirect, which GSC flags.)
+
+### `_redirects` — a 307 → 301 upgrade, not a router
+
+`build.js` generates `dist/_redirects` mapping every legacy `.html` (and `index.html`) URL to its canonical form with a **301**. This does **not** create the redirect — Cloudflare already redirects `.html` natively. It **upgrades** that redirect from **307 (temporary)** to **301 (permanent)**, so Google drops the `.html` URL and consolidates ranking signals onto the canonical. `404.html` is deliberately excluded: it is `noindex` and never indexed, so the permanence of its redirect is irrelevant (and it makes a clean control — `/404.html` still shows Cloudflare's native 307).
+
+### What each URL form does
+
+Three structural types cover every page. **301** = our `_redirects` (permanent). **307** = Cloudflare native (temporary), only ever hit on forms we never link or publish.
+
+| Type | Source file | Canonical (200) | `.html` form | wrong-slash / `index.html` form |
+| --- | --- | --- | --- | --- |
+| **Root** | `index.html` | `/` | `/index.html` → **301** → `/` | — |
+| **Section index** | `academy/index.html` | `/academy/` | — (no `academy.html`) | `/academy` → **307** → `/academy/`; `/academy/index.html` → **301** → `/academy/` |
+| **Leaf page** | `method.html` | `/method` | `/method.html` → **301** → `/method` | `/method/` → **307** → `/method` |
+
+Only the canonical column returns 200. Section indexes keep the trailing slash because they are genuine directory indexes; leaf pages have none. That split is correct, not an inconsistency — a slash means "collection," no slash means "document."
+
 ## Page Registry
 
 ### Source of truth
