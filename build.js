@@ -98,6 +98,7 @@ const CSS_SEGMENTS = [
   'components/button-base', 'components/accordion-base', 'components/footer-base',
   'components/card-base', 'components/terminal-base', 'components/story-card', 'components/nav-base',
   'layouts/page-shell', 'layouts/article-layout', 'layouts/directory-layout', 'layouts/hero-layout',
+  'components/motion',
   'layouts/responsive-mobile',
 ];
 const stylesDir   = path.join(__dirname, 'src', 'styles');
@@ -150,6 +151,75 @@ function extensionlessLinks(html) {
       ? pathname.slice(0, -'index.html'.length) || './'
       : pathname.slice(0, -'.html'.length);
     return `href="${out}${suffix}"`;
+  });
+}
+
+// Site-wide scroll-reveal: tag every top-level <section> inside <main> that
+// begins AFTER the page's first <h1>. The hero always contains the first H1
+// (whether it is a <section>, an <article>'s <header>, etc.), so heroes stay
+// instant — protecting LCP and avoiding a load flash — while the content
+// sections below fade up on scroll. Paired with public/js/scroll-reveal.js and
+// the prefers-reduced-motion-gated rules in styles/components/motion.css.
+// A section that already carries data-reveal (authored by hand) is left as-is.
+function applyScrollReveal(html) {
+  return html.replace(/<main>[\s\S]*?<\/main>/, (mainBlock) => {
+    const h1Index = mainBlock.search(/<h1\b/);
+
+    // Sections: reveal every <section> that begins after the hero. When the
+    // page has an <h1>, the hero is whatever block holds it, so reveal the
+    // sections starting after it. When it has none (e.g. product.html), fall
+    // back to skipping the first <section> as the hero.
+    let firstSectionSkipped = h1Index !== -1;
+    let sectionTagged = false;
+    let out = mainBlock.replace(/<section\b([^>]*)>/g, (tag, attrs, offset) => {
+      if (h1Index !== -1) {
+        if (offset < h1Index) return tag;               // hero — stays instant
+      } else if (!firstSectionSkipped) {
+        firstSectionSkipped = true;
+        return tag;                                     // hero — stays instant
+      }
+      if (/\bdata-reveal\b/.test(attrs)) return tag;    // already tagged
+      sectionTagged = true;
+      return `<section${attrs} data-reveal>`;
+    });
+
+    // Directory cards and section banners (the section-landing pages) sit
+    // below the hero inside a single <section>, so the section rule skips them.
+    // Reveal each one for a staggered entrance. The hero banner holds the H1,
+    // so the offset < h1 guard keeps it instant. These directory-* classes
+    // appear only on directory pages, so there is no overlap with a section
+    // already revealed above.
+    if (h1Index !== -1) {
+      const h1 = out.search(/<h1\b/);
+      out = out.replace(
+        /<(a|article|div)\b([^>]*\bclass="[^"]*\bdirectory-(?:card|featured|banner)\b[^"]*"[^>]*)>/g,
+        (tag, el, rest, offset) => {
+          if (offset < h1) return tag;
+          if (/\bdata-reveal\b/.test(rest)) return tag;
+          return `<${el}${rest} data-reveal>`;
+        },
+      );
+    }
+
+    // Single-section content pages (company/*) wrap their panels in
+    // .page-content-wide below the hero, so the section rule finds nothing to
+    // reveal. When no <section> was revealed above, tag the top-level content
+    // panels directly. Gated on !sectionTagged, this never touches the homepage
+    // or articles, where the same classes sit inside already-revealed sections.
+    // metric-tile is intentionally excluded — it nests inside terminal-shell
+    // and reveals with its parent.
+    if (h1Index !== -1 && !sectionTagged) {
+      const h1 = out.search(/<h1\b/);
+      out = out.replace(
+        /<(div|article)\b([^>]*\bclass="[^"]*\b(?:terminal-shell|product-panel)\b[^"]*"[^>]*)>/g,
+        (tag, el, rest, offset) => {
+          if (offset < h1) return tag;
+          if (/\bdata-reveal\b/.test(rest)) return tag;
+          return `<${el}${rest} data-reveal>`;
+        },
+      );
+    }
+    return out;
   });
 }
 
@@ -236,7 +306,7 @@ function renderPage(page) {
   });
 
   ensureDir(outPath);
-  fs.writeFileSync(outPath, extensionlessLinks(html), 'utf8');
+  fs.writeFileSync(outPath, extensionlessLinks(applyScrollReveal(html)), 'utf8');
   console.log(`✓  ${page.src}`);
   return true;
 }

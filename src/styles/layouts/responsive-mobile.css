@@ -212,23 +212,17 @@
         margin-bottom: 2.5rem;
       }
 
-      .hero-top-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .hero-ai-panel {
-        border-left: none;
-        padding-left: 0;
-        border-top: 1px solid rgba(var(--color-light-rgb),0.15);
-        padding-top: 2rem;
-      }
-      .hero-inner { padding-top: 5rem; }
-      .hero-bottom {
-        border-top: 1px solid rgba(var(--color-light-rgb),0.15);
-        padding-top: 1.5rem;
-        margin-top: 1.5rem;
-      }
+      .hero-grid { grid-template-columns: 1fr; gap: 2.25rem; }
+      .hero-ai-card { padding: 1.35rem; }
+      .hero-inner { min-height: auto; padding-top: 5rem; }
       .hero-lede { font-size: 0.95rem; }
       .ask-ai-heading { font-size: 1rem; }
       .button-hero-ai { font-size: 0.95rem; }
-      .hero-strip-label { font-size: 1.1em; }
+      .featured-head {
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+      .featured-disclaimer { text-align: left; max-width: none; }
 
       .story-carousel-frame {
         gap: 0.5rem;

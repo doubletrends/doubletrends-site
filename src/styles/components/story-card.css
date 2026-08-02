@@ -33,7 +33,49 @@
       will-change: transform;
       width: max-content;
     }
-    .hero-bottom .story-card-tag { font-size: 1.04rem; }
+    /* Featured strip: its own light-background section below the hero. */
+    .featured-strip {
+      background: var(--color-light);
+      border-top: 1px solid rgba(var(--color-dark-rgb), 0.08);
+      border-bottom: 1px solid rgba(var(--color-dark-rgb), 0.08);
+    }
+    .featured-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .featured-disclaimer {
+      color: var(--color-muted);
+      max-width: 34rem;
+      text-align: right;
+    }
+    /* Light-background carousel arrows (glass button was for the dark hero). */
+    .button-story-arrow {
+      width: 1.35rem;
+      min-width: 1.35rem;
+      padding: 0;
+      align-self: stretch;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-dark);
+      background: var(--color-white);
+      border: 1px solid rgba(var(--color-dark-rgb), 0.12);
+      cursor: pointer;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+    .button-story-arrow:hover {
+      color: var(--color-rust);
+      border-color: var(--color-rust);
+    }
+    .button-story-arrow span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.92rem;
+      line-height: 1;
+    }
+    .featured-strip .story-card-tag { font-size: 1.04rem; }
     .story-card {
       flex: 0 0 var(--story-card-width);
       display: flex;
