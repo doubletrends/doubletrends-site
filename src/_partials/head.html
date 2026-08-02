@@ -1,6 +1,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Reveal no-FOUC guard: set html.reveal-on before first paint so reveal
+       targets (hero included) start hidden and animate in cleanly, never a
+       paint-then-hide flash. Gated to match scroll-reveal.js — only when motion
+       is allowed and IntersectionObserver exists; JS-off / reduced-motion see
+       fully-rendered content. scroll-reveal.js is the revealer. -->
+  <script>
+    (function () {
+      var m = window.matchMedia;
+      if (m && !m('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+        document.documentElement.classList.add('reveal-on');
+      }
+    })();
+  </script>
   <title>{{TITLE}}</title>
   <meta name="description" content="{{DESC}}" />
   <meta name="author" content="DoubleTrends L.L.C." />

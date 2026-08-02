@@ -154,6 +154,45 @@ function extensionlessLinks(html) {
   });
 }
 
+// Index just past the matching close tag of the element opened at `openStart`,
+// found by counting same-name open/close depth. Used to skip content nested
+// inside an element we just tagged.
+function elementEnd(html, tag, openStart) {
+  const gt = html.indexOf('>', openStart);
+  const re = new RegExp(`<${tag}\\b|</${tag}>`, 'gi');
+  re.lastIndex = gt + 1;
+  let depth = 1, m;
+  while ((m = re.exec(html))) {
+    if (m[0][1] === '/') { if (--depth === 0) return m.index + m[0].length; }
+    else depth++;
+  }
+  return html.length;
+}
+
+// Block atomicity (reveal contract): a data-reveal element may not live inside
+// another. Keep the OUTERMOST — the block — and strip data-reveal from any
+// nested descendant, so blocks reveal whole instead of double-animating their
+// pieces. Runs after all tagging, so it also catches cross-rule overlaps (e.g.
+// a hero banner-text sitting inside a revealed section banner).
+function dropNestedReveals(mainBlock) {
+  const spans = [];
+  const re = /<([a-zA-Z0-9]+)\b[^>]*\bdata-reveal\b[^>]*>/g;
+  let m;
+  while ((m = re.exec(mainBlock))) {
+    spans.push({ start: m.index, end: elementEnd(mainBlock, m[1], m.index) });
+  }
+  const nestedStarts = spans
+    .filter((s) => spans.some((p) => p !== s && s.start > p.start && s.start < p.end))
+    .map((s) => s.start)
+    .sort((a, b) => b - a);                          // right-to-left keeps indices valid
+  let out = mainBlock;
+  for (const pos of nestedStarts) {
+    const gt = out.indexOf('>', pos);
+    out = out.slice(0, pos) + out.slice(pos, gt + 1).replace(/\s+data-reveal\b/, '') + out.slice(gt + 1);
+  }
+  return out;
+}
+
 // Site-wide scroll-reveal: tag every top-level <section> inside <main> that
 // begins AFTER the page's first <h1>. The hero always contains the first H1
 // (whether it is a <section>, an <article>'s <header>, etc.), so heroes stay
@@ -183,18 +222,18 @@ function applyScrollReveal(html) {
       return `<section${attrs} data-reveal>`;
     });
 
-    // Directory cards and section banners (the section-landing pages) sit
-    // below the hero inside a single <section>, so the section rule skips them.
-    // Reveal each one for a staggered entrance. The hero banner holds the H1,
-    // so the offset < h1 guard keeps it instant. These directory-* classes
-    // appear only on directory pages, so there is no overlap with a section
-    // already revealed above.
+    // Directory cards, featured tiles, and banners (the section-landing pages)
+    // sit below the hero inside a single <section>, so the section rule skips
+    // them. Each reveals as a WHOLE block (card as a whole) — including the hero
+    // banner at the top: its background image reveals with it, rather than
+    // leaving the image/tint static while only the text fades (which read as a
+    // broken partial animation). The h1Index guard scopes this to directory
+    // pages; product.html reuses .directory-banner for app-shot frames but has
+    // no <h1>, so it is left untouched here.
     if (h1Index !== -1) {
-      const h1 = out.search(/<h1\b/);
       out = out.replace(
         /<(a|article|div)\b([^>]*\bclass="[^"]*\bdirectory-(?:card|featured|banner)\b[^"]*"[^>]*)>/g,
-        (tag, el, rest, offset) => {
-          if (offset < h1) return tag;
+        (tag, el, rest) => {
           if (/\bdata-reveal\b/.test(rest)) return tag;
           return `<${el}${rest} data-reveal>`;
         },
@@ -203,11 +242,12 @@ function applyScrollReveal(html) {
 
     // Single-section content pages (company/*) wrap their panels in
     // .page-content-wide below the hero, so the section rule finds nothing to
-    // reveal. When no <section> was revealed above, tag the top-level content
-    // panels directly. Gated on !sectionTagged, this never touches the homepage
-    // or articles, where the same classes sit inside already-revealed sections.
+    // reveal. When no <section> was revealed above, tag the content panels
+    // directly. Gated on !sectionTagged, this never touches the homepage or
+    // articles, where the same classes sit inside already-revealed sections.
     // metric-tile is intentionally excluded — it nests inside terminal-shell
-    // and reveals with its parent.
+    // and reveals with its parent. Any nesting from this or the rules above is
+    // removed afterwards by dropNestedReveals (keeps the outermost block).
     if (h1Index !== -1 && !sectionTagged) {
       const h1 = out.search(/<h1\b/);
       out = out.replace(
@@ -219,7 +259,23 @@ function applyScrollReveal(html) {
         },
       );
     }
-    return out;
+
+    // Hero text stacks. One system: the hero reveals through the same
+    // data-reveal path as every content block, cascading in on load via the
+    // first-viewport branch of scroll-reveal.js. The no-FOUC guard in <head>
+    // applies the hidden state before first paint, so the hero never flashes.
+    // These classes are hero-only, and decor/banner images sit OUTSIDE the text
+    // stack (so image-LCP heroes stay instant). No h1 guard: the hero is no
+    // longer the instant exception.
+    out = out.replace(
+      /<(div|header|a|section)\b([^>]*\bclass="[^"]*\b(?:hero-copy|hero-ai-card|page-hero-center|article-hero-frame|hero-load)\b[^"]*"[^>]*)>/g,
+      (tag, el, rest) => {
+        if (/\bdata-reveal\b/.test(rest)) return tag;
+        return `<${el}${rest} data-reveal>`;
+      },
+    );
+
+    return dropNestedReveals(out);
   });
 }
 
