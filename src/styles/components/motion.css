@@ -48,4 +48,13 @@
       .button-story-arrow:active {
         transform: scale(0.97);
       }
+
+      /* Signal-history rows cascade in as the table populates. history-table.js
+         staggers when each row gets .is-in (and ticks up its returns in sync),
+         so the fade here is plain. Opacity only — reliable on <tr>. */
+      .hist-row { opacity: 0; }
+      .hist-row.is-in {
+        opacity: 1;
+        transition: opacity 0.4s ease;
+      }
     }
