@@ -223,6 +223,19 @@ function applyScrollReveal(html) {
   });
 }
 
+// Tag every overline inside <main> for the decrypted-text effect
+// (public/js/decrypt-text.js). Scoped to <main>, so the nav and footer partials
+// are never touched. Overlines are JetBrains Mono, so the scramble is
+// fixed-width and steady — unlike a proportional display font.
+function applyDecrypt(html) {
+  return html.replace(/<main>[\s\S]*?<\/main>/, (mainBlock) =>
+    mainBlock.replace(
+      /<span\b([^>]*\bclass="[^"]*\btag-overline\b[^"]*"[^>]*)>/g,
+      (tag, attrs) => (/\bdata-decrypt\b/.test(attrs) ? tag : `<span${attrs} data-decrypt>`),
+    ),
+  );
+}
+
 // Pages are emitted flat: method.html → dist/method.html. Cloudflare serves
 // each at its extensionless URL (/method) with 200, so the output path is just
 // the source path.
@@ -306,7 +319,7 @@ function renderPage(page) {
   });
 
   ensureDir(outPath);
-  fs.writeFileSync(outPath, extensionlessLinks(applyScrollReveal(html)), 'utf8');
+  fs.writeFileSync(outPath, extensionlessLinks(applyDecrypt(applyScrollReveal(html))), 'utf8');
   console.log(`✓  ${page.src}`);
   return true;
 }
