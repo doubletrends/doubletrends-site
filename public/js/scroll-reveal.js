@@ -15,8 +15,22 @@
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-revealed');
-      io.unobserve(entry.target);
+      var el = entry.target;
+      io.unobserve(el);
+      el.classList.add('is-revealed');
+      // Once the entrance finishes, strip the reveal so it no longer owns
+      // `transform`/`transition`. Otherwise the resting `transform` outranks a
+      // card's :hover lift, and the 1.5s reveal transition makes that lift
+      // sluggish. The element is already at its final state, so removal is
+      // seamless. Guard on e.target so a child's transitionend (a hover image,
+      // etc.) bubbling up does not trigger cleanup early.
+      var done = function (e) {
+        if (e.target !== el) return;
+        el.removeEventListener('transitionend', done);
+        el.removeAttribute('data-reveal');
+        el.classList.remove('is-revealed');
+      };
+      el.addEventListener('transitionend', done);
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
 
