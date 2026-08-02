@@ -33,6 +33,27 @@
     return `${emoji} ${label}`.trim();
   }
 
+  // Ease a numeric cell from 0 to its value, keeping sign/suffix (e.g. "+71%",
+  // "-5%"). Non-numeric cells ("pending") are left untouched.
+  function countUp(el, duration) {
+    const text = el.textContent;
+    const m = text.match(/^([^\d]*)(\d[\d,]*(?:\.\d+)?)(.*)$/);
+    if (!m) return;
+    const prefix = m[1], suffix = m[3];
+    const target = parseFloat(m[2].replace(/,/g, ''));
+    const decimals = m[2].indexOf('.') >= 0 ? m[2].split('.')[1].length : 0;
+    let start = null;
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    function tick(ts) {
+      if (start === null) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      el.textContent = prefix + (target * ease(p)).toFixed(decimals) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = text;
+    }
+    requestAnimationFrame(tick);
+  }
+
   let history;
   try {
     const response = await fetch('public/replay/history.json');
@@ -57,9 +78,9 @@
         <td class="px-5 py-3" style="color: #1E2530;">${e.signal_date}</td>
         <td class="px-3 py-3" style="color: #1E2530;">${regimeCell(e.regime)}</td>
         <td class="px-3 py-3 text-right" style="color: #1E2530;">${e.signal_close.toFixed(2)}</td>
-        <td class="px-3 py-3 text-right" style="color: ${r90.color};">${r90.text}</td>
-        <td class="px-3 py-3 text-right" style="color: ${r1y.color};">${r1y.text}</td>
-        <td class="px-5 py-3 text-right" style="color: ${r2y.color};">${r2y.text}</td>
+        <td class="px-3 py-3 text-right ret" style="color: ${r90.color};">${r90.text}</td>
+        <td class="px-3 py-3 text-right ret" style="color: ${r1y.color};">${r1y.text}</td>
+        <td class="px-5 py-3 text-right ret" style="color: ${r2y.color};">${r2y.text}</td>
       </tr>
     `;
   }).join('');
@@ -69,8 +90,36 @@
   if (summary && history.metrics) {
     const m = history.metrics;
     summary.innerHTML =
-      `<b style="color: #1E2530;">${m.total_signals}</b> signals &middot; ` +
-      `median 1y <b style="color: ${COLOR_GAIN};">+${m.median_1y_pct}%</b> &middot; ` +
-      `<b style="color: #1E2530;">${m.positive_1y_count}</b>/${m.matured_1y_count} positive at 1y`;
+      `<b class="cu" style="color: #1E2530;">${m.total_signals}</b> signals &middot; ` +
+      `median 1y <b class="cu" style="color: ${COLOR_GAIN};">+${m.median_1y_pct}%</b> &middot; ` +
+      `<b class="cu" style="color: #1E2530;">${m.positive_1y_count}</b>/${m.matured_1y_count} positive at 1y`;
+  }
+
+  // Reveal + count-up when the table scrolls into view: each row fades in and
+  // its 90d/1y/2y returns tick up from zero, cascading down the table (a quiet
+  // "terminal computing returns" beat), then the headline metrics count up.
+  // No-ops under prefers-reduced-motion, which leaves the real figures in place.
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const rowEls = Array.from(body.querySelectorAll('tr'));
+    rowEls.forEach((tr) => tr.classList.add('hist-row'));
+
+    const reveal = () => {
+      rowEls.forEach((tr, i) => {
+        setTimeout(() => {
+          tr.classList.add('is-in');
+          tr.querySelectorAll('.ret').forEach((cell) => countUp(cell, 800));
+        }, i * 45);
+      });
+      if (summary) summary.querySelectorAll('.cu').forEach((el) => countUp(el, 1200));
+    };
+
+    if ('IntersectionObserver' in window) {
+      const rio = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) { reveal(); obs.disconnect(); } });
+      }, { threshold: 0.1 });
+      rio.observe(body);
+    } else {
+      requestAnimationFrame(reveal);
+    }
   }
 })();
