@@ -2,6 +2,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Critical resources first. Request the stylesheet and the above-the-fold
+       fonts before anything else in <head>, so first paint is not held up and
+       the brand fonts are ready (or nearly) by the time text renders — cutting
+       both the fallback-font flash and the reflow when the real font swaps in.
+       Syne 700 and DM Sans 400 are used on every page; page-specific preloads
+       (e.g. the homepage's Syne 800 hero weight) arrive via HEAD_PRELOADS.
+       crossorigin is required even same-origin: font fetches are CORS-mode. -->
+  <link rel="preload" href="{{ROOT}}public/fonts/syne/syne-700.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="{{ROOT}}public/fonts/dm-sans/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+{{HEAD_PRELOADS}}
+  <link rel="stylesheet" href="{{ROOT}}public/css/site.css" />
+
   <!-- Reveal no-FOUC guard: set html.reveal-on before first paint so reveal
        targets (hero included) start hidden and animate in cleanly, never a
        paint-then-hide flash. Gated to match scroll-reveal.js — only when motion
@@ -15,6 +27,7 @@
       }
     })();
   </script>
+
   <title>{{TITLE}}</title>
   <meta name="description" content="{{DESC}}" />
   <meta name="author" content="DoubleTrends L.L.C." />
@@ -52,8 +65,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{{ROOT}}public/brand/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="{{ROOT}}public/brand/favicon-180.png" />
 
-  <!-- Structured data -->
+  <!-- Structured data (non-critical, last) -->
 {{JSONLD_SCRIPTS}}
-
-  <link rel="stylesheet" href="{{ROOT}}public/css/site.css" />
 </head>

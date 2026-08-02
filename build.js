@@ -303,6 +303,19 @@ function socialExtraFor(page) {
   <meta property="article:section" content="${section}" />`;
 }
 
+// Page-specific <head> preloads. The universal above-the-fold fonts (Syne 700,
+// DM Sans 400) are static in head.html; this adds only the faces that vary by
+// page, so no page preloads a font it does not use above the fold. Today the
+// homepage hero <h1> is the sole place Syne 800 appears above the fold. root is
+// baked in directly (this string is injected after {{ROOT}} is resolved).
+function headPreloadsFor(page) {
+  const preloads = [];
+  if (page.src === 'index.html') {
+    preloads.push(`  <link rel="preload" href="${page.root}public/fonts/syne/syne-800.woff2" as="font" type="font/woff2" crossorigin />`);
+  }
+  return preloads.join('\n');
+}
+
 function renderRoutingCard(card, root) {
   if (!card) return '';
   return replace(routingCardTemplate, {
@@ -345,6 +358,7 @@ function renderPage(page) {
     OG_IMAGE,
     OG_IMAGE_ALT,
     SOCIAL_EXTRA: socialExtraFor(page),
+    HEAD_PRELOADS: headPreloadsFor(page),
     ROBOTS:    page.robots ?? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
     JSONLD_SCRIPTS: buildJsonLdScripts({
       page,
