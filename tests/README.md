@@ -14,6 +14,7 @@ Frontend validation suite. All scripts are invoked via `npm run test:*`; `npm ru
 - `npm run test:nav-consistency` — verify nav dropdown, footer column, and section index card are in sync for every sub-page
 - `npm run test:headings` — verify heading hierarchy consistency across company pages
 - `npm run test:brand-tokens` — verify the hand-mirrored brand token copies agree with `src/brand.config.js`
+- `npm run test:reveal` — verify the reveal-animation contract holds across built pages
 
 ## Contracts
 
@@ -70,3 +71,12 @@ The test parses each mirror from source (no build needed) and fails if any copy 
 - Article pages must emit `Article`, declare `section`, and declare non-empty `schema.about`
 - Non-article pages must not emit `Article`
 - Academy content pages must emit breadcrumbs
+
+### Reveal-animation contract (`test:reveal`)
+
+Enforces that the scroll-reveal / load-in motion animates a *block* (the smallest complete idea) and never its pieces. Across every built page:
+
+- **No nested reveals** — a `[data-reveal]` element never contains another. Animate the block as a whole; no double-animation. (Also guards the block-level section split: a split section must opt its wrapper out, not tag both wrapper and inner blocks.)
+- **No reveal in chrome** — `[data-reveal]` appears only inside `<main>`; nav, header, and footer never animate.
+- **Hero stays instant** — no `[data-reveal]` before the first `<h1>`. The hero is the load-in exception (CSS), never scroll-revealed.
+- **Data panels reveal whole** — no `[data-reveal]` on `<tr>`/`<td>`/`<th>`, and none inside a `.terminal-shell`. Never a per-row / per-item cascade.
