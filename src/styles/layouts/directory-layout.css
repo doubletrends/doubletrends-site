@@ -18,25 +18,6 @@
         padding: 3rem;
       }
     }
-    .directory-title {
-      background-image: linear-gradient(140deg, var(--color-dark) 0%, var(--color-muted) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: var(--color-dark);
-      font-family: 'Syne', sans-serif;
-      font-size: 2.75em;
-      font-weight: 700;
-      line-height: 1.25;
-      text-align: center;
-    }
-    .directory-subtitle {
-      color: var(--color-muted);
-      font-family: 'Syne', sans-serif;
-      font-size: 1.5rem;
-      line-height: 1.375;
-      text-align: center;
-    }
     .decor-banner {
       box-shadow: var(--shadow-section);
     }
@@ -81,13 +62,13 @@
       color: var(--color-rust);
       text-shadow: 0 1px 8px rgba(0,0,0,0.90);
     }
-    .directory-banner .directory-title {
+    .directory-banner .page-title {
       -webkit-text-fill-color: white;
       color: white;
       background-image: none;
       text-shadow: 0 2px 16px rgba(0,0,0,0.95);
     }
-    .directory-banner .directory-subtitle {
+    .directory-banner .page-subtitle {
       color: rgba(255,255,255,0.90);
       text-shadow: 0 1px 10px rgba(0,0,0,0.90);
     }

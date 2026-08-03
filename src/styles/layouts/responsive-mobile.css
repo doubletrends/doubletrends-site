@@ -178,7 +178,7 @@
         padding-top: 1rem;
         padding-bottom: 1rem;
       }
-      .directory-banner .directory-subtitle {
+      .directory-banner .page-subtitle {
         display: none;
       }
 
@@ -194,13 +194,11 @@
         padding: 1.25rem;
         margin-bottom: 2rem;
       }
-      .page-title,
-      .directory-title {
+      .page-title {
         font-size: 2.1rem;
         line-height: 1.12;
       }
-      .page-subtitle,
-      .directory-subtitle {
+      .page-subtitle {
         font-size: 1.08rem;
         line-height: 1.55;
       }

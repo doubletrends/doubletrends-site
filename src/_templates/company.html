@@ -1,0 +1,66 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     COMPANY PAGE TEMPLATE
+     Copy this file to src/pages/company/<slug>.html and fill in every
+     <!-- FILL: --> marker. Delete optional blocks you don't need.
+     Register the new page in src/site.config.js:
+       companyPage('<slug>', { title: '...', desc: '...' })
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<!-- COMPANY: FILL: one-line internal description (e.g. "Consulting page") -->
+<section class="page-shell">
+
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+<div class="page-hero page-hero-center">
+<span class="tag-overline mb-3">Company &middot; <!-- FILL: page label (e.g. "Consulting") --></span>
+<h1 class="page-title"><!-- FILL: page title --></h1>
+<p class="page-subtitle mt-2"><!-- FILL: 1–3 sentence summary of the page --></p>
+</div>
+
+<!-- ── Content ───────────────────────────────────────────────────────────── -->
+<div class="page-content-wide">
+
+<!-- ── Block: narrative panel ─────────────────────────────────────────────
+     Prose section with an overline + heading + body text.                 -->
+<div class="terminal-shell p-6 md:p-8 lg:p-10">
+<span class="tag-overline"><!-- FILL: section label --></span>
+<h3 class="text-dark text-xl md:text-2xl font-noto font-bold mt-3 mb-4"><!-- FILL: section heading --></h3>
+<p class="text-muted text-sm md:text-base leading-relaxed"><!-- FILL: body paragraph --></p>
+</div>
+
+<!-- ── Block: metric tiles (optional) ─────────────────────────────────────
+     2- or 3-column grid of short labelled points inside a terminal-shell.
+     Adjust grid-cols-* to match the number of tiles.                      -->
+<div class="terminal-shell p-6 md:p-8">
+<span class="tag-overline"><!-- FILL: section label --></span>
+<h3 class="text-dark text-xl md:text-2xl font-noto font-bold mt-3 mb-4"><!-- FILL: section heading --></h3>
+<div class="grid md:grid-cols-3 gap-4">
+<div class="metric-tile hover-lift-rust p-5">
+<span class="data-label"><!-- FILL: tile label --></span>
+<p class="text-muted text-sm leading-relaxed mt-3"><!-- FILL: tile body --></p>
+</div>
+<div class="metric-tile hover-lift-rust p-5">
+<span class="data-label"><!-- FILL: tile label --></span>
+<p class="text-muted text-sm leading-relaxed mt-3"><!-- FILL: tile body --></p>
+</div>
+<div class="metric-tile hover-lift-rust p-5">
+<span class="data-label"><!-- FILL: tile label --></span>
+<p class="text-muted text-sm leading-relaxed mt-3"><!-- FILL: tile body --></p>
+</div>
+</div>
+</div>
+
+<!-- ── Block: image + text panel (optional) ───────────────────────────────
+     Service or feature block with an illustrative image on one side.
+     Swap md:flex-row for md:flex-row-reverse to put the image on the right. -->
+<div class="product-panel overflow-hidden flex flex-col md:flex-row">
+<div class="md:w-1/2 service-image">
+<img src="{{ROOT}}public/company/<!-- FILL: image filename -->" alt="<!-- FILL: alt text -->" class="w-full h-full object-cover" />
+</div>
+<div class="md:w-1/2 flex flex-col justify-center p-6 md:p-10">
+<span class="tag-overline"><!-- FILL: section label --></span>
+<h3 class="text-dark text-xl md:text-2xl font-noto font-bold mt-3 mb-4"><!-- FILL: heading --></h3>
+<p class="text-muted text-sm leading-relaxed"><!-- FILL: body paragraph --></p>
+</div>
+</div>
+
+</div><!-- end page-content-wide -->
+</section>
