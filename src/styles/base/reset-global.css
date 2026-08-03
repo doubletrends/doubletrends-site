@@ -1,7 +1,7 @@
 ﻿    html { scroll-behavior: smooth; }
     * { box-sizing: border-box; }
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--font-body);
       background-color: var(--color-light);
     }
     /* Site texture: a fine grid with a crosshair node at each intersection, held in a

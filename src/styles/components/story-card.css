@@ -29,7 +29,7 @@
       gap: 1.5rem;
     }
     .stories-title {
-      font-family: 'Syne', sans-serif;
+      font-family: var(--font-display);
       font-weight: 700;
       font-size: 1.65rem;
       line-height: 1;
@@ -58,7 +58,7 @@
       background: #39434F;
     }
     .button-story-arrow span {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 0.95rem;
       line-height: 1;
     }
@@ -127,21 +127,21 @@
       gap: 0.55rem;
     }
     .story-card-tag {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 0.6rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--color-rust);
     }
     .story-card-title {
-      font-family: 'Syne', sans-serif;
+      font-family: var(--font-display);
       font-size: 1.18rem;
       font-weight: 700;
       line-height: 1.16;
       color: var(--color-dark);
     }
     .story-card-dek {
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--font-body);
       font-size: 0.83rem;
       line-height: 1.5;
       color: var(--color-muted);
@@ -149,7 +149,7 @@
     .story-card-read {
       margin-top: auto;
       padding-top: 0.7rem;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 0.6rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;

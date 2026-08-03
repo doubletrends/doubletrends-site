@@ -35,7 +35,7 @@
       border: 1px solid rgba(var(--color-dark-rgb),0.10);
       background: rgba(255,255,255,0.72);
       color: var(--color-dark);
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 0.62rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;

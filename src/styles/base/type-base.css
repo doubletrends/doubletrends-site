@@ -11,21 +11,21 @@
       background-clip: text;
     }
     .data-label {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 0.62rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--color-muted);
     }
     .data-value {
-      font-family: 'Syne', sans-serif;
+      font-family: var(--font-display);
       font-weight: 700;
       font-size: 2.25rem;
       color: var(--color-dark);
       line-height: 1;
     }
     .code-block {
-      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-family: var(--font-mono);
       font-size: 0.75rem;
       background: var(--color-light);
       color: var(--color-dark);
@@ -36,7 +36,7 @@
     }
     .tag-overline {
       display: block;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 1.2rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
@@ -48,7 +48,7 @@
       max-width: 34rem;
     }
     .ask-ai-heading {
-      font-family: 'Syne', sans-serif;
+      font-family: var(--font-display);
       font-weight: 700;
       font-size: 1.15rem;
       line-height: 1.3;
