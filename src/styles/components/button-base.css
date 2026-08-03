@@ -1,26 +1,9 @@
-﻿    .button-rust {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--color-white);
-      background: var(--color-rust);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.8rem 1.75rem;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.1s ease;
-    }
-
+﻿    .button-rust,
     .button-dark {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       color: var(--color-white);
-      background: var(--color-dark);
       font-family: 'DM Sans', sans-serif;
       font-size: 0.68rem;
       font-weight: 600;
@@ -31,6 +14,8 @@
       cursor: pointer;
       transition: transform 0.1s ease;
     }
+    .button-rust { background: var(--color-rust); }
+    .button-dark { background: var(--color-dark); }
 
     .social-box-grid {
       display: grid;
