@@ -87,6 +87,7 @@ const head                = read('head.html');
 const header              = read('header.html');
 const footer              = read('footer.html');
 const checkoutGate        = read('checkout-gate.html');
+const stories             = read('stories.html');
 
 // ─── Build CSS ───────────────────────────────────────────────────────────────
 // Concatenate entry.css (Tailwind directives + @layer components) with all
@@ -345,6 +346,9 @@ function renderPage(page) {
     FOOTER:        footer,
     CHECKOUT_GATE: checkoutGate,
     CONTENT:       fs.readFileSync(srcPath, 'utf8'),
+    // STORIES after CONTENT so the {{STORIES}} placeholder in the page source is
+    // expanded here; its inner {{ROUTING_CARD}} is then filled per page below.
+    STORIES:       stories,
   });
   const html = replace(assembled, {
     ROOT:      page.root,

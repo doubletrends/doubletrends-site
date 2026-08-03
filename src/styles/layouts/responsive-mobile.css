@@ -218,19 +218,12 @@
       .hero-lede { font-size: 0.95rem; }
       .ask-ai-heading { font-size: 1rem; }
       .button-hero-ai { font-size: 0.95rem; }
-      .featured-head {
-        flex-direction: column;
-        gap: 0.6rem;
-      }
-      .featured-disclaimer { text-align: left; max-width: none; }
+      .stories-title { font-size: 1.35rem; }
+      .stories-disclaimer { max-width: none; }
 
-      .story-carousel-frame {
-        gap: 0.5rem;
-      }
       .story-viewport {
         width: 100%;
         max-width: none;
-        flex: 1 1 auto;
       }
       .story-strip {
         width: 100%;
