@@ -4,7 +4,7 @@
       align-items: center;
       gap: 0.5rem;
       color: var(--color-white);
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--font-body);
       font-size: 0.68rem;
       font-weight: 600;
       letter-spacing: 0.1em;
@@ -32,7 +32,7 @@
       color: var(--color-dark);
       background: var(--color-white);
       border: 1px solid rgba(var(--color-dark-rgb),0.10);
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--font-body);
       font-size: 0.7rem;
       font-weight: 600;
       letter-spacing: 0.1em;
@@ -57,7 +57,7 @@
       justify-content: center;
       background: var(--color-dark);
       color: var(--color-white);
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 0.66rem;
       font-weight: 600;
     }
@@ -72,7 +72,7 @@
       background: rgba(var(--color-light-rgb),0.06);
       backdrop-filter: blur(30px);
       -webkit-backdrop-filter: blur(30px);
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--font-body);
       font-size: 0.68rem;
       font-weight: 600;
       letter-spacing: 0.1em;
@@ -101,7 +101,7 @@
       align-self: stretch;
     }
     .button-hero-arrow span {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 0.92rem;
       line-height: 1;
     }
@@ -110,7 +110,7 @@
     .button-hero-ai {
       width: 100%;
       justify-content: flex-start;
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--font-body);
       font-size: 1rem;
       font-weight: 600;
       letter-spacing: 0.1em;

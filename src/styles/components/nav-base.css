@@ -13,7 +13,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--font-body);
       font-size: 0.65rem;
       font-weight: 600;
       letter-spacing: 0.12em;
@@ -78,7 +78,7 @@
     }
     .nav-dropdown-index {
       display: block;
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--font-body);
       font-size: 0.75rem;
       font-weight: 700;
       color: var(--color-dark);
@@ -94,7 +94,7 @@
     .nav-dropdown-section:first-of-type { border-top: none; }
     .nav-dropdown-label {
       display: block;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
       font-size: 0.55rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -103,7 +103,7 @@
     }
     .nav-dropdown-item {
       display: block;
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--font-body);
       font-size: 0.8rem;
       color: var(--color-muted);
       padding: 0.35rem 1.25rem;

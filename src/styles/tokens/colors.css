@@ -14,4 +14,8 @@
       --color-loss: #C8413B;
       --color-gain-rgb: 46, 158, 123;
       --color-loss-rgb: 200, 65, 59;
+      /* Font stacks */
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }

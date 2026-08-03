@@ -25,4 +25,5 @@
   .panel-heading { @apply font-noto font-semibold text-lg md:text-xl mb-3; color: var(--color-rust); }
   .panel-body    { @apply font-open text-sm leading-relaxed; color: var(--color-muted); }
   .article-h3    { @apply text-dark font-noto font-semibold text-xl leading-tight mb-3; }
+  .card-heading  { @apply text-dark font-noto font-bold text-xl leading-tight; }
 }
