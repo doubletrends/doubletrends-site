@@ -22,6 +22,7 @@
     var visibleCount = 3;
     var busy         = false;
     var autoId       = null;
+    var reduce       = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function readGap() {
       return parseFloat(window.getComputedStyle(strip).gap) || 0;
@@ -29,6 +30,15 @@
 
     function measure() {
       visibleCount = window.innerWidth <= 767 ? 1 : 3;
+    }
+
+    // Only the on-screen cards keep their drop-shadow. Off-screen cards are
+    // flagged so CSS removes their shadow — otherwise it bleeds past the clip
+    // into the visible edges and reads as a cut-off shadow.
+    function markOffscreen(startIdx) {
+      cards.forEach(function (c, i) {
+        c.classList.toggle('is-offscreen', i < startIdx || i >= startIdx + visibleCount);
+      });
     }
 
     function applyTransform(idx, animated) {
@@ -43,6 +53,7 @@
       } else {
         strip.style.transform = 'translateX(' + (-offset) + 'px)';
       }
+      markOffscreen(idx);
     }
 
     function stepNext() {
@@ -82,11 +93,21 @@
 
     function restartAutoAdvance() {
       if (autoId) clearInterval(autoId);
-      autoId = setInterval(stepNext, 2000);
+      if (reduce) return;                       // reduced motion: manual controls only
+      autoId = setInterval(stepNext, 2000); 
+    }
+    function pauseAutoAdvance() {
+      if (autoId) { clearInterval(autoId); autoId = null; }
     }
 
     prevBtn.addEventListener('click', function () { stepPrev(); restartAutoAdvance(); });
     nextBtn.addEventListener('click', function () { stepNext(); restartAutoAdvance(); });
+
+    // Pause while the reader is engaged (hover or keyboard focus within).
+    root.addEventListener('mouseenter', pauseAutoAdvance);
+    root.addEventListener('mouseleave', restartAutoAdvance);
+    root.addEventListener('focusin', pauseAutoAdvance);
+    root.addEventListener('focusout', restartAutoAdvance);
 
     window.addEventListener('resize', function () {
       measure();
