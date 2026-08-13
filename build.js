@@ -35,6 +35,7 @@ const {
 } = require('./src/site.config');
 const { buildJsonLdScripts, canonicalFor: canonicalForRaw, pageDisplayName, isoDate } = require('./src/schema');
 const { COLORS } = require('./src/brand.config');
+const { optimizeImages } = require('./build-images');
 const canonicalFor = (src) => canonicalForRaw(SITE_URL, src);
 
 // ─── Site config ────────────────────────────────────────────────────────────
@@ -487,11 +488,23 @@ fs.writeFileSync(path.join(DIST, 'llms.txt'), llms, 'utf8');
 console.log('✓  llms.txt generated');
 
 // ─── Copy static assets ──────────────────────────────────────────────────────
-fs.cpSync(path.join(__dirname, 'public'), path.join(DIST, 'public'), { recursive: true });
-console.log('✓  public/ copied');
-
 fs.copyFileSync(path.join(__dirname, 'src', 'robots.txt'), path.join(DIST, 'robots.txt'));
 console.log('✓  robots.txt copied');
 
 fs.copyFileSync(path.join(__dirname, 'src', '_headers'), path.join(DIST, '_headers'));
 console.log('✓  _headers copied');
+
+// public/ is copied verbatim EXCEPT the managed rasters, which are re-encoded to
+// resized WebP (and carousel thumbnails) — see build-images.js. Async, so it runs
+// last as an awaited IIFE and fails the build loudly on any encode error.
+(async () => {
+  const { fullCount, thumbCount } = await optimizeImages(
+    path.join(__dirname, 'public'),
+    path.join(DIST, 'public'),
+  );
+  console.log(`✓  public/ copied + ${fullCount} images → WebP (${thumbCount} carousel thumbnails)`);
+})().catch((err) => {
+  console.error('✗  image optimization failed');
+  console.error(err);
+  process.exit(1);
+});
