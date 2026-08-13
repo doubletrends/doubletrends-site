@@ -1,123 +1,143 @@
 # DoubleTrends™ Frontend
 
-Marketing site for DoubleTrends™, served at  `doubletrends.com`.
+Marketing site for DoubleTrends™, served at `doubletrends.com`.
 
-Static HTML/CSS/JS — no framework. A Node.js build step injects partials and generates metadata; the output is deployed as a Cloudflare Worker (Static Assets).
+Static HTML/CSS/JS — no framework. A single Node.js build step (`build.js`) assembles pages from templates, derives all metadata, compiles the stylesheet, and optimizes images; the output in `dist/` is deployed as a Cloudflare Worker (Static Assets).
+
+---
+
+## The big picture
+
+Read this first — it's the whole repo in one screen.
+
+This is a **tiny static-site generator**, not a framework app. There is no client-side router, no bundler, no app shell. `build.js` runs at build time, produces plain HTML/CSS/JS into `dist/`, and Cloudflare serves it. That's the entire runtime.
+
+```mermaid
+flowchart LR
+    subgraph SRC["Sources you author"]
+        direction TB
+        cfg["<b>site.config.js</b> — page registry<br/>(single source of truth)"]
+        pages["pages/*.html — page bodies"]
+        parts["_partials/*.html — shared shell"]
+        css["styles/**.css"]
+        pub["public/** — fonts · images · JS · JSON"]
+    end
+
+    SRC --> build["<b>build.js</b><br/>• wrap bodies in layout + head/header/footer<br/>• resolve #123;#123;PLACEHOLDERS#125;#125; (ROOT, TITLE, DESC, CANONICAL…)<br/>• compile CSS sources → one site.css<br/>• derive canonical URLs, JSON-LD, sitemap, _redirects<br/>• copy public/ → dist/, images → resized WebP"]
+
+    build --> dist[("dist/<br/>static output — disposable")]
+    dist --> cf(["Cloudflare Worker · Static Assets<br/>serves doubletrends.com"])
+```
+
+Five load-bearing ideas — internalize these and the rest is detail:
+
+1. **`build.js` is the whole system.** Everything below is an input to it or an output from it.
+2. **The page registry (`src/site.config.js`) is the single source of truth.** Page files under `src/pages/` are just body content; their title, description, URL, JSON-LD kind, sitemap priority, and robots rules all live in the registry entry, not in the page.
+3. **URLs and metadata are derived once, never hand-authored twice.** The canonical URL, sitemap `<loc>`, `_redirects` targets, JSON-LD, and Open Graph all flow from one helper (`canonicalFor` in `src/schema.js`), so they cannot drift. See [URLs, serving & SEO](#urls-serving--seo).
+4. **Assets are transformed, not just shipped.** CSS sources compile to one file; images are resized and converted to WebP at build time while the editable originals stay in `public/`. See [Image pipeline](#image-pipeline).
+5. **`dist/` is disposable.** It is generated output — never edit it, never link to a `.html` file inside it.
+
+---
+
+## Quick start
+
+```bash
+npm run build     # build the site into dist/
+npm run dev       # build once, then serve dist/ locally at http://localhost:8787
+npm run deploy    # build, then deploy with Wrangler (manual fallback — see Deployment)
+npm test          # run the full validation suite
+```
+
+Data and brand regeneration (run only when their inputs change):
+
+```bash
+npm run replay-data   # rebuild replay JSON in public/replay/ (needs the backend repo — see below)
+npm run brand         # regenerate logos/favicons/OG image in public/brand/
+```
+
+### Where to look first
+
+| You want to… | Start here |
+| --- | --- |
+| Add or edit a page's metadata/URL | `src/site.config.js` (the page registry) |
+| Change a page's content | `src/pages/<path>.html` |
+| Author a brand-new page | copy a scaffold from `src/_templates/`, then register it |
+| Change shared header/footer/head | `src/_partials/` |
+| Change styling | `src/styles/` (tokens → base → components → layouts) |
+| Understand the build | `build.js` (top-to-bottom, it's linear) |
+
+---
 
 ## Deployment
 
-Wired to the GitHub repo — a commit and push to `main` auto-deploys to `doubletrends.com` via the Cloudflare Git integration.
+Wired to the GitHub repo: a push to `main` auto-deploys to `doubletrends.com` via the Cloudflare Git integration.
 
-`npm run deploy` (`node build.js` → `wrangler deploy`) is available for quicker change visualization without a Git push.
+`npm run deploy` (`node build.js` → `wrangler deploy`) is a manual fallback for pushing a change without a Git commit. `dist/` is the Worker's asset directory (`wrangler.jsonc`).
 
-## Scripts
+---
 
-### Build and dev
+## How the build works
 
-- `npm run build`
-  Build the site into `dist/`.
-- `npm run dev`
-  Build once, then serve `dist/` locally with `wrangler dev` (defaults to `http://localhost:8787`).
-- `npm run deploy`
-  Run the site build, then deploy with Wrangler as a manual fallback path.
+`build.js` runs top-to-bottom and is deliberately linear. In order, it:
 
-### Data and brand
+1. Reads shared partials from `src/_partials/` (layout, head, header, footer, checkout gate, stories).
+2. Compiles the CSS sources in `src/styles/` into one minified `dist/public/css/site.css` via the Tailwind CLI.
+3. For each entry in the page registry, reads the body from `src/pages/`, wraps it in `layout.html`, and injects head/header/footer.
+4. Resolves placeholders — `{{ROOT}}`, `{{TITLE}}`, `{{DESC}}`, `{{CANONICAL}}`, `{{STORIES}}`, and more.
+5. Rewrites internal `.html` hrefs to the extensionless URLs Cloudflare serves with 200 (`method.html` → `method`, `academy/index.html` → `academy/`). Templates author plain `.html` paths.
+6. Auto-tags top-level blocks with `data-reveal` for the scroll-reveal motion system (see [Motion](#motion)).
+7. Writes final HTML to `dist/` and generates `sitemap.xml`, `_redirects`, and `llms.txt`.
+8. Copies `public/` into `dist/public/`, re-encoding the managed images to resized WebP along the way (see [Image pipeline](#image-pipeline)).
 
-- `npm run replay-data`
-  Rebuild replay JSON artifacts in `public/replay/`.
-- `npm run brand`
-  Regenerate brand assets in `public/brand/`.
+### Templates vs. partials vs. scaffolds — don't confuse them
 
-### Tests
+- **`src/_partials/`** — shared fragments injected into *every* build (`layout.html` is the page shell with `{{HEAD}}`/`{{HEADER}}`/`{{CONTENT}}`/`{{FOOTER}}` slots; plus `head`, `header`, `footer`, `checkout-gate`, `stories`, `routing-card`). These are build inputs.
+- **`src/_templates/`** — authoring **scaffolds** you *copy* to start a new page (`article`, `company`, `directory`, `legal`). They are **not** read by the build; they carry `<!-- FILL: -->` markers and a reminder to register the page.
+- **`src/pages/`** — the actual page bodies, one file per page.
 
-- `npm run test` — run the full validation suite (see [`tests/README.md`](tests/README.md) for individual commands and contracts)
+---
 
-## Overview
+## Repo layout
 
-### What this repo is
+### Directories
 
-- A static site with a custom Node build step.
-- No framework runtime, router, or bundler-driven app shell.
-- A content-and-config driven frontend where page templates live in `src/pages/` and shared HTML comes from `src/_partials/`.
+- `src/pages/` — page bodies (content only), one file = one page = one URL.
+- `src/_partials/` — shared layout, head, header, footer, and reusable fragments injected by the build.
+- `src/_templates/` — copy-to-create scaffolds for new pages (not build inputs).
+- `src/styles/` — CSS sources, layered `tokens/` → `base/` → `components/` → `layouts/`, concatenated and compiled by `build.js` into one `site.css`.
+- `public/` — static assets copied into the build: fonts, images, replay JSON, and browser JS.
+- `dist/` — generated output. Treat as a build artifact; never edit or commit-link it.
 
-### What this repo builds
+### `public/js/`
 
-- Main marketing pages
-- Academy pages
-- Replay chart and history table
-- SEO outputs such as `sitemap.xml` and `llms.txt`
+Site-wide (loaded on every page via `layout.html`):
 
-## Repo Layout
+- `accordion.js` — `<details>` accordion animation.
+- `canvas-grid.js` — animated square grid decorating section banners.
+- `scroll-reveal.js` — drives the `data-reveal` fade-up motion the build tags onto blocks.
 
-### Main directories
+Loaded only where needed:
 
-- `src/pages/`
-  Page templates for the site.
-- `src/_partials/`
-  Shared layout, head, header, footer, and reusable HTML fragments.
-- `src/styles/`
-  CSS sources (tokens, base, components, layouts) concatenated by `build.js` and compiled by the Tailwind CLI into a single `dist/public/css/site.css`.
-- `public/`
-  Static assets copied into the final build, including replay JSON, fonts, images, and browser-side JS.
-  - `public/js/accordion.js` — site-wide `<details>` accordion animation (260ms grid-template-rows + opacity). Loaded on every page via `layout.html`.
-  - `public/js/canvas-grid.js` — animated square grid decorating section banners. Loaded on every page via `layout.html`.
-  - `public/js/story-strip.js` — homepage story-strip carousel. Loaded only on `index.html`.
-- `dist/`
-  Generated output. Safe to treat as build artifact.
+- `checkout-gate.js` — the subscribe/checkout gate (via the `checkout-gate` partial).
+- `story-strip.js` — story carousel (via the `stories` partial).
+- `replay-chart.js`, `history-table.js`, `lightweight-charts.standalone.production.js` — homepage replay chart + signal history table (loaded by `index.html`; the charts library is vendored).
 
-### Main source files
+### Key files
 
-- `build.js`
-  Main site build. Assembles partials, injects config/placeholders, writes `dist/`, and generates `sitemap.xml` and `llms.txt`.
-- `build-brand.js`
-  Regenerates the DoubleTrends™ logo, wordmark, favicons, banner, and OG image into `public/brand/`.
-- `build-replay-data.js`
-  Rebuilds `public/replay/*.json` from backend artifacts and existing replay data.
-- `src/site.config.js`
-  Page registry and site-level config source of truth.
-- `src/schema.js`
-  Structured data and canonical helpers.
-- `src/brand.config.js`
-  Frontend brand token source of truth for colors and fonts.
-- `wrangler.jsonc`
-  Cloudflare deployment config. `dist/` is served as the Worker asset directory.
+- `build.js` — the site build (assemble, compile CSS, derive metadata, optimize images, emit `dist/`).
+- `build-images.js` — image optimization step used by `build.js` (resize + WebP; see below).
+- `build-brand.js` — regenerates brand assets into `public/brand/`.
+- `build-replay-data.js` — rebuilds `public/replay/*.json` from backend artifacts.
+- `src/site.config.js` — page registry and site-level config (source of truth).
+- `src/schema.js` — canonical-URL and JSON-LD helpers.
+- `src/brand.config.js` — brand token source of truth (colors, fonts).
+- `wrangler.jsonc` — Cloudflare deploy config; serves `dist/` as Worker assets.
 
-## Architecture
+---
 
-### Build model
+## URLs, serving & SEO
 
-The site is generated by `build.js`.
-
-At a high level it:
-
-1. Reads shared partials from `src/_partials/`
-2. Compiles the CSS sources in `src/styles/` into a single minified `dist/public/css/site.css` via the Tailwind CLI
-3. Reads page templates from `src/pages/`
-4. Resolves placeholders like `{{ROOT}}`, `{{TITLE}}`, `{{DESC}}`, and `{{CANONICAL}}`
-5. Rewrites internal `.html` hrefs to the extensionless URLs Cloudflare serves with 200 (`method.html` → `method`, `academy/index.html` → `academy/`) — templates keep authoring plain `.html` file paths
-6. Writes final HTML into `dist/`
-7. Generates `sitemap.xml` and `llms.txt`
-8. Copies static assets from `public/`
-
-### Metadata model
-
-Metadata is centralized rather than authored separately inside each page template.
-
-- Page registry data comes from `src/site.config.js`
-- Canonical and JSON-LD helpers come from `src/schema.js`
-- Final `<title>`, description, Open Graph, Twitter, canonical, robots, and JSON-LD are emitted during the build
-
-The current title pattern is:
-
-```text
-DoubleTrends™ | {page.title}
-```
-
-That prefix is applied centrally in `build.js`, so `page.title` in `src/site.config.js` should contain only the page-specific portion.
-
-## URLs, Serving, and SEO
-
-This is the model that ties together file output, how Cloudflare serves it, and what we publish to crawlers. Getting it wrong reintroduces Google Search Console "Page with redirect" errors, so it is documented in full.
+This ties together file output, how Cloudflare serves it, and what we publish to crawlers. Getting it wrong reintroduces Google Search Console "Page with redirect" errors, so it is documented in full.
 
 Every page has three distinct identities. Keep them separate:
 
@@ -129,7 +149,7 @@ Every page has three distinct identities. Keep them separate:
 
 ### Source of truth
 
-Pages are authored as `.html` files under `src/pages/` and emitted **flat** to `dist/` — `method.html` → `dist/method.html`, `academy/cpi-inflation.html` → `dist/academy/cpi-inflation.html`. One source file = one page = one URL. Flat output is what `outPathFor(src)` returns (identity) in `build.js`; `src/site.config.js` and `tests/test-page-registry.js` mirror it so `rootFor` derives `{{ROOT}}` depth from the same path.
+Pages are authored as `.html` files under `src/pages/` and emitted **flat** to `dist/` — `method.html` → `dist/method.html`. One source file = one page = one URL. `src/site.config.js` and `tests/test-page-registry.js` mirror this so `rootFor` derives `{{ROOT}}` depth from the same path.
 
 > Do **not** emit pages as `<slug>/index.html`. That was tried (commit `90032ff`) on the assumption Cloudflare would serve `/method` directly with 200. It does not — see below.
 
@@ -137,201 +157,129 @@ Pages are authored as `.html` files under `src/pages/` and emitted **flat** to `
 
 Cloudflare (Workers Static Assets) serves each asset at **one** canonical URL and **redirects every other spelling to it**:
 
-- A `.html` file is served at its **extensionless** URL with a **200**. The `.html` URL itself **always redirects** — `/method.html` never returns 200.
+- A `.html` file is served at its **extensionless** URL with a **200**. The `.html` URL itself **always redirects**.
 - A `<dir>/index.html` file is served at `/<dir>/` (trailing slash) with a **200**. `/dir` (no slash) redirects to `/dir/`.
 
-So the canonical served form is:
+So the canonical served form is: leaf page `foo.html` → `/foo` (no slash); directory index `dir/index.html` → `/dir/` (slash); root `index.html` → `/`.
 
-- leaf page `foo.html` → `/foo` (no slash)
-- directory index `dir/index.html` → `/dir/` (slash)
-- root `index.html` → `/`
-
-This is the platform default, not something we configure: Workers Static Assets defaults to the `auto-trailing-slash` HTML-handling mode, which serves individual files without a trailing slash and folder index files with one — exactly the scheme above. See [Workers Static Assets · HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/).
-
-This repo deploys as a **Cloudflare Worker (Static Assets)**, whose built-in redirects are **307 (temporary)** — verified both against the doc above and by curling our own `/404.html` (excluded from `_redirects`, so no rule of ours), which returns `307 → /404`. Note this differs from **classic Cloudflare Pages**, which issues **308 (permanent)** for the same normalization; the 307-vs-308 distinction is why the `_redirects` upgrade below matters here (see next section).
+This is the platform default (`auto-trailing-slash` HTML handling), not something we configure. See [Workers Static Assets · HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/). This repo deploys as a **Worker (Static Assets)**, whose built-in redirects are **307 (temporary)** — verified by curling `/404.html` (excluded from `_redirects`), which returns `307 → /404`.
 
 ### `canonicalFor()` — one source for every URL we publish
 
-`canonicalFor(siteUrl, src)` in `src/schema.js` computes the canonical served URL from a source path (strip `index.html`, then strip `.html`). It is the **single source** feeding the canonical tag, `sitemap.xml` `<loc>`, `llms.txt` links, JSON-LD, and the `_redirects` targets. Because they all call the same function, they cannot drift. The published URL is always the served-200 form — **never the `.html` file path**. (A sitemap `<loc>` or canonical pointing at `.html` is a redirect, which GSC flags.)
+`canonicalFor(siteUrl, src)` in `src/schema.js` computes the canonical served URL from a source path (strip `index.html`, then `.html`). It is the **single source** feeding the canonical tag, `sitemap.xml` `<loc>`, `llms.txt` links, JSON-LD, and `_redirects` targets — so they cannot drift. The published URL is always the served-200 form, **never the `.html` path**.
 
 ### `_redirects` — a 307 → 301 upgrade, not a router
 
-`build.js` generates `dist/_redirects` mapping every legacy `.html` (and `index.html`) URL to its canonical form with a **301**. This does **not** create the redirect — Cloudflare already redirects `.html` natively. It **upgrades** that redirect from **307 (temporary)** to **301 (permanent)**, so Google drops the `.html` URL and consolidates ranking signals onto the canonical. `404.html` is deliberately excluded: it is `noindex` and never indexed, so the permanence of its redirect is irrelevant (and it makes a clean control — `/404.html` still shows Cloudflare's native 307).
+`build.js` generates `dist/_redirects` mapping every legacy `.html` (and `index.html`) URL to its canonical form with a **301**. This does not *create* the redirect — Cloudflare already redirects `.html` natively — it **upgrades** it from 307 (temporary) to 301 (permanent), so Google drops the `.html` URL and consolidates ranking signals. `404.html` is deliberately excluded (it's `noindex`, so permanence is irrelevant, and it stays a clean control still showing the native 307).
 
 ### What each URL form does
 
-Three structural types cover every page. **301** = our `_redirects` (permanent). **307** = Cloudflare native (temporary), only ever hit on forms we never link or publish.
+**301** = our `_redirects` (permanent). **307** = Cloudflare native (temporary), only ever hit on forms we never link or publish.
 
 | Type | Source file | Canonical (200) | `.html` form | wrong-slash / `index.html` form |
 | --- | --- | --- | --- | --- |
 | **Root** | `index.html` | `/` | `/index.html` → **301** → `/` | — |
-| **Section index** | `academy/index.html` | `/academy/` | — (no `academy.html`) | `/academy` → **307** → `/academy/`; `/academy/index.html` → **301** → `/academy/` |
+| **Section index** | `academy/index.html` | `/academy/` | — | `/academy` → **307** → `/academy/`; `/academy/index.html` → **301** → `/academy/` |
 | **Leaf page** | `method.html` | `/method` | `/method.html` → **301** → `/method` | `/method/` → **307** → `/method` |
 
-Only the canonical column returns 200. Section indexes keep the trailing slash because they are genuine directory indexes; leaf pages have none. That split is correct, not an inconsistency — a slash means "collection," no slash means "document."
+A slash means "collection," no slash means "document." That split is correct, not an inconsistency.
 
-## Page Registry
+---
 
-### Source of truth
+## Page registry
 
-`src/site.config.js` defines the `pages` array. Each entry controls:
+`src/site.config.js` defines the `pages` array — the source of truth for every page's output path, kind, title/description, sitemap inclusion and priority, robots behavior, and optional schema/routing-card content.
 
-- output path
-- page kind
-- title and description
-- sitemap inclusion and priority
-- robots behavior
-- optional schema extensions
-- optional routing card content
+It is helper-driven to cut boilerplate and drift. All helpers derive `root` automatically via `rootFor(src)` and take an `overrides` object for page-specific fields:
 
-### Helper functions
-
-The page registry is intentionally helper-driven now to reduce repeated boilerplate and drift.
-
-#### `page(src, overrides = {})`
-
-Base constructor for most pages.
-
-Defaults:
-
-- `src`
-  Uses the string you pass in, such as `method.html` or `academy/index.html`
-- `root`
-  Derived automatically from `src` using `rootFor(src)`
-- `priority`
-  Defaults to `0.7`
-- `kind`
-  Defaults to `'webpage'`
-
-Use `overrides` to supply page-specific fields like `title`, `desc`, `priority`, `kind`, `schema`, `robots`, or `sitemap`.
-
-Example:
-
-```js
-page('method.html', {
-  priority: 0.9,
-  title: 'How the DoubleTrends™ S&P 500 Signal Works',
-  desc: '...',
-});
-```
-
-#### `article(slug, overrides = {})`
-
-Convenience constructor for academy article pages.
-
-Defaults:
-
-- `src`
-  Becomes `academy/${slug}.html`
-- `root`
-  Derived automatically from that path
-- `priority`
-  Defaults to `0.7`
-- `kind`
-  Defaults to `'article'`
-
-This is the right helper for academy content pages that should emit `Article` JSON-LD.
-
-Example:
+| Helper | `src` becomes | Default `kind` | Default `priority` |
+| --- | --- | --- | --- |
+| `page(src, o)` | the string you pass (`method.html`) | `webpage` | `0.7` |
+| `article(slug, o)` | `academy/${slug}.html` | `article` | `0.7` |
+| `companyPage(slug, o)` | `company/${slug}.html` | `webpage` | `0.5` |
+| `legalPage(slug, o)` | `legal/${slug}.html` | `webpage` | `0.3` |
 
 ```js
 article('vix-percentile', {
   title: 'What Is VIX Percentile? Reading Volatility Against Itself',
-  desc: '...',
-  schema: {
-    articleSection: 'Volatility',
-    about: ['S&P 500 index', 'ETF investing', 'volatility'],
-  },
+  desc: '…',
+  schema: { articleSection: 'Volatility', about: ['S&P 500 index', 'volatility'] },
 });
 ```
 
-#### `companyPage(slug, overrides = {})`
+`rootFor(src)` derives the relative path back to the site root (`index.html` → `''`, `academy/index.html` → `'../'`), keeping shared-partial links working from nested directories without repeating `root` on every entry.
 
-Convenience constructor for `company/*.html`.
+The `<title>` pattern `DoubleTrends™ | {page.title}` is applied centrally in `build.js`, so registry `title` fields hold only the page-specific portion.
 
-Defaults:
+---
 
-- `src`
-  Becomes `company/${slug}.html`
-- `root`
-  Derived automatically
-- `priority`
-  Defaults to `0.5`
-- `kind`
-  Defaults to `'webpage'`
+## Image pipeline
 
-#### `legalPage(slug, overrides = {})`
+`build-images.js` replaces the old verbatim `public/` copy. It copies everything unchanged **except** a manifest of managed rasters, which it re-encodes to **resized WebP** sized to ~2× their largest on-screen dimension. Images reused in the 320px stories carousel also get a small `-card.webp` thumbnail, so a full hero shot is never shipped into a thumbnail slot.
 
-Convenience constructor for `legal/*.html`.
+- **Manifest** — each entry sets a `maxWidth`, a `quality` (charts/screenshots 82–84; hero decor behind a tint 72–76; flat diagrams use lossless WebP, which beats lossy on them), and an optional `thumb` flag.
+- **Originals stay editable** in `public/`; WebP is generated into `dist/` at build time. Nothing pre-optimized is committed.
+- **Adding an image:** drop the source in `public/`, add a manifest line in `build-images.js`, and reference it by its `.webp` name in the page. `tests/test-links.js` verifies every referenced asset exists in `dist/`.
+- **Left as-is:** brand assets (`og-image`, `wordmark`, `banner`, favicons) stay PNG for social-scraper compatibility; SVGs stay vector.
 
-Defaults:
+---
 
-- `src`
-  Becomes `legal/${slug}.html`
-- `root`
-  Derived automatically
-- `priority`
-  Defaults to `0.3`
-- `kind`
-  Defaults to `'webpage'`
+## Motion
 
-### `rootFor(src)`
+The build tags top-level content blocks with `data-reveal`; `public/js/scroll-reveal.js` fades them up on scroll (and cascades the first viewport on load). Blocks reveal as a whole — the build strips `data-reveal` from any nested descendant so nothing double-animates. A block that already carries `data-reveal` by hand is left untouched. See the reveal logic in `build.js` and its contract test `tests/test-reveal-contract.js`.
 
-`rootFor(src)` derives the relative path back to the site root.
+---
 
-Examples:
+## Replay data
 
-- `rootFor('index.html')` -> `''`
-- `rootFor('academy/index.html')` -> `'../'`
-- `rootFor('company/contact.html')` -> `'../'`
+The homepage replay chart and history table read from `public/replay/`, produced by `build-replay-data.js`:
 
-This keeps shared partial links working from nested directories without manually repeating `root` on every page entry.
+- `public/replay/sp500.json` — OHLC candles plus regime/watch/setup/signal state and authoritative signal dates.
+- `public/replay/history.json` — signal history entries with forward-return snapshots.
 
-## Replay Data
+The replay build is intentionally coupled to the backend repo so the frontend displays the same signal history the backend produces.
 
-The homepage replay chart and history table read from `public/replay/`.
+---
 
-`build-replay-data.js` produces:
-
-- `public/replay/sp500.json`
-  OHLC candles plus regime/watch/setup/signal state and authoritative signal dates.
-- `public/replay/history.json`
-  Signal history entries with forward-return snapshots.
-
-The replay build is intentionally coupled to the backend repo, because the frontend should display the same signal history the backend system produces.
-
-## Brand Assets
+## Brand assets
 
 Brand assets are generated, not hand-drawn.
 
-- source generator: `build-brand.js`
-- generated output: `public/brand/`
-- frontend tokens: `src/brand.config.js`
+- Generator: `build-brand.js` → output in `public/brand/` → frontend tokens in `src/brand.config.js`.
+- Do **not** hand-edit generated SVG/PNG in `public/brand/`; regenerate with `npm run brand`.
 
-Do not hand-edit generated SVG or PNG files in `public/brand/`; regenerate them with `npm run brand`.
+---
 
-## Backend Relationship
+## Backend relationship
 
-This repo is frontend-only, but it depends on data artifacts from the sibling backend repo.
+Frontend-only, but it depends on data artifacts from the sibling backend repo.
 
-- expected sibling path: `../doubletrends-backend`
-- replay-data input CSV: `../doubletrends-backend/signal/backfill/fast/backfill_fast.csv`
+- Expected sibling path: `../doubletrends-backend`
+- Replay-data input CSV: `../doubletrends-backend/signal/backfill/fast/backfill_fast.csv`
 
-If `doubletrends-backend` is missing or stale, `npm run replay-data` can fail or produce outdated frontend demo data.
+If `doubletrends-backend` is missing or stale, `npm run replay-data` can fail or produce outdated demo data.
 
-## Nav Bar Glass Effect
+---
 
-The nav bar uses a frosted-glass look via a `::before` pseudo-element rather than `backdrop-filter` on the `<header>` element itself. This is intentional: applying `backdrop-filter` directly to the header makes it a backdrop root, which prevents child elements (like the dropdown panel) from having their own working `backdrop-filter`. By delegating the blur to `::before`, the header is not a backdrop root and the dropdown can composite independently against the page content behind it.
+## Nav bar glass effect
 
-- Nav bar blur: defined in `.site-header::before` in `src/styles/components/nav-base.css`
-- Dropdown blur: defined in `.nav-dropdown-panel` in the same file
+The nav bar's frosted-glass look comes from a `::before` pseudo-element, **not** `backdrop-filter` on `<header>` itself. Applying `backdrop-filter` directly to the header makes it a backdrop root, which breaks the dropdown panel's own `backdrop-filter`. Delegating the blur to `::before` keeps the header from being a backdrop root, so the dropdown composites independently.
+
+- Nav blur: `.site-header::before` in `src/styles/components/nav-base.css`
+- Dropdown blur: `.nav-dropdown-panel` (same file)
 - Header inline style: shadow only — no `backdrop-filter`
 
-## Reading Map
+---
 
-- site/page registry: `src/site.config.js`
-- structured data and canonical helpers: `src/schema.js`
-- brand tokens: `src/brand.config.js`
-- build pipeline: `build.js`
-- brand asset generator: `build-brand.js`
-- replay artifact generator: `build-replay-data.js`
+## Tests
+
+`npm test` runs the full validation suite (build + link/metadata/schema/registry/consistency checks). See [`tests/README.md`](tests/README.md) for individual commands and the contract each test enforces.
+
+## Reading map
+
+- Site/page registry: `src/site.config.js`
+- Structured data & canonical helpers: `src/schema.js`
+- Brand tokens: `src/brand.config.js`
+- Build pipeline: `build.js` · image step: `build-images.js`
+- Brand asset generator: `build-brand.js`
+- Replay artifact generator: `build-replay-data.js`
