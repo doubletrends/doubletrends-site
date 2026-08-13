@@ -1,9 +1,15 @@
 name: CI
 
-# Runs the build + validation suite on every PR and on pushes to main.
-# The suite (see tests/README.md) guards the SEO invariants — link integrity,
-# canonical/metadata/schema correctness, page-registry and nav/heading
-# consistency — so a regression is caught before it can reach production.
+# `test` runs the build + validation suite on every PR and push. `deploy` runs
+# only on pushes to main and only after `test` passes, so the SEO-invariant
+# suite (see tests/README.md) is a hard gate on production: broken code cannot
+# reach doubletrends.com.
+#
+# Requires two repo secrets for the deploy job:
+#   CLOUDFLARE_API_TOKEN   — token with Workers Scripts:Edit on this account
+#   CLOUDFLARE_ACCOUNT_ID  — the Cloudflare account id (not in wrangler.jsonc)
+# Cloudflare's own Git auto-deploy must be turned OFF so this is the only
+# deploy path (otherwise the site deploys twice, ungated).
 on:
   push:
     branches: [main]
@@ -22,11 +28,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc # single source of truth for the Node version
           cache: npm
-
       - run: npm ci
       - run: npm test
+
+  deploy:
+    needs: test # only deploys if the suite passed
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Deploy to Cloudflare
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

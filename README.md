@@ -70,9 +70,11 @@ npm run brand         # regenerate logos/favicons/OG image in public/brand/
 
 ## Deployment
 
-Wired to the GitHub repo: a push to `main` auto-deploys to `doubletrends.com` via the Cloudflare Git integration.
+Deploys are **gated by CI**. A push to `main` triggers `.github/workflows/ci.yml`: the `test` job runs the full validation suite, and only if it passes does the `deploy` job build and `wrangler deploy` to `doubletrends.com`. Broken code cannot reach production.
 
-`npm run deploy` (`node build.js` → `wrangler deploy`) is a manual fallback for pushing a change without a Git commit. `dist/` is the Worker's asset directory (`wrangler.jsonc`).
+The `deploy` job needs two repo secrets — `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` — and Cloudflare's own Git auto-deploy must be **disabled** so CI is the only deploy path (otherwise the site deploys twice, ungated).
+
+`npm run deploy` (`node build.js` → `wrangler deploy`) remains a manual local fallback. `dist/` is the Worker's asset directory (`wrangler.jsonc`).
 
 ---
 
