@@ -76,6 +76,8 @@ The `deploy` job needs two repo secrets — `CLOUDFLARE_API_TOKEN` and `CLOUDFLA
 
 `npm run deploy` (`node build.js` → `wrangler deploy`) remains a manual local fallback. `dist/` is the Worker's asset directory (`wrangler.jsonc`).
 
+Production routing is declared in `wrangler.jsonc`, not only in the dashboard: the `routes` entry binds `doubletrends.com` as a custom domain. Before it was added, deploys ended with `No targets deployed for doubletrends` and the site served only because the domain had been attached by hand — so a recreated Worker would have come up with no domain and nothing in the repo explaining why.
+
 ---
 
 ## How the build works
@@ -133,7 +135,7 @@ Loaded only where needed:
 - `src/site.config.js` — page registry and site-level config (source of truth).
 - `src/schema.js` — canonical-URL and JSON-LD helpers.
 - `src/brand.config.js` — brand token source of truth (colors, fonts).
-- `wrangler.jsonc` — Cloudflare deploy config; serves `dist/` as Worker assets.
+- `wrangler.jsonc` — Cloudflare deploy config; serves `dist/` as Worker assets and declares the `doubletrends.com` custom domain.
 
 ---
 
