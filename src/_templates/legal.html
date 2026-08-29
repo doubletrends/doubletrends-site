@@ -19,15 +19,17 @@
 
 <!-- ── Section with numbered paragraphs ─────────────────────────────────────
      Standard pattern: h2 heading + one or more numbered prose-p paragraphs.
+     The .legal-section wrapper is the scroll-reveal unit — the build tags it
+     so each clause fades up on entry; keep the class on every section block.
      Defined terms use <strong class="text-dark">Term</strong>.
      Internal legal cross-links: <a href="{{ROOT}}legal/<slug>.html" class="text-primary hover:underline">...</a> -->
-<div>
+<div class="legal-section">
 <h2 class="article-h2">1. <!-- FILL: section title --></h2>
 <p class="prose-p">1.1. <!-- FILL: paragraph text --></p>
 <p class="prose-p">1.2. <!-- FILL: paragraph text --></p>
 </div>
 
-<div>
+<div class="legal-section">
 <h2 class="article-h2">2. <!-- FILL: section title --></h2>
 <p class="prose-p">2.1. <!-- FILL: paragraph text --></p>
 <p class="prose-p">2.2. <!-- FILL: paragraph text --></p>
@@ -36,12 +38,12 @@
 <!-- ── Section with a definition list (optional) ─────────────────────────────
      Use when a section enumerates lettered sub-items (e.g. "you may: (a)…").
      Delete this block if not needed. -->
-<div>
+<div class="legal-section">
 <h2 class="article-h2">3. <!-- FILL: section title --></h2>
 <p class="prose-p">3.1. <!-- FILL: intro sentence -->: (a) <!-- FILL: item -->; (b) <!-- FILL: item -->; and (c) <!-- FILL: item -->.</p>
 </div>
 
-<!-- Add further <div> / <h2> / <p class="prose-p"> blocks for each section. -->
+<!-- Add further <div class="legal-section"> / <h2> / <p class="prose-p"> blocks for each section. -->
 
 </div><!-- end page-content-legal -->
 </section>

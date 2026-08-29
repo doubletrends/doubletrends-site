@@ -242,10 +242,12 @@ function applyScrollReveal(html) {
       );
     }
 
-    // Single-section content pages (company/*) wrap their panels in
-    // .page-content-wide below the hero, so the section rule finds nothing to
-    // reveal. When no <section> was revealed above, tag the content panels
-    // directly. Gated on !sectionTagged, this never touches the homepage or
+    // Single-section content pages (company/*, legal/*) wrap their panels in
+    // one container below the hero (.page-content-wide, .page-content-legal), so
+    // the section rule finds nothing to reveal. When no <section> was revealed
+    // above, tag the content panels directly: .terminal-shell / .product-panel
+    // for company pages, .legal-section for the per-clause blocks of a legal
+    // document. Gated on !sectionTagged, this never touches the homepage or
     // articles, where the same classes sit inside already-revealed sections.
     // metric-tile is intentionally excluded — it nests inside terminal-shell
     // and reveals with its parent. Any nesting from this or the rules above is
@@ -253,7 +255,7 @@ function applyScrollReveal(html) {
     if (h1Index !== -1 && !sectionTagged) {
       const h1 = out.search(/<h1\b/);
       out = out.replace(
-        /<(div|article)\b([^>]*\bclass="[^"]*\b(?:terminal-shell|product-panel)\b[^"]*"[^>]*)>/g,
+        /<(div|article)\b([^>]*\bclass="[^"]*\b(?:terminal-shell|product-panel|legal-section)\b[^"]*"[^>]*)>/g,
         (tag, el, rest, offset) => {
           if (offset < h1) return tag;
           if (/\bdata-reveal\b/.test(rest)) return tag;
