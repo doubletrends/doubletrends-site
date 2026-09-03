@@ -211,6 +211,22 @@
       }
 
       .hero-grid { grid-template-columns: 1fr; gap: 2.25rem; }
+
+      /* Hero CTA pair stays side by side, 50/50 */
+      .hero-cta-row { flex-wrap: nowrap; gap: 0.6rem; }
+      .hero-cta-row > a {
+        flex: 1 1 0;
+        min-width: 0;
+        width: auto;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        min-height: 2.9rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        line-height: 1.15;
+      }
+
       .hero-ai-card { padding: 1.35rem; }
       .hero-inner { min-height: auto; padding-top: 5rem; }
       .hero-lede { font-size: 0.95rem; }
