@@ -211,13 +211,21 @@
       }
 
       .hero-grid { grid-template-columns: 1fr; gap: 2.25rem; }
+      /* Let the hero column shrink to the viewport instead of to its
+         widest child (iOS honours the default min-width: auto). */
+      .hero-copy { min-width: 0; }
 
-      /* Hero CTA pair stays side by side, 50/50 */
-      .hero-cta-row { flex-wrap: nowrap; gap: 0.6rem; }
+      /* Hero CTA pair stays side by side, 50/50. Grid with minmax(0,1fr)
+         tracks so each button can shrink below its content width and the
+         row never pushes the page wider than the screen. */
+      .hero-cta-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 0.6rem;
+      }
       .hero-cta-row > a {
-        flex: 1 1 0;
-        min-width: 0;
         width: auto;
+        min-width: 0;
         justify-content: center;
         text-align: center;
         align-items: center;
