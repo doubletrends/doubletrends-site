@@ -1,4 +1,4 @@
-# DoubleTrends™ Frontend
+# DoubleTrends™ Site
 
 Marketing site for DoubleTrends™, served at `doubletrends.com`.
 
@@ -241,7 +241,7 @@ The homepage replay chart and history table read from `public/replay/`, produced
 - `public/replay/sp500.json` — OHLC candles plus regime/watch/setup/signal state and authoritative signal dates.
 - `public/replay/history.json` — signal history entries with forward-return snapshots.
 
-The replay build is intentionally coupled to the backend repo so the frontend displays the same signal history the backend produces.
+The replay build is intentionally coupled to the backend repo so the site displays the same signal history the backend produces.
 
 ---
 
@@ -256,7 +256,7 @@ Brand assets are generated, not hand-drawn.
 
 ## Backend relationship
 
-Frontend-only, but it depends on data artifacts from the sibling backend repo.
+Site-only, but it depends on data artifacts from the sibling backend repo.
 
 - Expected sibling path: `../doubletrends-backend`
 - Replay-data input CSV: `../doubletrends-backend/signal/backfill/fast/backfill_fast.csv`

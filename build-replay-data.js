@@ -105,7 +105,7 @@ function build() {
   if (!fs.existsSync(BACKEND_CSV)) {
     throw new Error(
       `Backfill CSV not found at ${BACKEND_CSV} — check that doubletrends-backend ` +
-        `is checked out beside doubletrends-frontend and that backfill/prod has run.`,
+        `is checked out beside doubletrends-site and that backfill/prod has run.`,
     );
   }
   if (!fs.existsSync(EXISTING_SP500)) {
