@@ -66,7 +66,7 @@ function article(slug, { published, ...overrides }) {
 }
 
 function companyPage(slug, overrides = {}) {
-  return page(`company/${slug}.html`, { nav: 'about', priority: 0.5, ...overrides });
+  return page(`company/${slug}.html`, { priority: 0.5, ...overrides });
 }
 
 function legalPage(slug, overrides = {}) {
@@ -77,38 +77,42 @@ const pages = [
   page('index.html', {
     priority: 1.0,
     kind: 'home',
+    nav: 'home',
     title: 'Quantitative Market Research',
     desc:  'DoubleTrends is an independent quantitative research firm studying market regimes, drawdowns and investor behavior. It publishes its research and the DoubleTrends Regime Indicator openly, and offers research and data engineering services.',
   }),
-  page('indicator/index.html', {
+  page('indicator.html', {
     priority: 0.9,
     nav: 'indicator',
     title: 'The DoubleTrends Regime Indicator',
     crumb: 'Indicator',
     desc:  'The DoubleTrends Regime Indicator: a rules-based daily classification of S&P 500 market stress — calm, correction, panic, bear — with a reversal signal eligible only under stress. Published as research, with history from December 1995.',
   }),
-  page('indicator/methodology.html', {
+  page('method.html', {
     priority: 0.9,
     nav: 'methodology',
     title: 'Methodology',
     crumb: 'Methodology',
+    schema: { breadcrumbs: [{ name: 'Indicator', url: '/indicator' }, { name: 'Methodology', url: '/method' }] },
     desc:  'How the DoubleTrends Regime Indicator is constructed: data inputs, derived measures, the four-state regime classification, signal eligibility and confirmation, publication timing, and point-in-time validation.',
   }),
-  page('indicator/data.html', {
+  page('data.html', {
     priority: 0.9,
     nav: 'data',
+    schema: { breadcrumbs: [{ name: 'Indicator', url: '/indicator' }, { name: 'Historical data', url: '/data' }] },
     title: 'Historical Data: Regimes and Signals Since 1995',
     crumb: 'Historical data',
     desc:  'Every DoubleTrends signal since 1998 with 3-month, 1-year and 2-year S&P 500 forward returns, the regime mix by year since 1996, regime statistics, and a CSV download.',
   }),
-  page('indicator/subscription.html', {
+  page('product.html', {
     priority: 0.9,
     kind: 'product',
-    nav: 'indicator',
+    nav: 'subscription',
     title: 'Subscriber Access',
     crumb: 'Subscriber access',
     desc:  'Subscriber access to the daily DoubleTrends regime reading and same-day signals. The USD 149 annual fee covers the infrastructure that computes and delivers the reading; 30-day free trial and a refund window.',
     schema: {
+      breadcrumbs: [{ name: 'Indicator', url: '/indicator' }, { name: 'Subscriber access', url: '/product' }],
       productName: 'DoubleTrends Regime Indicator — Annual Subscription',
       price: '149.00',
       monthlyPrice: 12.42,
@@ -117,7 +121,7 @@ const pages = [
   }),
   page('alphaverify/index.html', {
     priority: 0.9,
-    nav: 'alphaverify',
+    nav: 'validation',
     series: 'Software',
     section: 'Signal validation',
     title: 'AlphaVerify: Open-Source Signal Validation',
@@ -127,21 +131,21 @@ const pages = [
   }),
   page('alphaverify/method.html', {
     priority: 0.7,
-    nav: 'alphaverify',
+    nav: 'validation',
     title: 'AlphaVerify Method: Surfaces, Scores and the Null',
     crumb: 'Method',
     desc:  'How AlphaVerify measures a condition: barrier-touch probability surfaces, baseline subtraction, the mirror-asymmetry score, the memoryless synthetic-market null, the Monte Carlo p-value, selection with Benjamini-Hochberg context, and naive Bayes combination.',
   }),
   page('alphaverify/findings.html', {
     priority: 0.7,
-    nav: 'alphaverify',
+    nav: 'validation',
     title: 'AlphaVerify Findings: Four Popular Signals on the NASDAQ',
     crumb: 'Findings',
     desc:  'The golden cross, price above the 200-day average, and low and moderate bond yields, tested on the NASDAQ Composite since 2015 against 1,000 synthetic markets. None clears.',
   }),
   page('alphaverify/workspaces.html', {
     priority: 0.6,
-    nav: 'alphaverify',
+    nav: 'validation',
     title: 'AlphaVerify Workspaces: NASDAQ and Bitcoin',
     crumb: 'Workspaces',
     desc:  'The three workspaces shipped with AlphaVerify (NASDAQ daily, bitcoin daily and bitcoin hourly): data sources, test grids and the feature families each one tests.',
@@ -156,7 +160,6 @@ const pages = [
   page('company/index.html', {
     priority: 0.6,
     kind: 'collection',
-    nav: 'about',
     title: 'About DoubleTrends',
     desc:  'About DoubleTrends L.L.C.: what the firm publishes, the principles behind the indicator, research services, careers and contact.',
   }),
@@ -176,7 +179,6 @@ const pages = [
   companyPage('consulting', {
     priority: 0.8,
     kind: 'services',
-    nav: 'services',
     title: 'Research Services',
     desc:  'Quantitative research and data engineering from the team behind the DoubleTrends Regime Indicator: market data pipelines, statistical studies, forecasting and model validation.',
   }),
@@ -221,7 +223,7 @@ const pages = [
   page('success.html', {
     sitemap: false,
     robots: 'noindex,follow',
-    nav: 'indicator',
+    nav: 'subscription',
     title: 'Subscription Confirmed',
     desc:  'Your DoubleTrends subscription is active. Check your email for the sign-in link to the subscriber portal.',
   }),

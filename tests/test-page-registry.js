@@ -6,8 +6,8 @@ const { report } = require('./test-utils');
 const SRC_PAGES    = path.join(__dirname, '..', 'src', 'pages');
 const ALLOWED_KINDS = new Set(['home', 'webpage', 'collection', 'services', 'contact', 'about', 'article', 'product']);
 
-// Pages are emitted at their source path: indicator/methodology.html →
-// dist/indicator/methodology.html, so root depth is derived straight from the source path.
+// Pages are emitted at their source path: alphaverify/method.html →
+// dist/alphaverify/method.html, so root depth is derived straight from the source path.
 function outPathFor(src) {
   return src;
 }

@@ -104,8 +104,8 @@ function replace(template, vars) {
 }
 
 // Rewrite internal .html hrefs to the extensionless form Cloudflare's asset
-// handling serves with 200 (indicator/methodology.html → indicator/methodology,
-// research/index.html → research/), so in-site navigation skips the 307 and links agree with the
+// handling serves with 200 (method.html → method, research/index.html →
+// research/), so in-site navigation skips the 307 and links agree with the
 // canonical URLs. Sources keep authoring plain .html file paths. External URLs,
 // in-page anchors, and non-.html targets pass through untouched. A bare
 // index.html link becomes ./ to stay resolvable.
@@ -156,10 +156,10 @@ function decorateArticle(html, page) {
 <span class="tag-overline">Further reading</span>
 <ul class="further-list">
 ${related.map((a) => `<li><a href="${page.root}${a.src}">${escAmp(a.title)}</a><span>${a.series} &middot; ${fmtDateLong(a.schema.datePublished)}</span></li>`).join('\n')}
-<li><a href="${page.root}indicator/methodology.html">Methodology</a><span>How the regime classification and the signal are constructed</span></li>
-<li><a href="${page.root}indicator/data.html">Historical data</a><span>Every signal since ${EXHIBITS.SIG_FIRST}, with what followed</span></li>
+<li><a href="${page.root}method.html">Methodology</a><span>How the regime classification and the signal are constructed</span></li>
+<li><a href="${page.root}data.html">Historical data</a><span>Every signal since ${EXHIBITS.SIG_FIRST}, with what followed</span></li>
 </ul>
-<p class="fine-print">DoubleTrends research is published alongside the <a href="${page.root}indicator/index.html">DoubleTrends Regime Indicator</a>.</p>
+<p class="fine-print">DoubleTrends research is published alongside the <a href="${page.root}indicator.html">DoubleTrends Regime Indicator</a>.</p>
 </section>`;
   html = html.replace(/<section class="cta-panel article-cta">[\s\S]*?<\/section>/, () => further);
 
@@ -209,6 +209,24 @@ function researchLibrary(root) {
   }).join('\n');
 }
 
+// Primary-nav dropdowns. Research lists every note by series (software has
+// its own nav item); Validation lists the AlphaVerify pages. Menu links carry
+// no data-nav, so markCurrentNav only ever marks the top-level item.
+const shortTitle = (t) => escAmp(t.split(':')[0]);
+function navResearchMenu(page) {
+  const cols = SERIES_ORDER.filter((s) => s !== 'Software').map((series) => {
+    const list = ARTICLES.filter((a) => a.series === series);
+    return `<div><p class="menu-head">${series}</p><ul>${list.map((a) =>
+      `<li><a href="${page.root}${a.src}"${a.src === page.src ? ' aria-current="page"' : ''}>${shortTitle(a.title)}</a></li>`).join('')}</ul></div>`;
+  }).join('');
+  return `<div class="menu menu-wide">${cols}<p class="menu-foot"><a href="${page.root}research/index.html">All research</a></p></div>`;
+}
+function navValidationMenu(page) {
+  const items = pages.filter((p) => p.src.startsWith('alphaverify/'));
+  return `<div class="menu"><p class="menu-head">AlphaVerify</p><ul>${items.map((p) =>
+    `<li><a href="${page.root}${p.src}"${p.src === page.src ? ' aria-current="page"' : ''}>${p.src.endsWith('index.html') ? 'Overview' : p.crumb}</a></li>`).join('')}</ul></div>`;
+}
+
 function formatTitle(page) {
   return page.kind === 'home' ? `${SITE_NAME} — ${page.title}` : `${page.title} | ${SITE_NAME}`;
 }
@@ -246,6 +264,8 @@ function renderPage(page) {
     BREADCRUMB: breadcrumbHtml(page),
     RESEARCH_RECENT: researchRecent(page.root),
     RESEARCH_LIBRARY: researchLibrary(page.root),
+    NAV_RESEARCH_MENU: navResearchMenu(page),
+    NAV_VALIDATION_MENU: navValidationMenu(page),
     ROOT: page.root,
     TITLE: formatTitle(page),
     DESC: page.desc,
@@ -296,7 +316,7 @@ const urls = pages
   .filter((p) => p.sitemap !== false)
   .map((p) => `  <url>
     <loc>${canonicalFor(p.src)}</loc>
-    <changefreq>${p.kind === 'home' || p.src === 'indicator/data.html' ? 'weekly' : 'monthly'}</changefreq>
+    <changefreq>${p.kind === 'home' || p.src === 'data.html' ? 'weekly' : 'monthly'}</changefreq>
     <priority>${(p.priority ?? 0.7).toFixed(1)}</priority>
   </url>`)
   .join('\n\n');
@@ -325,14 +345,6 @@ const LEGACY = [
     const slug = p.src.slice('research/'.length, -'.html'.length);
     return [[`/academy/${slug}`, `/research/${slug}`], [`/academy/${slug}.html`, `/research/${slug}`]];
   }),
-  ['/indicator', '/indicator/'],
-  ['/indicator.html', '/indicator/'],
-  ['/method', '/indicator/methodology'],
-  ['/method.html', '/indicator/methodology'],
-  ['/data', '/indicator/data'],
-  ['/data.html', '/indicator/data'],
-  ['/product', '/indicator/subscription'],
-  ['/product.html', '/indicator/subscription'],
   ['/alphaverify', '/alphaverify/'],
   ['/alphaverify.html', '/alphaverify/'],
   ['/public/academy/*', '/public/research/:splat'],
@@ -347,14 +359,13 @@ console.log('✓  _redirects generated');
 const LLMS_SECTIONS = [
   { key: 'main',    heading: 'Primary Pages' },
   { key: 'research', heading: 'Research' },
-  { key: 'indicator', heading: 'The DoubleTrends Regime Indicator' },
   { key: 'alphaverify', heading: 'AlphaVerify' },
   { key: 'company', heading: 'About' },
   { key: 'legal',   heading: 'Legal' },
 ];
 function llmsSectionKey(src) {
   const prefix = src.split('/')[0];
-  return ['research', 'indicator', 'alphaverify', 'company', 'legal'].includes(prefix) && !src.endsWith('index.html') ? prefix : 'main';
+  return ['research', 'alphaverify', 'company', 'legal'].includes(prefix) && !src.endsWith('index.html') ? prefix : 'main';
 }
 const llmsSections = LLMS_SECTIONS.map(({ key, heading }) => {
   const entries = pages

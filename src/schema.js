@@ -9,17 +9,16 @@ function toJsonLdScript(node) {
 // Top-level folders that form site sections, with their breadcrumb label.
 const SECTIONS = {
   research: 'Research',
-  indicator: 'Indicator',
   alphaverify: 'AlphaVerify',
   company: 'About',
   legal: 'Legal',
 };
 
 function canonicalFor(siteUrl, src) {
-  // Pages are emitted at their source path (indicator/methodology.html →
-  // dist/indicator/methodology.html) and Cloudflare serves them at their
-  // extensionless URL with 200: /indicator/methodology is canonical. Section
-  // indexes (research/index.html) keep their trailing slash: /research/.
+  // Pages are emitted at their source path (method.html → dist/method.html,
+  // alphaverify/findings.html → dist/alphaverify/findings.html) and Cloudflare
+  // serves them at their extensionless URL with 200: /method is canonical.
+  // Section indexes (research/index.html) keep their trailing slash.
   return `${siteUrl}/${src.replace(/index\.html$/, '').replace(/\.html$/, '')}`;
 }
 

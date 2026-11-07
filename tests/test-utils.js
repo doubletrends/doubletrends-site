@@ -9,7 +9,7 @@ const DIST = path.join(ROOT, 'dist');
 const SECTIONS = { research: 'Research', company: 'About', legal: 'Legal' };
 // Sections whose sub-pages only need a kicker that starts with "Section · "
 // (their H1s are descriptive headlines, not category names).
-const LOOSE_SECTIONS = { indicator: 'Indicator', alphaverify: 'AlphaVerify' };
+const LOOSE_SECTIONS = { alphaverify: 'AlphaVerify' };
 
 // Handles both file and directory targets.
 function walk(target) {
