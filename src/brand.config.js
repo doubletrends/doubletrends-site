@@ -6,27 +6,29 @@
  * in src/styles/tokens/colors.css; tests/test-brand-tokens.js fails the suite
  * if a mirror drifts.
  *
- * House style ("index provider"): navy ink on white paper, one gray family,
- * no accent color in the chrome. Color carries data — the regime palette is
- * the only chromatic set, and it appears only where it encodes a regime.
+ * House style ("index provider") in the brand's two colors: navy ink for
+ * text and chrome, rust for highlights (labels, active states, accent rules,
+ * the "Double" of the wordmark, signal markers). The regime palette encodes
+ * regimes only and is kept clear of rust (panic is magenta, not red).
  *
- *   COLORS   Tailwind palette. `primary`, `dark`, `light`, `muted` are the
- *            historical utility names used across page markup (text-primary,
- *            bg-light …); they now resolve to the house palette, so legacy
- *            markup restyles without edits.
+ *   COLORS   Tailwind palette. `primary` (navy) and `accent` (rust) are the
+ *            two brand colors of the original wordmark. `dark`, `light`,
+ *            `muted` are the historical utility names used in page markup.
  *   FONTS    Source Serif 4 (display + reading) and Source Sans 3 (interface +
  *            data). `noto` / `open` / `mono` are the historical class keys.
  *   REGIMES  Validated categorical palette (dataviz validate_palette.js,
- *            light mode on #FFFFFF, all-pairs CVD ΔE ≥ 14.9). The correction
- *            ochre is below 3:1 against white, so regimes are always labelled
- *            in text and every chart has a table view.
+ *            light mode on #FFFFFF, all pairs: CVD ΔE ≥ 8.4, normal ≥ 18.1;
+ *            every regime ≥ 16.4 from rust under normal vision). The
+ *            correction ochre is below 3:1 against white, so regimes are
+ *            always labelled in text and every chart has a table view.
  */
 
 const COLORS = {
-  primary: '#14213D',  // Navy ink — brand, headings, links, primary buttons
-  dark:    '#1C2430',  // Body text
+  primary: '#2A3340',  // Brand navy — text, headings, chrome, primary buttons
+  accent:  '#C2410C',  // Brand rust — highlights only
+  dark:    '#2A3340',  // Body text (same navy)
   light:   '#FFFFFF',  // Paper
-  muted:   '#5B6573',  // Secondary text
+  muted:   '#5A6473',  // Secondary text
   rule:    '#DADDE2',  // Hairlines
   tint:    '#F4F5F7',  // Quiet panels, utility bar
 };
@@ -40,10 +42,10 @@ const FONTS = {
 };
 
 const REGIMES = {
-  calm:       { hex: '#4A8CC0' },
-  correction: { hex: '#D29A2E' },
-  panic:      { hex: '#BC3F2F' },
-  bear:       { hex: '#5D4BA6' },
+  calm:       { hex: '#2F7F49' },
+  correction: { hex: '#D0A535' },
+  panic:      { hex: '#B23B8C' },
+  bear:       { hex: '#4A8CC0' },
 };
 
 module.exports = { COLORS, FONTS, REGIMES };

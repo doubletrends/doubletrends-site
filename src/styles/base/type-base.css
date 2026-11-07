@@ -49,7 +49,7 @@ p { margin: 0; text-wrap: pretty; }
   line-height: 1.2;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--accent);
 }
 .kicker-muted { color: var(--muted); }
 
@@ -71,12 +71,12 @@ p { margin: 0; text-wrap: pretty; }
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
-  text-decoration-color: rgba(20, 33, 61, 0.45);
+  text-decoration-color: rgba(194, 65, 12, 0.55);
   transition: text-decoration-color 0.15s ease;
 }
-.link:hover, .prose a:hover, .text-link:hover { text-decoration-color: var(--ink); }
+.link:hover, .prose a:hover, .text-link:hover { text-decoration-color: var(--accent); }
 .link-arrow { font-weight: 600; text-decoration: none; color: var(--ink); white-space: nowrap; }
-.link-arrow::after { content: " →"; }
+.link-arrow::after { content: " →"; color: var(--accent); }
 .link-arrow:hover { text-decoration: underline; text-underline-offset: 0.18em; }
 
 /* Long-form reading (methodology, research notes, firm documents). */
@@ -91,4 +91,4 @@ p { margin: 0; text-wrap: pretty; }
 .prose strong { font-weight: 600; color: var(--ink); }
 .prose .fine { font-family: var(--font-sans); }
 
-.section-no { font-family: var(--font-sans); font-weight: 600; color: var(--muted); margin-right: 0.6em; font-variant-numeric: tabular-nums; }
+.section-no { font-family: var(--font-sans); font-weight: 600; color: var(--accent); margin-right: 0.6em; font-variant-numeric: tabular-nums; }

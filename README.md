@@ -98,7 +98,7 @@ Placeholder families: `ROOT`, `TITLE`, `DESC`, `CANONICAL` … (page metadata), 
 The site is designed to read like an index provider's publication, not a product landing page.
 
 - **Type:** Source Serif 4 for headings and long-form reading, Source Sans 3 for interface and data (tabular figures in tables). Self-hosted latin subsets, SIL OFL (`public/fonts/*/OFL.txt`).
-- **Color:** navy ink on white, one cool gray family. Color carries data only: the four regime colors (`--regime-*`) appear where they encode a regime and nowhere else. The palette was validated for color-vision deficiency (all-pairs ΔE ≥ 14.9); the ochre is below 3:1 on white, so regimes are always labelled in text and every exhibit has a table view.
+- **Color:** the brand's two colors from the original wordmark — navy `#2A3340` for text and chrome, rust `#C2410C` for highlights only (kickers, active nav, accent rules, "Double" in the wordmark, and signal markers on the exhibits). The four regime colors (`--regime-*`: calm green, correction ochre, panic magenta, bear blue) appear only where they encode a regime and are kept clear of rust — panic is magenta, not red, so it is never confused with the brand accent. The palette was validated for color-vision deficiency (all regime pairs CVD ΔE ≥ 8.4, normal ≥ 18.1; each ≥ 16.4 from rust); the ochre is below 3:1 on white, so regimes are always labelled in text and every exhibit has a table view.
 - **Structure:** ruled sections, numbered exhibits with a source line, document pages with a contents column. No cards, shadows, gradients, scroll animation or stock photography.
 - **Voice:** sentence case, plain and specific, figures with their basis. Readings before the live date are always labelled **back-tested**; the full signal record, including early signals, is always published.
 - **Trademark:** `DoubleTrends` in running text; the ™ appears in the footer notice and the legal documents (enforced by `tests/test-trademark.js`).
@@ -204,7 +204,7 @@ Research notes also set `section` (topic, shown as "Research · {section}") and 
 
 ## Brand assets
 
-`build-brand.js` generates `public/brand/`: the DT monogram and the wordmark set in Source Serif 4 and converted to outlines (no font dependency), favicons, and an OG image carrying the real regime ribbon from `src/data/`. Every historical filename is still produced so external links keep working. Do not hand-edit generated files; run `npm run brand`.
+`build-brand.js` generates `public/brand/`: the DT monogram (navy plate, rust bar) and the two-tone wordmark ("Double" rust, "Trends" navy) set in Source Serif 4 and converted to outlines (no font dependency), favicons, and an OG image carrying the real regime ribbon from `src/data/`. Every historical filename is still produced so external links keep working. Do not hand-edit generated files; run `npm run brand`.
 
 ---
 

@@ -1,30 +1,31 @@
 ﻿/* House palette — mirror of src/brand.config.js (tests/test-brand-tokens.js
-   enforces the match). Navy ink on white paper, one cool gray family; the
-   regime colors are the only chromatic set and appear only where they encode
-   a regime. */
+   enforces the match). The brand's two colors: navy for text and chrome,
+   rust for highlights. Regime colors encode regimes only. */
 :root {
-  --ink:         #14213D;
-  --ink-hover:   #22335A;
-  --text:        #1C2430;
-  --muted:       #5B6573;
+  --ink:         #2A3340;
+  --ink-hover:   #3A4554;
+  --accent:      #C2410C;
+  --accent-hover: #9A330A;
+  --text:        #2A3340;
+  --muted:       #5A6473;
   --faint:       #8A929E;
   --rule:        #DADDE2;
-  --rule-strong: #1C2430;
+  --rule-strong: #2A3340;
   --paper:       #FFFFFF;
   --tint:        #F4F5F7;
   --focus:       #2F6FB0;
 
-  --regime-calm:       #4A8CC0;
-  --regime-correction: #D29A2E;
-  --regime-panic:      #BC3F2F;
-  --regime-bear:       #5D4BA6;
+  --regime-calm:       #2F7F49;
+  --regime-correction: #D0A535;
+  --regime-panic:      #B23B8C;
+  --regime-bear:       #4A8CC0;
 
   --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-sans:  "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
 
   /* Historical names still referenced by inline styles in page markup —
      resolved to the house palette so legacy markup restyles without edits. */
-  --color-rust:  var(--ink);
+  --color-rust:  var(--accent);
   --color-dark:  var(--text);
   --color-light: var(--paper);
   --color-muted: var(--muted);

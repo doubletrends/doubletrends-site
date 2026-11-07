@@ -10,6 +10,7 @@ const { ROOT, report } = require('./test-utils');
 // brand.config key → CSS custom property in colors.css.
 const COLOR_MIRROR = {
   primary: '--ink',
+  accent:  '--accent',
   dark:    '--text',
   light:   '--paper',
   muted:   '--muted',

@@ -18,7 +18,7 @@
 @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 2.25rem; } }
 
 /* Latest-reading panel — the "index level" box. */
-.reading { border-top: 3px solid var(--ink); background: var(--tint); padding: 1.5rem 1.6rem 1.4rem; }
+.reading { border-top: 3px solid var(--accent); background: var(--tint); padding: 1.5rem 1.6rem 1.4rem; }
 .reading-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
 .reading-title { font-weight: 600; font-size: 0.9375rem; color: var(--ink); }
 .reading-asof { font-size: 0.8125rem; color: var(--muted); }
@@ -99,28 +99,28 @@
 
 /* Numbered procedure. */
 .steps { list-style: none; margin: 0; padding: 0; counter-reset: step; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
-.steps li { counter-increment: step; border-top: 2px solid var(--ink); padding-top: 1rem; }
+.steps li { counter-increment: step; border-top: 2px solid var(--accent); padding-top: 1rem; }
 .steps li::before { content: counter(step, decimal-leading-zero); display: block; font-weight: 600; color: var(--muted); font-size: 0.875rem; margin-bottom: 0.4rem; font-variant-numeric: tabular-nums; }
 .steps h3 { font-family: var(--font-sans); font-size: 1.0625rem; margin-bottom: 0.35rem; }
 .steps p { color: var(--muted); font-size: 0.96875rem; }
 @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
 
 /* Boxes: notes, disclosures, the subscription offer. */
-.note { border-left: 3px solid var(--ink); background: var(--tint); padding: 1.1rem 1.3rem; font-size: 0.9375rem; line-height: 1.6; color: var(--text); }
+.note { border-left: 3px solid var(--accent); background: var(--tint); padding: 1.1rem 1.3rem; font-size: 0.9375rem; line-height: 1.6; color: var(--text); }
 .note strong { color: var(--ink); }
 .disclosure { border: 1px solid var(--rule); padding: 1.25rem 1.4rem; font-size: 0.84375rem; line-height: 1.6; color: var(--muted); }
 .disclosure h2, .disclosure h3 { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.6rem; }
 .disclosure p + p { margin-top: 0.6rem; }
 
 .offer { border: 1px solid var(--rule-strong); }
-.offer-head { background: var(--ink); color: #fff; padding: 1.4rem 1.6rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.75rem; }
+.offer-head { background: var(--ink); color: #fff; border-bottom: 3px solid var(--accent); padding: 1.4rem 1.6rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.75rem; }
 .offer-head h2, .offer-head h3 { color: #fff; font-family: var(--font-serif); font-size: 1.5rem; }
 .offer-price { font-weight: 600; font-size: 1.125rem; }
 .offer-price span { font-weight: 400; color: #C6CFDB; font-size: 0.9375rem; }
 .offer-body { padding: 1.6rem; }
 .offer-body ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; }
 .offer-body li { padding-left: 1.4rem; position: relative; }
-.offer-body li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 0.6rem; height: 2px; background: var(--ink); }
+.offer-body li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 0.6rem; height: 2px; background: var(--accent); }
 .offer-foot { border-top: 1px solid var(--rule); padding: 1.2rem 1.6rem; display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; align-items: center; justify-content: space-between; }
 
 /* Tagged regime word inline in text. */

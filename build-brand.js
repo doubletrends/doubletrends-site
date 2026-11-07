@@ -1,8 +1,10 @@
 /**
  * build-brand.js — `npm run brand` — generates public/brand/.
  *
- * Identity: a navy plate carrying a "DT" monogram, and the name "DoubleTrends",
- * both set in Source Serif 4 Semibold and converted to outlines (opentype.js),
+ * Identity in the brand's two colors: a navy plate carrying a white "DT"
+ * monogram over a rust bar, and the name "DoubleTrends" split as in the
+ * original wordmark ("Double" rust, "Trends" navy), both set in Source Serif
+ * 4 Semibold and converted to outlines (opentype.js),
  * so the SVGs render identically everywhere with no font dependency. The OG
  * image carries the real regime ribbon (1996 → latest), drawn from
  * src/data/regimes-daily.json — the house exhibit, not decoration.
@@ -19,6 +21,7 @@ const { COLORS, REGIMES } = require('./src/brand.config');
 
 const OUT = path.join(__dirname, 'public', 'brand');
 const NAVY = COLORS.primary;
+const RUST = COLORS.accent;
 const MUTED = COLORS.muted;
 
 function loadFont(rel) {
@@ -66,16 +69,19 @@ function outline(font, text, size, x = 0, y = 0, tracking = 0) {
 
 // ─── Mark: plate + DT ───────────────────────────────────────────────────────
 function markSvg({ plate, ink, size = 64 }) {
-  const fs_ = 34;
-  const t = outline(SERIF, 'DT', fs_, 0, 0, -1);
+  const k = size / 64;
+  const fs_ = 32 * k;
+  const t = outline(SERIF, 'DT', fs_, 0, 0, -1 * k);
   const capH = -t.top;                         // glyph top is negative (y-up)
   const x = (size - t.width) / 2;
-  const y = size / 2 + capH / 2 + 0.5;         // optical centre on cap height
-  const g = outline(SERIF, 'DT', fs_, x, y, -1);
+  const y = size * 0.45 + capH / 2;            // sits above centre to leave room for the bar
+  const g = outline(SERIF, 'DT', fs_, x, y, -1 * k);
+  // Rust bar under the letters — the accent of the original wordmark's underscore.
+  const barW = Math.max(t.width * 0.9, 30 * k), barH = 4 * k;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
-<rect width="${size}" height="${size}" rx="3" fill="${plate}"/>
-<rect x="5" y="5" width="${size - 10}" height="${size - 10}" rx="1.5" fill="none" stroke="${ink}" stroke-opacity="0.28" stroke-width="1"/>
+<rect width="${size}" height="${size}" rx="${3 * k}" fill="${plate}"/>
 <path d="${g.d}" fill="${ink}"/>
+<rect x="${((size - barW) / 2).toFixed(2)}" y="${(y + 6 * k).toFixed(2)}" width="${barW.toFixed(2)}" height="${barH.toFixed(2)}" fill="${RUST}"/>
 </svg>`;
 }
 
@@ -87,12 +93,16 @@ function wordmarkSvg({ dark = false } = {}) {
   const H = 80, mark = 80, gap = 22, size = 50;
   const probe = outline(SERIF, 'DoubleTrends', size);
   const y = H / 2 + (-probe.top) / 2 - 1;
-  const name = outline(SERIF, 'DoubleTrends', size, mark + gap, y);
-  const W = Math.ceil(mark + gap + name.width + 4);
+  // "Double" in rust, "Trends" in navy (white on dark), as in the original wordmark.
+  const first = outline(SERIF, 'Double', size, mark + gap, y);
+  const kernET = (SERIF.getKerningValue(SERIF.charToGlyph('e'), SERIF.charToGlyph('T')) / SERIF.unitsPerEm) * size;
+  const second = outline(SERIF, 'Trends', size, mark + gap + first.width + kernET, y);
+  const W = Math.ceil(mark + gap + first.width + kernET + second.width + 4);
   const inner = markSvg({ plate, ink: plateInk, size: mark }).replace(/^<svg[^>]*>|<\/svg>$/g, '');
   return { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
 ${inner}
-<path d="${name.d}" fill="${ink}"/>
+<path d="${first.d}" fill="${RUST}"/>
+<path d="${second.d}" fill="${ink}"/>
 </svg>`, W, H };
 }
 
@@ -130,6 +140,7 @@ function cardSvg(W, H, { scale = 1 } = {}) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
 <rect width="${W}" height="${H}" fill="#FFFFFF"/>
 <rect width="${W}" height="${10 * scale}" fill="${NAVY}"/>
+<rect y="${10 * scale}" width="${W}" height="${3 * scale}" fill="${RUST}"/>
 <g transform="translate(${pad} ${pad}) scale(${wmScale})">${wmInner}</g>
 <path d="${sub.d}" fill="${MUTED}"/>
 <path d="${line1.d}" fill="${NAVY}"/>
