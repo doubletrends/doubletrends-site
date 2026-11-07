@@ -143,7 +143,7 @@ Every page has three distinct identities. Keep them separate:
 
 ### Source of truth
 
-Pages are authored as `.html` files under `src/pages/` and emitted to `dist/` at their source path — `method.html` → `dist/indicator/methodology.html`. One source file = one page = one URL. `src/site.config.js` and `tests/test-page-registry.js` mirror this so `rootFor` derives `{{ROOT}}` depth from the same path.
+Pages are authored as `.html` files under `src/pages/` and emitted to `dist/` at their source path — `indicator/methodology.html` → `dist/indicator/methodology.html`. One source file = one page = one URL. `src/site.config.js` and `tests/test-page-registry.js` mirror this so `rootFor` derives `{{ROOT}}` depth from the same path.
 
 > Do **not** emit pages as `<slug>/index.html`. That was tried (commit `90032ff`) on the assumption Cloudflare would serve `/method` directly with 200. It does not — see below.
 
