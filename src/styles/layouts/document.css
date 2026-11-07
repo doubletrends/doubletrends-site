@@ -2,7 +2,7 @@
    numbered sections separated by hairlines, a left-hand section label on
    wide screens, generous whitespace, no cards, no shadows. */
 
-.page-head { padding-block: 3rem 2.5rem; border-bottom: 1px solid var(--rule); }
+.page-head { padding-block: 3rem 2.5rem; }
 .page-head .breadcrumb { margin-bottom: 1.25rem; }
 .page-head .kicker { margin-bottom: 0.9rem; }
 .page-head .dek { margin-top: 1.1rem; }
@@ -74,7 +74,7 @@
 @media (max-width: 900px) { .cols-2, .cols-3, .split { grid-template-columns: 1fr; gap: 2rem; } }
 
 /* Ruled list of entries (research library, documents). */
-.entries { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule-strong); }
+.entries { list-style: none; margin: 0; padding: 0; }
 .entry { display: grid; grid-template-columns: 9rem minmax(0, 1fr) 11rem; gap: 1.5rem; padding-block: 1.35rem; border-bottom: 1px solid var(--rule); }
 .entry-date { font-size: 0.875rem; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 0.2rem; }
 .entry-title { font-family: var(--font-serif); font-weight: 600; font-size: 1.25rem; line-height: 1.3; }
@@ -130,3 +130,19 @@
 .regime-word.correction::before { background: var(--regime-correction); }
 .regime-word.panic::before { background: var(--regime-panic); }
 .regime-word.bear::before { background: var(--regime-bear); }
+
+/* Double rule (thick over thin): closes every page head, and heads every
+   ledger — tables and entry lists. Drawn as two hairline-crisp gradients so
+   it sits on any background without a pseudo-element. */
+.page-head, .table-scroll, .entries {
+  background-image: linear-gradient(var(--ink), var(--ink)), linear-gradient(var(--ink), var(--ink));
+  background-repeat: no-repeat;
+  background-size: 100% 3px, 100% 1px;
+}
+.table-scroll, .entries { background-position: 0 0, 0 5px; padding-top: 6px; }
+.page-head { background-position: 0 calc(100% - 4px), 0 100%; padding-bottom: calc(2.5rem + 6px); }
+/* A ledger that opens the first section under a page head takes a hairline:
+   the page head's double rule already closes the space above it. */
+.wrap:has(> .page-head) + .section > .wrap > :is(.entries, .table-scroll):first-child {
+  background-image: none; padding-top: 0; border-top: 1px solid var(--rule-strong);
+}

@@ -19,7 +19,7 @@
 .regime-key-panic { background: var(--regime-panic); }
 .regime-key-bear { background: var(--regime-bear); }
 .legend-wash { display: inline-block; width: 1.1rem; height: 0.75rem; background: rgba(74, 140, 192, 0.14); border: 1px solid rgba(74, 140, 192, 0.45); }
-.legend-signal { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--accent); margin-inline: 0.15rem; }
+.legend-signal { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--paper), 0 0 0 3px var(--accent); margin-inline: 0.15rem; }
 
 /* SVG marks (classes emitted by src/charts.js). */
 .exhibit-svg text { font-family: var(--font-sans); }
@@ -29,8 +29,8 @@
 .ex-note { font-size: 12.5px; fill: var(--muted); }
 .ex-note-strong { fill: var(--ink); font-weight: 600; }
 .ex-line { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-.ex-signal { fill: var(--accent); stroke: #fff; stroke-width: 2; }
-.ex-end { fill: var(--ink); stroke: #fff; stroke-width: 2; }
+.ex-signal { fill: var(--accent); stroke: var(--paper); stroke-width: 2; }
+.ex-end { fill: var(--ink); stroke: var(--paper); stroke-width: 2; }
 .ex-live { stroke: var(--ink); stroke-width: 1; shape-rendering: crispEdges; }
 .wash-bear { fill: var(--regime-bear); fill-opacity: 0.1; }
 .fill-calm { fill: var(--regime-calm); }
@@ -41,7 +41,7 @@
 .ex-bars rect:hover, .ex-bars rect:focus { filter: brightness(0.9); outline: none; }
 .ex-hover { display: none; pointer-events: none; }
 .ex-cross { stroke: var(--text); stroke-width: 1; shape-rendering: crispEdges; }
-.ex-cross-dot { fill: #fff; stroke: var(--ink); stroke-width: 2; }
+.ex-cross-dot { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
 .exhibit[data-active] .ex-hover { display: block; }
 
 .exhibit-interactive { outline: none; cursor: crosshair; }
@@ -49,7 +49,7 @@
 
 .ex-tooltip {
   position: absolute; z-index: 5; pointer-events: none; min-width: 11rem;
-  background: #fff; border: 1px solid var(--rule-strong); padding: 0.55rem 0.7rem;
+  background: var(--paper); border: 1px solid var(--rule-strong); padding: 0.55rem 0.7rem;
   font-size: 0.8125rem; line-height: 1.45; color: var(--text);
   box-shadow: 0 2px 6px rgba(42, 51, 64, 0.08);
 }
@@ -62,7 +62,7 @@
 .exhibit-scroll .exhibit-svg { min-width: 40rem; }
 
 /* Data tables. */
-.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-top: 1px solid var(--rule-strong); }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .data-table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; font-variant-numeric: tabular-nums lining-nums; }
 .data-table th, .data-table td { padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
 .data-table th:first-child, .data-table td:first-child { padding-left: 0; }

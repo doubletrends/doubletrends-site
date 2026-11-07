@@ -27,10 +27,10 @@ const COLORS = {
   primary: '#2A3340',  // Brand navy — text, headings, chrome, primary buttons
   accent:  '#C2410C',  // Brand rust — highlights only
   dark:    '#2A3340',  // Body text (same navy)
-  light:   '#FFFFFF',  // Paper
+  light:   '#FBFAF7',  // Paper (warm off-white)
   muted:   '#5A6473',  // Secondary text
-  rule:    '#DADDE2',  // Hairlines
-  tint:    '#F4F5F7',  // Quiet panels, utility bar
+  rule:    '#DDD9D1',  // Hairlines
+  tint:    '#F3F1EC',  // Quiet panels
 };
 
 const FONTS = {

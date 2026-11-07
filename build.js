@@ -30,7 +30,7 @@ const {
   pages,
 } = require('./src/site.config');
 const { buildJsonLdScripts, canonicalFor: canonicalForRaw, pageDisplayName, breadcrumbItems, isoDate } = require('./src/schema');
-const { COLORS } = require('./src/brand.config');
+const { COLORS, REGIMES } = require('./src/brand.config');
 const { buildExhibits, fmtDateLong } = require('./src/charts');
 const { optimizeImages } = require('./build-images');
 const canonicalFor = (src) => canonicalForRaw(SITE_URL, src);
@@ -380,11 +380,36 @@ fs.copyFileSync(path.join(__dirname, 'src', 'robots.txt'), path.join(DIST, 'robo
 fs.copyFileSync(path.join(__dirname, 'src', '_headers'), path.join(DIST, '_headers'));
 console.log('✓  robots.txt, _headers copied');
 
+// Regime ribbon: every trading day since the record starts, one unit wide,
+// colored by regime. Consecutive days in the same regime merge into one rect
+// (~700 runs for ~7,800 days). Stretched to any width by CSS
+// (preserveAspectRatio="none"), it is the site's signature divider.
+function writeRegimeRibbon(outFile) {
+  const daily = require('./src/data/regimes-daily.json');
+  const fill = Object.fromEntries(Object.entries(daily.codes).map(([name, code]) => [code, REGIMES[name]?.hex]));
+  const iRegime = daily.fields.indexOf('regime');
+  const rows = daily.rows;
+  const rects = [];
+  let start = 0;
+  for (let i = 1; i <= rows.length; i++) {
+    if (i === rows.length || rows[i][iRegime] !== rows[start][iRegime]) {
+      const color = fill[rows[start][iRegime]];
+      if (!/^#[0-9A-F]{6}$/i.test(color || "")) throw new Error(`regime ribbon: no hex color for regime code ${rows[start][iRegime]}`);
+      rects.push(`<rect x="${start}" width="${i - start}" height="1" fill="${color}"/>`);
+      start = i;
+    }
+  }
+  fs.mkdirSync(path.dirname(outFile), { recursive: true });
+  fs.writeFileSync(outFile, `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${rows.length} 1" preserveAspectRatio="none" shape-rendering="crispEdges">${rects.join('')}</svg>\n`, 'utf8');
+}
+
 // public/ is copied verbatim EXCEPT the managed rasters, which are re-encoded to
 // resized WebP — see build-images.js. Awaited last; fails the build on error.
 (async () => {
   const { count } = await optimizeImages(path.join(__dirname, 'public'), path.join(DIST, 'public'));
   console.log(`✓  public/ copied + ${count} images → WebP`);
+  writeRegimeRibbon(path.join(DIST, 'public', 'brand', 'regime-ribbon.svg'));
+  console.log('✓  public/brand/regime-ribbon.svg generated');
 })().catch((err) => {
   console.error('✗  image optimization failed');
   console.error(err);
