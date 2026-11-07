@@ -5,8 +5,6 @@
  *
  *   guilloche-paper.svg   moiré beat: two woven strand families at different
  *                         frequencies, tiled in rows behind every page
- *   guilloche-topbar.svg  rosette medallions linked by strands, white on the
- *                         navy top bar
  *   guilloche-footer.svg  a spirograph rosette, set navy-on-navy in the footer
  *
  * Every curve is periodic in its tile, so tiled patterns join without seams.
@@ -80,32 +78,6 @@ function paperBeat() {
   return svg(W, H, paths, { stroke: COLORS.primary, opacity: 0.05, strokeWidth: 0.8 });
 }
 
-// Top bar — locked in the top-bar lab (round 1 sample T5 "Rosette links",
-// 2026-11-08), white at 0.15 on the navy utility bar. Every 160px a
-// medallion — two circle-rosettes (12 circles on a 6.5px ring, 8 on a 3.2px
-// ring) — joined by 8 phase-shifted strands that pinch into each medallion.
-// Tile 160 x 36 (the bar's height), repeated horizontally.
-function topBarRosettes() {
-  const W = 160, H = 36, MID = H / 2, steps = 240, margin = 8, paths = [];
-  for (let k = 0; k < 8; k++) {
-    const ph = (k / 8) * TAU, pts = [];
-    for (let i = 0; i <= steps; i++) {
-      const x = -margin + (i / steps) * (W + 2 * margin), t = (x / W) * TAU;
-      pts.push([x, MID + 10 * (0.15 + 0.85 * Math.sin(t) ** 2) * Math.sin(2 * t + ph)]);
-    }
-    paths.push(relPath(pts));
-  }
-  for (const cx of [0, W]) {
-    for (const [ringR, circR, count, rot] of [[6.5, 6.5, 12, 0], [3.2, 3.2, 8, Math.PI / 8]]) {
-      for (let i = 0; i < count; i++) {
-        const a = rot + (i / count) * TAU, ox = cx + ringR * Math.cos(a), oy = MID + ringR * Math.sin(a), pts = [];
-        for (let j = 0; j < 40; j++) { const b = (j / 40) * TAU; pts.push([ox + circR * Math.cos(b), oy + circR * Math.sin(b)]); }
-        paths.push(relPath(pts, true));
-      }
-    }
-  }
-  return svg(W, H, paths, { stroke: '#FFFFFF', opacity: 0.15, strokeWidth: 0.5 });
-}
 
 // Footer: rings of hypotrochoids (spirograph). Each keeps its pen inside the
 // rolling circle (d < R - r), so every layer is an annulus with an open
@@ -141,7 +113,6 @@ function writeGuilloches(brandDir) {
   fs.mkdirSync(brandDir, { recursive: true });
   const out = {
     'guilloche-paper.svg': paperBeat(),
-    'guilloche-topbar.svg': topBarRosettes(),
     'guilloche-footer.svg': footerRosette(),
   };
   for (const [name, body] of Object.entries(out)) fs.writeFileSync(path.join(brandDir, name), body, 'utf8');
