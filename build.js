@@ -150,7 +150,7 @@ function decorateArticle(html, page) {
     + '<span>DoubleTrends Research</span></p>';
   // The notes' original closing promo blocks are replaced by one standard
   // further-reading block: related notes from the same series, the method,
-  // the record, and a single plain line about the subscription.
+  // the record, and a pointer to the indicator — no sales line.
   const related = ARTICLES.filter((a) => a.series === page.series && a.src !== page.src).slice(0, 2);
   const further = `<section class="article-section article-further">
 <span class="tag-overline">Further reading</span>
@@ -159,7 +159,7 @@ ${related.map((a) => `<li><a href="${page.root}${a.src}">${escAmp(a.title)}</a><
 <li><a href="${page.root}method.html">Methodology</a><span>How the regime classification and the signal are constructed</span></li>
 <li><a href="${page.root}data.html">Historical data</a><span>Every signal since ${EXHIBITS.SIG_FIRST}, with what followed</span></li>
 </ul>
-<p class="fine-print">The daily reading and same-day signals are available by <a href="${page.root}product.html">subscription</a>.</p>
+<p class="fine-print">DoubleTrends research is published alongside the <a href="${page.root}indicator.html">DoubleTrends Regime Indicator</a>.</p>
 </section>`;
   html = html.replace(/<section class="cta-panel article-cta">[\s\S]*?<\/section>/, () => further);
 
@@ -336,7 +336,7 @@ const llmsSections = LLMS_SECTIONS.map(({ key, heading }) => {
 
 fs.writeFileSync(path.join(DIST, 'llms.txt'), `# DoubleTrends
 
-DoubleTrends publishes the DoubleTrends Regime Indicator: a rules-based daily classification of U.S. equity market stress (calm, correction, panic, bear) for the S&P 500, with a reversal signal that is eligible to fire only in panic and bear regimes. History is a point-in-time reconstruction from ${EXHIBITS.IND_FIRST_YEAR}; live publication began ${EXHIBITS.IND_LIVE_SINCE}. The site also publishes research notes on drawdowns, investor behavior, and the indicator's inputs.
+DoubleTrends is an independent quantitative research firm. It publishes research on market regimes, drawdowns and investor behavior, and the DoubleTrends Regime Indicator: a rules-based daily classification of U.S. equity market stress (calm, correction, panic, bear) for the S&P 500, with a reversal signal that is eligible to fire only in panic and bear regimes. It does not sell trading signals; a subscription to the daily reading covers the infrastructure that produces it. It accepts no payments from brokers or exchanges and also offers research and data engineering services. History is a point-in-time reconstruction from ${EXHIBITS.IND_FIRST_YEAR}; live publication began ${EXHIBITS.IND_LIVE_SINCE}. The site also publishes research notes on drawdowns, investor behavior, and the indicator's inputs.
 
 Important: the content is educational market information only. It is not financial, investment, trading, tax, or legal advice, and it is not a recommendation to buy, sell, or hold any security. Readings before ${EXHIBITS.IND_LIVE_SINCE} are back-tested.
 

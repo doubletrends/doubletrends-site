@@ -4,7 +4,7 @@
     {{BREADCRUMB}}
     <span class="kicker">About &middot; Research services</span>
     <h1 class="h1">Research services</h1>
-    <p class="dek">The data engineering and quantitative research behind the indicator are available for a limited number of engagements: building reliable data pipelines, statistical studies and forecasts, and predictive models with documented limits.</p>
+    <p class="dek">Quantitative research and data engineering, built to the standard of the firm&rsquo;s own indicator: reliable data pipelines, statistical studies and forecasts, and predictive models with their limits documented.</p>
   </header>
 </div>
 
@@ -25,6 +25,32 @@
         <p class="muted" style="margin-top: 0.6rem;">Classification, regression, forecasting and anomaly detection on structured data: churn, demand, risk scoring, fraud and segmentation. Models are evaluated on held-out data and delivered with reproducible code and a model card covering performance by segment and known failure modes.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Case study &middot; The firm&rsquo;s own work</span>
+        <h2 class="h2">Building a point-in-time market regime classifier</h2>
+        <p>The <a class="link" href="../indicator.html">DoubleTrends Regime Indicator</a> is the firm&rsquo;s own system, and the clearest example of how engagements are built: the question, the data, the validation and the operations are all documented in public.</p>
+      </div>
+    </div>
+    <dl class="facts">
+      <dt>The question</dt>
+      <dd>Classify S&amp;P 500 market stress every trading day from public data alone, with a back-tested history that avoids hindsight wherever the data allows, and a live system that publishes reliably after each close.</dd>
+      <dt>Data</dt>
+      <dd>Daily index prices, the VIX and three Federal Reserve series. Macroeconomic downloads are validated before use and retried on failure; if the source stays unavailable, the last validated copy (at most a week old) is used and the run is flagged.</dd>
+      <dt>Method</dt>
+      <dd>Measures of the depth, duration and sharpness of a decline, dual-horizon momentum and volatility percentiles feed a four-state classification and a signal state machine. The structure of every rule is <a class="link" href="../method.html">published</a>.</dd>
+      <dt>Validation</dt>
+      <dd>Thirty years of history are computed twice, independently &mdash; over the full series and date by date with only the data each date allowed. Both must agree before anything is published. A known limitation in the timing of macroeconomic inputs is disclosed rather than hidden.</dd>
+      <dt>Operations</dt>
+      <dd>Computation scheduled to the NYSE calendar, including early closes; retried dispatch and a backup end-of-day run; a monitoring view that flags missing or late readings; and a public <a class="link" href="../data.html#revisions">revisions log</a>.</dd>
+      <dt>Outputs</dt>
+      <dd>A methodology document, a complete <a class="link" href="../data.html">signal record</a> with a CSV download, and a daily reading delivered to subscribers.</dd>
+    </dl>
   </div>
 </section>
 

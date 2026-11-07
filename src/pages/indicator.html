@@ -1,0 +1,131 @@
+<!-- The DoubleTrends Regime Indicator: public research published by the firm.
+     Latest reading, record facts, the history exhibit, regime definitions,
+     recent signals, and access. No performance claims above the fold — the
+     full record with returns lives on data.html. Every number is generated
+     from src/data/indicator.json. -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      {{BREADCRUMB}}
+      <span class="kicker">Public research &middot; S&amp;P 500</span>
+      <h1 class="display">The DoubleTrends Regime Indicator</h1>
+      <p class="dek">A rules-based classification of U.S. equity market stress. Each trading day, the S&amp;P 500 is assigned one of four regimes &mdash; calm, correction, panic or bear. A reversal signal is eligible to fire only under stress. DoubleTrends publishes the indicator, its methodology and its complete record as research.</p>
+      <div class="hero-actions">
+        <a class="btn" href="method.html">Read the methodology</a>
+        <a class="link-arrow" href="data.html">Historical data</a>
+      </div>
+    </div>
+
+    <aside class="reading" aria-labelledby="reading-title">
+      <div class="reading-head">
+        <h2 id="reading-title" class="reading-title">Latest reading</h2>
+        <span class="reading-asof">As of the {{IND_AS_OF}} close</span>
+      </div>
+      <div class="reading-regime">
+        <span class="swatch regime-key-{{IND_REGIME_KEY}}" aria-hidden="true"></span>
+        <div>
+          <div class="reading-regime-value">{{IND_REGIME}}</div>
+          <div class="reading-regime-note">Regime since {{IND_REGIME_SINCE}} &middot; {{IND_REGIME_SESSIONS}} sessions</div>
+        </div>
+      </div>
+      <dl>
+        <dt>S&amp;P 500 close</dt><dd>{{IND_CLOSE}}</dd>
+        <dt>From one-year high</dt><dd>{{IND_DRAWDOWN}}</dd>
+        <dt>Signal</dt><dd>{{IND_SIGNAL_STATE}}</dd>
+        <dt>Most recent signal</dt><dd>{{IND_LAST_SIGNAL}}</dd>
+      </dl>
+      <p class="reading-foot">Readings on this site are as of the date shown. Subscribers receive each day&rsquo;s reading shortly after the 4:00&nbsp;p.m. ET close, and any signal the same day.</p>
+    </aside>
+  </div>
+</section>
+
+<section aria-label="Key facts">
+  <div class="wrap">
+    <div class="key-figures">
+      <div class="key-figure">
+        <div class="key-figure-value">{{IND_TRADING_DAYS}}</div>
+        <div class="key-figure-label">Trading days classified</div>
+        <div class="key-figure-note">Since {{IND_FIRST_DATE}}</div>
+      </div>
+      <div class="key-figure">
+        <div class="key-figure-value">4</div>
+        <div class="key-figure-label">Regimes: calm, correction, panic, bear</div>
+        <div class="key-figure-note">One per session, after the close</div>
+      </div>
+      <div class="key-figure">
+        <div class="key-figure-value">{{SIG_COUNT}}</div>
+        <div class="key-figure-label">Signals since {{SIG_FIRST}}</div>
+        <div class="key-figure-note">About {{SIG_PER_DECADE}} per decade</div>
+      </div>
+      <div class="key-figure">
+        <div class="key-figure-value">{{IND_LIVE_SINCE_SHORT}}</div>
+        <div class="key-figure-label">Live publication began</div>
+        <div class="key-figure-note">Earlier readings are back-tested</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <figure class="exhibit" data-exhibit="series">
+      <figcaption class="exhibit-head">
+        <div>
+          <span class="exhibit-no">Exhibit 1</span>
+          <span class="exhibit-title">The S&amp;P 500 and its regime classification since {{IND_FIRST_MONTH}}</span>
+        </div>
+        {{EXHIBIT_LEGEND}}
+      </figcaption>
+      <div class="exhibit-body">
+        <div class="exhibit-interactive exhibit-scroll" tabindex="0" aria-describedby="ex1-help">{{EXHIBIT_REGIME_HISTORY}}</div>
+      </div>
+      <script type="application/json">{{EXHIBIT_REGIME_HISTORY_DATA}}</script>
+      <p class="exhibit-source">Weekly closes on a logarithmic scale; the ribbon shows the daily regime. Source: DoubleTrends, point-in-time reconstruction from S&amp;P 500, Cboe VIX and Federal Reserve Economic Data (FRED) series. Readings before {{IND_LIVE_SINCE}} are back-tested. <span id="ex1-help" class="sr-only">Focus the chart and use the left and right arrow keys to move week by week; hold Shift to move a year at a time.</span></p>
+      <p class="sr-only ex-live-region" aria-live="polite"></p>
+    </figure>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">The four regimes</span>
+        <h2 class="h2">Stress is classified before any signal is considered</h2>
+        <p>Most selling is routine. The indicator first decides what kind of market it is looking at; the reversal signal is only eligible when that market is under acute or persistent stress.</p>
+      </div>
+      <a class="link-arrow" href="method.html#regimes">Classification rules</a>
+    </div>
+    <div class="table-scroll">{{TABLE_REGIMES}}</div>
+    <p class="table-foot">Share of sessions, episode counts and median episode length over {{IND_TRADING_DAYS}} trading days since {{IND_FIRST_DATE}}. An episode is an uninterrupted run of sessions in one regime.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Signal record</span>
+        <h2 class="h2">The most recent signals</h2>
+        <p>Every signal is published with what followed it, including the ones that were early. The full record since {{SIG_FIRST}} is on the historical data page.</p>
+      </div>
+      <a class="link-arrow" href="data.html#signals">All {{SIG_COUNT}} signals</a>
+    </div>
+    <div class="table-scroll">{{TABLE_SIGNALS_RECENT}}</div>
+    <p class="table-foot">S&amp;P 500 price return from the signal-day close to the first close on or after 3 months, 1 year and 2 years later. &ldquo;Pending&rdquo; returns have not yet matured.</p>
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="wrap split">
+    <div>
+      <span class="kicker">Access</span>
+      <h2 class="h2" style="margin-top: 0.6rem;">Why the daily reading has a fee</h2>
+    </div>
+    <div class="body-lg">
+      <p>DoubleTrends does not sell trading signals. The indicator is published as research: its rules, its complete record and every correction are public on this site.</p>
+      <p style="margin-top: 1rem;">Computing and delivering the reading each trading day runs on servers and data services the firm rents. Subscribers receive each day&rsquo;s reading shortly after the close and any signal the same day, for USD 149 a year &mdash; a fee set to cover that upkeep.</p>
+      <p style="margin-top: 1.25rem;"><a class="link-arrow" href="product.html">Subscriber access</a></p>
+    </div>
+  </div>
+</section>

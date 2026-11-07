@@ -295,6 +295,7 @@ function buildExhibits() {
     IND_FIRST_MONTH: MONTHS[Number(indicator.first_date.slice(5, 7)) - 1] + ' ' + indicator.first_date.slice(0, 4),
     IND_TRADING_DAYS: indicator.trading_days.toLocaleString('en-US'),
     IND_LIVE_SINCE: fmtDateLong(indicator.live_since),
+    IND_LIVE_SINCE_SHORT: fmtDateShort(indicator.live_since),
 
     SIG_COUNT: String(S.count),
     ...sinceFigures(indicator.signals, '2016-07-01', 'JUL_2016'),

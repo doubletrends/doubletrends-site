@@ -1,6 +1,6 @@
 # DoubleTrends Site
 
-Public site of DoubleTrends, served at `doubletrends.com`: the DoubleTrends Regime Indicator (overview, methodology, historical data), the research notes, the subscription page, and the firm pages.
+Public site of DoubleTrends, served at `doubletrends.com`. The site presents an independent research firm: research notes, the DoubleTrends Regime Indicator as public research (overview, methodology, historical data, subscriber access), research services, and the firm pages. Navigation: Research · Indicator · Services · About. The firm does not sell trading signals; the subscription is described as covering the infrastructure that produces the daily reading, and pricing appears only on the subscriber-access page.
 
 Static HTML/CSS/JS — no framework. A single Node.js build (`build.js`) assembles pages, renders the data exhibits, derives all metadata, compiles the stylesheet and optimizes images; `dist/` is deployed as a Cloudflare Worker (Static Assets).
 

@@ -77,20 +77,28 @@ const pages = [
   page('index.html', {
     priority: 1.0,
     kind: 'home',
+    title: 'Quantitative Market Research',
+    desc:  'DoubleTrends is an independent quantitative research firm studying market regimes, drawdowns and investor behavior. It publishes its research and the DoubleTrends Regime Indicator openly, and offers research and data engineering services.',
+  }),
+  page('indicator.html', {
+    priority: 0.9,
     nav: 'indicator',
-    title: 'S&P 500 Market Regime Indicator',
-    desc:  'The DoubleTrends Regime Indicator: a rules-based daily classification of S&P 500 market stress — calm, correction, panic, bear — with a reversal signal eligible only under stress. History from December 1995.',
+    title: 'The DoubleTrends Regime Indicator',
+    crumb: 'Indicator',
+    desc:  'The DoubleTrends Regime Indicator: a rules-based daily classification of S&P 500 market stress — calm, correction, panic, bear — with a reversal signal eligible only under stress. Published as research, with history from December 1995.',
   }),
   page('method.html', {
     priority: 0.9,
-    nav: 'methodology',
+    nav: 'indicator',
     title: 'Methodology',
     crumb: 'Methodology',
+    schema: { breadcrumbs: [{ name: 'Indicator', url: '/indicator' }, { name: 'Methodology', url: '/method' }] },
     desc:  'How the DoubleTrends Regime Indicator is constructed: data inputs, derived measures, the four-state regime classification, signal eligibility and confirmation, publication timing, and point-in-time validation.',
   }),
   page('data.html', {
     priority: 0.9,
-    nav: 'data',
+    nav: 'indicator',
+    schema: { breadcrumbs: [{ name: 'Indicator', url: '/indicator' }, { name: 'Historical data', url: '/data' }] },
     title: 'Historical Data: Regimes and Signals Since 1995',
     crumb: 'Historical data',
     desc:  'Every DoubleTrends signal since 1998 with 3-month, 1-year and 2-year S&P 500 forward returns, the regime mix by year since 1996, regime statistics, and a CSV download.',
@@ -98,11 +106,12 @@ const pages = [
   page('product.html', {
     priority: 0.9,
     kind: 'product',
-    nav: 'subscription',
-    title: 'Subscription',
-    crumb: 'Subscription',
-    desc:  'Subscriber access to the daily DoubleTrends regime reading and same-day signals: USD 149 per year (USD 12.42 a month, billed annually), with a 30-day free trial and a refund window.',
+    nav: 'indicator',
+    title: 'Subscriber Access',
+    crumb: 'Subscriber access',
+    desc:  'Subscriber access to the daily DoubleTrends regime reading and same-day signals. The USD 149 annual fee covers the infrastructure that computes and delivers the reading; 30-day free trial and a refund window.',
     schema: {
+      breadcrumbs: [{ name: 'Indicator', url: '/indicator' }, { name: 'Subscriber access', url: '/product' }],
       productName: 'DoubleTrends Regime Indicator — Annual Subscription',
       price: '149.00',
       monthlyPrice: 12.42,
@@ -137,8 +146,9 @@ const pages = [
     desc:  'The principles behind the DoubleTrends Regime Indicator: published rules, a complete public record, one narrow question answered well, and education over dependency.',
   }),
   companyPage('consulting', {
-    priority: 0.6,
+    priority: 0.8,
     kind: 'services',
+    nav: 'services',
     title: 'Research Services',
     desc:  'Quantitative research and data engineering from the team behind the DoubleTrends Regime Indicator: market data pipelines, statistical studies, forecasting and model validation.',
   }),
@@ -183,7 +193,7 @@ const pages = [
   page('success.html', {
     sitemap: false,
     robots: 'noindex,follow',
-    nav: 'subscription',
+    nav: 'indicator',
     title: 'Subscription Confirmed',
     desc:  'Your DoubleTrends subscription is active. Check your email for the sign-in link to the subscriber portal.',
   }),
@@ -289,7 +299,7 @@ const pages = [
 ];
 
 const SITE_NAME = 'DoubleTrends';
-const SITE_DESCRIPTION = 'The DoubleTrends Regime Indicator: a rules-based daily classification of S&P 500 market stress, with research on drawdowns and market regimes.';
+const SITE_DESCRIPTION = 'DoubleTrends is an independent quantitative research firm: research on market regimes and drawdowns, the DoubleTrends Regime Indicator, and research services.';
 
 module.exports = {
   SITE_URL,

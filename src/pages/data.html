@@ -58,6 +58,43 @@
   </div>
 </section>
 
+<section class="section" id="revisions">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Revisions</span>
+        <h2 class="h2">Changes to published data</h2>
+        <p>Any change to a reading after its publication date is recorded here with its reason. Readings are otherwise final once the next session begins.</p>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead><tr><th scope="col">Date</th><th scope="col">Sessions affected</th><th scope="col">Change</th><th scope="col">Effect on regime or signal</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="date">2026-11-07</td>
+            <td>20 sessions, 2026-06-22 to 2026-11-06 (19 Fridays and June 22)</td>
+            <td class="text">Not published at the time because of a scheduling fault. Computed after the fact with the published method and added. The fault was corrected the same day.</td>
+            <td class="text">None carried a signal.</td>
+          </tr>
+          <tr>
+            <td class="date">2026-11-07</td>
+            <td>2026-08-06 and 2026-10-21</td>
+            <td class="text">The final reading did not publish (on October 21 an upstream data source was unavailable at the close); the published value was a provisional intraday reading. Replaced with the final reading computed with the published method.</td>
+            <td class="text">Regime and signal state unchanged; closing values updated.</td>
+          </tr>
+          <tr>
+            <td class="date">2026-11-07</td>
+            <td>Back-tested history</td>
+            <td class="text">The <a class="link" href="method.html#history">methodology</a> now discloses that monthly macroeconomic inputs are applied from the start of the month they describe in the back-tested history, before their release.</td>
+            <td class="text">Disclosure only; no readings changed.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
 <section class="section">
   <div class="wrap cols-2">
     <div>
@@ -67,7 +104,7 @@
         <dt>Signal history</dt>
         <dd><a class="link" href="public/data/doubletrends-signals.csv" download>doubletrends-signals.csv</a><br /><span class="fine">One row per signal: date, regime, S&amp;P 500 close, distance from one-year high, 3-month, 1-year and 2-year returns, and basis (back-tested or live).</span></dd>
         <dt>Daily readings</dt>
-        <dd>Available to subscribers in the portal. <a class="link" href="product.html">Subscription</a></dd>
+        <dd>Delivered to subscribers in the portal. <a class="link" href="product.html">Subscriber access</a></dd>
       </dl>
     </div>
     <div class="disclosure">
