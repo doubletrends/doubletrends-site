@@ -28,8 +28,6 @@ const IMAGES = [
   { src: 'research/mdd-1.png',            maxWidth: 1600, quality: 80 }, // 3400px JPEG
   { src: 'research/mdd-2.png',            maxWidth: 1425, lossless: true }, // flat diagram
   { src: 'research/mdd-3.png',            maxWidth: 1320, lossless: true }, // flat diagram
-  { src: 'research/volume-profile.png',   maxWidth: 1600, quality: 82 },
-  { src: 'research/vwap.png',             maxWidth: 1111, quality: 82 },
   // AlphaVerify figures (CC0, from github.com/doubletrends/alpha-verify docs/).
   { src: 'alphaverify/ma_cross_50_200__bin_09.png', maxWidth: 1800, quality: 84 },
   { src: 'alphaverify/ma_ratio_200__bin_04.png',    maxWidth: 1800, quality: 84 },
