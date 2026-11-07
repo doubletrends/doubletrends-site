@@ -53,21 +53,15 @@ function svg(width, height, paths, { stroke, opacity, strokeWidth }) {
 // pre-rounded points (no drift) to keep the file small.
 function paperBeat() {
   const W = 720, H = 192, MID = H / 2, AMP = 80, N = 22, steps = 240, margin = 24;
-  const r1 = (n) => Math.round(n * 10) / 10;
   const env4 = (t) => 0.62 + 0.38 * Math.cos(4 * t);
   const env6 = (t) => 0.55 + 0.45 * Math.cos(6 * t);
   const strand = (yOf) => {
     const pts = [];
     for (let i = 0; i <= steps; i++) {
       const x = -margin + (i / steps) * (W + 2 * margin);
-      pts.push([r1(x), r1(yOf((x / W) * TAU))]);
+      pts.push([x, yOf((x / W) * TAU)]);
     }
-    let d = `M${pts[0][0]} ${pts[0][1]}l`;
-    for (let i = 1; i < pts.length; i++) {
-      const dx = r1(pts[i][0] - pts[i - 1][0]), dy = r1(pts[i][1] - pts[i - 1][1]);
-      d += `${i > 1 ? ' ' : ''}${dx} ${dy}`;
-    }
-    return d.replace(/ -/g, '-');
+    return relPath(pts);
   };
   const paths = [];
   for (let k = 0; k < N; k++) {
