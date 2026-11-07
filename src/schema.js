@@ -224,7 +224,7 @@ function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher,
       '@id': `${canonical}#product`,
       name: schema.productName || page.title,
       description: page.desc,
-      brand: { '@type': 'Brand', name: 'DoubleTrends™' },
+      brand: { '@type': 'Brand', name: 'DoubleTrends' },
       offers: {
         '@type': 'Offer',
         url: canonical,

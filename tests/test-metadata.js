@@ -4,7 +4,10 @@ const { SITE_URL, SITE_NAME } = require('../src/site.config');
 const { DIST, walk, relPosix, isNoindex, report } = require('./test-utils');
 
 const HTML_EXT        = '.html';
-const REQUIRED_PREFIX = `${SITE_NAME} | `;
+// Title convention: page first, firm last ("Methodology | DoubleTrends");
+// the homepage leads with the firm ("DoubleTrends — S&P 500 …").
+const PAGE_SUFFIX = ` | ${SITE_NAME}`;
+const HOME_PREFIX = `${SITE_NAME} — `;
 const TITLE_RE        = /<title>([^<]+)<\/title>/i;
 const DESC_RE         = /<meta\s+name=["']description["']\s+content=(["'])(.*?)\1\s*\/?>/i;
 const ROBOTS_RE       = /<meta\s+name=["']robots["']\s+content=(["'])(.*?)\1\s*\/?>/i;
@@ -24,13 +27,14 @@ function readMatch(html, regex, label, relFile, errors) {
   return match[match.length - 1].trim();
 }
 
-function validatePrefixed(value, label, relFile, errors) {
-  if (!value.startsWith(REQUIRED_PREFIX)) {
-    errors.push(`${relFile}: ${label} must start with "${REQUIRED_PREFIX}"`);
-    return;
-  }
-  if (value.length === REQUIRED_PREFIX.length) {
-    errors.push(`${relFile}: ${label} must include non-empty text after prefix`);
+function validateTitle(value, label, relFile, errors) {
+  const decoded = value.replace(/&amp;/g, '&');
+  const isHome = relFile === 'index.html';
+  const ok = isHome
+    ? decoded.startsWith(HOME_PREFIX) && decoded.length > HOME_PREFIX.length
+    : decoded.endsWith(PAGE_SUFFIX) && decoded.length > PAGE_SUFFIX.length;
+  if (!ok) {
+    errors.push(`${relFile}: ${label} must ${isHome ? `start with "${HOME_PREFIX}"` : `end with "${PAGE_SUFFIX}"`} with page text`);
   }
 }
 
@@ -64,9 +68,9 @@ function main() {
     validatePresent(canonical,    'canonical',           relFile, errors);
     validatePresent(ogDesc,       'og:description',      relFile, errors);
     validatePresent(twitterDesc,  'twitter:description', relFile, errors);
-    validatePrefixed(title,        '<title>',      relFile, errors);
-    validatePrefixed(ogTitle,      'og:title',     relFile, errors);
-    validatePrefixed(twitterTitle, 'twitter:title', relFile, errors);
+    validateTitle(title,        '<title>',      relFile, errors);
+    validateTitle(ogTitle,      'og:title',     relFile, errors);
+    validateTitle(twitterTitle, 'twitter:title', relFile, errors);
 
     if (title !== ogTitle || title !== twitterTitle) {
       errors.push(`${relFile}: title, og:title, and twitter:title must match exactly`);

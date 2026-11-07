@@ -1,6 +1,6 @@
 # Served from the assets root by Cloudflare Workers static assets.
 # Anything not listed keeps the platform default (max-age=0, must-revalidate),
-# which is what HTML and the daily-rebuilt replay JSON need.
+# which is what HTML and the data files under public/data/ need.
 
 # Font files never change under the same name — the filename encodes family
 # and weight, so a redesign ships new files. Safe to cache forever.

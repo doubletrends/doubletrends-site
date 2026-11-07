@@ -4,7 +4,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 
-const SECTIONS = { academy: 'Academy', company: 'Company', legal: 'Legal' };
+const SECTIONS = { academy: 'Research', company: 'About', legal: 'Legal' };
 
 // Handles both file and directory targets.
 function walk(target) {
@@ -37,39 +37,8 @@ function decode(str) {
     .trim();
 }
 
-// Normalize a built-page href to its dist file path: strip the leading ../
-// that section sub-pages use, then undo the build's extensionless link
-// rewrite (directory → index.html, extensionless → + ".html").
-function normDist(href) {
-  const p = href.replace(/^\.\.\//, '').replace(/^\.\//, '');
-  if (p === '' || p.endsWith('/')) return `${p}index.html`;
-  if (!/\.[a-z0-9]+$/i.test(p)) return `${p}.html`;
-  return p;
-}
-
 function isNoindex(robotsStr) {
   return robotsStr != null && robotsStr.toLowerCase().includes('noindex');
-}
-
-// Returns [{href, body, featured}] for every card in a built index page.
-// Covers the three card variants: <a directory-featured>, <a directory-card>,
-// and <article directory-card>. href is already normDist-normalized.
-function walkCards(html) {
-  const cards = [];
-
-  const featM = html.match(/<a\b[^>]+href="([^"]+)"[^>]*\bdirectory-featured\b[^>]*>([\s\S]*?)<\/a>/);
-  if (featM) cards.push({ href: normDist(featM[1]), body: featM[2], featured: true });
-
-  for (const m of html.matchAll(/<a\b[^>]+href="([^"]+)"[^>]*\bdirectory-card\b[^>]*>([\s\S]*?)<\/a>/g)) {
-    cards.push({ href: normDist(m[1]), body: m[2], featured: false });
-  }
-
-  for (const m of html.matchAll(/<article\b[^>]*\bdirectory-card\b[^>]*>([\s\S]*?)<\/article>/g)) {
-    const inner = m[1].match(/href="([^"]+)"/);
-    if (inner) cards.push({ href: normDist(inner[1]), body: m[1], featured: false });
-  }
-
-  return cards;
 }
 
 function report(errors, label) {
@@ -82,4 +51,4 @@ function report(errors, label) {
   console.log(`  ${green}✓ PASS${reset}  ${label}`);
 }
 
-module.exports = { ROOT, DIST, SECTIONS, walk, relPosix, decode, normDist, isNoindex, walkCards, report };
+module.exports = { ROOT, DIST, SECTIONS, walk, relPosix, decode, isNoindex, report };

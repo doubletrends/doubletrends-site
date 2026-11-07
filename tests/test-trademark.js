@@ -1,54 +1,44 @@
+// Trademark convention (as established publishers handle marks):
+//
+//   1. Every built page carries the footer notice
+//      "DoubleTrends™ is a trademark of DoubleTrends L.L.C.".
+//   2. Outside the legal documents, the ™ symbol appears only in that notice —
+//      running text, titles and metadata say plain "DoubleTrends". (Marking
+//      every mention reads as defensive; the notice preserves the claim.)
+//   3. Legal documents (legal/*) may mark the name wherever their drafting does.
 const fs   = require('fs');
 const path = require('path');
-const { ROOT, walk, relPosix, report } = require('./test-utils');
+const { DIST, walk, relPosix, report } = require('./test-utils');
 
-const TARGETS = [
-  'README.md',
-  'dist',
-  path.join('public', 'js'),
-];
-const TEXT_EXTS         = new Set(['.md', '.js', '.html']);
-const TRADEMARK_LITERAL = 'DoubleTrends';
-const ALLOWED_SUFFIXES  = ['™', '&trade;', '%E2%84%A2', ']'];
-const ENTITY_SUFFIX     = ' L.L.C.';
-
-function isAllowedSuffix(text, indexAfterLiteral) {
-  return (
-    ALLOWED_SUFFIXES.some((suffix) => text.startsWith(suffix, indexAfterLiteral)) ||
-    text.startsWith(ENTITY_SUFFIX, indexAfterLiteral)
-  );
-}
-
-function lineNumberAt(text, index) {
-  let line = 1;
-  for (let i = 0; i < index; i++) {
-    if (text.charCodeAt(i) === 10) line++;
-  }
-  return line;
-}
+const NOTICE_RE = /DoubleTrends(?:™|&trade;) is a trademark of DoubleTrends L\.L\.C\./g;
+const MARK_RE   = /DoubleTrends(?:™|&trade;|%E2%84%A2)/g;
 
 function main() {
-  const files = TARGETS
-    .map((target) => path.join(ROOT, target))
-    .flatMap((targetPath) => walk(targetPath))
-    .filter((file) => TEXT_EXTS.has(path.extname(file)));
-
+  if (!fs.existsSync(DIST)) throw new Error('dist/ not found — run npm run build first');
+  const files = walk(DIST).filter((f) => f.endsWith('.html'));
   const errors = [];
 
   for (const file of files) {
-    const text = fs.readFileSync(file, 'utf8');
-    let index  = text.indexOf(TRADEMARK_LITERAL);
-
-    while (index !== -1) {
-      const after = index + TRADEMARK_LITERAL.length;
-      if (!isAllowedSuffix(text, after)) {
-        errors.push(`${relPosix(file, ROOT)}:${lineNumberAt(text, index)} bare "${TRADEMARK_LITERAL}"`);
+    const rel = relPosix(file, DIST);
+    const html = fs.readFileSync(file, 'utf8');
+    const notices = (html.match(NOTICE_RE) || []).length;
+    if (notices !== 1) errors.push(`${rel}: expected the footer trademark notice once, found ${notices}`);
+    if (rel.startsWith('legal/')) continue;
+    const marks = (html.match(MARK_RE) || []).length;
+    if (marks !== notices) {
+      const extra = [];
+      for (const m of html.matchAll(MARK_RE)) {
+        const ctx = html.slice(m.index, m.index + 60);
+        if (!/^DoubleTrends(?:™|&trade;) is a trademark/.test(ctx)) {
+          extra.push(html.slice(0, m.index).split('\n').length);
+        }
       }
-      index = text.indexOf(TRADEMARK_LITERAL, after);
+      errors.push(`${rel}: ™ outside the notice on line(s) ${extra.join(', ')}`);
     }
   }
 
-  report(errors, 'Trademark test');
+  if (!files.length) errors.push('no built pages found');
+  report(errors, `Trademark test (${files.length} pages)`);
 }
 
 main();

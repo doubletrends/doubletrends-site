@@ -1,143 +1,133 @@
-# DoubleTrends™ Site
+# DoubleTrends Site
 
-Marketing site for DoubleTrends™, served at `doubletrends.com`.
+Public site of DoubleTrends, served at `doubletrends.com`: the DoubleTrends Regime Indicator (overview, methodology, historical data), the research notes, the subscription page, and the firm pages.
 
-Static HTML/CSS/JS — no framework. A single Node.js build step (`build.js`) assembles pages from templates, derives all metadata, compiles the stylesheet, and optimizes images; the output in `dist/` is deployed as a Cloudflare Worker (Static Assets).
+Static HTML/CSS/JS — no framework. A single Node.js build (`build.js`) assembles pages, renders the data exhibits, derives all metadata, compiles the stylesheet and optimizes images; `dist/` is deployed as a Cloudflare Worker (Static Assets).
 
 ---
 
 ## The big picture
 
-Read this first — it's the whole repo in one screen.
-
-This is a **tiny static-site generator**, not a framework app. There is no client-side router, no bundler, no app shell. `build.js` runs at build time, produces plain HTML/CSS/JS into `dist/`, and Cloudflare serves it. That's the entire runtime.
-
 ```mermaid
 flowchart LR
+    backend[("../doubletrends-backend<br/>backfill_fast.csv")] -->|npm run indicator-data| data["src/data/<br/>indicator.json · regimes-daily.json<br/>public/data/*.csv"]
     subgraph SRC["Sources you author"]
         direction TB
-        cfg["<b>site.config.js</b> — page registry<br/>(single source of truth)"]
+        cfg["site.config.js — page registry"]
         pages["pages/*.html — page bodies"]
-        parts["_partials/*.html — shared shell"]
-        css["styles/**.css"]
-        pub["public/** — fonts · images · JS · JSON"]
+        parts["_partials/*.html — shell"]
+        css["styles/**.css — house style"]
     end
-
-    SRC --> build["<b>build.js</b><br/>• wrap bodies in layout + head/header/footer<br/>• resolve #123;#123;PLACEHOLDERS#125;#125; (ROOT, TITLE, DESC, CANONICAL…)<br/>• compile CSS sources → one site.css<br/>• derive canonical URLs, JSON-LD, sitemap, _redirects<br/>• copy public/ → dist/, images → resized WebP"]
-
-    build --> dist[("dist/<br/>static output — disposable")]
-    dist --> cf(["Cloudflare Worker · Static Assets<br/>serves doubletrends.com"])
+    data --> build
+    SRC --> build["<b>build.js</b><br/>layout + partials · placeholders<br/>charts.js → SVG exhibits + figures<br/>breadcrumbs, datelines, research lists<br/>CSS · sitemap · _redirects · llms.txt · WebP"]
+    build --> dist[("dist/ — disposable")]
+    dist --> cf(["Cloudflare Worker · Static Assets"])
 ```
 
-Five load-bearing ideas — internalize these and the rest is detail:
+Load-bearing ideas:
 
-1. **`build.js` is the whole system.** Everything below is an input to it or an output from it.
-2. **The page registry (`src/site.config.js`) is the single source of truth.** Page files under `src/pages/` are just body content; their title, description, URL, JSON-LD kind, sitemap priority, and robots rules all live in the registry entry, not in the page.
-3. **URLs and metadata are derived once, never hand-authored twice.** The canonical URL, sitemap `<loc>`, `_redirects` targets, JSON-LD, and Open Graph all flow from one helper (`canonicalFor` in `src/schema.js`), so they cannot drift. See [URLs, serving & SEO](#urls-serving--seo).
-4. **Assets are transformed, not just shipped.** CSS sources compile to one file; images are resized and converted to WebP at build time while the editable originals stay in `public/`. See [Image pipeline](#image-pipeline).
-5. **`dist/` is disposable.** It is generated output — never edit it, never link to a `.html` file inside it.
+1. **`build.js` is the whole system.** Everything else is an input to it or an output of it.
+2. **No number is typed by hand.** Every figure on the site — the latest reading, signal counts, returns, regime shares, the exhibits — comes from `src/data/`, generated from the backend's validated backfill by `build-indicator-data.js`. Change the data, rebuild, and every page agrees.
+3. **The page registry (`src/site.config.js`) is the single source of truth** for each page's URL, title, description, nav item, breadcrumb, JSON-LD and — for research notes — section, series and publication date. The research library and "further reading" blocks are generated from it.
+4. **URLs and metadata are derived once** (`canonicalFor` in `src/schema.js`) and feed the canonical tag, sitemap, `_redirects`, JSON-LD and Open Graph. See [URLs, serving & SEO](#urls-serving--seo).
+5. **`dist/` is disposable.** Never edit it.
 
 ---
 
 ## Quick start
 
 ```bash
-npm run build     # build the site into dist/
-npm run dev       # build once, then serve dist/ locally at http://localhost:8787
-npm run deploy    # build, then deploy with Wrangler (manual fallback — see Deployment)
-npm test          # run the full validation suite
+npm run build            # build into dist/
+npm run dev              # build, then serve dist/ with Wrangler
+npm test                 # full validation suite (what CI runs)
+npm run deploy           # manual fallback — CI deploys on push to main
 ```
 
-Data and brand regeneration (run only when their inputs change):
+Regenerate inputs only when they change:
 
 ```bash
-npm run replay-data   # rebuild replay JSON in public/replay/ (needs the backend repo — see below)
-npm run brand         # regenerate logos/favicons/OG image in public/brand/
+npm run indicator-data   # src/data/ + public/data/ from ../doubletrends-backend (after a backend backfill)
+npm run brand            # public/brand/ (logo, favicons, wordmarks, OG image with the regime ribbon)
 ```
 
 ### Where to look first
 
 | You want to… | Start here |
 | --- | --- |
-| Add or edit a page's metadata/URL | `src/site.config.js` (the page registry) |
+| Change a page's title, description, URL or nav item | `src/site.config.js` |
 | Change a page's content | `src/pages/<path>.html` |
-| Author a brand-new page | copy a scaffold from `src/_templates/`, then register it |
-| Change shared header/footer/head | `src/_partials/` |
-| Change styling | `src/styles/` (tokens → base → components → layouts) |
-| Understand the build | `build.js` (top-to-bottom, it's linear) |
+| Add a research note | copy `src/_templates/article.html`, register it with `article(...)` |
+| Change a figure, table or exhibit | `src/charts.js` (fed by `src/data/`) |
+| Change the header, footer or head | `src/_partials/` |
+| Change styling | `src/styles/` (tokens → base → components → layouts → legacy) |
 
 ---
 
 ## Deployment
 
-Deploys are **gated by CI**. A push to `main` triggers `.github/workflows/ci.yml`: the `test` job runs the full validation suite, and only if it passes does the `deploy` job build and `wrangler deploy` to `doubletrends.com`. Broken code cannot reach production.
+Deploys are **gated by CI**. A push to `main` runs `.github/workflows/ci.yml`: the `test` job runs the full suite, and only if it passes does `deploy` build and `wrangler deploy` to `doubletrends.com`. It needs the repo secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`; Cloudflare's own Git auto-deploy must stay **disabled** so CI is the only deploy path.
 
-The `deploy` job needs two repo secrets — `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` — and Cloudflare's own Git auto-deploy must be **disabled** so CI is the only deploy path (otherwise the site deploys twice, ungated).
+Production routing is declared in `wrangler.jsonc` (`routes` binds `doubletrends.com` as a custom domain), so a recreated Worker comes up with its domain attached.
 
-`npm run deploy` (`node build.js` → `wrangler deploy`) remains a manual local fallback. `dist/` is the Worker's asset directory (`wrangler.jsonc`).
-
-Production routing is declared in `wrangler.jsonc`, not only in the dashboard: the `routes` entry binds `doubletrends.com` as a custom domain. Before it was added, deploys ended with `No targets deployed for doubletrends` and the site served only because the domain had been attached by hand — so a recreated Worker would have come up with no domain and nothing in the repo explaining why.
+Readings on the site are as of the last build (the date is printed beside them). Refreshing them means: backend backfill → `npm run indicator-data` → commit → push.
 
 ---
 
 ## How the build works
 
-`build.js` runs top-to-bottom and is deliberately linear. In order, it:
+`build.js` runs top to bottom:
 
-1. Reads shared partials from `src/_partials/` (layout, head, header, footer, checkout gate, stories).
-2. Compiles the CSS sources in `src/styles/` into one minified `dist/public/css/site.css` via the Tailwind CLI.
-3. For each entry in the page registry, reads the body from `src/pages/`, wraps it in `layout.html`, and injects head/header/footer.
-4. Resolves placeholders — `{{ROOT}}`, `{{TITLE}}`, `{{DESC}}`, `{{CANONICAL}}`, `{{STORIES}}`, and more.
-5. Rewrites internal `.html` hrefs to the extensionless URLs Cloudflare serves with 200 (`method.html` → `method`, `academy/index.html` → `academy/`). Templates author plain `.html` paths.
-6. Auto-tags top-level blocks with `data-reveal` for the scroll-reveal motion system (see [Motion](#motion)).
-7. Writes final HTML to `dist/` and generates `sitemap.xml`, `_redirects`, and `llms.txt`.
-8. Copies `public/` into `dist/public/`, re-encoding the managed images to resized WebP along the way (see [Image pipeline](#image-pipeline)).
+1. Computes figures and exhibits once from `src/data/` (`src/charts.js`).
+2. Compiles `src/styles/` into one minified `dist/public/css/site.css` (Tailwind CLI; utilities remain available to older page markup).
+3. For each registry entry: wraps the page body in `layout.html` with head/header/footer/checkout-gate, resolves every placeholder, marks the current nav item (`aria-current`), and — for research notes — inserts the breadcrumb and dateline and replaces the note's closing promo block with a generated further-reading block.
+4. **Fails the build on any unresolved placeholder.**
+5. Rewrites internal `.html` links to the extensionless URLs Cloudflare serves with 200.
+6. Writes `sitemap.xml`, `_redirects` and `llms.txt`; copies `public/`, re-encoding managed images to WebP.
 
-### Templates vs. partials vs. scaffolds — don't confuse them
+Placeholder families: `ROOT`, `TITLE`, `DESC`, `CANONICAL` … (page metadata), `BREADCRUMB`, `RESEARCH_RECENT` / `RESEARCH_LIBRARY`, `IND_*` (latest reading, history span), `SIG_*` (signal record), `REG_*` (regime shares), `EXHIBIT_*` and `TABLE_*` (SVG exhibits, data tables), each written in double braces in page markup. The full list is the return value of `buildExhibits()` in `src/charts.js`.
 
-- **`src/_partials/`** — shared fragments injected into *every* build (`layout.html` is the page shell with `{{HEAD}}`/`{{HEADER}}`/`{{CONTENT}}`/`{{FOOTER}}` slots; plus `head`, `header`, `footer`, `checkout-gate`, `stories`, `routing-card`). These are build inputs.
-- **`src/_templates/`** — authoring **scaffolds** you *copy* to start a new page (`article`, `company`, `directory`, `legal`). They are **not** read by the build; they carry `<!-- FILL: -->` markers and a reminder to register the page.
-- **`src/pages/`** — the actual page bodies, one file per page.
+### Partials vs. templates
+
+- **`src/_partials/`** — injected into every page: `layout`, `head`, `header` (utility bar with the latest reading + primary nav), `footer` (disclosures, trademark notice), `checkout-gate` (notice shown before Stripe checkout).
+- **`src/_templates/`** — copy-to-create scaffolds (`article`, `legal`), not read by the build.
+
+---
+
+## House style
+
+The site is designed to read like an index provider's publication, not a product landing page.
+
+- **Type:** Source Serif 4 for headings and long-form reading, Source Sans 3 for interface and data (tabular figures in tables). Self-hosted latin subsets, SIL OFL (`public/fonts/*/OFL.txt`).
+- **Color:** navy ink on white, one cool gray family. Color carries data only: the four regime colors (`--regime-*`) appear where they encode a regime and nowhere else. The palette was validated for color-vision deficiency (all-pairs ΔE ≥ 14.9); the ochre is below 3:1 on white, so regimes are always labelled in text and every exhibit has a table view.
+- **Structure:** ruled sections, numbered exhibits with a source line, document pages with a contents column. No cards, shadows, gradients, scroll animation or stock photography.
+- **Voice:** sentence case, plain and specific, figures with their basis. Readings before the live date are always labelled **back-tested**; the full signal record, including early signals, is always published.
+- **Trademark:** `DoubleTrends` in running text; the ™ appears in the footer notice and the legal documents (enforced by `tests/test-trademark.js`).
+
+### Styles (`src/styles/`)
+
+| File | Role |
+| --- | --- |
+| `tokens/colors.css`, `tokens/font-face.css` | palette (mirror of `src/brand.config.js`) and faces |
+| `base/reset-global.css`, `base/type-base.css` | reset, type scale, prose |
+| `components/chrome.css` | utility bar, masthead, nav, breadcrumb, footer |
+| `components/controls.css` | buttons |
+| `components/exhibit.css` | exhibits, legends, tooltips, data tables |
+| `layouts/document.css` | page heads, reading panel, key figures, sections, contents layout, entries, facts, steps, notes, offer |
+| `components/legacy.css` | maps the class vocabulary inside older research notes and legal documents onto the house style |
 
 ---
 
-## Repo layout
+## Data and exhibits
 
-### Directories
+`build-indicator-data.js` reads `../doubletrends-backend/signal/backfill/fast/backfill_fast.csv` — the point-in-time history produced and parity-checked by the backend's `python -m backfill.prod` — and writes:
 
-- `src/pages/` — page bodies (content only), one file = one page = one URL.
-- `src/_partials/` — shared layout, head, header, footer, and reusable fragments injected by the build.
-- `src/_templates/` — copy-to-create scaffolds for new pages (not build inputs).
-- `src/styles/` — CSS sources, layered `tokens/` → `base/` → `components/` → `layouts/`, concatenated and compiled by `build.js` into one `site.css`.
-- `public/` — static assets copied into the build: fonts, images, replay JSON, and browser JS.
-- `dist/` — generated output. Treat as a build artifact; never edit or commit-link it.
+- `src/data/indicator.json` — latest reading, regime statistics, bear episodes, every signal with 3-month / 1-year / 2-year S&P 500 price returns, and the summary figures. Build input.
+- `src/data/regimes-daily.json` — `[date, close, regime]` for every classified trading day. Build input; not shipped.
+- `public/data/doubletrends-signals.csv` — the public signal history download.
 
-### `public/js/`
+Constants at the top of the script: `LIVE_SINCE` (first live publication date; earlier readings are labelled back-tested) and `SIGNAL_RECORD_START` (the published record includes every signal from this date).
 
-Site-wide (loaded on every page via `layout.html`):
-
-- `accordion.js` — `<details>` accordion animation.
-- `canvas-grid.js` — animated square grid decorating section banners.
-- `scroll-reveal.js` — drives the `data-reveal` fade-up motion the build tags onto blocks.
-
-Loaded only where needed:
-
-- `checkout-gate.js` — the subscribe/checkout gate (via the `checkout-gate` partial).
-- `story-strip.js` — story carousel (via the `stories` partial).
-- `replay-chart.js`, `history-table.js`, `lightweight-charts.standalone.production.js` — homepage replay chart + signal history table (loaded by `index.html`; the charts library is vendored).
-
-### Key files
-
-- `build.js` — the site build (assemble, compile CSS, derive metadata, optimize images, emit `dist/`).
-- `build-images.js` — image optimization step used by `build.js` (resize + WebP; see below).
-- `build-brand.js` — regenerates brand assets into `public/brand/`.
-- `build-replay-data.js` — rebuilds `public/replay/*.json` from backend artifacts.
-- `src/site.config.js` — page registry and site-level config (source of truth).
-- `src/schema.js` — canonical-URL and JSON-LD helpers.
-- `src/brand.config.js` — brand token source of truth (colors, fonts).
-- `wrangler.jsonc` — Cloudflare deploy config; serves `dist/` as Worker assets and declares the `doubletrends.com` custom domain.
-
----
+`src/charts.js` renders the exhibits to static SVG at build time (they work without JavaScript and print cleanly); `public/js/exhibits.js` adds the crosshair and tooltips, with keyboard stepping and a live region for screen readers.
 
 ## URLs, serving & SEO
 
@@ -190,100 +180,41 @@ A slash means "collection," no slash means "document." That split is correct, no
 
 ---
 
+
 ## Page registry
 
-`src/site.config.js` defines the `pages` array — the source of truth for every page's output path, kind, title/description, sitemap inclusion and priority, robots behavior, and optional schema/routing-card content.
+`src/site.config.js` defines `pages`. Helpers derive `root` from the path and take overrides:
 
-It is helper-driven to cut boilerplate and drift. All helpers derive `root` automatically via `rootFor(src)` and take an `overrides` object for page-specific fields:
+| Helper | `src` | Defaults |
+| --- | --- | --- |
+| `page(src, o)` | as given | `kind: 'webpage'`, priority 0.7 |
+| `article(slug, { published, ... })` | `academy/${slug}.html` | `kind: 'article'`, `nav: 'research'`; `published` → dateline + JSON-LD `datePublished` |
+| `companyPage(slug, o)` | `company/${slug}.html` | `nav: 'about'`, priority 0.5 |
+| `legalPage(slug, o)` | `legal/${slug}.html` | priority 0.3 |
 
-| Helper | `src` becomes | Default `kind` | Default `priority` |
-| --- | --- | --- | --- |
-| `page(src, o)` | the string you pass (`method.html`) | `webpage` | `0.7` |
-| `article(slug, o)` | `academy/${slug}.html` | `article` | `0.7` |
-| `companyPage(slug, o)` | `company/${slug}.html` | `webpage` | `0.5` |
-| `legalPage(slug, o)` | `legal/${slug}.html` | `webpage` | `0.3` |
-
-```js
-article('vix-percentile', {
-  title: 'What Is VIX Percentile? Reading Volatility Against Itself',
-  desc: '…',
-  schema: { articleSection: 'Volatility', about: ['S&P 500 index', 'volatility'] },
-});
-```
-
-`rootFor(src)` derives the relative path back to the site root (`index.html` → `''`, `academy/index.html` → `'../'`), keeping shared-partial links working from nested directories without repeating `root` on every entry.
-
-The `<title>` pattern `DoubleTrends™ | {page.title}` is applied centrally in `build.js`, so registry `title` fields hold only the page-specific portion.
+Research notes also set `section` (topic, shown as "Research · {section}") and `series` (`Studies`, `Primers`, `Macro inputs`), which group the library. Titles render as `{page.title} | DoubleTrends`; the homepage as `DoubleTrends — {title}`.
 
 ---
 
 ## Image pipeline
 
-`build-images.js` replaces the old verbatim `public/` copy. It copies everything unchanged **except** a manifest of managed rasters, which it re-encodes to **resized WebP** sized to ~2× their largest on-screen dimension. Images reused in the 320px stories carousel also get a small `-card.webp` thumbnail, so a full hero shot is never shipped into a thumbnail slot.
-
-- **Manifest** — each entry sets a `maxWidth`, a `quality` (charts/screenshots 82–84; hero decor behind a tint 72–76; flat diagrams use lossless WebP, which beats lossy on them), and an optional `thumb` flag.
-- **Originals stay editable** in `public/`; WebP is generated into `dist/` at build time. Nothing pre-optimized is committed.
-- **Adding an image:** drop the source in `public/`, add a manifest line in `build-images.js`, and reference it by its `.webp` name in the page. `tests/test-links.js` verifies every referenced asset exists in `dist/`.
-- **Left as-is:** brand assets (`og-image`, `wordmark`, `banner`, favicons) stay PNG for social-scraper compatibility; SVGs stay vector.
-
----
-
-## Motion
-
-The build tags top-level content blocks with `data-reveal`; `public/js/scroll-reveal.js` fades them up on scroll (and cascades the first viewport on load). Blocks reveal as a whole — the build strips `data-reveal` from any nested descendant so nothing double-animates. A block that already carries `data-reveal` by hand is left untouched. See the reveal logic in `build.js` and its contract test `tests/test-reveal-contract.js`.
-
----
-
-## Replay data
-
-The homepage replay chart and history table read from `public/replay/`, produced by `build-replay-data.js`:
-
-- `public/replay/sp500.json` — OHLC candles plus regime/watch/setup/signal state and authoritative signal dates.
-- `public/replay/history.json` — signal history entries with forward-return snapshots.
-
-The replay build is intentionally coupled to the backend repo so the site displays the same signal history the backend produces.
+`build-images.js` copies `public/` unchanged except a manifest of research-note figures, which it re-encodes to resized WebP (≈2× their on-screen width; lossless for flat diagrams). Reference images by their `.webp` name; `tests/test-links.js` verifies every referenced asset exists. Brand assets stay PNG/SVG.
 
 ---
 
 ## Brand assets
 
-Brand assets are generated, not hand-drawn.
-
-- Generator: `build-brand.js` → output in `public/brand/` → frontend tokens in `src/brand.config.js`.
-- Do **not** hand-edit generated SVG/PNG in `public/brand/`; regenerate with `npm run brand`.
-
----
-
-## Backend relationship
-
-Site-only, but it depends on data artifacts from the sibling backend repo.
-
-- Expected sibling path: `../doubletrends-backend`
-- Replay-data input CSV: `../doubletrends-backend/signal/backfill/fast/backfill_fast.csv`
-
-If `doubletrends-backend` is missing or stale, `npm run replay-data` can fail or produce outdated demo data.
-
----
-
-## Nav bar glass effect
-
-The nav bar's frosted-glass look comes from a `::before` pseudo-element, **not** `backdrop-filter` on `<header>` itself. Applying `backdrop-filter` directly to the header makes it a backdrop root, which breaks the dropdown panel's own `backdrop-filter`. Delegating the blur to `::before` keeps the header from being a backdrop root, so the dropdown composites independently.
-
-- Nav blur: `.site-header::before` in `src/styles/components/nav-base.css`
-- Dropdown blur: `.nav-dropdown-panel` (same file)
-- Header inline style: shadow only — no `backdrop-filter`
+`build-brand.js` generates `public/brand/`: the DT monogram and the wordmark set in Source Serif 4 and converted to outlines (no font dependency), favicons, and an OG image carrying the real regime ribbon from `src/data/`. Every historical filename is still produced so external links keep working. Do not hand-edit generated files; run `npm run brand`.
 
 ---
 
 ## Tests
 
-`npm test` runs the full validation suite (build + link/metadata/schema/registry/consistency checks). See [`tests/README.md`](tests/README.md) for individual commands and the contract each test enforces.
+`npm test` builds and runs the suite: links, trademark convention, metadata, page registry, JSON-LD schema, label consistency (kickers, research sections, About index, nav state) and brand-token mirrors. See [`tests/README.md`](tests/README.md).
 
 ## Reading map
 
-- Site/page registry: `src/site.config.js`
-- Structured data & canonical helpers: `src/schema.js`
-- Brand tokens: `src/brand.config.js`
-- Build pipeline: `build.js` · image step: `build-images.js`
-- Brand asset generator: `build-brand.js`
-- Replay artifact generator: `build-replay-data.js`
+- Page registry: `src/site.config.js` · structured data and canonical URLs: `src/schema.js`
+- Figures and exhibits: `src/charts.js` · data generator: `build-indicator-data.js`
+- Brand tokens: `src/brand.config.js` · brand generator: `build-brand.js`
+- Build: `build.js` · images: `build-images.js`

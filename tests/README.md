@@ -1,82 +1,53 @@
 # tests/
 
-Frontend validation suite. All scripts are invoked via `npm run test:*`; `npm run test` runs them all.
+Site validation suite. `npm test` builds the site and runs every check below; CI runs the same command and blocks the deploy on any failure. Each check counts what it examined and fails if it examined nothing, so a markup change cannot turn a check into a silent pass.
 
 ## Commands
 
-- `npm run test` — run the full suite
-- `npm run test:links` — verify internal links, anchors, and unresolved placeholders in built HTML
-- `npm run test:trademark` — validate brand and entity naming across tracked text sources
-- `npm run test:metadata` — verify metadata completeness and title-prefix rules
-- `npm run test:registry` — validate `src/site.config.js` page registry integrity
-- `npm run test:schema` — verify JSON-LD rules for article and non-article pages
-- `npm run test:overlines` — verify every academy/company/legal page carries a correctly formatted overline
-- `npm run test:nav-consistency` — verify nav dropdown, footer column, and section index card are in sync for every sub-page
-- `npm run test:headings` — verify heading hierarchy consistency across company pages
-- `npm run test:brand-tokens` — verify the hand-mirrored brand token copies agree with `src/brand.config.js`
-- `npm run test:reveal` — verify the reveal-animation contract holds across built pages
+- `npm test` — build and run the full suite
+- `npm run test:links` — internal links, anchors and referenced assets in built HTML
+- `npm run test:trademark` — trademark notice and ™ convention
+- `npm run test:metadata` — metadata completeness and the title convention
+- `npm run test:registry` — `src/site.config.js` page-registry integrity
+- `npm run test:schema` — JSON-LD rules for article and non-article pages
+- `npm run test:labels` — kickers, research sections, About index and navigation state agree
+- `npm run test:brand-tokens` — `src/styles/tokens/colors.css` mirrors `src/brand.config.js`
+
+Unresolved `{{PLACEHOLDER}}` tokens are caught earlier: the build itself fails on any.
 
 ## Contracts
 
-### Metadata completeness (`test:metadata`)
-
-Checks each built HTML page for: `<title>`, meta description, robots meta, canonical link, `og:title`, `og:description`, `twitter:title`, `twitter:description`, and at least one JSON-LD block.
-
 ### Internal links (`test:links`)
 
-Link targets are resolved the way Cloudflare's auto-trailing-slash asset handling serves them: an extensionless path resolves to `path.html`, a directory path to its `index.html`. The build rewrites internal `.html` hrefs to this extensionless form; the test validates the rewritten output.
+Link targets are resolved the way Cloudflare's auto-trailing-slash asset handling serves them: an extensionless path resolves to `path.html`, a directory path to its `index.html`. The build rewrites internal `.html` hrefs to this extensionless form; the test validates the rewritten output, including that every referenced image, script and download exists in `dist/`.
 
-Also enforces:
+### Trademark (`test:trademark`)
 
-- `<title>`, `og:title`, and `twitter:title` must match and start with `DoubleTrends™ | `
-- description, `og:description`, and `twitter:description` must match
+- Every built page carries the footer notice "DoubleTrends™ is a trademark of DoubleTrends L.L.C." exactly once.
+- Outside `legal/`, the ™ appears only in that notice: running text, titles, metadata and JSON-LD use plain "DoubleTrends".
+- Legal documents may mark the name wherever their drafting does.
 
-### Trademark and entity naming (`test:trademark`)
+### Metadata completeness (`test:metadata`)
 
-- Brand references must use `DoubleTrends™`
-- Legal entity name is allowed only as `DoubleTrends L.L.C.`
-- An unmarked brand-name literal is not allowed unless immediately followed by ` L.L.C.`
+Each built page has `<title>`, meta description, robots, canonical, `og:title`, `og:description`, `twitter:title`, `twitter:description`, and (unless `noindex`) a JSON-LD block. The three titles match and follow the convention `{Page} | DoubleTrends`, or `DoubleTrends — {title}` on the homepage; the three descriptions match; the canonical is on `https://doubletrends.com/`.
 
 ### Page registry integrity (`test:registry`)
 
-Checks `src/site.config.js` for: unique `src` values, valid `.html` output paths, source-file existence under `src/pages/`, valid `kind`, required `title` and `desc`, valid priority ranges, expected `root` derivation, and article pages living under `academy/`.
-
-### Overline consistency (`test:overlines`)
-
-Checks every HTML page under `academy/`, `company/`, and `legal/` for a `.tag-overline` element whose text matches the expected section prefix (e.g. `Academy ·`, `Company ·`, `Legal ·`).
-
-### Nav / footer / index consistency (`test:nav-consistency`)
-
-Cross-checks nav dropdown, footer column, and section index card for each sub-page — fails if a page appears in one but not the others.
-
-Pages intentionally excluded from navigation are listed in the `NAV_EXCLUDED` set at the top of `test-nav-consistency.js`. Add a page's canonical path there to suppress the check without removing it from the build or sitemap.
-
-### Heading consistency (`test:headings`)
-
-Checks that company pages follow a consistent heading hierarchy.
-
-### Brand token consistency (`test:brand-tokens`)
-
-`src/brand.config.js` is the reference copy of the brand tokens; the same values are intentionally hand-mirrored (plain CSS stays greppable) in:
-
-- `src/styles/tokens/colors.css` — COLORS and SEMANTIC gain/loss (hex + rgb triples)
-- `src/styles/components/terminal-base.css` — REGIMES bands, legend alpha, signal flash
-- `build-brand.js` — the COLOR map driving generated brand assets
-- `src/_partials/routing-card.html` — the DARK_SURFACE gradient and text colors
-
-The test parses each mirror from source (no build needed) and fails if any copy disagrees with `brand.config.js`. When changing a token, update the reference and its mirror(s) together.
+Unique `src` values, valid `.html` output paths, source files present under `src/pages/`, valid `kind`, required `title` and `desc`, valid priorities, the expected `root` derivation, and article pages under `academy/`.
 
 ### Schema rules (`test:schema`)
 
-- Article pages must emit `Article`, declare `section`, and declare non-empty `schema.about`
-- Non-article pages must not emit `Article`
-- Academy content pages must emit breadcrumbs
+- Article pages emit `Article`, declare `section`, and declare non-empty `schema.about`.
+- Non-article pages do not emit `Article`.
+- Research pages emit breadcrumbs.
 
-### Reveal-animation contract (`test:reveal`)
+### Labels (`test:labels`)
 
-Enforces that the scroll-reveal / load-in motion animates a *block* (the smallest complete idea) and never its pieces. Across every built page:
+- **Kickers:** each section index carries the section name ("Research", "About", "Legal"); every sub-page carries "Section · Category".
+- **Research notes:** the kicker category equals the registry `section` (which also feeds the dateline and the research library).
+- **About and Legal:** each sub-page's kicker category equals its H1, and the About index lists each sub-page under that same name.
+- **Navigation:** a page with `nav` in the registry marks exactly that primary-nav item `aria-current`; a page without `nav` marks none.
 
-- **No nested reveals** — a `[data-reveal]` element never contains another. Animate the block as a whole; no double-animation. (Also guards the block-level section split: a split section must opt its wrapper out, not tag both wrapper and inner blocks.)
-- **No reveal in chrome** — `[data-reveal]` appears only inside `<main>`; nav, header, and footer never animate.
-- **Hero stays instant** — no `[data-reveal]` before the first `<h1>`. The hero is the load-in exception (CSS), never scroll-revealed.
-- **Data panels reveal whole** — no `[data-reveal]` on `<tr>`/`<td>`/`<th>`, and none inside a `.terminal-shell`. Never a per-row / per-item cascade.
+### Brand tokens (`test:brand-tokens`)
+
+`src/brand.config.js` is read by Tailwind and `build-brand.js`; `src/styles/tokens/colors.css` is read by every stylesheet and the SVG exhibits. The test maps each `COLORS` key and each `REGIMES` entry to its CSS custom property and fails on any missing or differing value — and on any `COLORS` key without a defined mirror.
