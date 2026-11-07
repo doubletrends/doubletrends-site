@@ -1,286 +1,134 @@
-<!-- ════════════════════════════════════════════════════════ HOW IT WORKS ════════════════════════════════════════════════════════ -->
-<!-- ── Foundation: Williams %R (with dtep-1 decor) — serves as page hero ─ -->
-<section id="foundation" class="decor-banner decor-banner-dark relative w-full min-h-screen flex items-center overflow-hidden" style="background: #2A3340; border-bottom: 1px solid rgba(255,255,255,0.10);">
-<img src="{{ROOT}}public/product/method-1.webp" alt="" aria-hidden="true"
-     class="home-decor-img absolute inset-y-0 right-0 h-full w-2/3 object-cover object-right pointer-events-none"
- />
-<div class="home-container relative z-10 pt-32 pb-20">
-<div class="hero-load flex flex-col max-w-3xl mb-10">
-<span class="tag-overline mb-5">How It Works &middot; Foundation</span>
-<h1 class="text-4xl md:text-5xl font-noto font-bold text-grad-section leading-[1.05] mb-5"> The engine: Williams %R, doubled. </h1>
-<p class="font-open text-lg leading-relaxed" style="color: var(--color-light);"> DoubleTrends&trade; works in three layers: a dual-timeframe Williams %R reversal, a market-regime classifier, and a confirmation gate. Williams %R is the engine underneath that stack: a momentum oscillator developed in the 1970s that measures where the current close sits inside the recent high-low range. </p>
-</div>
-<div class="max-w-3xl" data-reveal>
-<h3 class="text-dark text-xl md:text-2xl font-noto font-bold mb-3"> Why two timeframes, not one. </h3>
-<p class="font-open text-base leading-relaxed mb-4" style="color: var(--color-light);"> A single-period oscillator is too noisy. A short window catches every dip, including ones that don&rsquo;t matter; a long window catches the deep ones but lags badly. So we run Williams %R on two timeframes at once &mdash; one short, one long &mdash; and smooth each to take out day-to-day chop. </p>
-<p class="font-open text-base leading-relaxed" style="color: var(--color-light);"> A reversal candidate exists only when both timeframes agree the market is deeply oversold, and both start turning back up. The name <em>DoubleTrends™</em> refers to exactly this: two trend signals, both pointing the same way. </p>
-</div>
-</div>
-</section>
+<!-- Methodology: the rulebook. Structure of the method is published in full;
+     parameter values are not (same disclosure level as before the redesign). -->
+<div class="wrap">
+  <header class="page-head">
+    {{BREADCRUMB}}
+    <span class="kicker">Methodology</span>
+    <h1 class="h1">How the DoubleTrends Regime Indicator is constructed</h1>
+    <p class="dek">The indicator classifies the S&amp;P 500 into one of four regimes each trading day, and fires a reversal signal only when an oversold turn coincides with acute or persistent stress. This document sets out the inputs, the classification, the signal rules, publication timing, and how the history was built.</p>
+    <p class="page-head-meta"><span><strong>Coverage</strong> S&amp;P 500 index</span><span><strong>Frequency</strong> Daily, after the U.S. close</span><span><strong>History</strong> From {{IND_FIRST_DATE}}</span><span><strong>Live since</strong> {{IND_LIVE_SINCE}}</span></p>
+  </header>
 
-<!-- ── The Honest Part: why an oscillator alone fails ───────────────────── -->
-<section id="honest" class="w-full" style="background: transparent;">
-<div class="home-container py-20">
-<div class="flex flex-col max-w-3xl">
-<span class="tag-overline mb-5">The Honest Part</span>
-<h2 class="section-heading mb-5"> A momentum oscillator, alone, doesn&rsquo;t make money. </h2>
-<p class="section-body mb-5"> Every trading day, millions of chart-watchers, in the US, Japan, China, and every other market with a screen &mdash; if not two or six screens &mdash; run RSI, MACD, Bollinger Bands, Fibonacci retracements, Elliott Waves, and whatever pattern they can fit into a screenshot. They post their setups. They explain their conviction. They claim, in earnest, to have figured it out. </p>
-<p class="section-body"> If indicators alone were enough to call market bottoms, every one of them would be rich. </p>
-<p class="text-3xl md:text-4xl font-noto font-bold leading-tight my-8" style="color: var(--color-rust); letter-spacing: 0.02em;"> THEY. ARE. NOT. </p>
-<p class="section-body"> They fail because indicators alone have no context. A Williams %R reversal in a calm market means nothing; the same reversal in a panic means everything. With nothing telling them which is which, they fire on every oversold reading they see. Most of those are just routine pullbacks that resolve themselves quickly &mdash; noise, not opportunity. </p>
-</div>
-</div>
-</section>
+  <div class="doc">
+    <nav class="doc-toc" aria-label="Contents">
+      <span class="kicker kicker-muted">Contents</span>
+      <ol>
+        <li><a href="#overview">1. Overview</a></li>
+        <li><a href="#inputs">2. Data inputs</a></li>
+        <li><a href="#measures">3. Derived measures</a></li>
+        <li><a href="#regimes">4. Regime classification</a></li>
+        <li><a href="#signal">5. The reversal signal</a></li>
+        <li><a href="#publication">6. Publication and timing</a></li>
+        <li><a href="#history">7. Historical reconstruction</a></li>
+        <li><a href="#limitations">8. Limitations</a></li>
+      </ol>
+    </nav>
 
-<!-- ── The Two Layers (with dtep-2 decor) ───────────────────────────────── -->
-<section id="layers" class="decor-banner relative w-full overflow-hidden">
-<div class="home-container relative z-10 py-20">
+    <div class="doc-body">
+      <section id="overview">
+        <h2 class="h2"><span class="section-no">1</span>Overview</h2>
+        <div class="prose">
+          <p>Most declines in the S&amp;P 500 are routine: rebalancing, withdrawals and ordinary profit-taking that resolve without consequence. A small number are not. They are acute, disorderly selloffs or long, macro-driven bear markets &mdash; the periods in which buying a decline has historically been rewarded, and in which it is hardest to do.</p>
+          <p>The indicator separates the two. It first classifies the market&rsquo;s state from price, volatility and macroeconomic inputs, and only then considers whether an oversold reversal is meaningful. The question it answers is narrow by design: <em>is this a stressed market turning, or noise?</em></p>
+          <p>Two outputs are published each trading day: the <strong>regime</strong> (calm, correction, panic or bear) and the <strong>signal state</strong>. Signals are rare &mdash; {{SIG_COUNT}} since {{SIG_FIRST}}, about {{SIG_PER_DECADE}} per decade &mdash; and some years have none.</p>
+        </div>
+      </section>
 
-<!-- Layer 1 -->
-<div id="features" class="flex flex-col max-w-3xl mb-8">
-<span class="tag-overline mb-5">Layer 1</span>
-<h2 class="section-heading mb-5"> Derived features: the shape of the selloff. </h2>
-<p class="section-body"> Price gives you more than just &ldquo;up&rdquo; or &ldquo;down.&rdquo; A few derivatives computed off the raw OHLC history describe what a selloff is actually <em>doing</em> &mdash; not just where it ended up. A 3% dip and a 25% rout look identical in the headline but represent very different markets. </p>
-</div>
-<div class="grid md:grid-cols-2 gap-4 max-w-4xl">
-<div class="product-panel hover-lift-rust p-7">
-<h3 class="panel-heading">Drawdown depth</h3>
-<p class="panel-body"> How far below the trailing one-year high. The magnitude of the move. Tells you how bad it currently is. </p>
-</div>
-<div class="product-panel hover-lift-rust p-7">
-<h3 class="panel-heading">Drawdown duration</h3>
-<p class="panel-body"> How many bars since the last one-year high. A market that has been bleeding for six months is structurally different from one bleeding for two weeks &mdash; even at identical depth. Tells you how persistent it is. </p>
-</div>
-<div class="product-panel hover-lift-rust p-7">
-<h3 class="panel-heading">Recent sharpness</h3>
-<p class="panel-body"> The worst ten-day stretch within the trailing month. Captures sudden-onset stress: the kind of acute drop that happens in a panic, not a grind. </p>
-</div>
-<div class="product-panel hover-lift-rust p-7">
-<h3 class="panel-heading">Reference high</h3>
-<p class="panel-body"> Where the recent ceiling sat. Gives the rest of the rule something to be relative to &mdash; current price loses meaning without a benchmark. </p>
-</div>
-</div>
-<p class="section-body mt-8 max-w-3xl"> Together, these let the rule distinguish &ldquo;down 3% over six weeks&rdquo; (mild) from &ldquo;down 15% over four weeks&rdquo; (acute) &mdash; even though both end at similar drawdown levels. </p>
+      <section id="inputs">
+        <h2 class="h2"><span class="section-no">2</span>Data inputs</h2>
+        <div class="prose"><p>The method uses five public series. No proprietary or survey data is involved.</p></div>
+        <div class="table-scroll" style="margin-top: 1.25rem;">
+          <table class="data-table">
+            <thead><tr><th scope="col">Series</th><th scope="col">Source</th><th scope="col">Frequency</th><th scope="col">Used for</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">S&amp;P 500 index</th><td>Daily index prices</td><td>Daily</td><td class="text">Momentum, drawdown depth and duration, recent sharpness</td></tr>
+              <tr><th scope="row">Cboe Volatility Index (VIX)</th><td>Daily index prices</td><td>Daily</td><td class="text">Implied volatility relative to its own trailing year</td></tr>
+              <tr><th scope="row">Effective federal funds rate</th><td>FRED (FEDFUNDS)</td><td>Monthly</td><td class="text">Pace of monetary tightening</td></tr>
+              <tr><th scope="row">Unemployment rate</th><td>FRED (UNRATE)</td><td>Monthly</td><td class="text">Labor-market deterioration</td></tr>
+              <tr><th scope="row">Consumer Price Index, all items</th><td>FRED (CPIAUCSL)</td><td>Monthly</td><td class="text">Inflation as context for policy pressure</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-foot">Monthly series are carried forward to each trading day at their most recently published value.</p>
+      </section>
 
-<!-- Layer 2 -->
-<div id="anchoring" class="flex flex-col max-w-3xl mt-20 mb-8">
-<span class="tag-overline mb-5">Layer 2</span>
-<h2 class="section-heading mb-5"> External anchoring: the world around the price. </h2>
-<p class="section-body"> Price is necessary but not sufficient. A 10% drop with low volatility and an accommodative Fed is a different market from a 10% drop with VIX spiking and the Fed tightening. So we anchor the rule to four external series that describe the macro environment around the price action. </p>
-</div>
-<div class="grid md:grid-cols-2 gap-4 max-w-4xl">
-<div class="product-panel hover-lift-rust p-7">
-<h3 class="panel-heading">VIX &mdash; volatility</h3>
-<p class="panel-body"> The options market&rsquo;s implied-volatility index. When VIX sits in the upper end of its trailing one-year distribution, the market is paying up for fear. We track VIX as a smoothed percentile rather than a raw level &mdash; where it sits in its own distribution matters more than the number. </p>
-</div>
-<div class="product-panel hover-lift-rust p-7">
-<h3 class="panel-heading">Fed funds rate</h3>
-<p class="panel-body"> The Federal Reserve&rsquo;s policy rate, tracked as recent change over multiple horizons. Reads whether monetary policy is tightening, loosening, or holding &mdash; and how aggressively. </p>
-</div>
-<div class="product-panel hover-lift-rust p-7">
-<h3 class="panel-heading">Unemployment</h3>
-<p class="panel-body"> The U.S. unemployment rate, tracked both as recent change and against its trailing one-year average. Unemployment turning higher is one of the cleanest signals that the macro regime is deteriorating. </p>
-</div>
-<div class="product-panel hover-lift-rust p-7">
-<h3 class="panel-heading">CPI inflation</h3>
-<p class="panel-body"> Year-over-year inflation. Gives the context for what the Fed is reacting to &mdash; a Fed tightening into low inflation is a different beast from a Fed tightening into 5%-plus inflation. </p>
-</div>
-</div>
-<p class="section-body mt-8 max-w-3xl"> These four anchor the price-based features to the real world. Together with the derived features above, they feed the regime classifier. </p>
+      <section id="measures">
+        <h2 class="h2"><span class="section-no">3</span>Derived measures</h2>
+        <div class="prose">
+          <h3>3.1 Dual-horizon momentum</h3>
+          <p>Williams&nbsp;%R &mdash; a 1970s momentum oscillator that locates the latest close within its recent high&ndash;low range &mdash; is computed over a short and a long lookback, and each is smoothed. A single horizon is either too noisy (short) or too slow (long); requiring both to agree removes most false readings. A market is <strong>oversold</strong> when both smoothed readings sit deep in the bottom of their ranges, and a <strong>reversal candidate</strong> occurs on the session in which that condition ends.</p>
+          <h3>3.2 The shape of a decline</h3>
+          <p>Four measures describe what a decline is doing, not only where it has reached: <strong>depth</strong> (distance below the trailing one-year closing high), <strong>duration</strong> (sessions since that high), <strong>sharpness</strong> (the worst ten-session move within the trailing month) and a <strong>reference high</strong> (the recent ceiling the rest is measured against). Together they distinguish a 3% drift over six weeks from a 15% fall in four.</p>
+          <h3>3.3 Volatility and macro context</h3>
+          <p>The VIX is used as a smoothed percentile of its own trailing year, so that &ldquo;high&rdquo; is judged against recent experience rather than a fixed level. The federal funds rate is read as its change over three and six months; unemployment as its six-month change and its position against its own trailing average; CPI as year-over-year inflation.</p>
+        </div>
+      </section>
 
-</div>
-</section>
+      <section id="regimes">
+        <h2 class="h2"><span class="section-no">4</span>Regime classification</h2>
+        <div class="prose">
+          <p>Each session receives exactly one regime. A <em>base regime</em> is decided from price and volatility alone, and a <em>bear overlay</em> can replace it.</p>
+          <h3>4.1 Base regime</h3>
+          <ul class="plain-list">
+            <li><span class="regime-word calm">Calm</span> when implied volatility is in the low part of its trailing-year range.</li>
+            <li><span class="regime-word panic">Panic</span> when the index is below its recent high and either its recent ten-session decline is severe or implied volatility is near the top of its trailing-year range.</li>
+            <li><span class="regime-word correction">Correction</span> otherwise.</li>
+          </ul>
+          <h3>4.2 Bear overlay</h3>
+          <p>The <span class="regime-word bear">Bear</span> regime marks a deep and persistent decline under macroeconomic pressure. It begins only when all of the following hold: the drawdown has lasted well beyond a typical correction; it is deep; the market has re-entered oversold territory repeatedly; and at least one source of macro pressure is present &mdash; rapid policy tightening, rising unemployment, or high inflation met by tightening. Once active it persists, overriding the base regime, until the drawdown has recovered materially.</p>
+          <p>Since {{IND_FIRST_MONTH}} the overlay has been active three times: 2001&ndash;03, 2008&ndash;09 and 2022&ndash;23.</p>
+        </div>
+        <p class="note" style="margin-top: 1.5rem;"><strong>Parameters.</strong> Lookback lengths, smoothing and thresholds are fixed values of the method and are not published. The structure of every rule is described here in full.</p>
+      </section>
 
-<!-- ── The Classifier: regimes ──────────────────────────────────────────── -->
-<section id="regimes" class="w-full" style="background: transparent;">
-<div class="home-container py-20">
-<div class="flex flex-col max-w-3xl mb-8">
-<span class="tag-overline mb-5">The Classifier</span>
-<h2 class="section-heading mb-5"> Not every selloff is the same. </h2>
-<p class="section-body mb-4"> Most of the time, the market is doing nothing interesting. On most red days the selling is mechanical: pension rebalancing, retirement-account withdrawals, monthly DCA flows from people who need the cash. Boring. Reverting. Trying to time a Williams %R bottom in that kind of market is just noise-trading. </p>
-<p class="section-body"> Then, occasionally, something else happens. Acute selling. Forced de-risking. Volatility spiking. The macro picture deteriorating. That is the environment where buy-the-dip has historically paid &mdash; and where waiting for a Williams %R reversal is actually doing work. The rule needs to know which environment it is in. So we classify. </p>
-</div>
-<div aria-hidden="true" style="height: 0.75rem;"></div>
-<div class="terminal-shell hover-lift-rust overflow-hidden">
-<div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-3">
-<div class="flex items-center gap-3">
-<span class="status-dot"></span>
-<span class="data-label !text-white">Regime Classification</span>
-<span class="data-label !text-[var(--color-muted)]">Four states &middot; macro &times; price</span>
-</div>
-</div>
-<div class="overflow-x-auto" style="background: var(--color-light);">
-<table class="w-full text-sm font-mono" style="border-collapse: collapse;">
-<thead>
-<tr style="border-bottom: 1px solid rgba(30,37,48,0.10);">
-<th class="text-left px-5 py-3 font-semibold" style="color: var(--color-muted);">Regime</th>
-<th class="text-left px-3 py-3 font-semibold" style="color: var(--color-muted);">Character</th>
-<th class="text-left px-3 py-3 font-semibold" style="color: var(--color-muted);">Signal eligible?</th>
-</tr>
-</thead>
-<tbody>
-<tr style="border-bottom: 1px solid rgba(30,37,48,0.06);">
-<td class="px-5 py-3 font-semibold" style="color: var(--color-dark);">&#x1F7E2; calm</td>
-<td class="px-3 py-3" style="color: var(--color-muted);">low stress, near highs</td>
-<td class="px-3 py-3" style="color: var(--color-muted);">no &mdash; selloffs are noise</td>
-</tr>
-<tr style="border-bottom: 1px solid rgba(30,37,48,0.06);">
-<td class="px-5 py-3 font-semibold" style="color: var(--color-dark);">&#x1F7E1; correction</td>
-<td class="px-3 py-3" style="color: var(--color-muted);">off the highs, contained</td>
-<td class="px-3 py-3" style="color: var(--color-muted);">no &mdash; benign pullbacks</td>
-</tr>
-<tr style="border-bottom: 1px solid rgba(30,37,48,0.06);">
-<td class="px-5 py-3 font-semibold" style="color: var(--color-dark);">&#x1F7E0; panic</td>
-<td class="px-3 py-3" style="color: var(--color-muted);">acute drop + vol spike</td>
-<td class="px-3 py-3" style="color: var(--color-muted);">yes &mdash; this is the asymmetry</td>
-</tr>
-<tr>
-<td class="px-5 py-3 font-semibold" style="color: var(--color-dark);">&#x1F534; bear</td>
-<td class="px-3 py-3" style="color: var(--color-muted);">chronic, prolonged, macro stress</td>
-<td class="px-3 py-3" style="color: var(--color-muted);">yes &mdash; filtered hard</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="terminal-footer px-5 py-3 flex items-center">
-<span class="data-label" style="color: var(--color-muted);"> The first two regimes hold most of the calendar. The last two are where the rule does its work. </span>
-</div>
-</div>
-<p class="section-body mt-8 max-w-3xl"> Bear deserves a note. Bear markets have the deepest selloffs, but they also have the most fake bottoms &mdash; the V-bounces that look like recovery and then resume falling. So while bear-regime reversals can fire, they have to clear a harder confirmation bar than panic-regime reversals. The product is willing to wait. </p>
-</div>
-</section>
+      <section id="signal">
+        <h2 class="h2"><span class="section-no">5</span>The reversal signal</h2>
+        <div class="prose"><p>A signal fires on a session only when three conditions are met on that session.</p></div>
+        <ol class="steps" style="margin-top: 1.5rem;">
+          <li><h3>Reversal candidate</h3><p>Both smoothed momentum readings have been deeply oversold and turn up together (section 3.1).</p></li>
+          <li><h3>Stress regime</h3><p>The session&rsquo;s regime is panic or bear. In calm and correction the candidate is disregarded, without exception.</p></li>
+          <li><h3>Confirmation</h3><p>In panic, every qualifying reversal fires. In bear, early reversals are recorded but not signalled; a later reversal fires only with same-day confirmation.</p></li>
+        </ol>
+        <div class="prose" style="margin-top: 1.75rem;">
+          <h3>5.1 Clusters</h3>
+          <p>Reversals during one episode of stress are grouped into a cluster. Bear clusters persist until the decline has recovered, because bear markets produce many short-lived rallies before they end; this is why a bear-regime signal needs both depth of sequence and confirmation.</p>
+          <h3>5.2 Signal window</h3>
+          <p>A signal remains active for five sessions after it fires, and the signal date is recorded with it. Separately, subscribers receive an <strong>oversold alert</strong> when a panic or bear market is oversold but no reversal has yet occurred.</p>
+        </div>
+      </section>
 
-<!-- ── The Trigger (with dtep-3 decor + flow diagram) ───────────────────── -->
-<section id="trigger" class="decor-banner relative w-full overflow-hidden">
-<div class="home-container relative z-10 py-20">
-<div class="flex flex-col max-w-3xl mb-8">
-<span class="tag-overline mb-5">The Trigger</span>
-<h2 class="section-heading mb-5"> When the signal actually fires. </h2>
-<p class="section-body mb-5"> A DoubleTrends&trade; signal only fires when all three gates agree on the same day. </p>
-<p class="section-body mb-5"> <strong class="text-dark">First</strong> &mdash; the engine sees a reversal candidate. Both smoothed Williams %R timeframes have been deeply oversold and have started turning. </p>
-<p class="section-body mb-5"> <strong class="text-dark">Second</strong> &mdash; the regime classifier reads panic or bear. If the market is in calm or correction, the reversal is dropped on the floor. No exceptions, no overrides. </p>
-<p class="section-body mb-5"> <strong class="text-dark">Third</strong> &mdash; the reversal has to clear confirmation. Panic and bear both gate the trigger, but bear clears a harder bar &mdash; bear markets produce too many false bottoms to fire on the first oversold turn. </p>
-</div>
-<div aria-hidden="true" style="height: 0.75rem;"></div>
-<div class="terminal-shell hover-lift-rust overflow-hidden max-w-4xl">
-<div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-3">
-<div class="flex items-center gap-3">
-<span class="status-dot"></span>
-<span class="data-label !text-white">Signal Decision Flow</span>
-<span class="data-label !text-[var(--color-muted)]">Three gates &middot; all must clear</span>
-</div>
-</div>
-<div style="background: var(--color-light);">
-<div class="px-5 py-4 flex items-start gap-4 flex-wrap" style="border-top: 1px solid rgba(30,37,48,0.06);">
-<div style="min-width: 7rem;">
-<span class="data-label">Gate 1</span>
-<div class="font-mono text-sm mt-1" style="color: var(--color-dark);">Engine</div>
-</div>
-<div class="flex-1 min-w-0">
-<p class="font-mono text-sm" style="color: var(--color-dark);">Both smoothed Williams %R timeframes oversold &amp; turning up?</p>
-<div class="flex gap-6 flex-wrap mt-2 font-mono text-xs">
-<span style="color: var(--color-loss);">no &mdash;&gt; wait</span>
-<span style="color: var(--color-gain);">yes &mdash;&gt; continue</span>
-</div>
-</div>
-</div>
-<div class="px-5 py-4 flex items-start gap-4 flex-wrap" style="border-top: 1px solid rgba(30,37,48,0.06);">
-<div style="min-width: 7rem;">
-<span class="data-label">Gate 2</span>
-<div class="font-mono text-sm mt-1" style="color: var(--color-dark);">Regime</div>
-</div>
-<div class="flex-1 min-w-0">
-<p class="font-mono text-sm" style="color: var(--color-dark);">Regime = panic or bear?</p>
-<div class="flex gap-6 flex-wrap mt-2 font-mono text-xs">
-<span style="color: var(--color-loss);">calm / correction &mdash;&gt; reversal ignored</span>
-<span style="color: var(--color-gain);">panic / bear &mdash;&gt; continue</span>
-</div>
-</div>
-</div>
-<div class="px-5 py-4 flex items-start gap-4 flex-wrap" style="border-top: 1px solid rgba(30,37,48,0.06);">
-<div style="min-width: 7rem;">
-<span class="data-label">Gate 3</span>
-<div class="font-mono text-sm mt-1" style="color: var(--color-dark);">Confirmation</div>
-</div>
-<div class="flex-1 min-w-0">
-<p class="font-mono text-sm" style="color: var(--color-dark);">Reversal confirmation cleared? Bear clears a harder bar than panic.</p>
-<div class="flex gap-6 flex-wrap mt-2 font-mono text-xs">
-<span style="color: var(--color-loss);">no &mdash;&gt; wait for confirmation</span>
-<span style="color: var(--color-gain);">yes &mdash;&gt; fire</span>
-</div>
-</div>
-</div>
-<div class="px-5 py-4 text-center" style="border-top: 1px solid rgba(30,37,48,0.10); background: rgba(194,65,12,0.08);">
-<span class="font-mono text-sm font-bold" style="color: var(--color-rust); letter-spacing: 0.15em;">SIGNAL FIRES</span>
-</div>
-</div>
-</div>
-<p class="section-body mt-8 max-w-3xl"> When all three line up, the signal fires for that trading day. By construction, signals are rare. Some years produce several; others produce none. That rarity is not a bug &mdash; it is the entire point of the design. </p>
-</div>
-</section>
+      <section id="publication">
+        <h2 class="h2"><span class="section-no">6</span>Publication and timing</h2>
+        <dl class="facts">
+          <dt>Final reading</dt><dd>Computed from the session&rsquo;s closing values at 4:05&nbsp;p.m. ET and recomputed at 4:20&nbsp;p.m. ET, after the VIX settles. On early-close days the same schedule runs after the 1:00&nbsp;p.m. close.</dd>
+          <dt>Intraday readings</dt><dd>Provisional regime readings hourly from 10:00&nbsp;a.m. to 3:00&nbsp;p.m. ET. They never carry a signal; only the final reading can.</dd>
+          <dt>Trading calendar</dt><dd>The New York Stock Exchange calendar, including holidays and early closes.</dd>
+          <dt>Delivery</dt><dd>Subscribers see the reading in the portal; signals are delivered the same day. Public pages on this site show readings as of the date stated on them.</dd>
+          <dt>Finality</dt><dd>A session&rsquo;s final reading is not revised after the next session begins, except to complete a reading that failed to publish.</dd>
+        </dl>
+      </section>
 
-<!-- ── Causality ────────────────────────────────────────────────────────── -->
-<section id="causality" class="w-full" style="background: transparent;">
-<div class="home-container py-20">
-<div class="flex flex-col max-w-3xl">
-<span class="tag-overline mb-5">Discipline</span>
-<h2 class="section-heading mb-5"> Point-in-time. No future leak. </h2>
-<p class="section-body mb-5"> On every historical date in the replay, the system sees only data that was available on that date. Today&rsquo;s features cannot inform yesterday&rsquo;s signal. This is how the track record on the home page stays honest: every signal is decided as it would have been decided live, on the day. </p>
-<p class="section-body mb-5"> The live pipeline runs hourly through the trading session and locks the final signal at <span class="font-mono">16:10 America/New_York</span>, after the cash market closes. Up until that lock, the day&rsquo;s read is provisional. After it, the day&rsquo;s signal state is frozen and stored. </p>
-<p class="section-body"> Causality is not a feature layered on at the end. It is the constraint the rest of the rule was built inside of. Without it, the track record would mean nothing. </p>
-</div>
-</div>
-</section>
+      <section id="history">
+        <h2 class="h2"><span class="section-no">7</span>Historical reconstruction</h2>
+        <div class="prose">
+          <p>Readings and signals before {{IND_LIVE_SINCE}} are <strong>back-tested</strong>: they were produced after the fact by applying the method to history, not published at the time. For prices and volatility the reconstruction is point-in-time &mdash; on each historical date the method sees only closes on or before that date.</p>
+          <p>Before history is published it is computed twice, independently: once over the full series and once by replaying each date separately with only the trailing window available on that date. The two must agree field by field on a random sample of dates and produce byte-identical output; otherwise nothing is published.</p>
+          <p><strong>Macroeconomic timing.</strong> Monthly series are aligned to the month they describe, so in the back-tested history a month&rsquo;s value is applied from the first day of that month &mdash; between one and six weeks before it was actually released. Live readings use only values already published. These series enter only the bear overlay (section 4.2), so the effect is limited to the timing of bear-regime episodes.</p>
+          <p><strong>Data vintage.</strong> Macroeconomic series are revised after first release. The reconstruction uses the series as currently published, which can differ from the values available at the time. Price and volatility inputs are not revised.</p>
+        </div>
+      </section>
 
-<!-- ── Transparency: what we show, what we keep close (with mdd-1 decor) ── -->
-<section id="transparency" class="decor-banner relative w-full overflow-hidden">
-<div class="home-container relative z-10 py-20">
-<div class="flex flex-col max-w-3xl mb-8">
-<span class="tag-overline mb-5">Transparency</span>
-<h2 class="section-heading mb-5"> What we show. What we keep close. </h2>
-<p class="section-body mb-5"> The honest question after reading this far: <em>but what are the exact thresholds?</em> Where is the line between calm and correction? What VIX percentile trips the panic regime? How many bars of bear confirmation are required? </p>
-<p class="section-body"> Here is the boundary, explicitly. </p>
+      <section id="limitations">
+        <h2 class="h2"><span class="section-no">8</span>Limitations</h2>
+        <div class="prose">
+          <ul>
+            <li><strong>Signals can be early.</strong> In long declines the market can keep falling after a signal. The October 2000, September 2001 and January 2008 signals were each followed by lower prices a year later; the full record is on the <a href="data.html">historical data</a> page.</li>
+            <li><strong>Rarity.</strong> Several years contain no signal. The indicator is not a source of regular trading activity.</li>
+            <li><strong>Scope.</strong> The method is calibrated to the S&amp;P 500 only. Returns quoted on this site are index price returns, excluding dividends, costs and taxes; the index cannot be invested in directly.</li>
+            <li><strong>Not advice.</strong> The indicator describes market conditions. It does not account for any investor&rsquo;s circumstances and is not a recommendation to buy or sell any security.</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
 </div>
-<div aria-hidden="true" style="height: 0.75rem;"></div>
-<div class="terminal-shell hover-lift-rust overflow-hidden">
-<div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-3">
-<div class="flex items-center gap-3">
-<span class="status-dot"></span>
-<span class="data-label !text-white">Transparency Boundary</span>
-<span class="data-label !text-[var(--color-muted)]">Open above &middot; proprietary below</span>
-</div>
-</div>
-<div class="grid md:grid-cols-2" style="background: var(--color-light);">
-<div class="px-5 py-5 md:border-r" style="border-bottom: 1px solid rgba(30,37,48,0.06); border-right-color: rgba(30,37,48,0.06);">
-<span class="data-label" style="color: var(--color-gain);">What we show</span>
-<ul class="mt-3 font-mono text-sm leading-relaxed" style="color: var(--color-dark); list-style: none; padding: 0; margin: 0;">
-<li>&middot; the five inputs (price, VIX, Fed funds, unemployment, CPI)</li>
-<li>&middot; the four regimes (calm, correction, panic, bear)</li>
-<li>&middot; the three signal gates and their order</li>
-<li>&middot; the daily cadence and the EOD lock time</li>
-<li>&middot; the point-in-time / no-leak discipline</li>
-<li>&middot; the philosophy behind every gating choice</li>
-</ul>
-</div>
-<div class="px-5 py-5" style="border-bottom: 1px solid rgba(30,37,48,0.06);">
-<span class="data-label" style="color: var(--color-loss);">What we keep close</span>
-<ul class="mt-3 font-mono text-sm leading-relaxed" style="color: var(--color-dark); list-style: none; padding: 0; margin: 0;">
-<li>&middot; exact numerical thresholds</li>
-<li>&middot; cutoff percentiles per input</li>
-<li>&middot; drawdown depth / duration bands</li>
-<li>&middot; bear-confirmation gate parameters</li>
-<li>&middot; smoothing windows and lookback periods</li>
-<li>&middot; cluster-gap rules and reset bands</li>
-</ul>
-</div>
-</div>
-<div class="terminal-footer px-5 py-3 flex items-center">
-<span class="data-label" style="color: var(--color-muted);"> Everything you need to evaluate the rule. Nothing you need to replicate it. </span>
-</div>
-</div>
-<p class="section-body mt-8 max-w-3xl"> The proof of the rule is not in the parameter values we could publish &mdash; it is in the track record you can already see. Every signal since 2004, every forward return, every miss. That is the audit. </p>
-</div>
-</section>
-
-<!-- ── Explore + next step: shared stories carousel + routing CTA ────────── -->
-{{STORIES}}

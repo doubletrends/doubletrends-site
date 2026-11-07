@@ -2,25 +2,25 @@ const SITE_URL = 'https://doubletrends.com';
 const SUBSCRIBE_URL = 'https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c';
 const PORTAL_URL = 'https://app.doubletrends.com/brief';
 const OG_IMAGE = `${SITE_URL}/public/brand/og-image.png`;
-const OG_IMAGE_ALT = 'DoubleTrends™ wordmark and tagline';
+const OG_IMAGE_ALT = 'DoubleTrends — Market Regime Research';
 
 const PUBLISHER = {
   '@type': 'Organization',
   '@id': `${SITE_URL}/#organization`,
-  name: "DoubleTrends L.L.C.",
+  name: 'DoubleTrends L.L.C.',
   url: SITE_URL,
-  legalName: "DoubleTrends L.L.C.",
-  description: 'Operator of DoubleTrends™, a rules-based S&P 500 index signal and research site for ETF investors.',
+  legalName: 'DoubleTrends L.L.C.',
+  description: 'Publisher of the DoubleTrends Regime Indicator, a rules-based daily classification of U.S. equity market stress, and of research on S&P 500 drawdowns and market regimes.',
   email: 'info@doubletrends.com',
   logo: {
     '@type': 'ImageObject',
     url: `${SITE_URL}/public/brand/wordmark-light.png`,
     width: 1024,
-    height: 127,
+    height: 160,
   },
   brand: {
     '@type': 'Brand',
-    name: 'DoubleTrends™',
+    name: 'DoubleTrends',
   },
   sameAs: [
     'https://www.crunchbase.com/organization/doubletrends-l-l-c',
@@ -29,7 +29,7 @@ const PUBLISHER = {
   ],
   knowsAbout: [
     'S&P 500 index',
-    'ETF investing',
+    'market regimes',
     'market drawdowns',
     'oversold reversal signals',
     'quantitative research',
@@ -44,84 +44,66 @@ function outPathFor(src) {
 }
 
 function rootFor(src) {
-  const out = outPathFor(src);
-  const depth = out.split('/').length - 1;
+  const depth = outPathFor(src).split('/').length - 1;
   return depth === 0 ? '' : '../'.repeat(depth);
 }
 
 function page(src, overrides = {}) {
-  return {
-    src,
-    root: rootFor(src),
-    priority: 0.7,
-    kind: 'webpage',
-    ...overrides,
-  };
+  return { src, root: rootFor(src), priority: 0.7, kind: 'webpage', ...overrides };
 }
 
-function article(slug, overrides = {}) {
+// Research notes. `section` is the topic (shown in the dateline and kicker),
+// `series` groups the library, `published` is the date the note first shipped
+// (from version history) and feeds the dateline + JSON-LD.
+function article(slug, { published, ...overrides }) {
   return page(`academy/${slug}.html`, {
     kind: 'article',
+    nav: 'research',
     priority: 0.7,
     ...overrides,
+    schema: { ...(overrides.schema || {}), datePublished: published },
   });
 }
 
 function companyPage(slug, overrides = {}) {
-  return page(`company/${slug}.html`, {
-    priority: 0.5,
-    ...overrides,
-  });
+  return page(`company/${slug}.html`, { nav: 'about', priority: 0.5, ...overrides });
 }
 
 function legalPage(slug, overrides = {}) {
-  return page(`legal/${slug}.html`, {
-    priority: 0.3,
-    ...overrides,
-  });
+  return page(`legal/${slug}.html`, { priority: 0.3, ...overrides });
 }
 
 const pages = [
   page('index.html', {
     priority: 1.0,
     kind: 'home',
-    title: 'Discipline over Hype',
-    desc:  'A quantitative S&P 500 market regime signal for ETF investors. Rules over noise, discipline over hype — live replay and full signal history from 2016.',
-    routingCard: {
-      pill: '/METHOD',
-      headline: 'Now look under the hood.',
-      body: 'You have seen the outcome surface and the historical proof. The next page shows the decision stack itself: what the rule reads, how the market gets classified, and what has to clear before a signal is allowed to fire.',
-      route: 'Outcome  &rarr;  Method',
-      routeDesc: 'Move from signal evidence to execution logic.',
-      href: 'method.html',
-      cta: 'Enter how it works',
-      footerLabel: 'THE ENGINE BEHIND.',
-    },
+    nav: 'indicator',
+    title: 'S&P 500 Market Regime Indicator',
+    desc:  'The DoubleTrends Regime Indicator: a rules-based daily classification of S&P 500 market stress — calm, correction, panic, bear — with a reversal signal eligible only under stress. History from December 1995.',
   }),
   page('method.html', {
     priority: 0.9,
-    title: 'How the DoubleTrends™ S&P 500 Signal Works',
-    crumb: 'How It Works',
-    desc:  'See how the DoubleTrends™ S&P 500 signal works: dual-period Williams %R, drawdown features, VIX and macro anchors, four market regimes, and the point-in-time rules behind the track record.',
-    routingCard: {
-      pill: '/PRODUCT',
-      headline: 'Institutional-grade signal. Retail access.',
-      body: 'The engine is built to institutional standards, but access is not reserved for institutions. The next page shows how a retail subscriber can use the bot directly, what gets delivered, and what the terms look like in practice.',
-      route: 'Method  &rarr;  Product',
-      routeDesc: 'From rule logic to live access.',
-      href: 'product.html',
-      cta: 'SEE THE PRODUCT',
-      footerLabel: 'TRY IT YOURSELF.',
-    },
+    nav: 'methodology',
+    title: 'Methodology',
+    crumb: 'Methodology',
+    desc:  'How the DoubleTrends Regime Indicator is constructed: data inputs, derived measures, the four-state regime classification, signal eligibility and confirmation, publication timing, and point-in-time validation.',
+  }),
+  page('data.html', {
+    priority: 0.9,
+    nav: 'data',
+    title: 'Historical Data: Regimes and Signals Since 1995',
+    crumb: 'Historical data',
+    desc:  'Every DoubleTrends signal since 1998 with 3-month, 1-year and 2-year S&P 500 forward returns, the regime mix by year since 1996, regime statistics, and a CSV download.',
   }),
   page('product.html', {
     priority: 0.9,
     kind: 'product',
-    title: 'Pricing, Trial, and Subscriber Portal',
-    crumb: 'Pricing',
-    desc:  'DoubleTrends™ costs USD $12.42 per month, billed annually at $149/year. Includes a 30-day free trial, a live subscriber portal with same-day alerts, and a refund window.',
+    nav: 'subscription',
+    title: 'Subscription',
+    crumb: 'Subscription',
+    desc:  'Subscriber access to the daily DoubleTrends regime reading and same-day signals: USD 149 per year (USD 12.42 a month, billed annually), with a 30-day free trial and a refund window.',
     schema: {
-      productName: 'DoubleTrends™ Annual Signal Subscription',
+      productName: 'DoubleTrends Regime Indicator — Annual Subscription',
       price: '149.00',
       monthlyPrice: 12.42,
       priceCurrency: 'USD',
@@ -130,61 +112,64 @@ const pages = [
   page('academy/index.html', {
     priority: 0.9,
     kind: 'collection',
-    title: 'Academy — Research & Education',
-    desc:  'Research notes on S&P 500 drawdowns and investor behavior, primers on the standard tools the engine uses (Williams %R, drawdown, volume profile), and one article per macro anchor (VIX, Fed funds, unemployment, CPI).',
+    nav: 'research',
+    title: 'Research',
+    desc:  'DoubleTrends research notes: studies of S&P 500 drawdowns and investor behavior, primers on the measures behind the indicator, and one note per macro input (VIX, Fed funds, unemployment, CPI).',
   }),
   page('company/index.html', {
     priority: 0.6,
     kind: 'collection',
-    title: 'Company — Mission, Services, and Contact',
-    desc:  'The company side of DoubleTrends™: mission, consulting services, hiring roadmap, and contact information.',
+    nav: 'about',
+    title: 'About DoubleTrends',
+    desc:  'About DoubleTrends L.L.C.: what the firm publishes, the principles behind the indicator, research services, careers and contact.',
   }),
   page('legal/index.html', {
     priority: 0.4,
     kind: 'collection',
-    title: 'Legal — Terms, Privacy, Refunds, and Disclaimer',
-    desc:  'The operating documents for DoubleTrends™: Terms of Service, Privacy Policy, Refund Policy, and Disclaimer.',
+    title: 'Legal',
+    desc:  'The documents that govern the DoubleTrends website and subscription: Terms of Service, Privacy Policy, Refund Policy and Disclaimer.',
   }),
 
-  // ── company ───────────────────────────────────────────────────────────────
+  // ── about ─────────────────────────────────────────────────────────────────
   companyPage('mission', {
     kind: 'about',
-    title: 'Mission',
-    desc:  'Why DoubleTrends™ exists and the principles behind it: one transparent, rule-based oversold-reversal signal — transparency over hype, education over dependency, narrow over vague.',
+    title: 'Principles',
+    desc:  'The principles behind the DoubleTrends Regime Indicator: published rules, a complete public record, one narrow question answered well, and education over dependency.',
   }),
   companyPage('consulting', {
     priority: 0.6,
     kind: 'services',
-    title: 'Consulting',
-    desc:  'The data engineering and quantitative research behind DoubleTrends™, available for custom projects: ML modelling, statistical analysis, forecasting, and data collection.',
+    title: 'Research Services',
+    desc:  'Quantitative research and data engineering from the team behind the DoubleTrends Regime Indicator: market data pipelines, statistical studies, forecasting and model validation.',
   }),
   companyPage('careers', {
     title: 'Careers',
-    desc:  'The three functions DoubleTrends™ is building around: Quantitative Analyst, Data Engineer, and Audience & Partnerships Lead. Open applications accepted.',
+    desc:  'Careers at DoubleTrends: how the firm hires, the roles it expects to add, and how to send a speculative application.',
   }),
   companyPage('contact', {
     priority: 0.6,
     kind: 'contact',
     title: 'Contact',
-    desc:  'Contact DoubleTrends™ for product questions, data and quant service inquiries, research questions, partnerships, or company matters.',
+    desc:  'Contact DoubleTrends for subscription questions, research services inquiries, press and partnerships, or legal and privacy matters.',
   }),
+
   // ── legal ────────────────────────────────────────────────────────────────
   legalPage('refund-policy', {
     priority: 0.4,
     title: 'Refund Policy',
-    desc:  'DoubleTrends™ starts with a 30-day free trial — $0 today, cancel anytime. After that, a full refund within 14 days of any charge if no signal has fired.',
+    desc:  'The DoubleTrends subscription begins with a 30-day free trial. After that, a full refund is available within 14 days of any charge if no signal has been delivered.',
   }),
   legalPage('terms', {
     title: 'Terms of Service',
-    desc:  'The terms for using the DoubleTrends™ website and subscription: billing, acceptable use, disclaimers, and limitation of liability. Governed by Ontario law.',
+    desc:  'The terms for using the DoubleTrends website and subscription: billing, acceptable use, disclaimers and limitation of liability. Governed by Ontario law.',
   }),
   legalPage('privacy', {
     title: 'Privacy Policy',
-    desc:  'How DoubleTrends™ handles your data: no cookies, no analytics, no tracking — only the minimum needed to bill via Stripe and authenticate subscriber portal access.',
+    desc:  'How DoubleTrends handles personal data: no cookies, analytics or tracking on this website; only what is needed to bill through Stripe and authenticate subscriber access.',
   }),
   legalPage('disclaimer', {
     title: 'Disclaimer',
-    desc:  'DoubleTrends™ provides educational, rules-based market information only — not financial, investment, trading, tax, or legal advice. Trading involves risk.',
+    desc:  'DoubleTrends provides educational, rules-based market information only — not financial, investment, trading, tax or legal advice. Investing involves risk.',
   }),
 
   // ── utility pages ────────────────────────────────────────────────────────
@@ -192,99 +177,119 @@ const pages = [
     root: '/',
     sitemap: false,
     robots: 'noindex,follow',
-    title: '404 Not Found',
+    title: 'Page Not Found',
     desc:  'Page not found.',
   }),
   page('success.html', {
     sitemap: false,
     robots: 'noindex,follow',
-    title: 'You\'re Subscribed',
-    desc:  'Your DoubleTrends™ subscription is active. Check your email for the magic link to access the subscriber portal.',
+    nav: 'subscription',
+    title: 'Subscription Confirmed',
+    desc:  'Your DoubleTrends subscription is active. Check your email for the sign-in link to the subscriber portal.',
   }),
 
-  // ── academy: articles ────────────────────────────────────────────────────
+  // ── research: studies ────────────────────────────────────────────────────
   article('sp-500-drawdowns', {
+    published: '2026-05-25',
+    series: 'Studies',
     priority: 0.8,
     title:   'S&P 500 Drawdowns Since 1950: How Often Corrections and Bear Markets Happen',
-    crumb:   'How often does the S&P 500 dip — and how deep?',
+    crumb:   'S&P 500 drawdowns since 1950',
     section: 'Market History',
-    desc:  'How often the S&P 500 falls 5%, 10%, 20%, and 30% since 1950, how long recovery usually takes, and what those drawdown base rates mean for buying the dip.',
-    schema: { about: ['S&P 500 index', 'ETF investing', 'market drawdowns'] },
+    desc:  'How often the S&P 500 falls 5%, 10%, 20% and 30% since 1950, how long recovery usually takes, and what those base rates mean for buying the dip.',
+    schema: { about: ['S&P 500 index', 'market drawdowns'] },
   }),
   article('why-buying-the-dip-is-hard', {
+    published: '2026-05-25',
+    series: 'Studies',
     priority: 0.8,
     title:   'Why Buying the Dip Is Hard: The Best Days Happen During Crashes',
-    crumb:   'Why buying the dip is so hard — and how to make it automatic',
+    crumb:   'Why buying the dip is hard',
     section: 'Investor Behavior',
     desc:  'Why buying the dip feels hardest when expected returns improve: the S&P 500\'s best days cluster inside crashes, and missing a few of them changes long-run results.',
-    schema: { about: ['S&P 500 index', 'ETF investing', 'buying the dip'] },
+    schema: { about: ['S&P 500 index', 'investor behavior', 'buying the dip'] },
   }),
   article('every-sp-500-bottom-since-2016', {
+    published: '2026-05-25',
+    series: 'Studies',
     priority: 0.8,
-    title:   'Every DoubleTrends™ S&P 500 Signal Since 2016',
-    crumb:   'Every S&P 500 bottom since 2016 — and what they had in common',
+    title:   'Every DoubleTrends Signal on the S&P 500 Since July 2016',
+    crumb:   'Every signal since July 2016',
     section: 'Track Record',
-    desc:  'Every DoubleTrends™ signal on the S&P 500 since 2016, the regime and drawdown around each fire, and the forward returns that followed.',
-    schema: { about: ['S&P 500 index', 'ETF investing'] },
+    desc:  'Every DoubleTrends signal on the S&P 500 since July 2016, the regime and drawdown around each, and the forward returns that followed.',
+    schema: { about: ['S&P 500 index', 'oversold reversal'] },
   }),
 
-  // ── academy: methods ─────────────────────────────────────────────────────
-  article('volume-profile-vwap', {
-    title:   'What Are Volume Profile and VWAP?',
-    crumb:   'Volume Profile & VWAP, Explained',
-    section: 'Liquidity',
-    desc:  'A plain-English primer on Volume Profile and VWAP: what each tool measures, how institutional desks use them, and where they fit in market structure.',
-    schema: { about: ['S&P 500 index', 'ETF investing', 'market structure'] },
-  }),
+  // ── research: primers ────────────────────────────────────────────────────
   article('double-trend-exhaustion', {
-    title:   'What Is Double Trend Exhaustion? The DoubleTrends™ Signal Explained',
-    crumb:   'The DoubleTrends™ Signal',
-    section: 'The Engine',
-    desc:  'What double trend exhaustion means in DoubleTrends™: dual-period Williams %R on a short and long clock, both turning up out of deep oversold territory.',
-    schema: { about: ['S&P 500 index', 'ETF investing', 'oversold reversal'] },
+    published: '2026-05-25',
+    series: 'Primers',
+    title:   'Double Trend Exhaustion: The Signal Explained',
+    crumb:   'Double trend exhaustion',
+    section: 'The Signal',
+    desc:  'What double trend exhaustion means: a dual-period Williams %R on a short and a long horizon, both turning up out of deeply oversold territory.',
+    schema: { about: ['S&P 500 index', 'oversold reversal', 'Williams %R'] },
   }),
   article('maximum-drawdown', {
-    title:   'What Is Maximum Drawdown? Depth, Duration, and Sharpness',
-    crumb:   'Maximum Drawdown',
-    section: 'Stress Lens',
-    desc:  'What maximum drawdown means for market stress: drawdown depth from the trailing one-year high, duration since that high, and ten-day sharpness.',
-    schema: { about: ['S&P 500 index', 'ETF investing', 'market drawdowns'] },
+    published: '2026-05-25',
+    series: 'Primers',
+    title:   'Maximum Drawdown: Depth, Duration and Sharpness',
+    crumb:   'Maximum drawdown',
+    section: 'Drawdown',
+    desc:  'What maximum drawdown means for market stress: depth below the trailing one-year high, time since that high, and ten-day sharpness.',
+    schema: { about: ['S&P 500 index', 'market drawdowns'] },
+  }),
+  article('volume-profile-vwap', {
+    published: '2026-05-25',
+    series: 'Primers',
+    title:   'Volume Profile and VWAP',
+    crumb:   'Volume profile and VWAP',
+    section: 'Market Structure',
+    desc:  'A plain-English primer on volume profile and VWAP: what each measures, how institutional desks use them, and where they fit in market structure.',
+    schema: { about: ['S&P 500 index', 'market structure'] },
   }),
 
-  // ── academy: macro anchors ──────────────────────────────────────────────
+  // ── research: macro inputs ──────────────────────────────────────────────
   article('vix-percentile', {
-    title:   'What Is VIX Percentile? Reading Volatility Against Itself',
+    published: '2026-06-06',
+    series: 'Macro inputs',
+    title:   'VIX Percentile: Reading Volatility Against Itself',
     crumb:   'VIX percentile',
     section: 'Volatility',
-    desc:  'What VIX percentile means, why it is more useful than the raw VIX level, and how DoubleTrends™ uses it inside the market regime classifier.',
-    schema: { about: ['S&P 500 index', 'ETF investing', 'volatility'] },
+    desc:  'What VIX percentile means, why it is more informative than the raw VIX level, and how the regime classification uses it.',
+    schema: { about: ['S&P 500 index', 'volatility'] },
   }),
   article('fed-funds-rate', {
-    title:   'What Is the Fed Funds Rate and Why Does It Matter for Stocks?',
+    published: '2026-06-06',
+    series: 'Macro inputs',
+    title:   'The Fed Funds Rate and Equity Market Regimes',
     crumb:   'Fed funds rate',
-    section: 'Interest Rate',
-    desc:  'What the fed funds rate is, why its recent change matters more than the level, and how DoubleTrends™ uses it inside the bear-regime overlay.',
-    schema: { about: ['S&P 500 index', 'ETF investing', 'Federal Reserve policy'] },
+    section: 'Interest Rates',
+    desc:  'What the federal funds rate is, why its recent change matters more than its level, and how the bear-regime overlay reads it.',
+    schema: { about: ['S&P 500 index', 'Federal Reserve policy'] },
   }),
   article('unemployment', {
+    published: '2026-06-06',
+    series: 'Macro inputs',
     title:   'Why the Unemployment Rate Matters for Market Regimes',
     crumb:   'Unemployment',
-    section: 'Labor',
-    desc:  'Why the US unemployment rate lags but rarely gives false positives, how DoubleTrends™ reads its slope, and where it fits inside the bear overlay.',
-    schema: { about: ['S&P 500 index', 'ETF investing', 'labor market'] },
+    section: 'Labor Market',
+    desc:  'Why the U.S. unemployment rate lags but rarely gives false alarms, how its slope is read, and where it fits in the bear-regime overlay.',
+    schema: { about: ['S&P 500 index', 'labor market'] },
   }),
   article('cpi-inflation', {
-    title:   'What CPI Inflation Tells You About Fed Pressure',
+    published: '2026-06-06',
+    series: 'Macro inputs',
+    title:   'CPI Inflation and Federal Reserve Pressure',
     crumb:   'CPI inflation',
     section: 'Inflation',
-    desc:  'Why year-over-year CPI matters as context for Fed policy, and how DoubleTrends™ reads high inflation together with active tightening inside the bear gate.',
-    schema: { about: ['S&P 500 index', 'ETF investing', 'Federal Reserve policy', 'inflation'] },
+    desc:  'Why year-over-year CPI matters as context for Federal Reserve policy, and how high inflation combined with active tightening enters the bear-regime overlay.',
+    schema: { about: ['S&P 500 index', 'Federal Reserve policy', 'inflation'] },
   }),
 ];
 
-const SITE_NAME = 'DoubleTrends™';
-const SITE_DESCRIPTION = 'Rules-based S&P 500 market regime signal and quantitative research for ETF investors.';
-const ARTICLE_PUBLISHED = '2026-05-25';
+const SITE_NAME = 'DoubleTrends';
+const SITE_DESCRIPTION = 'The DoubleTrends Regime Indicator: a rules-based daily classification of S&P 500 market stress, with research on drawdowns and market regimes.';
 
 module.exports = {
   SITE_URL,
@@ -295,6 +300,5 @@ module.exports = {
   OG_IMAGE,
   OG_IMAGE_ALT,
   PUBLISHER,
-  ARTICLE_PUBLISHED,
   pages,
 };

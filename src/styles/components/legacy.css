@@ -1,0 +1,66 @@
+/* Compatibility layer: the class vocabulary used inside research notes and
+   legal documents (authored before the house style) mapped onto it. Page
+   markup is unchanged; only its presentation moved. New pages should use the
+   house classes (type-base, document, exhibit) instead of these. */
+
+/* Labels */
+.tag-overline { display: inline-block; font-family: var(--font-sans); font-weight: 600; font-size: 0.75rem; line-height: 1.2; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink); }
+.data-label { font-family: var(--font-sans); font-size: 0.8125rem; letter-spacing: 0; text-transform: none; color: var(--muted); }
+.data-value { font-family: var(--font-sans); font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.fine-print { font-family: var(--font-sans); font-size: 0.8125rem; line-height: 1.55; color: var(--muted); }
+.text-grad-hero, .text-grad-section { color: var(--ink); background: none; -webkit-text-fill-color: currentColor; }
+.font-mono { font-variant-numeric: tabular-nums; }
+
+/* Document pages (legal, firm) */
+.page-shell { width: 100%; max-width: 76rem; margin-inline: auto; padding: 0 1.5rem 2rem; }
+.page-hero, .page-hero-center { text-align: left; align-items: flex-start; padding-block: 3rem 2.25rem; border-bottom: 1px solid var(--rule); margin-bottom: 2.5rem; }
+.page-hero .tag-overline, .page-hero-center .tag-overline { margin-bottom: 0.9rem; }
+.page-title { font-family: var(--font-serif); font-weight: 600; font-size: clamp(2rem, 1.55rem + 1.7vw, 2.875rem); line-height: 1.12; letter-spacing: -0.01em; color: var(--ink); }
+.page-subtitle { font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.5; color: #3A4452; max-width: 44em; margin-top: 1rem; }
+.page-content-legal { max-width: 46rem; }
+.page-content-wide { display: grid; gap: 2rem; }
+.legal-section + .legal-section { margin-top: 2.25rem; padding-top: 2.25rem; border-top: 1px solid var(--rule); }
+.legal-section .prose-p + .prose-p { margin-top: 0.85em; }
+
+/* Research notes */
+.article-page { width: 100%; max-width: 76rem; margin-inline: auto; padding: 0 1.5rem 2rem; }
+.article-page > * { max-width: 46rem; }
+.article-page > .article-hero { max-width: none; }
+.article-hero { padding-block: 2.5rem 2.25rem; border-bottom: 1px solid var(--rule); margin-bottom: 2.5rem; }
+.article-hero .tag-overline { margin-bottom: 1rem; }
+.article-title { font-family: var(--font-serif); font-weight: 600; font-size: clamp(2rem, 1.55rem + 1.7vw, 2.875rem); line-height: 1.12; letter-spacing: -0.01em; color: var(--ink); max-width: 22em; text-wrap: balance; }
+.lead { font-family: var(--font-serif); font-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem); line-height: 1.55; color: #3A4452; max-width: 40em; margin-top: 1.1rem; }
+.article-meta { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: 0.3rem 1.4rem; font-size: 0.875rem; color: var(--muted); }
+.article-meta strong { font-weight: 600; color: var(--text); }
+.article-section + .article-section { margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--rule); }
+.article-section > .tag-overline { margin-bottom: 0.6rem; color: var(--muted); }
+.article-h2 { font-family: var(--font-serif); font-weight: 600; font-size: 1.625rem; line-height: 1.25; color: var(--ink); margin-bottom: 1rem; }
+.article-h3, .card-heading, .panel-heading { font-family: var(--font-serif); font-weight: 600; font-size: 1.25rem; line-height: 1.3; color: var(--ink); }
+.prose-p { font-family: var(--font-serif); font-size: 1.1875rem; line-height: 1.65; color: var(--text); }
+.panel-body, .section-body { font-size: 1rem; line-height: 1.6; color: var(--muted); }
+.article-page .text-muted, .page-shell .text-muted { color: #4A5361; }
+.article-page a:not([class*="button"]):not(.btn), .page-shell a:not([class*="button"]):not(.btn) {
+  color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; text-decoration-color: rgba(20, 33, 61, 0.45);
+}
+
+/* Panels → ruled boxes (no radius, no shadow, no lift) */
+.terminal-shell, .product-panel, .cta-panel, .article-cta, .metric-tile {
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 0; box-shadow: none;
+}
+.terminal-shell { border-top: 2px solid var(--ink); }
+.article-cta, .cta-panel { background: var(--tint); border: 0; border-left: 3px solid var(--ink); padding: 1.5rem 1.6rem; }
+.hover-lift-rust, .hover-lift-rust:hover { transform: none; box-shadow: none; }
+.hairline { border-top: 1px solid var(--rule); }
+.media-frame { border: 1px solid var(--rule); background: var(--paper); }
+.media-frame img { width: 100%; height: auto; }
+.article-page table { width: 100%; border-collapse: collapse; font-family: var(--font-sans); font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
+.article-page th, .article-page td { border-bottom: 1px solid var(--rule); padding: 0.55rem 0.75rem; }
+.article-page thead th { color: var(--muted); font-weight: 600; font-size: 0.8125rem; border-bottom-color: var(--rule-strong); }
+
+/* Checkout interstitial */
+.checkout-gate .gate-panel { border-top: 3px solid var(--ink); }
+.article-hero .breadcrumb { margin-bottom: 1.25rem; }
+.further-list { list-style: none !important; padding: 0 !important; margin: 0.8rem 0 1rem; border-top: 1px solid var(--rule-strong); }
+.further-list li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--rule); }
+.further-list a { font-family: var(--font-serif); font-weight: 600; font-size: 1.0625rem; }
+.further-list span { font-size: 0.875rem; color: var(--muted); }

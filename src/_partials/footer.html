@@ -1,106 +1,56 @@
-<footer class="relative w-full" style="background: #FFFFFF; box-shadow: 0 -4px 24px rgba(30,37,48,0.08);">
-  <div class="site-footer-inner relative z-10 w-full max-w-site mx-auto px-8 py-12">
-
-    <!-- Main row -->
-    <div class="site-footer-grid grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12">
-
-      <!-- Left: brand + disclaimer + copyright -->
-      <div class="site-footer-brand flex flex-col max-w-sm">
-        <div class="flex items-center mb-5">
-          <img src="{{ROOT}}public/brand/wordmark.svg" alt="DoubleTrends™"
-               class="h-6 w-auto" style="opacity: 0.72" />
-        </div>
-        <p class="text-[0.65rem] leading-relaxed text-muted">
-          DoubleTrends™ signals are provided for educational and informational purposes only and do not constitute financial, investment, or trading advice. Past performance does not guarantee future results.
-        </p>
-        <span class="data-label mt-6">© 2019–2026 DoubleTrends L.L.C. All rights reserved.</span>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer-top">
+      <div class="site-footer-brand">
+        <a class="brand" href="{{ROOT}}index.html" aria-label="DoubleTrends — home">
+          <img class="brand-mark" src="{{ROOT}}public/brand/logo-on-dark.svg" alt="" width="34" height="34" />
+          <span class="brand-name">DoubleTrends<small>Market Regime Research</small></span>
+        </a>
+        <p class="site-footer-about">A rules-based daily classification of U.S. equity market stress, with a reversal signal that is eligible to fire only in panic and bear regimes. History from {{IND_FIRST_MONTH}}; published live since {{IND_LIVE_SINCE}}.</p>
       </div>
-
-      <!-- Right: sitemap columns — each column shrinks to its widest line; a hairline divider
-           with equal padding on both sides separates sections at lg+. Stacks vertically below lg. -->
-      <div class="site-footer-nav-wrap flex justify-start lg:justify-end">
-        <div class="site-footer-nav flex flex-col lg:flex-row gap-8 lg:gap-0 w-max">
-          <div class="site-footer-group site-footer-align-right flex flex-col items-start gap-3 lg:pr-8">
-            <span class="tag-overline mb-2">Product</span>
-            <a href="{{ROOT}}index.html" class="foot-link">Home</a>
-            <a href="{{ROOT}}method.html" class="foot-link">How It Works</a>
-            <a href="{{ROOT}}product.html" class="foot-link">Pricing &amp; FAQ</a>
-            <a href="{{PORTAL_URL}}" class="foot-link" target="_blank" rel="noopener">Subscriber Portal</a>
-          </div>
-          <div class="site-footer-group site-footer-academy-group flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
-            <span class="tag-overline mb-2">Academy</span>
-            <a href="{{ROOT}}academy/index.html" class="foot-link">Academy</a>
-            <div class="site-footer-accordion site-footer-academy-accordion w-full">
-              <details class="site-footer-details site-footer-subdetails">
-                <summary class="site-footer-summary site-footer-subsummary">
-                  <span class="data-label">Research</span>
-                  <span class="site-footer-expand">
-                    <span>Expand</span>
-                    <span class="acc-icon" aria-hidden="true">▾</span>
-                  </span>
-                </summary>
-                <div class="site-footer-details-content">
-                  <div class="site-footer-details-inner site-footer-academy-links flex flex-col items-start gap-3">
-                    <a href="{{ROOT}}academy/sp-500-drawdowns.html" class="foot-link">Market History</a>
-                    <a href="{{ROOT}}academy/why-buying-the-dip-is-hard.html" class="foot-link">Investor Behavior</a>
-                    <a href="{{ROOT}}academy/every-sp-500-bottom-since-2016.html" class="foot-link">Track Record</a>
-                  </div>
-                </div>
-              </details>
-              <details class="site-footer-details site-footer-subdetails">
-                <summary class="site-footer-summary site-footer-subsummary">
-                  <span class="data-label">Standard Tools</span>
-                  <span class="site-footer-expand">
-                    <span>Expand</span>
-                    <span class="acc-icon" aria-hidden="true">▾</span>
-                  </span>
-                </summary>
-                <div class="site-footer-details-content">
-                  <div class="site-footer-details-inner site-footer-academy-links flex flex-col items-start gap-3">
-                    <a href="{{ROOT}}academy/double-trend-exhaustion.html" class="foot-link">The Engine</a>
-                    <a href="{{ROOT}}academy/maximum-drawdown.html" class="foot-link">Stress Lens</a>
-                    <a href="{{ROOT}}academy/volume-profile-vwap.html" class="foot-link">Liquidity</a>
-                  </div>
-                </div>
-              </details>
-              <details class="site-footer-details site-footer-subdetails">
-                <summary class="site-footer-summary site-footer-subsummary">
-                  <span class="data-label">Macro Anchors</span>
-                  <span class="site-footer-expand">
-                    <span>Expand</span>
-                    <span class="acc-icon" aria-hidden="true">▾</span>
-                  </span>
-                </summary>
-                <div class="site-footer-details-content">
-                  <div class="site-footer-details-inner site-footer-academy-links flex flex-col items-start gap-3">
-                    <a href="{{ROOT}}academy/vix-percentile.html" class="foot-link">Volatility</a>
-                    <a href="{{ROOT}}academy/fed-funds-rate.html" class="foot-link">Interest Rate</a>
-                    <a href="{{ROOT}}academy/unemployment.html" class="foot-link">Labor</a>
-                    <a href="{{ROOT}}academy/cpi-inflation.html" class="foot-link">Inflation</a>
-                  </div>
-                </div>
-              </details>
-            </div>
-          </div>
-          <div class="site-footer-group site-footer-align-right flex flex-col items-start gap-3 lg:px-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
-            <span class="tag-overline mb-2">Company</span>
-            <a href="{{ROOT}}company/index.html" class="foot-link">Company</a>
-            <a href="{{ROOT}}company/contact.html" class="foot-link">Contact</a>
-            <a href="{{ROOT}}company/mission.html" class="foot-link">Mission</a>
-            <a href="{{ROOT}}company/consulting.html" class="foot-link">Consulting</a>
-            <a href="{{ROOT}}company/careers.html" class="foot-link">Careers</a>
-          </div>
-          <div class="site-footer-group site-footer-align-right flex flex-col items-start gap-3 lg:pl-8 lg:border-l lg:border-[rgba(0,0,0,0.08)]">
-            <span class="tag-overline mb-2">Legal</span>
-            <a href="{{ROOT}}legal/index.html" class="foot-link">Legal</a>
-            <a href="{{ROOT}}legal/terms.html" class="foot-link">Terms of Service</a>
-            <a href="{{ROOT}}legal/privacy.html" class="foot-link">Privacy Policy</a>
-            <a href="{{ROOT}}legal/refund-policy.html" class="foot-link">Refund Policy</a>
-            <a href="{{ROOT}}legal/disclaimer.html" class="foot-link">Disclaimer</a>
-          </div>
-        </div>
-      </div>
-
+      <nav class="site-footer-nav" aria-label="The indicator">
+        <h2>The indicator</h2>
+        <ul>
+          <li><a href="{{ROOT}}index.html">Overview</a></li>
+          <li><a href="{{ROOT}}method.html">Methodology</a></li>
+          <li><a href="{{ROOT}}data.html">Historical data</a></li>
+          <li><a href="{{ROOT}}public/data/doubletrends-signals.csv" download>Signal history (CSV)</a></li>
+          <li><a href="{{ROOT}}product.html">Subscription</a></li>
+        </ul>
+      </nav>
+      <nav class="site-footer-nav" aria-label="Research">
+        <h2>Research</h2>
+        <ul>
+          <li><a href="{{ROOT}}academy/index.html">Research library</a></li>
+          <li><a href="{{ROOT}}academy/sp-500-drawdowns.html">Market history</a></li>
+          <li><a href="{{ROOT}}academy/why-buying-the-dip-is-hard.html">Investor behavior</a></li>
+          <li><a href="{{ROOT}}academy/every-sp-500-bottom-since-2016.html">Track record</a></li>
+        </ul>
+      </nav>
+      <nav class="site-footer-nav" aria-label="The firm">
+        <h2>The firm</h2>
+        <ul>
+          <li><a href="{{ROOT}}company/index.html">About</a></li>
+          <li><a href="{{ROOT}}company/mission.html">Principles</a></li>
+          <li><a href="{{ROOT}}company/consulting.html">Research services</a></li>
+          <li><a href="{{ROOT}}company/careers.html">Careers</a></li>
+          <li><a href="{{ROOT}}company/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <nav class="site-footer-nav" aria-label="Legal">
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="{{ROOT}}legal/terms.html">Terms of Service</a></li>
+          <li><a href="{{ROOT}}legal/privacy.html">Privacy Policy</a></li>
+          <li><a href="{{ROOT}}legal/refund-policy.html">Refund Policy</a></li>
+          <li><a href="{{ROOT}}legal/disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="site-footer-legal">
+      <p><strong>Important information.</strong> DoubleTrends publishes market information for educational purposes. Nothing on this site is investment, financial, tax or legal advice, or a recommendation to buy, sell or hold any security. Readings and signals dated before {{IND_LIVE_SINCE}} are back-tested: they were produced after the fact by a point-in-time reconstruction of the method, not published in real time. Back-tested and past results do not guarantee future results. The S&amp;P 500 cannot be invested in directly.</p>
+      <p>DoubleTrends&trade; is a trademark of DoubleTrends L.L.C. S&amp;P 500&reg; is a registered trademark of S&amp;P Dow Jones Indices LLC, which does not sponsor, endorse or review DoubleTrends.</p>
+      <p class="entity">&copy; 2019&ndash;2026 DoubleTrends L.L.C. All rights reserved. &middot; <a href="mailto:info@doubletrends.com">info@doubletrends.com</a></p>
     </div>
   </div>
 </footer>

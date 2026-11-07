@@ -1,0 +1,21 @@
+/* Buttons: square-ish, sentence case, no gradients, no lift. Primary = navy
+   fill; secondary = navy outline. The legacy class names used across page
+   markup map onto the same two styles. */
+.btn, .button-rust, .button-dark, .button-hero, .button-light, .btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  min-height: 2.75rem; padding: 0.6rem 1.25rem;
+  font-family: var(--font-sans); font-weight: 600; font-size: 0.96875rem; line-height: 1.2;
+  letter-spacing: 0; text-transform: none; text-decoration: none;
+  border: 1px solid var(--ink); border-radius: 2px;
+  background: var(--ink); color: #fff; cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.btn:hover, .button-rust:hover, .button-dark:hover, .button-hero:hover, .btn-primary:hover { background: var(--ink-hover); border-color: var(--ink-hover); }
+.btn:active, .button-rust:active, .button-dark:active, .button-hero:active { transform: translateY(1px); }
+.btn-secondary, .button-light {
+  background: transparent; color: var(--ink); border-color: var(--ink);
+}
+.btn-secondary:hover, .button-light:hover { background: var(--tint); color: var(--ink); border-color: var(--ink); }
+.btn-on-dark { background: #fff; color: var(--ink); border-color: #fff; }
+.btn-on-dark:hover { background: #E8ECF2; border-color: #E8ECF2; color: var(--ink); }
+.btn-sm { min-height: 2.25rem; padding: 0.4rem 0.9rem; font-size: 0.875rem; }

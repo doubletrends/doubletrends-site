@@ -1,11 +1,11 @@
-<!-- ARTICLE: Every S&P 500 bottom since 2016 — and what they had in common -->
+<!-- ARTICLE: Every S&P 500 bottom since July 2016 — and what they had in common -->
 <article class="article-page">
 
 <!-- Header -->
 <header class="article-hero article-hero-frame">
-<span class="tag-overline">Academy &middot; Track Record</span>
-<h1 class="article-title"> Every S&amp;P 500 bottom since 2016 &mdash; and what they had in common </h1>
-<p class="lead"> Since 2016, the DoubleTrends&trade; engine has fired <strong>{{TR_SIGNAL_COUNT}}</strong> times on the S&amp;P 500 index. Read together, those dates show what the rule actually captures: stressed-regime reversals with strong forward asymmetry, plus the uncomfortable reality that some valid fires still arrive before the final low. </p>
+<span class="tag-overline">Research &middot; Track Record</span>
+<h1 class="article-title"> Every S&amp;P 500 bottom since July 2016 &mdash; and what they had in common </h1>
+<p class="lead"> Since July 2016, the DoubleTrends engine has fired <strong>{{SIG_COUNT_SINCE_JUL_2016}}</strong> times on the S&amp;P 500 index. Read together, those dates show what the rule actually captures: stressed-regime reversals with strong forward asymmetry, plus the uncomfortable reality that some valid fires still arrive before the final low. </p>
 </header>
 
 <!-- Signal table -->
@@ -52,10 +52,10 @@
 </div>
 <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 p-5" style="border-bottom: 1px solid rgba(0,0,0,0.08);">
 <div class="sm:w-52 shrink-0 flex items-baseline gap-3">
-<span class="data-value" style="font-size: 1.6rem; color: var(--color-dark);">{{TR_MEDIAN_1Y_PCT}}</span>
+<span class="data-value" style="font-size: 1.6rem; color: var(--color-dark);">{{SIG_MEDIAN_1Y_SINCE_JUL_2016}}</span>
 <span class="data-label">12 months</span>
 </div>
-<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);">Median one-year return. <strong>{{TR_POSITIVE_1Y}}</strong> matured signals were positive at the 12-month mark.</p>
+<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);">Median one-year return. <strong>{{SIG_POSITIVE_1Y_SINCE_JUL_2016}}</strong> matured signals were positive at the 12-month mark.</p>
 </div>
 <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 p-5">
 <div class="sm:w-52 shrink-0 flex items-baseline gap-3">
@@ -92,7 +92,7 @@
 <!-- CTA -->
 <section class="cta-panel article-cta">
 <h3 class="text-dark font-noto font-bold text-2xl mb-3">Watch the next one as it happens.</h3>
-<p class="prose-p mb-6"> DoubleTrends&trade; tracks the S&amp;P 500 index daily and sends one alert when the rule fires. See every historical signal replayed on the live chart, then let the next rule-based prompt come to you. </p>
+<p class="prose-p mb-6"> DoubleTrends tracks the S&amp;P 500 index daily and sends one alert when the rule fires. See every historical signal replayed on the live chart, then let the next rule-based prompt come to you. </p>
 <div class="flex flex-wrap gap-4">
 <a href="{{ROOT}}product.html" class="button-rust">See the product</a>
 </div>
@@ -101,7 +101,7 @@
 <!-- Methodology -->
 <section class="hairline pt-6">
 <p class="data-label mb-3">Data &amp; method</p>
-<p class="fine-print"> S&amp;P 500 price index (^GSPC) daily closes, 2016 to present. Signal dates and forward closes are sourced from the live DoubleTrends&trade; history JSON. Forward returns are price-only (exclude dividends) and computed from the signal close. Cells marked <em>pending</em> have not yet matured at the corresponding horizon. Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results. </p>
+<p class="fine-print"> S&amp;P 500 price index (^GSPC) daily closes, July 2016 to present. Signal dates and forward closes are from the DoubleTrends signal history (back-tested before June 15, 2026). Forward returns are price-only (exclude dividends) and computed from the signal close. Cells marked <em>pending</em> have not yet matured at the corresponding horizon. Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results. </p>
 </section>
 
 </article>

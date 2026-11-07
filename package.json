@@ -8,8 +8,8 @@
   "scripts": {
     "build": "node build.js",
     "brand": "node build-brand.js",
-    "replay-data": "node build-replay-data.js",
-    "test": "node build.js && node tests/test-links.js && node tests/test-trademark.js && node tests/test-metadata.js && node tests/test-page-registry.js && node tests/test-schema.js && node tests/test-overlines.js && node tests/test-nav-consistency.js && node tests/test-heading-consistency.js && node tests/test-brand-tokens.js && node tests/test-reveal-contract.js",
+    "indicator-data": "node build-indicator-data.js",
+    "test": "node build.js && node tests/test-links.js && node tests/test-trademark.js && node tests/test-metadata.js && node tests/test-page-registry.js && node tests/test-schema.js && node tests/test-overlines.js && node tests/test-nav-consistency.js && node tests/test-heading-consistency.js && node tests/test-brand-tokens.js",
     "test:links": "node build.js && node tests/test-links.js",
     "test:trademark": "node tests/test-trademark.js",
     "test:metadata": "node build.js && node tests/test-metadata.js",
@@ -19,15 +19,12 @@
     "test:nav-consistency": "node build.js && node tests/test-nav-consistency.js",
     "test:headings": "node build.js && node tests/test-heading-consistency.js",
     "test:brand-tokens": "node tests/test-brand-tokens.js",
-    "test:reveal": "node build.js && node tests/test-reveal-contract.js",
     "dev": "node build.js && wrangler dev",
     "deploy": "node build.js && wrangler deploy"
   },
   "devDependencies": {
-    "@fontsource/dm-sans": "^5.2.8",
-    "@fontsource/jetbrains-mono": "^5.2.8",
-    "@fontsource/syne": "^5.2.7",
-    "lightweight-charts": "^4.2.3",
+    "@fontsource/source-sans-3": "^5.3.1",
+    "@fontsource/source-serif-4": "^5.3.1",
     "opentype.js": "^2.0.0",
     "sharp": "^0.35.3",
     "tailwindcss": "^3.4.19",

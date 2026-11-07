@@ -1,44 +1,54 @@
-<!-- ══════════════════════════════════════════════════════════════ COMPANY ═══════════════════════════════════════════════════════════════ -->
-<section class="directory-shell">
+<!-- About the firm. -->
+<div class="wrap">
+  <header class="page-head">
+    {{BREADCRUMB}}
+    <span class="kicker">About</span>
+    <h1 class="h1">About DoubleTrends</h1>
+    <p class="dek">DoubleTrends L.L.C. publishes the DoubleTrends Regime Indicator &mdash; a rules-based daily classification of U.S. equity market stress &mdash; and research on how the market behaves under stress.</p>
+  </header>
+</div>
 
-<div class="directory-banner media-frame w-full mb-8">
-  <img src="{{ROOT}}public/company/office.webp" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover" />
-  <div class="banner-tint" aria-hidden="true"></div>
-  <div class="banner-text">
-    <span class="tag-overline mb-3">Company</span>
-    <h1 class="page-title"> Mission, services, and contact. </h1>
-    <p class="page-subtitle mt-2"> The operating side of DoubleTrends&trade;: why the company exists, the consulting work available outside the product, who we expect to hire over time, and where to reach us. </p>
+<section class="section">
+  <div class="wrap split">
+    <div>
+      <span class="kicker">The firm</span>
+      <h2 class="h2" style="margin-top: 0.6rem;">At a glance</h2>
+      <p class="muted" style="margin-top: 0.9rem; max-width: 26rem;">The firm does one thing: it measures whether the S&amp;P 500 is under stress, publishes the rules it uses to decide, and keeps the complete record in public.</p>
+    </div>
+    <dl class="facts">
+      <dt>Legal name</dt><dd>DoubleTrends L.L.C.</dd>
+      <dt>Office</dt><dd>14th Floor, 955 Bay Street<br />Toronto, ON M5S 0C6, Canada</dd>
+      <dt>Publishes</dt><dd>The DoubleTrends Regime Indicator for the S&amp;P 500, and the <a class="link" href="../academy/index.html">research notes</a> behind it</dd>
+      <dt>Indicator record</dt><dd>Back-tested history from {{IND_FIRST_DATE}}; published live since {{IND_LIVE_SINCE}}</dd>
+      <dt>Subscribers</dt><dd>Individual investors, through an annual <a class="link" href="../product.html">subscription</a></dd>
+      <dt>Contact</dt><dd><a class="link" href="mailto:info@doubletrends.com">info@doubletrends.com</a></dd>
+    </dl>
   </div>
-</div>
+</section>
 
-<a href="{{ROOT}}company/contact.html" class="terminal-shell directory-featured hover-lift-rust group">
-<div class="p-8 md:p-10">
-<span class="tag-overline">Featured &middot; Contact</span>
-<h3 class="text-dark font-noto font-bold text-2xl md:text-3xl leading-tight mt-3 mb-3 group-hover:text-dark transition-colors"> Get in touch </h3>
-<p class="font-open text-sm md:text-base leading-relaxed" style="color: var(--color-muted);"> Product questions, consulting inquiries, partnerships, and company matters. The direct path to the team behind the site. </p>
-<span class="button-rust mt-6">Open contact page</span>
-</div>
-</a>
-
-<div class="grid gap-6 md:grid-cols-3 w-full">
-<article class="directory-card hover-lift-rust p-6 md:p-7">
-<span class="tag-overline">Mission</span>
-<h3 class="card-heading md:text-2xl mt-3 mb-3"> Why we exist </h3>
-<p class="font-open text-sm leading-relaxed mb-5" style="color: var(--color-muted);"> The case for one transparent, rules-based oversold-reversal signal instead of a shelf of vague market opinions. What gets published, what gets sold, and the principles that keep those two aligned. </p>
-<a href="{{ROOT}}company/mission.html" class="text-primary hover:underline font-open text-sm font-semibold">Learn details &rarr;</a>
-</article>
-<article class="directory-card hover-lift-rust p-6 md:p-7">
-<span class="tag-overline">Consulting</span>
-<h3 class="card-heading md:text-2xl mt-3 mb-3"> Data &amp; research for hire </h3>
-<p class="font-open text-sm leading-relaxed mb-5" style="color: var(--color-muted);"> Data engineering, quantitative research, forecasting, and ML work built with the same disciplined, reproducible standard used in the product. </p>
-<a href="{{ROOT}}company/consulting.html" class="text-primary hover:underline font-open text-sm font-semibold">Learn details &rarr;</a>
-</article>
-<article class="directory-card hover-lift-rust p-6 md:p-7">
-<span class="tag-overline">Careers</span>
-<h3 class="card-heading md:text-2xl mt-3 mb-3"> Who we&rsquo;ll hire </h3>
-<p class="font-open text-sm leading-relaxed mb-5" style="color: var(--color-muted);"> The three functions we are building around: quantitative analysis, data engineering, and audience partnerships. Open applications accepted. </p>
-<a href="{{ROOT}}company/careers.html" class="text-primary hover:underline font-open text-sm font-semibold">Learn details &rarr;</a>
-</article>
-</div>
-
+<section class="section">
+  <div class="wrap">
+    <ul class="entries">
+      <li class="entry">
+        <span class="entry-date">Principles</span>
+        <div><h3 class="entry-title"><a href="mission.html">How the indicator is governed</a></h3><p class="entry-abstract">Published rules, a complete public record, one narrow question answered well, and information rather than instructions.</p></div>
+        <span class="entry-series"></span>
+      </li>
+      <li class="entry">
+        <span class="entry-date">Services</span>
+        <div><h3 class="entry-title"><a href="consulting.html">Research services</a></h3><p class="entry-abstract">The firm&rsquo;s data engineering and quantitative research, available for a limited number of engagements.</p></div>
+        <span class="entry-series"></span>
+      </li>
+      <li class="entry">
+        <span class="entry-date">Careers</span>
+        <div><h3 class="entry-title"><a href="careers.html">Working at DoubleTrends</a></h3><p class="entry-abstract">How the firm hires, the functions it expects to add, and how to apply.</p></div>
+        <span class="entry-series"></span>
+      </li>
+      <li class="entry">
+        <span class="entry-date">Contact</span>
+        <div><h3 class="entry-title"><a href="contact.html">Contact the firm</a></h3><p class="entry-abstract">Subscription support, research services, careers, press and partnerships.</p></div>
+        <span class="entry-series"></span>
+      </li>
+    </ul>
+  </div>
 </section>

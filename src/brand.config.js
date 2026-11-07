@@ -1,97 +1,49 @@
 /**
- * brand.config.js
+ * brand.config.js — brand token registry (reference copy).
  *
- * Brand token registry. The only live consumer is tailwind.config.js
- * (COLORS → color utilities like bg-primary / text-dark, FONTS →
- * font-noto / font-open / font-mono). Everything else here is the
- * reference copy of values that are hand-mirrored elsewhere:
+ * Live consumers: tailwind.config.js (COLORS → bg- and text- utilities, FONTS →
+ * font- utilities) and build-brand.js (logo / OG image colors). Hand-mirrored
+ * in src/styles/tokens/colors.css; tests/test-brand-tokens.js fails the suite
+ * if a mirror drifts.
  *
- *   COLORS       ↔ src/styles/tokens/colors.css (--color-rust/dark/light/muted;
- *                  note: `primary` here is `--color-rust` there)
- *                ↔ build-brand.js COLOR map (dark / light / rust)
- *   SEMANTIC     ↔ colors.css --color-gain / --color-loss (+ -rgb triples)
- *   REGIMES,     ↔ the #replay-shell custom-property block in
- *   REGIME_ALPHA_LEGEND,   src/styles/components/terminal-base.css
- *   SIGNAL_FLASH
- *   DARK_SURFACE ↔ inline styles in src/_partials/routing-card.html
+ * House style ("index provider"): navy ink on white paper, one gray family,
+ * no accent color in the chrome. Color carries data — the regime palette is
+ * the only chromatic set, and it appears only where it encodes a regime.
  *
- * tests/test-brand-tokens.js fails the suite if any mirror drifts from
- * this file — change a value here and in its mirror(s) together.
- *
- * Token notes:
- *   COLORS       — the documented brand palette (4 tokens). What used to be
- *                  "working palette" (bright, primary-h, muted-dim, gray-d)
- *                  collapsed into the four canonical names after the audit
- *                  showed no meaningful visual delta between bright and dark,
- *                  muted-dim and muted, etc. The hover-darkening on .btn-light
- *                  and .cmd-send keeps the literal #9A330A inline because it
- *                  is an implementation detail, not a brand token.
- *   FONTS        — three faces (Syne / DM Sans / JetBrains Mono). The `noto` /
- *                  `open` keys are historical class names, kept to avoid a
- *                  site-wide rename.
- *   DARK_SURFACE — the dark-bevel gradient + companion text colors used on
- *                  the routing-card panels at the foot of index.html and
- *                  method.html. Accepted as designed; named so they stop
- *                  registering as drift.
- *   REGIMES      — chart regime band colors as RGB triples (composed with
- *                  alpha at the call site).
- *   SEMANTIC     — gain / loss colors for financial return rendering.
- *                  Currently share hex values with REGIMES.calm / .bear by
- *                  coincidence; kept conceptually separate so they can move
- *                  independently if either side ever repaints.
+ *   COLORS   Tailwind palette. `primary`, `dark`, `light`, `muted` are the
+ *            historical utility names used across page markup (text-primary,
+ *            bg-light …); they now resolve to the house palette, so legacy
+ *            markup restyles without edits.
+ *   FONTS    Source Serif 4 (display + reading) and Source Sans 3 (interface +
+ *            data). `noto` / `open` / `mono` are the historical class keys.
+ *   REGIMES  Validated categorical palette (dataviz validate_palette.js,
+ *            light mode on #FFFFFF, all-pairs CVD ΔE ≥ 14.9). The correction
+ *            ochre is below 3:1 against white, so regimes are always labelled
+ *            in text and every chart has a table view.
  */
 
 const COLORS = {
-  primary: '#C2410C',  // Rust — accents, CTAs, links
-  dark:    '#2A3340',  // Glyphs on light, primary text
-  light:   '#FBFAF7',  // Page background, glyphs on dark
-  muted:   '#5A6473',  // Secondary text, body copy, fine print
+  primary: '#14213D',  // Navy ink — brand, headings, links, primary buttons
+  dark:    '#1C2430',  // Body text
+  light:   '#FFFFFF',  // Paper
+  muted:   '#5B6573',  // Secondary text
+  rule:    '#DADDE2',  // Hairlines
+  tint:    '#F4F5F7',  // Quiet panels, utility bar
 };
 
 const FONTS = {
-  noto: ['"Syne"', 'sans-serif'],            // Display
-  open: ['"DM Sans"', 'sans-serif'],         // Body
-  mono: ['"JetBrains Mono"', 'monospace'],   // Data / code / eyebrows
+  serif: ['"Source Serif 4"', 'Georgia', '"Times New Roman"', 'serif'],
+  sans:  ['"Source Sans 3"', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+  noto:  ['"Source Serif 4"', 'Georgia', 'serif'],          // historical: display
+  open:  ['"Source Sans 3"', '"Helvetica Neue"', 'Arial', 'sans-serif'], // historical: body
+  mono:  ['"Source Sans 3"', '"Helvetica Neue"', 'Arial', 'sans-serif'], // historical: data — tabular figures via CSS
 };
 
-// Routing-card palette (foot of index.html and method.html). Three-stop
-// dark bevel + text-on-dark companions. Treated as one designed system.
-const DARK_SURFACE = {
-  gradient: 'linear-gradient(135deg, #171D25 0%, #222B36 58%, #2C3641 100%)',
-  text:        '#F6F1E8',  // Warm light text — h2, route label
-  'text-cool': '#E9EDF2',  // Cool body text — composed with alpha at call sites
-  'pill-fg':   '#FFD7BF',  // Primary-on-dark pill foreground
-};
-
-// Regime palette. Stored as RGB triples (not hex) because consumers compose
-// them with variable alpha for chart bands, legends, etc. Mirrored as CSS
-// custom properties on #replay-shell in styles/components/terminal-base.css;
-// the mirror is enforced by tests/test-brand-tokens.js.
 const REGIMES = {
-  calm:       { rgb: '46, 158, 123', hex: '#2E9E7B', alphaBand: 0.07 },
-  correction: { rgb: '234, 179, 8',  hex: '#EAB308', alphaBand: 0.10 },
-  panic:      { rgb: '217, 119, 6',  hex: '#D97706', alphaBand: 0.10 },
-  bear:       { rgb: '200, 65, 59',  hex: '#C8413B', alphaBand: 0.12 },
-};
-const REGIME_ALPHA_LEGEND = 0.50;  // Solid-ish swatches in the chart legend
-const SIGNAL_FLASH = { rgb: '255, 0, 0', alpha: 0.16 };  // Chart fire-animation flash
-
-// Financial semantic colors — used for returns in history-table.js and the
-// replay chart's candlestick series. Stored as RGB triples (mirrors REGIMES
-// shape) so consumers can compose with alpha at the call site via
-// rgba(var(--gain-rgb), alpha). Conceptually independent from regimes;
-// currently share triples with calm/bear by happy coincidence.
-const SEMANTIC = {
-  gain: { rgb: '46, 158, 123', hex: '#2E9E7B' },  // Positive return (= calm, today)
-  loss: { rgb: '200, 65, 59',  hex: '#C8413B' },  // Negative return (= bear, today)
+  calm:       { hex: '#4A8CC0' },
+  correction: { hex: '#D29A2E' },
+  panic:      { hex: '#BC3F2F' },
+  bear:       { hex: '#5D4BA6' },
 };
 
-module.exports = {
-  COLORS,
-  FONTS,
-  DARK_SURFACE,
-  REGIMES,
-  REGIME_ALPHA_LEGEND,
-  SIGNAL_FLASH,
-  SEMANTIC,
-};
+module.exports = { COLORS, FONTS, REGIMES };

@@ -1,9 +1,13 @@
-<!-- 404 -->
-<section class="w-full min-h-screen flex flex-col items-center justify-center px-6 text-center" style="background: var(--color-light);">
-<div class="hero-load terminal-shell p-10 md:p-14 max-w-xl w-full">
-<span class="tag-overline">Route not found</span>
-<h1 class="text-[6rem] font-noto font-bold text-grad-section leading-none my-4">404</h1>
-<p class="text-muted text-xl mb-8">The page you're looking for doesn't exist.</p>
-<a href="{{ROOT}}"><button class="button-rust">Go Home</button></a>
+<!-- 404. root is "/" in the registry so links resolve from any depth. -->
+<div class="wrap-narrow">
+  <header class="page-head" style="border-bottom: 0;">
+    <span class="kicker">Error 404</span>
+    <h1 class="h1">This page could not be found</h1>
+    <p class="dek">The address may be mistyped, or the page may have moved during a recent reorganization of the site.</p>
+  </header>
+  <ul class="entries">
+    <li class="entry"><span class="entry-date">Indicator</span><div><h2 class="entry-title"><a href="{{ROOT}}index.html">The DoubleTrends Regime Indicator</a></h2><p class="entry-abstract">The latest reading, the history since {{IND_FIRST_MONTH}}, and the four regimes.</p></div><span class="entry-series"></span></li>
+    <li class="entry"><span class="entry-date">Data</span><div><h2 class="entry-title"><a href="{{ROOT}}data.html">Historical data</a></h2><p class="entry-abstract">Every signal since {{SIG_FIRST}} with what followed it.</p></div><span class="entry-series"></span></li>
+    <li class="entry"><span class="entry-date">Research</span><div><h2 class="entry-title"><a href="{{ROOT}}academy/index.html">Research notes</a></h2><p class="entry-abstract">Studies, primers and the macro inputs.</p></div><span class="entry-series"></span></li>
+  </ul>
 </div>
-</section>

@@ -1,21 +1,32 @@
-﻿    :root {
-      /* Brand palette */
-      --color-white: #FFFFFF;
-      --color-rust: #C2410C;
-      --color-dark: #2A3340;
-      --color-muted: #5A6473;
-      --color-light: #FBFAF7;
-      /* RGB channels for rgba() usage */
-      --color-rust-rgb: 194, 65, 12;
-      --color-dark-rgb: 42, 51, 64;
-      --color-light-rgb: 251, 250, 247;
-      /* Signal gain/loss */
-      --color-gain: #2E9E7B;
-      --color-loss: #C8413B;
-      --color-gain-rgb: 46, 158, 123;
-      --color-loss-rgb: 200, 65, 59;
-      /* Font stacks */
-      --font-display: 'Syne', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
+﻿/* House palette — mirror of src/brand.config.js (tests/test-brand-tokens.js
+   enforces the match). Navy ink on white paper, one cool gray family; the
+   regime colors are the only chromatic set and appear only where they encode
+   a regime. */
+:root {
+  --ink:         #14213D;
+  --ink-hover:   #22335A;
+  --text:        #1C2430;
+  --muted:       #5B6573;
+  --faint:       #8A929E;
+  --rule:        #DADDE2;
+  --rule-strong: #1C2430;
+  --paper:       #FFFFFF;
+  --tint:        #F4F5F7;
+  --focus:       #2F6FB0;
+
+  --regime-calm:       #4A8CC0;
+  --regime-correction: #D29A2E;
+  --regime-panic:      #BC3F2F;
+  --regime-bear:       #5D4BA6;
+
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans:  "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+
+  /* Historical names still referenced by inline styles in page markup —
+     resolved to the house palette so legacy markup restyles without edits. */
+  --color-rust:  var(--ink);
+  --color-dark:  var(--text);
+  --color-light: var(--paper);
+  --color-muted: var(--muted);
+  --font-body:   var(--font-sans);
+}

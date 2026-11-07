@@ -58,7 +58,7 @@ function breadcrumbItems(page, siteUrl) {
     items.push({
       '@type': 'ListItem',
       position: 2,
-      name: 'Academy',
+      name: 'Research',
       item: `${siteUrl}/academy/`,
     });
     if (page.src !== 'academy/index.html') {
@@ -76,7 +76,7 @@ function breadcrumbItems(page, siteUrl) {
     items.push({
       '@type': 'ListItem',
       position: 2,
-      name: 'Company',
+      name: 'About',
       item: `${siteUrl}/company/`,
     });
     if (page.src !== 'company/index.html') {
@@ -291,5 +291,6 @@ module.exports = {
   buildJsonLdScripts,
   canonicalFor,
   pageDisplayName,
+  breadcrumbItems,
   isoDate,
 };

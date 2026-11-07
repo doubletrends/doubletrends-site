@@ -3,7 +3,7 @@
 
 <!-- Header -->
 <header class="article-hero article-hero-frame">
-<span class="tag-overline">Academy &middot; Volatility</span>
+<span class="tag-overline">Research &middot; Volatility</span>
 <h1 class="article-title"> VIX percentile </h1>
 <p class="lead"> VIX percentile asks a better question than the raw VIX level: is volatility high or low relative to its own recent history? A VIX of 25 can mean a quiet correction or genuine panic depending on what VIX has been doing in the months before, so the honest read is positional rather than absolute. </p>
 </header>
@@ -58,7 +58,7 @@
 <section class="article-section">
 <span class="tag-overline">How the engine uses it</span>
 <h2 class="article-h2"> Two roles in the regime classifier </h2>
-<p class="prose-p mb-4"> Inside the DoubleTrends&trade; engine, the smoothed VIX percentile plays two roles &mdash; one that keeps the rule quiet, and one that lets the rule fire. </p>
+<p class="prose-p mb-4"> Inside the DoubleTrends engine, the smoothed VIX percentile plays two roles &mdash; one that keeps the rule quiet, and one that lets the rule fire. </p>
 <p class="prose-p mb-4"> When the percentile sits in the lower part of its range, the regime classifier reads <strong>calm</strong>. In a calm regime no reversal is allowed to fire, no matter what price is doing. Most of the calendar lives here. </p>
 <p class="prose-p mb-4"> When the percentile climbs into the upper end of its range &mdash; combined with price action that has already left the recent ceiling and either a brutal recent leg down or a sustained vol spike &mdash; the regime classifier reads <strong>panic</strong>. Panic is one of the two states where a Williams %R reversal is allowed to fire. </p>
 <p class="prose-p"> The exact threshold percentiles, smoothing window, and combination weights are part of the production logic and are not published. What matters for the educational story is that VIX never appears as a raw level &mdash; both reads are positional, so the rule stays honest across structurally different volatility regimes. Whether VIX is averaging 12 or 26, the gates trip based on where it is sitting <em>now</em> relative to recent normal, not based on a number written down in 2008. </p>
@@ -79,7 +79,7 @@
 <!-- CTA -->
 <section class="cta-panel article-cta">
 <h3 class="text-dark font-noto font-bold text-2xl mb-3">Volatility is just one input.</h3>
-<p class="prose-p mb-6"> DoubleTrends&trade; reads VIX percentile, three other macro anchors, and dual-timeframe price momentum &mdash; and only fires when all of them line up. One alert when the rule clears, for ETF investors using funds such as VOO, SPY, or IVV. </p>
+<p class="prose-p mb-6"> DoubleTrends reads VIX percentile, three other macro anchors, and dual-timeframe price momentum &mdash; and only fires when all of them line up. One alert when the rule clears, for ETF investors using funds such as VOO, SPY, or IVV. </p>
 <a href="{{ROOT}}product.html" class="button-rust">See the product</a>
 </section>
 

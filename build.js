@@ -1,21 +1,18 @@
 /**
  * build.js
- * Assembles final HTML by injecting _partials into each page template,
- * builds the site stylesheet via Tailwind CLI, and generates sitemap.xml.
+ * Assembles each page from src/pages/ into the layout, compiles the site
+ * stylesheet (Tailwind CLI), renders the data exhibits, and writes sitemap.xml,
+ * _redirects and llms.txt into dist/.
  *
- * Placeholders (replaced in head / header / footer / layout):
- *   {{ROOT}}       - relative path to site root (e.g. "" or "../")
- *   {{TITLE}}      - <title> content
- *   {{DESC}}       - meta description content
- *   {{CANONICAL}}  - canonical URL
- *   {{HEAD}} {{HEADER}} {{CONTENT}} {{FOOTER}} {{CHECKOUT_GATE}} - layout slots
+ * Placeholders resolved in every page and partial:
+ *   {{ROOT}} {{TITLE}} {{DESC}} {{CANONICAL}} …   page metadata (see renderPage)
+ *   {{HEAD}} {{HEADER}} {{CONTENT}} {{FOOTER}} {{CHECKOUT_GATE}}   layout slots
+ *   {{BREADCRUMB}}                                 visible breadcrumb (same items as JSON-LD)
+ *   {{IND_*}} {{SIG_*}} {{REG_*}}                  figures from src/data/indicator.json
+ *   {{EXHIBIT_*}} {{TABLE_*}}                      SVG exhibits and data tables (src/charts.js)
  *
- * Page fields:
- *   src       - path under src/pages/ AND the output path AND the sitemap loc
- *   root      - relative path back to site root from this page
- *   title,desc- <title> / meta description
- *   priority  - sitemap priority (default 0.7)
- *   sitemap   - set false to exclude from sitemap.xml (e.g. 404)
+ * Page fields (src/site.config.js): src, root, title, desc, kind, nav (which
+ * primary-nav item is current), crumb, schema, priority, sitemap, robots.
  */
 
 const fs   = require('fs');
@@ -30,40 +27,23 @@ const {
   OG_IMAGE,
   OG_IMAGE_ALT,
   PUBLISHER,
-  ARTICLE_PUBLISHED,
   pages,
 } = require('./src/site.config');
-const { buildJsonLdScripts, canonicalFor: canonicalForRaw, pageDisplayName, isoDate } = require('./src/schema');
+const { buildJsonLdScripts, canonicalFor: canonicalForRaw, pageDisplayName, breadcrumbItems, isoDate } = require('./src/schema');
 const { COLORS } = require('./src/brand.config');
+const { buildExhibits, fmtDateLong } = require('./src/charts');
 const { optimizeImages } = require('./build-images');
 const canonicalFor = (src) => canonicalForRaw(SITE_URL, src);
 
-// ─── Site config ────────────────────────────────────────────────────────────
 function todayInTimeZone(timeZone) {
-  const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).formatToParts(new Date());
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
   const get = (type) => parts.find((part) => part.type === type).value;
   return `${get('year')}-${get('month')}-${get('day')}`;
 }
+const TODAY = todayInTimeZone('America/New_York');
 
-const TODAY = todayInTimeZone('Asia/Shanghai');
-
-// ─── Track-record numbers from the backfill ─────────────────────────────────
-// Read once at build start so {{TR_*}} placeholders resolve to real numbers in
-// static HTML (good for SEO and avoids a flash-of-loading-content). Generated
-// by build-replay-data.js — see that file's header for the contract.
-const HISTORY_PATH = path.join(__dirname, 'public', 'replay', 'history.json');
-const history = JSON.parse(fs.readFileSync(HISTORY_PATH, 'utf8'));
-const tr = history.metrics_since_replay_start;
-const TRACK_RECORD = {
-  TR_SIGNAL_COUNT: String(tr.total_signals),
-  TR_MEDIAN_1Y_PCT: `+${tr.median_1y_pct}%`,
-  TR_POSITIVE_1Y: `${tr.positive_1y_count} of ${tr.matured_1y_count}`,
-};
+// Figures and exhibits, computed once from src/data/ (build-indicator-data.js).
+const EXHIBITS = buildExhibits();
 
 // ─── Prepare output directory ────────────────────────────────────────────────
 const DIST = path.join(__dirname, 'dist');
@@ -81,46 +61,34 @@ fs.mkdirSync(DIST, { recursive: true });
 // ─── Read partials ────────────────────────────────────────────────────────────
 const partialsDir = path.join(__dirname, 'src', '_partials');
 const read = (name) => fs.readFileSync(path.join(partialsDir, name), 'utf8');
-
-const layout              = read('layout.html');
-const routingCardTemplate = read('routing-card.html');
-const head                = read('head.html');
-const header              = read('header.html');
-const footer              = read('footer.html');
-const checkoutGate        = read('checkout-gate.html');
-const stories             = read('stories.html');
+const layout       = read('layout.html');
+const head         = read('head.html');
+const header       = read('header.html');
+const footer       = read('footer.html');
+const checkoutGate = read('checkout-gate.html');
 
 // ─── Build CSS ───────────────────────────────────────────────────────────────
-// Concatenate entry.css (Tailwind directives + @layer components) with all
-// CSS source files, run Tailwind CLI to produce a single minified file.
-// Paths are relative to src/styles/ — subdirectory prefix encodes the layer.
+// entry.css (Tailwind directives) + the house style, in cascade order:
+// tokens → base → components → layouts. The compatibility layer comes last so
+// it can override Tailwind utilities left in older page markup.
 const CSS_SEGMENTS = [
-  'tokens/font-face', 'tokens/colors', 'tokens/shadows', 'tokens/gradients',
+  'tokens/font-face', 'tokens/colors',
   'base/reset-global', 'base/type-base',
-  'components/button-base', 'components/accordion-base', 'components/footer-base',
-  'components/card-base', 'components/terminal-base', 'components/story-card', 'components/nav-base',
-  'layouts/page-shell', 'layouts/article-layout', 'layouts/directory-layout', 'layouts/hero-layout',
-  'components/motion',
-  'layouts/responsive-mobile',
+  'components/chrome', 'components/controls', 'components/exhibit',
+  'layouts/document',
+  'components/legacy',
 ];
 const stylesDir   = path.join(__dirname, 'src', 'styles');
 const entryCSS    = fs.readFileSync(path.join(stylesDir, 'entry.css'), 'utf8');
-const customCSS   = CSS_SEGMENTS
-  .map((s) => fs.readFileSync(path.join(stylesDir, `${s}.css`), 'utf8'))
-  .join('\n');
-const cssInputTmp = path.join(__dirname, 'src', 'styles', '.build-input.css');
+const customCSS   = CSS_SEGMENTS.map((s) => fs.readFileSync(path.join(stylesDir, `${s}.css`), 'utf8')).join('\n');
+const cssInputTmp = path.join(stylesDir, '.build-input.css');
 const cssOut      = path.join(DIST, 'public', 'css', 'site.css');
 fs.mkdirSync(path.dirname(cssOut), { recursive: true });
 fs.writeFileSync(cssInputTmp, entryCSS + '\n' + customCSS, 'utf8');
 try {
   execFileSync(
     process.execPath,
-    [
-      path.join(__dirname, 'node_modules', 'tailwindcss', 'lib', 'cli.js'),
-      '-i', cssInputTmp,
-      '-o', cssOut,
-      '--minify',
-    ],
+    [path.join(__dirname, 'node_modules', 'tailwindcss', 'lib', 'cli.js'), '-i', cssInputTmp, '-o', cssOut, '--minify'],
     { stdio: 'inherit' },
   );
 } finally {
@@ -129,11 +97,10 @@ try {
 console.log('✓  public/css/site.css generated');
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
+// Function replacer: values are inserted literally ("$&", "$1" in generated
+// markup must not be read as replacement patterns).
 function replace(template, vars) {
-  return Object.entries(vars).reduce(
-    (str, [k, v]) => str.replaceAll(`{{${k}}}`, v),
-    template
-  );
+  return Object.entries(vars).reduce((str, [k, v]) => str.replaceAll(`{{${k}}}`, () => v), template);
 }
 
 // Rewrite internal .html hrefs to the extensionless form Cloudflare's asset
@@ -144,9 +111,7 @@ function replace(template, vars) {
 // index.html link becomes ./ to stay resolvable.
 function extensionlessLinks(html) {
   return html.replace(/href="([^"]*)"/g, (attr, value) => {
-    if (/^[a-z][a-z0-9+.-]*:/i.test(value) || value.startsWith('//') || value.startsWith('#')) {
-      return attr;
-    }
+    if (/^[a-z][a-z0-9+.-]*:/i.test(value) || value.startsWith('//') || value.startsWith('#')) return attr;
     const [, pathname, suffix = ''] = value.match(/^([^#?]*)([#?].*)?$/);
     if (!pathname.endsWith('.html')) return attr;
     const out = pathname.endsWith('index.html')
@@ -156,217 +121,139 @@ function extensionlessLinks(html) {
   });
 }
 
-// Index just past the matching close tag of the element opened at `openStart`,
-// found by counting same-name open/close depth. Used to skip content nested
-// inside an element we just tagged.
-function elementEnd(html, tag, openStart) {
-  const gt = html.indexOf('>', openStart);
-  const re = new RegExp(`<${tag}\\b|</${tag}>`, 'gi');
-  re.lastIndex = gt + 1;
-  let depth = 1, m;
-  while ((m = re.exec(html))) {
-    if (m[0][1] === '/') { if (--depth === 0) return m.index + m[0].length; }
-    else depth++;
-  }
-  return html.length;
+// Mark the current primary-nav item (page.nav names it).
+function markCurrentNav(html, page) {
+  if (!page.nav) return html;
+  return html.replace(`data-nav="${page.nav}"`, `data-nav="${page.nav}" aria-current="page"`);
 }
 
-// Block atomicity (reveal contract): a data-reveal element may not live inside
-// another. Keep the OUTERMOST — the block — and strip data-reveal from any
-// nested descendant, so blocks reveal whole instead of double-animating their
-// pieces. Runs after all tagging, so it also catches cross-rule overlaps (e.g.
-// a hero banner-text sitting inside a revealed section banner).
-function dropNestedReveals(mainBlock) {
-  const spans = [];
-  const re = /<([a-zA-Z0-9]+)\b[^>]*\bdata-reveal\b[^>]*>/g;
-  let m;
-  while ((m = re.exec(mainBlock))) {
-    spans.push({ start: m.index, end: elementEnd(mainBlock, m[1], m.index) });
-  }
-  const nestedStarts = spans
-    .filter((s) => spans.some((p) => p !== s && s.start > p.start && s.start < p.end))
-    .map((s) => s.start)
-    .sort((a, b) => b - a);                          // right-to-left keeps indices valid
-  let out = mainBlock;
-  for (const pos of nestedStarts) {
-    const gt = out.indexOf('>', pos);
-    out = out.slice(0, pos) + out.slice(pos, gt + 1).replace(/\s+data-reveal\b/, '') + out.slice(gt + 1);
-  }
-  return out;
+// Visible breadcrumb, built from the same items as the JSON-LD BreadcrumbList.
+function breadcrumbHtml(page) {
+  const items = breadcrumbItems(page, SITE_URL);
+  if (items.length < 2) return '';
+  const li = items.map((it, i) => {
+    const last = i === items.length - 1;
+    const href = it.item === SITE_URL ? `${page.root}index.html` : it.item.replace(`${SITE_URL}/`, page.root);
+    return last
+      ? `<li aria-current="page">${it.name}</li>`
+      : `<li><a href="${href}">${it.name}</a></li>`;
+  }).join('');
+  return `<nav class="breadcrumb" aria-label="Breadcrumb"><ol>${li}</ol></nav>`;
 }
 
-// Site-wide scroll-reveal: tag every top-level <section> inside <main> that
-// begins AFTER the page's first <h1>. The hero always contains the first H1
-// (whether it is a <section>, an <article>'s <header>, etc.), so heroes stay
-// instant — protecting LCP and avoiding a load flash — while the content
-// sections below fade up on scroll. Paired with public/js/scroll-reveal.js and
-// the prefers-reduced-motion-gated rules in styles/components/motion.css.
-// A section that already carries data-reveal (authored by hand) is left as-is.
-function applyScrollReveal(html) {
-  return html.replace(/<main>[\s\S]*?<\/main>/, (mainBlock) => {
-    const h1Index = mainBlock.search(/<h1\b/);
+// Research notes: breadcrumb above the title, dateline below the standfirst.
+function decorateArticle(html, page) {
+  if (page.kind !== 'article') return html;
+  const published = page.schema?.datePublished;
+  const meta = `<p class="article-meta"><span><strong>Research note</strong> &middot; ${page.section}</span>`
+    + (published ? `<span>Published ${fmtDateLong(published)}</span>` : '')
+    + '<span>DoubleTrends Research</span></p>';
+  // The notes' original closing promo blocks are replaced by one standard
+  // further-reading block: related notes from the same series, the method,
+  // the record, and a single plain line about the subscription.
+  const related = ARTICLES.filter((a) => a.series === page.series && a.src !== page.src).slice(0, 2);
+  const further = `<section class="article-section article-further">
+<span class="tag-overline">Further reading</span>
+<ul class="further-list">
+${related.map((a) => `<li><a href="${page.root}${a.src}">${escAmp(a.title)}</a><span>${a.series} &middot; ${fmtDateLong(a.schema.datePublished)}</span></li>`).join('\n')}
+<li><a href="${page.root}method.html">Methodology</a><span>How the regime classification and the signal are constructed</span></li>
+<li><a href="${page.root}data.html">Historical data</a><span>Every signal since ${EXHIBITS.SIG_FIRST}, with what followed</span></li>
+</ul>
+<p class="fine-print">The daily reading and same-day signals are available by <a href="${page.root}product.html">subscription</a>.</p>
+</section>`;
+  html = html.replace(/<section class="cta-panel article-cta">[\s\S]*?<\/section>/, () => further);
 
-    // Sections: reveal every <section> that begins after the hero. When the
-    // page has an <h1>, the hero is whatever block holds it, so reveal the
-    // sections starting after it. When it has none (e.g. product.html), fall
-    // back to skipping the first <section> as the hero.
-    let firstSectionSkipped = h1Index !== -1;
-    let sectionTagged = false;
-    let out = mainBlock.replace(/<section\b([^>]*)>/g, (tag, attrs, offset) => {
-      if (h1Index !== -1) {
-        if (offset < h1Index) return tag;               // hero — stays instant
-      } else if (!firstSectionSkipped) {
-        firstSectionSkipped = true;
-        return tag;                                     // hero — stays instant
-      }
-      if (/\bdata-reveal\b/.test(attrs)) return tag;    // already tagged
-      sectionTagged = true;
-      return `<section${attrs} data-reveal>`;
-    });
-
-    // Directory cards, featured tiles, and banners (the section-landing pages)
-    // sit below the hero inside a single <section>, so the section rule skips
-    // them. Each reveals as a WHOLE block (card as a whole) — including the hero
-    // banner at the top: its background image reveals with it, rather than
-    // leaving the image/tint static while only the text fades (which read as a
-    // broken partial animation). The h1Index guard scopes this to directory
-    // pages; product.html reuses .directory-banner for app-shot frames but has
-    // no <h1>, so it is left untouched here.
-    if (h1Index !== -1) {
-      out = out.replace(
-        /<(a|article|div)\b([^>]*\bclass="[^"]*\bdirectory-(?:card|featured|banner)\b[^"]*"[^>]*)>/g,
-        (tag, el, rest) => {
-          if (/\bdata-reveal\b/.test(rest)) return tag;
-          return `<${el}${rest} data-reveal>`;
-        },
-      );
-    }
-
-    // Single-section content pages (company/*, legal/*) wrap their panels in
-    // one container below the hero (.page-content-wide, .page-content-legal), so
-    // the section rule finds nothing to reveal. When no <section> was revealed
-    // above, tag the content panels directly: .terminal-shell / .product-panel
-    // for company pages, .legal-section for the per-clause blocks of a legal
-    // document. Gated on !sectionTagged, this never touches the homepage or
-    // articles, where the same classes sit inside already-revealed sections.
-    // metric-tile is intentionally excluded — it nests inside terminal-shell
-    // and reveals with its parent. Any nesting from this or the rules above is
-    // removed afterwards by dropNestedReveals (keeps the outermost block).
-    if (h1Index !== -1 && !sectionTagged) {
-      const h1 = out.search(/<h1\b/);
-      out = out.replace(
-        /<(div|article)\b([^>]*\bclass="[^"]*\b(?:terminal-shell|product-panel|legal-section)\b[^"]*"[^>]*)>/g,
-        (tag, el, rest, offset) => {
-          if (offset < h1) return tag;
-          if (/\bdata-reveal\b/.test(rest)) return tag;
-          return `<${el}${rest} data-reveal>`;
-        },
-      );
-    }
-
-    // Hero text stacks. One system: the hero reveals through the same
-    // data-reveal path as every content block, cascading in on load via the
-    // first-viewport branch of scroll-reveal.js. The no-FOUC guard in <head>
-    // applies the hidden state before first paint, so the hero never flashes.
-    // These classes are hero-only, and decor/banner images sit OUTSIDE the text
-    // stack (so image-LCP heroes stay instant). No h1 guard: the hero is no
-    // longer the instant exception.
-    out = out.replace(
-      /<(div|header|a|section)\b([^>]*\bclass="[^"]*\b(?:hero-copy|hero-ai-card|page-hero-center|article-hero-frame|hero-load)\b[^"]*"[^>]*)>/g,
-      (tag, el, rest) => {
-        if (/\bdata-reveal\b/.test(rest)) return tag;
-        return `<${el}${rest} data-reveal>`;
-      },
-    );
-
-    return dropNestedReveals(out);
-  });
+  // Anchor both insertions to the article's own <header>: the site masthead is
+  // also a <header> and comes first in the document.
+  return html.replace(
+    /(<header class="article-hero[^"]*">)([\s\S]*?)<\/header>/,
+    (_m, open, body) => `${open}\n${breadcrumbHtml(page)}${body}${meta}\n</header>`,
+  );
 }
 
-// Pages are emitted flat: method.html → dist/method.html. Cloudflare serves
-// each at its extensionless URL (/method) with 200, so the output path is just
-// the source path.
-function outPathFor(src) {
-  return src;
+// Research library entries, generated from the registry (title, desc,
+// published, series) so listings never drift from the notes themselves.
+const SERIES_ORDER = ['Studies', 'Primers', 'Macro inputs'];
+const SERIES_BLURB = {
+  'Studies': 'Market history and investor behavior: the base rates behind the indicator.',
+  'Primers': 'The measures the indicator is built from, explained one at a time.',
+  'Macro inputs': 'One note per macroeconomic series the regime classification reads.',
+};
+const ARTICLES = pages
+  .filter((p) => p.kind === 'article')
+  .sort((a, b) => (b.schema.datePublished.localeCompare(a.schema.datePublished)) || a.title.localeCompare(b.title));
+const escAmp = (s) => s.replace(/&(?![a-z]+;|#[0-9]+;)/gi, "&amp;");
+function entryHtml(a, root) {
+  return `<li class="entry">
+<span class="entry-date">${fmtDateLong(a.schema.datePublished)}</span>
+<div><h3 class="entry-title"><a href="${root}${a.src}">${escAmp(a.title)}</a></h3><p class="entry-abstract">${escAmp(a.desc)}</p></div>
+<span class="entry-series">${a.series} &middot; ${a.section}</span>
+</li>`;
 }
-
-function ensureDir(filePath) {
-  const dir = path.dirname(filePath);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+function researchRecent(root, n = 3) {
+  return `<ul class="entries">${ARTICLES.slice(0, n).map((a) => entryHtml(a, root)).join('\n')}</ul>`;
+}
+function researchLibrary(root) {
+  return SERIES_ORDER.map((series) => {
+    const list = ARTICLES.filter((a) => a.series === series);
+    const id = series.toLowerCase().replace(/\s+/g, '-');
+    return `<section class="section" id="${id}"><div class="wrap">
+<div class="section-head"><div><span class="kicker">${series}</span><h2 class="h2">${SERIES_BLURB[series]}</h2></div><span class="fine">${list.length} notes</span></div>
+<ul class="entries">${list.map((a) => entryHtml(a, root)).join('\n')}</ul>
+</div></section>`;
+  }).join('\n');
 }
 
 function formatTitle(page) {
-  return `${SITE_NAME} | ${page.title}`;
+  return page.kind === 'home' ? `${SITE_NAME} — ${page.title}` : `${page.title} | ${SITE_NAME}`;
 }
 
 function socialExtraFor(page) {
   if (page.kind !== 'article') return '';
-  const section = page.section || 'Academy';
-  return `  <meta property="article:published_time" content="${isoDate(ARTICLE_PUBLISHED)}" />
+  const published = page.schema?.datePublished;
+  return `  <meta property="article:published_time" content="${isoDate(published)}" />
   <meta property="article:modified_time" content="${isoDate(TODAY)}" />
-  <meta property="article:section" content="${section}" />`;
+  <meta property="article:section" content="${page.section || 'Research'}" />`;
 }
 
-// Page-specific <head> preloads. The universal above-the-fold fonts (Syne 700,
-// DM Sans 400) are static in head.html; this adds only the faces that vary by
-// page, so no page preloads a font it does not use above the fold. Today the
-// homepage hero <h1> is the sole place Syne 800 appears above the fold. root is
-// baked in directly (this string is injected after {{ROOT}} is resolved).
-function headPreloadsFor(page) {
-  const preloads = [];
-  if (page.src === 'index.html') {
-    preloads.push(`  <link rel="preload" href="${page.root}public/fonts/syne/syne-800.woff2" as="font" type="font/woff2" crossorigin />`);
-  }
-  return preloads.join('\n');
-}
-
-function renderRoutingCard(card, root) {
-  if (!card) return '';
-  return replace(routingCardTemplate, {
-    ROUTING_PILL:         card.pill,
-    ROUTING_HEADLINE:     card.headline,
-    ROUTING_BODY:         card.body,
-    ROUTING_ROUTE:        card.route,
-    ROUTING_ROUTE_DESC:   card.routeDesc,
-    ROUTING_HREF:         `${root}${card.href}`,
-    ROUTING_CTA:          card.cta,
-    ROUTING_FOOTER_LABEL: card.footerLabel,
-  });
+// Pages that carry exhibits load the interaction layer.
+function scriptsFor(html, root) {
+  return /data-exhibit=/.test(html) ? `<script src="${root}public/js/exhibits.js" defer></script>\n</body>` : '</body>';
 }
 
 function renderPage(page) {
   const srcPath = path.join(__dirname, 'src', 'pages', page.src);
-  const outPath = path.join(DIST, outPathFor(page.src));
-
+  const outPath = path.join(DIST, page.src);
   if (!fs.existsSync(srcPath)) {
     console.warn(`⚠  Missing source: ${page.src}`);
     return false;
   }
 
   const assembled = replace(layout, {
-    HEAD:          head,
-    HEADER:        header,
-    FOOTER:        footer,
+    HEAD: head,
+    HEADER: header,
+    FOOTER: footer,
     CHECKOUT_GATE: checkoutGate,
-    CONTENT:       fs.readFileSync(srcPath, 'utf8'),
-    // STORIES after CONTENT so the {{STORIES}} placeholder in the page source is
-    // expanded here; its inner {{ROUTING_CARD}} is then filled per page below.
-    STORIES:       stories,
+    CONTENT: fs.readFileSync(srcPath, 'utf8'),
   });
-  const html = replace(assembled, {
-    ROOT:      page.root,
-    TITLE:     formatTitle(page),
-    DESC:      page.desc,
+  let html = replace(assembled, {
+    ...EXHIBITS,
+    BREADCRUMB: breadcrumbHtml(page),
+    RESEARCH_RECENT: researchRecent(page.root),
+    RESEARCH_LIBRARY: researchLibrary(page.root),
+    ROOT: page.root,
+    TITLE: formatTitle(page),
+    DESC: page.desc,
     CANONICAL: canonicalFor(page.src),
-    THEME_COLOR: COLORS.light,
+    THEME_COLOR: COLORS.primary,
     SUBSCRIBE_URL,
     PORTAL_URL,
-    OG_TYPE:   page.kind === 'article' ? 'article' : 'website',
+    OG_TYPE: page.kind === 'article' ? 'article' : 'website',
     OG_IMAGE,
     OG_IMAGE_ALT,
     SOCIAL_EXTRA: socialExtraFor(page),
-    HEAD_PRELOADS: headPreloadsFor(page),
-    ROBOTS:    page.robots ?? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
+    HEAD_PRELOADS: '',
+    ROBOTS: page.robots ?? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
     JSONLD_SCRIPTS: buildJsonLdScripts({
       page,
       siteUrl: SITE_URL,
@@ -375,15 +262,19 @@ function renderPage(page) {
       publisher: PUBLISHER,
       ogImage: OG_IMAGE,
       today: TODAY,
-      defaultArticlePublished: ARTICLE_PUBLISHED,
+      defaultArticlePublished: page.schema?.datePublished,
       formattedTitle: formatTitle(page),
     }),
-    ...TRACK_RECORD,
-    ROUTING_CARD: renderRoutingCard(page.routingCard, page.root),
   });
+  html = decorateArticle(html, page);
+  html = markCurrentNav(html, page);
+  html = html.replace('</body>', scriptsFor(html, page.root));
 
-  ensureDir(outPath);
-  fs.writeFileSync(outPath, extensionlessLinks(applyScrollReveal(html)), 'utf8');
+  const leftover = html.match(/\{\{[A-Z0-9_]+\}\}/);
+  if (leftover) throw new Error(`${page.src}: unresolved placeholder ${leftover[0]}`);
+
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+  fs.writeFileSync(outPath, extensionlessLinks(html), 'utf8');
   console.log(`✓  ${page.src}`);
   return true;
 }
@@ -393,118 +284,91 @@ let built = 0;
 for (const page of pages) {
   if (renderPage(page)) built++;
 }
-
 console.log(`\nBuild complete — ${built} pages written.`);
 
-// ─── Generate sitemap.xml ────────────────────────────────────────────────────
+// ─── sitemap.xml ─────────────────────────────────────────────────────────────
 const urls = pages
   .filter((p) => p.sitemap !== false)
   .map((p) => `  <url>
     <loc>${canonicalFor(p.src)}</loc>
-    <changefreq>monthly</changefreq>
+    <changefreq>${p.kind === 'home' || p.src === 'data.html' ? 'weekly' : 'monthly'}</changefreq>
     <priority>${(p.priority ?? 0.7).toFixed(1)}</priority>
   </url>`)
   .join('\n\n');
-
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+fs.writeFileSync(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 ${urls}
 
 </urlset>
-`;
-
-fs.writeFileSync(path.join(DIST, 'sitemap.xml'), sitemap, 'utf8');
+`, 'utf8');
 console.log('✓  sitemap.xml generated');
 
-// ─── Generate _redirects ─────────────────────────────────────────────────────
+// ─── _redirects ──────────────────────────────────────────────────────────────
 // Cloudflare's built-in .html stripping issues 307 (temporary) redirects.
-// Explicit 301 (permanent) redirects take precedence and fix the SEO problem:
-// Google stops re-crawling .html URLs and passes PageRank to the canonical form.
+// Explicit 301s upgrade them so search engines consolidate on the canonical.
 const redirectLines = pages
   .filter((p) => p.src !== '404.html')
-  .map((p) => {
-    const from = `/${p.src}`;
-    const to   = canonicalFor(p.src).slice(SITE_URL.length) || '/';
-    return `${from} ${to} 301`;
-  });
-
+  .map((p) => `/${p.src} ${canonicalFor(p.src).slice(SITE_URL.length) || '/'} 301`);
 fs.writeFileSync(path.join(DIST, '_redirects'), redirectLines.join('\n') + '\n', 'utf8');
 console.log('✓  _redirects generated');
 
-// ─── Generate llms.txt ───────────────────────────────────────────────────────
-// Group published pages into sections that mirror the site's breadcrumb
-// structure — top-level pages, then Academy / Company / Legal — so llms.txt,
-// the nav, and the JSON-LD BreadcrumbList all share one section model. Primary
-// Pages holds the marketing pages plus each section's index (the breadcrumb
-// position-2 landings); the sub-sections list only their deeper children.
+// ─── llms.txt ────────────────────────────────────────────────────────────────
+// Sections mirror the breadcrumb model: top-level pages, then Research /
+// About / Legal children.
 const LLMS_SECTIONS = [
   { key: 'main',    heading: 'Primary Pages' },
-  { key: 'academy', heading: 'Academy' },
-  { key: 'company', heading: 'Company' },
+  { key: 'academy', heading: 'Research' },
+  { key: 'company', heading: 'About' },
   { key: 'legal',   heading: 'Legal' },
 ];
-
 function llmsSectionKey(src) {
   const prefix = src.split('/')[0];
-  const isSection = ['academy', 'company', 'legal'].includes(prefix);
-  return isSection && !src.endsWith('index.html') ? prefix : 'main';
+  return ['academy', 'company', 'legal'].includes(prefix) && !src.endsWith('index.html') ? prefix : 'main';
 }
+const llmsSections = LLMS_SECTIONS.map(({ key, heading }) => {
+  const entries = pages
+    .filter((p) => p.sitemap !== false && llmsSectionKey(p.src) === key)
+    .map((p) => `- ${pageDisplayName(p)}: ${canonicalFor(p.src)}\n  ${p.desc}`)
+    .join('\n');
+  return `## ${heading}\n\n${entries}`;
+}).join('\n\n');
 
-const llmsSections = LLMS_SECTIONS
-  .map(({ key, heading }) => {
-    const entries = pages
-      .filter((p) => p.sitemap !== false && llmsSectionKey(p.src) === key)
-      .map((p) => `- ${pageDisplayName(p)}: ${canonicalFor(p.src)}\n  ${p.desc}`)
-      .join('\n');
-    return `## ${heading}\n\n${entries}`;
-  })
-  .join('\n\n');
+fs.writeFileSync(path.join(DIST, 'llms.txt'), `# DoubleTrends
 
-const llms = `# DoubleTrends™
+DoubleTrends publishes the DoubleTrends Regime Indicator: a rules-based daily classification of U.S. equity market stress (calm, correction, panic, bear) for the S&P 500, with a reversal signal that is eligible to fire only in panic and bear regimes. History is a point-in-time reconstruction from ${EXHIBITS.IND_FIRST_YEAR}; live publication began ${EXHIBITS.IND_LIVE_SINCE}. The site also publishes research notes on drawdowns, investor behavior, and the indicator's inputs.
 
-DoubleTrends™ is a rules-based S&P 500 index signal for ETF investors. It tracks the S&P 500 index and publishes a same-day alert to the subscriber portal when its oversold-reversal rule fires. The site also publishes research notes on drawdowns, market exhaustion, investor behavior, and market-structure tools.
-
-Important: the content is educational market information only. It is not financial, investment, trading, tax, or legal advice, and it is not a recommendation to buy, sell, or hold any security.
+Important: the content is educational market information only. It is not financial, investment, trading, tax, or legal advice, and it is not a recommendation to buy, sell, or hold any security. Readings before ${EXHIBITS.IND_LIVE_SINCE} are back-tested.
 
 ${llmsSections}
 
 ## Machine-Readable Data
 
-- Replay data for the S&P 500 signal chart: ${SITE_URL}/public/replay/sp500.json
+- Signal history with forward returns (CSV): ${SITE_URL}/public/data/doubletrends-signals.csv
 - XML sitemap: ${SITE_URL}/sitemap.xml
 - Robots policy: ${SITE_URL}/robots.txt
 
 ## Entity Summary
 
-- Brand: DoubleTrends™
+- Brand: DoubleTrends (a trademark of DoubleTrends L.L.C.)
 - Operator: DoubleTrends L.L.C.
-- Coverage: S&P 500 index
-- Intended audience: ETF investors using S&P 500 exposure such as VOO, SPY, or IVV
-- Delivery: subscriber portal with same-day alerts
-- Signal type: low-frequency, rules-based oversold reversal
+- Coverage: S&P 500 index (DoubleTrends is not affiliated with S&P Dow Jones Indices)
+- Publication: daily regime reading after the U.S. close; signals delivered same day to subscribers
+- Signal history: ${EXHIBITS.SIG_COUNT} signals since ${EXHIBITS.SIG_FIRST}, all back-tested unless marked live
 - Contact: info@doubletrends.com
-`;
-
-fs.writeFileSync(path.join(DIST, 'llms.txt'), llms, 'utf8');
+`, 'utf8');
 console.log('✓  llms.txt generated');
 
-// ─── Copy static assets ──────────────────────────────────────────────────────
+// ─── Static assets ───────────────────────────────────────────────────────────
 fs.copyFileSync(path.join(__dirname, 'src', 'robots.txt'), path.join(DIST, 'robots.txt'));
-console.log('✓  robots.txt copied');
-
 fs.copyFileSync(path.join(__dirname, 'src', '_headers'), path.join(DIST, '_headers'));
-console.log('✓  _headers copied');
+console.log('✓  robots.txt, _headers copied');
 
 // public/ is copied verbatim EXCEPT the managed rasters, which are re-encoded to
-// resized WebP (and carousel thumbnails) — see build-images.js. Async, so it runs
-// last as an awaited IIFE and fails the build loudly on any encode error.
+// resized WebP — see build-images.js. Awaited last; fails the build on error.
 (async () => {
-  const { fullCount, thumbCount } = await optimizeImages(
-    path.join(__dirname, 'public'),
-    path.join(DIST, 'public'),
-  );
-  console.log(`✓  public/ copied + ${fullCount} images → WebP (${thumbCount} carousel thumbnails)`);
+  const { count } = await optimizeImages(path.join(__dirname, 'public'), path.join(DIST, 'public'));
+  console.log(`✓  public/ copied + ${count} images → WebP`);
 })().catch((err) => {
   console.error('✗  image optimization failed');
   console.error(err);

@@ -1,77 +1,9 @@
-﻿    @font-face {
-      font-family: 'Syne';
-      src: url('../fonts/syne/syne-400.woff2') format('woff2');
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Syne';
-      src: url('../fonts/syne/syne-600.woff2') format('woff2');
-      font-weight: 600;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Syne';
-      src: url('../fonts/syne/syne-700.woff2') format('woff2');
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Syne';
-      src: url('../fonts/syne/syne-800.woff2') format('woff2');
-      font-weight: 800;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'DM Sans';
-      src: url('../fonts/dm-sans/dm-sans-300.woff2') format('woff2');
-      font-weight: 300;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'DM Sans';
-      src: url('../fonts/dm-sans/dm-sans-400.woff2') format('woff2');
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'DM Sans';
-      src: url('../fonts/dm-sans/dm-sans-400-italic.woff2') format('woff2');
-      font-weight: 400;
-      font-style: italic;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'DM Sans';
-      src: url('../fonts/dm-sans/dm-sans-500.woff2') format('woff2');
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'DM Sans';
-      src: url('../fonts/dm-sans/dm-sans-600.woff2') format('woff2');
-      font-weight: 600;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'JetBrains Mono';
-      src: url('../fonts/jetbrains-mono/jetbrains-mono-400.woff2') format('woff2');
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'JetBrains Mono';
-      src: url('../fonts/jetbrains-mono/jetbrains-mono-600.woff2') format('woff2');
-      font-weight: 600;
-      font-style: normal;
-      font-display: swap;
-    }
+﻿/* Source Serif 4 (display + reading) and Source Sans 3 (interface + data).
+   Self-hosted latin subsets from @fontsource, SIL OFL 1.1 (OFL.txt beside the files).
+   Paths are relative to dist/public/css/site.css. */
+@font-face { font-family: 'Source Serif 4'; src: url('../fonts/source-serif-4/source-serif-4-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Serif 4'; src: url('../fonts/source-serif-4/source-serif-4-latin-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Source Serif 4'; src: url('../fonts/source-serif-4/source-serif-4-latin-600-normal.woff2') format('woff2'); font-weight: 600 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Sans 3'; src: url('../fonts/source-sans-3/source-sans-3-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Sans 3'; src: url('../fonts/source-sans-3/source-sans-3-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Sans 3'; src: url('../fonts/source-sans-3/source-sans-3-latin-600-normal.woff2') format('woff2'); font-weight: 600 800; font-style: normal; font-display: swap; }

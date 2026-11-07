@@ -1,228 +1,96 @@
-<style>
-  .live-pulse-dot {
-    display: inline-block;
-    width: 1.25rem;
-    height: 1.25rem;
-    background: var(--color-rust);
-    border-radius: 50%;
-    margin-right: 0.5rem;
-    flex-shrink: 0;
-    animation: livePulse 1s ease-out infinite;
-  }
-  @keyframes livePulse {
-    0%   { box-shadow: 0 0 0 0 rgba(194,65,12,0.45); }
-    100% { box-shadow: 0 0 0 10px rgba(194,65,12,0); }
-  }
-  .product-img-frame {
-    border: 1px solid rgba(30,37,48,0.10);
-    border-top: 9px solid var(--color-rust);
-    box-shadow: var(--shadow-card);
-  }
-  .product-img-frame:hover {
-    box-shadow: var(--shadow-card-hover);
-  }
-  .status-dot-pulse {
-    animation: statusPulse 1s ease-out infinite;
-  }
-  @keyframes statusPulse {
-    0%   { box-shadow: 0 0 0 0 rgba(194,65,12,0.45); }
-    100% { box-shadow: 0 0 0 5px rgba(194,65,12,0); }
-  }
-  #pricing .product-panel,
-  #pricing .terminal-shell {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-  }
-</style>
-<section id="try" class="relative w-full overflow-hidden h-screen flex items-center" style="background: transparent;">
-<div class="home-container relative z-10 pt-36 pb-24">
-<div class="hero-load flex flex-col mb-5 max-w-3xl">
-<span class="tag-overline mb-5">Subscriber Portal</span>
-<h2 class="section-heading mb-5" style="display:flex;align-items:center;gap:0.65rem;"><span class="live-pulse-dot"></span>Live, 24/7, 365.</h2>
-<p class="section-body max-w-3xl"> Oversold alert, DoubleTrends&trade; signal &mdash; in your portal, every trading day. Regime classification, VIX, Fed Funds, CPI, and unemployment &mdash; live and always on.</p>
+<!-- Subscription: what subscribers receive, terms, getting started, questions.
+     Commercial terms mirror legal/refund-policy.html and legal/terms.html. -->
+<div class="wrap">
+  <header class="page-head">
+    {{BREADCRUMB}}
+    <span class="kicker">Subscription</span>
+    <h1 class="h1">Subscriber access to the daily reading</h1>
+    <p class="dek">The public site shows the indicator&rsquo;s history. Subscribers receive each trading day&rsquo;s reading as it is published, the oversold alert when a stressed market turns deeply oversold, and every signal on the day it fires.</p>
+  </header>
 </div>
-<div style="display: flex; gap: 1.5rem;">
-<figure style="flex: 0 0 auto; margin: 0;">
-<div class="directory-banner product-img-frame hover-lift-rust" style="aspect-ratio: auto;">
-<img src="{{ROOT}}public/product/webapp1.webp" alt="Market Brief — daily regime and macro context" style="height: 518px; width: auto; display: block;" />
-</div>
-<figcaption class="fine-print mt-3">Market Brief &mdash; live regime classification, VIX, macro context, and signal status</figcaption>
-</figure>
-<figure style="flex: 0 0 auto; margin: 0;">
-<div class="directory-banner product-img-frame hover-lift-rust" style="aspect-ratio: auto;">
-<img src="{{ROOT}}public/product/webapp2.webp" alt="Signal Terminal — 20-year signal track record" style="height: 518px; width: auto; display: block;" />
-</div>
-<figcaption class="fine-print mt-3">Signal Terminal &mdash; 20 years of price history, regime overlay, every alert and signal, live</figcaption>
-</figure>
-</div>
-</div>
+
+<section class="section">
+  <div class="wrap split">
+    <div class="offer" style="align-self: start;">
+      <div class="offer-head">
+        <h2>Annual subscription</h2>
+        <p class="offer-price">USD 149 <span>per year</span></p>
+      </div>
+      <div class="offer-body">
+        <p style="color: var(--muted); margin-bottom: 1rem;">Equivalent to USD 12.42 a month, billed annually.</p>
+        <ul>
+          <li>30-day free trial; no charge if you cancel before it ends</li>
+          <li>Daily reading and same-day signals for the S&amp;P 500</li>
+          <li>Cancel at any time; access runs to the end of the paid term</li>
+          <li>Full refund within 14 days of a charge if no signal has been delivered since</li>
+        </ul>
+      </div>
+      <div class="offer-foot">
+        <a class="btn" href="{{SUBSCRIBE_URL}}">Start the 30-day trial</a>
+        <span class="fine">Payment by Stripe</span>
+      </div>
+    </div>
+
+    <div>
+      <span class="kicker">What subscribers receive</span>
+      <dl class="facts" style="margin-top: 1rem;">
+        <dt>Market brief</dt>
+        <dd>The day&rsquo;s regime classification with its context &mdash; VIX, federal funds rate, unemployment and CPI &mdash; and the current alert and signal status. Provisional readings through the session; the final reading after the close.</dd>
+        <dt>Oversold alert</dt>
+        <dd>A notice when a panic or bear market becomes deeply oversold: the condition that precedes a signal.</dd>
+        <dt>Signal</dt>
+        <dd>Delivered to the portal on the day it fires. {{SIG_COUNT}} signals since {{SIG_FIRST}}; several years have none.</dd>
+        <dt>Signal terminal</dt>
+        <dd>The S&amp;P 500&rsquo;s price history with every session colored by regime and every alert and signal marked, updated each trading day.</dd>
+        <dt>Access</dt>
+        <dd>The subscriber portal at app.doubletrends.com. Your checkout email is your account: sign in with an emailed link, no password.</dd>
+      </dl>
+    </div>
+  </div>
 </section>
-<section id="pricing" class="decor-banner relative w-full min-h-screen flex items-center overflow-hidden">
-<div class="home-container py-20">
-<div class="flex flex-col mb-6 max-w-3xl">
-<span class="tag-overline mb-5">Pricing</span>
-<h2 class="section-heading"> More than just a signal. </h2>
-<p class="section-body mt-5">One subscription unlocks the full system: live subscriber portal, same-day alerts, daily market context, and 20 years of signal history.</p>
-</div>
-<div class="grid lg:grid-cols-[1fr_0.9fr] gap-6 items-stretch">
-<div class="product-panel hover-lift-rust p-6 flex flex-col justify-between">
-<div>
-<div class="flex items-center justify-between gap-4 flex-wrap mb-6">
-<span class="data-label" style="font-size: 1.05rem;">Billed annually</span>
-<span class="status-pill" style="font-size: 0.74rem; padding: 0.5rem 0.84rem;"><span class="status-dot status-dot-pulse"></span>S&amp;P 500 active</span>
-</div>
-<div class="flex items-end gap-2 mb-2">
-<span class="data-value">USD $12.42</span>
-<span class="data-label mb-2" style="font-size:0.93rem;">/month</span>
-</div>
-<p class="data-label mb-2" style="font-size: 0.81rem;"><span class="font-noto font-semibold" style="text-transform:none;">USD $149</span>/year</p>
-<p class="font-open text-sm font-semibold mb-2" style="color: var(--color-rust);">Start with 30 days free</p>
-<ul class="grid sm:grid-cols-2 gap-3 my-5 font-open text-sm" style="color: var(--color-muted);">
-<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Oversold Alert</li>
-<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">DoubleTrends&trade; Signal</li>
-<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Subscriber Portal</li>
-<li class="px-4 py-3" style="background: rgba(255,255,255,0.72); border: 1px solid rgba(30,37,48,0.08);">Dedicated Terminal</li>
-</ul>
-<a href="{{SUBSCRIBE_URL}}" class="button-rust">Start your free trial</a>
-<p class="fine-print mt-5 leading-relaxed">Try it free for 30 days. Cancel before the trial ends and you pay nothing. If a paid term begins and no signal has been delivered, a refund window still applies.</p>
-</div>
-</div>
-<div class="terminal-shell hover-lift-rust p-5 flex flex-col justify-between">
-<div>
-<span class="data-label">What you are paying for</span>
-<div class="mt-5 flex flex-col">
-<div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Early warning before the signal</span>
-<span class="data-label">Oversold Alert</span>
-</div>
-<div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Exhaustion reversal signal</span>
-<span class="data-label">DoubleTrends&trade; Signal</span>
-</div>
-<div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">20-year track record</span>
-<span class="data-label">Subscriber Portal</span>
-</div>
-<div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Live market context</span>
-<span class="data-label">Dedicated Terminal</span>
-</div>
-<div class="flex items-center justify-between gap-4 py-4" style="border-top: 1px solid rgba(30,37,48,0.10); border-bottom: 1px solid rgba(30,37,48,0.10);">
-<span class="font-noto text-dark font-semibold">Free trial for 30 days</span>
-<span class="data-label">Full Refund</span>
-</div>
-</div>
-</div>
-<p class="fine-print mt-4 leading-relaxed">Payment is processed securely by <strong class="text-dark">Stripe</strong> &mdash; your full card number is never stored on this site. The first 30 days are free: cancel before they end and you are never charged. After a paid term begins, cancelling stops future charges, access continues to term-end, and a 14-day refund still applies if no signal has been delivered since that charge.</p>
-</div>
-</div>
-</div>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Getting started</span>
+        <h2 class="h2">From checkout to the first reading</h2>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><h3>Start the trial</h3><p>Complete checkout with Stripe. Nothing is charged today; the first 30 days are free.</p></li>
+      <li><h3>Sign in</h3><p>Open the sign-in link sent to your checkout email. There is no account to create and no password to keep.</p></li>
+      <li><h3>Read the brief</h3><p>The market brief, signal terminal and account pages are available immediately.</p></li>
+    </ol>
+  </div>
 </section>
-<section id="access-flow" class="relative w-full overflow-hidden" style="background: transparent;">
-<div class="home-container relative z-10 py-20">
-<div class="flex flex-col mb-12">
-<span class="tag-overline mb-5">Activation</span>
-<h2 class="section-heading mb-5">No registration. Ready as is.</h2>
-<p class="section-body max-w-3xl">Every website today wants you to register &mdash; pick a username, create a password, hit the length requirement, add the special character. Difficult to track, easy to forget. Not here. At DoubleTrends&trade;, there is no registration. Your checkout email = your account.</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-<div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
-<div class="step-marker mb-8">01</div>
-<h3 class="text-dark font-noto font-semibold text-lg mb-3">Start free</h3>
-<p class="panel-body"> Begin the 30-day trial. No charge today, just your card on file. </p>
-<div class="mt-8 pt-5" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="data-label">30-day free trial &middot; Stripe Checkout</span>
-</div>
-</div>
-<div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
-<div class="step-marker mb-8">02</div>
-<h3 class="text-dark font-noto font-semibold text-lg mb-3">Sign in</h3>
-<p class="panel-body"> Check your email for a magic link. One click and you are in &mdash; no password required. </p>
-<div class="mt-8 pt-5" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="data-label">Magic link &middot; No password</span>
-</div>
-</div>
-<div class="product-panel hover-lift-rust flex flex-col px-8 py-9">
-<div class="step-marker mb-8">03</div>
-<h3 class="text-dark font-noto font-semibold text-lg mb-3">You&apos;re live</h3>
-<p class="panel-body"> Market Brief, Signal Terminal, and same-day portal alerts are available immediately. </p>
-<div class="mt-8 pt-5" style="border-top: 1px solid rgba(30,37,48,0.10);">
-<span class="data-label">Brief &middot; Terminal &middot; Account</span>
-</div>
-</div>
-</div>
-<p class="fine-print mt-8 max-w-3xl"> No registration. No setup. Checkout and you are ready to go. </p>
-</div>
-</section>
-<section id="refund" class="decor-banner relative w-full overflow-hidden">
-<div class="home-container relative z-10 py-20">
-<div class="flex flex-col mb-10 max-w-3xl">
-<span class="tag-overline mb-5">Refund Policy</span>
-<h2 class="section-heading"> Try it without getting trapped. </h2>
-<p class="section-body mt-5">Start with 30 days free. If you cancel before the trial ends, you pay nothing. If a paid term begins, you still have a refund window as long as no signal has been delivered since that charge.</p>
-</div>
-<div class="grid md:grid-cols-3 gap-6">
-<div class="product-panel hover-lift-rust p-7 flex flex-col">
-<h3 class="panel-heading">Before your first charge</h3>
-<p class="panel-body">Your first 30 days are free. Cancel before the trial ends and you are never charged.</p>
-</div>
-<div class="product-panel hover-lift-rust p-7 flex flex-col">
-<h3 class="panel-heading">After a paid charge</h3>
-<p class="panel-body">If a paid term begins, a refund is still available within 14 days as long as no signal has been delivered since that charge.</p>
-</div>
-<div class="product-panel hover-lift-rust p-7 flex flex-col">
-<h3 class="panel-heading">Cancel anytime</h3>
-<p class="panel-body">Cancelling stops future renewal. If you are already in a paid term, access continues until that term ends.</p>
-</div>
-</div>
-<div class="mt-8">
-<a href="{{ROOT}}legal/refund-policy.html" class="button-rust">See full policy</a>
-</div>
-</div>
-</section>
-<section id="faq" class="w-full" style="background: transparent;">
-<div class="home-container py-20">
-<div class="flex flex-col mb-10">
-<span class="tag-overline mb-5">FAQ</span>
-<h2 class="section-heading"> Questions </h2>
-</div>
-<div class="max-w-3xl flex flex-col gap-3">
-<details class="card-border px-5 py-4" open>
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> What exactly do I receive? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">A same-day alert in your portal on signal day, plus the complete live picture. The Market Brief shows today&apos;s regime classification, VIX, Fed Funds, CPI, and unemployment with live alert and signal status. The Signal Terminal charts 20 years of S&amp;P 500 price history with every oversold alert and signal marked on the chart, regime-colored bar by bar &mdash; updated every trading day.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> How often will it fire? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">Rarely. Since 2016, the S&amp;P 500 index version has produced {{TR_SIGNAL_COUNT}} signals. Some years have several; some have none. That is the point.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> Is this financial advice? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">No. DoubleTrends™ is educational, rules-based market information only. It is not a recommendation to buy, sell, or hold any security.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> What does DoubleTrends™ measure? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">A regime filter plus a dual Williams %R reversal rule on the daily S&amp;P 500. It only fires in panic or bear regimes, with bear-market reversals filtered harder.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> Which assets are covered? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">The S&amp;P 500 index today. ETF investors can express it with VOO, SPY, or IVV. Nasdaq 100 support, including QQQ, is planned.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> Does a signal mean I should buy immediately? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">No. A signal is a timing reference, not a personal recommendation. Some investors use it to review a planned contribution or staged entry; others do nothing.</p>
-</details>
-<details class="card-border px-5 py-4">
-<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-dark font-noto font-semibold"> How do I get access after paying? <span class="acc-icon data-label transition-transform">⌄</span>
-</summary>
-<p class="mt-4 pt-4 font-open text-sm leading-relaxed" style="color: var(--color-muted); border-top: 1px solid rgba(0,0,0,0.08);">Right after checkout, you receive a magic-link email. Click it to sign in to the subscriber portal at app.doubletrends.com. No password, no app to install &mdash; access is immediate.</p>
-</details>
-</div>
-</div>
+
+<section class="section">
+  <div class="wrap cols-2">
+    <div>
+      <span class="kicker">Terms</span>
+      <h2 class="h2" style="margin-top: 0.6rem;">Trial, cancellation and refunds</h2>
+      <dl class="facts" style="margin-top: 1.25rem;">
+        <dt>Free trial</dt><dd>Thirty days. Cancel before it ends and you are never charged.</dd>
+        <dt>Cancellation</dt><dd>Stops renewal. If a paid term has begun, access continues until it ends.</dd>
+        <dt>Refunds</dt><dd>A full refund within 14 days of any charge, provided no signal has been delivered since that charge.</dd>
+        <dt>Payment</dt><dd>Processed by Stripe. Card numbers are never sent to or stored by DoubleTrends.</dd>
+      </dl>
+      <p class="fine" style="margin-top: 0.9rem;">The <a class="link" href="legal/refund-policy.html">Refund Policy</a> and <a class="link" href="legal/terms.html">Terms of Service</a> govern.</p>
+    </div>
+    <div>
+      <span class="kicker">Questions</span>
+      <h2 class="h2" style="margin-top: 0.6rem;">Common questions</h2>
+      <dl class="facts" style="margin-top: 1.25rem;">
+        <dt>How often does it fire?</dt>
+        <dd>Rarely: {{SIG_COUNT}} times since {{SIG_FIRST}}, about {{SIG_PER_DECADE}} per decade. Some years have several signals and many have none.</dd>
+        <dt>Is a signal a recommendation to buy?</dt>
+        <dd>No. It describes market conditions. Some investors use it to review a planned contribution or a staged entry; others take no action. It is not advice and does not consider your circumstances.</dd>
+        <dt>Which markets are covered?</dt>
+        <dd>The S&amp;P 500 index. Investors commonly hold it through funds such as VOO, SPY or IVV. Coverage of the Nasdaq-100 is planned.</dd>
+        <dt>How was the history produced?</dt>
+        <dd>Readings before {{IND_LIVE_SINCE}} are a back-tested reconstruction. The <a class="link" href="method.html#history">methodology</a> explains how, and the <a class="link" href="data.html">historical data</a> page lists every signal.</dd>
+      </dl>
+    </div>
+  </div>
 </section>

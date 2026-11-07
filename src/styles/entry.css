@@ -2,28 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  /* Article scaffolding (Academy pages) */
-  .lead       { @apply font-open text-lg md:text-xl leading-relaxed text-dark; }
-  .prose-p    { @apply font-open text-base leading-relaxed text-dark; }
-  .article-h2 { @apply text-dark font-noto font-bold text-2xl md:text-3xl leading-tight mb-5; }
-  .fine-print { @apply font-open text-xs leading-relaxed text-muted; }
-  /* Narrow top-level wrapper — used by single-column pages (brand, success) */
-  .page-shell-narrow { @apply w-full max-w-[1320px] mx-auto px-6 md:px-12 pt-24 pb-16 flex flex-col items-center; }
-  /* Footer navigation links */
-  .foot-link       { @apply text-muted text-xs transition-colors; }
-  .foot-link:hover { @apply text-dark; }
-  /* Section headings — shared across index/method/product */
-  .section-heading {
-    @apply text-4xl md:text-5xl font-noto font-bold leading-[1.05];
-    background-image: var(--gradient-text);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .section-body  { @apply font-open text-lg leading-relaxed; color: var(--color-muted); }
-  .panel-heading { @apply font-noto font-semibold text-lg md:text-xl mb-3; color: var(--color-rust); }
-  .panel-body    { @apply font-open text-sm leading-relaxed; color: var(--color-muted); }
-  .article-h3    { @apply text-dark font-noto font-semibold text-xl leading-tight mb-3; }
-  .card-heading  { @apply text-dark font-noto font-bold text-xl leading-tight; }
-}
+/* Preflight strips list markers; long-form text needs them back. */
+.prose ul, .article-page ul, .page-content-legal ul { list-style: disc; padding-left: 1.3em; }
+.prose ol, .article-page ol, .page-content-legal ol { list-style: decimal; padding-left: 1.3em; }

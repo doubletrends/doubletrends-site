@@ -1,12 +1,13 @@
-<!-- ══════════════════════════════════════════════════════ CHECKOUT SUCCESS ═══════════════════════════════════════════════════════ -->
-<section class="w-full min-h-screen flex flex-col items-center justify-center px-6 md:px-12">
-<div class="w-full max-w-3xl">
-<div class="hero-load product-panel p-8 md:p-12 flex flex-col items-center text-center gap-6">
-  <span class="tag-overline">Payment received</span>
-  <h1 class="text-[2.75em] font-noto font-bold text-grad-section leading-tight">You're subscribed.</h1>
-  <p class="text-muted text-2xl font-open leading-snug">Your checkout email is your account. No setup, no registration — the portal is ready now.</p>
-  <a href="{{PORTAL_URL}}" class="button-rust mt-2" target="_blank" rel="noopener">Go to Subscriber Portal</a>
-  <p class="fine-print max-w-xl">Questions? Email <a class="underline" href="mailto:support@doubletrends.com?subject=DoubleTrends%E2%84%A2%20access">support@doubletrends.com</a> with the email you used at checkout.</p>
+<!-- Post-checkout confirmation (Stripe success URL). Not indexed. -->
+<div class="wrap-narrow">
+  <header class="page-head" style="border-bottom: 0;">
+    <span class="kicker">Subscription confirmed</span>
+    <h1 class="h1">Your subscription is active</h1>
+    <p class="dek">Your checkout email is your account. A sign-in link is on its way to that address; the subscriber portal is available as soon as you open it.</p>
+    <div class="hero-actions">
+      <a class="btn" href="{{PORTAL_URL}}">Open the subscriber portal</a>
+      <a class="link-arrow" href="method.html">Read the methodology</a>
+    </div>
+  </header>
+  <p class="note">Questions about your subscription: <a class="link" href="mailto:support@doubletrends.com">support@doubletrends.com</a>, from the email you used at checkout.</p>
 </div>
-</div>
-</section>

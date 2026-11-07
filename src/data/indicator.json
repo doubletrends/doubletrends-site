@@ -1,0 +1,362 @@
+{
+  "generated_from": "doubletrends-backend/signal/backfill/fast/backfill_fast.csv",
+  "first_date": "1995-12-29",
+  "last_date": "2026-11-06",
+  "trading_days": 7765,
+  "live_since": "2026-06-15",
+  "latest": {
+    "date": "2026-11-06",
+    "close": 7376.86,
+    "regime": "panic",
+    "regime_since": "2026-11-05",
+    "regime_days": 2,
+    "drawdown_pct": -5.7,
+    "watch": false,
+    "setup": false,
+    "signal_active": false,
+    "last_signal": "2026-04-01"
+  },
+  "regimes": {
+    "calm": {
+      "days": 2486,
+      "share_pct": 32,
+      "episodes": 178,
+      "median_episode_days": 7,
+      "longest_episode_days": 110
+    },
+    "correction": {
+      "days": 2815,
+      "share_pct": 36.3,
+      "episodes": 341,
+      "median_episode_days": 4,
+      "longest_episode_days": 101
+    },
+    "panic": {
+      "days": 1237,
+      "share_pct": 15.9,
+      "episodes": 170,
+      "median_episode_days": 2,
+      "longest_episode_days": 69
+    },
+    "bear": {
+      "days": 1227,
+      "share_pct": 15.8,
+      "episodes": 3,
+      "median_episode_days": 419,
+      "longest_episode_days": 572
+    }
+  },
+  "bear_episodes": [
+    {
+      "start": "2001-02-20",
+      "end": "2003-06-03",
+      "days": 572
+    },
+    {
+      "start": "2008-02-05",
+      "end": "2009-10-01",
+      "days": 419
+    },
+    {
+      "start": "2022-05-06",
+      "end": "2023-04-14",
+      "days": 236
+    }
+  ],
+  "signals": [
+    {
+      "date": "1998-08-17",
+      "regime": "panic",
+      "close": 1083.67,
+      "drawdown_pct": -8.7,
+      "r3m_pct": 4.8,
+      "r1y_pct": 24,
+      "r2y_pct": 36.6,
+      "basis": "back-tested"
+    },
+    {
+      "date": "1998-09-02",
+      "regime": "panic",
+      "close": 990.48,
+      "drawdown_pct": -16.5,
+      "r3m_pct": 18.3,
+      "r1y_pct": 33.2,
+      "r2y_pct": 53.5,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2000-10-19",
+      "regime": "panic",
+      "close": 1388.76,
+      "drawdown_pct": -9.1,
+      "r3m_pct": -2.9,
+      "r1y_pct": -22.7,
+      "r2y_pct": -35.2,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2001-09-27",
+      "regime": "bear",
+      "close": 1018.61,
+      "drawdown_pct": -30.2,
+      "r3m_pct": 13.6,
+      "r1y_pct": -18.8,
+      "r2y_pct": -1.2,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2002-06-17",
+      "regime": "bear",
+      "close": 1036.17,
+      "drawdown_pct": -17.5,
+      "r3m_pct": -14,
+      "r1y_pct": -2.4,
+      "r2y_pct": 9.4,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2002-07-05",
+      "regime": "bear",
+      "close": 989.03,
+      "drawdown_pct": -20,
+      "r3m_pct": -19.1,
+      "r1y_pct": 1.6,
+      "r2y_pct": 12.9,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2002-07-26",
+      "regime": "bear",
+      "close": 852.84,
+      "drawdown_pct": -30.1,
+      "r3m_pct": 5.3,
+      "r1y_pct": 16.8,
+      "r2y_pct": 27.1,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2002-10-11",
+      "regime": "bear",
+      "close": 835.32,
+      "drawdown_pct": -28.8,
+      "r3m_pct": 11,
+      "r1y_pct": 25.1,
+      "r2y_pct": 34.6,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2006-05-25",
+      "regime": "panic",
+      "close": 1272.88,
+      "drawdown_pct": -4,
+      "r3m_pct": 1.8,
+      "r1y_pct": 19.1,
+      "r2y_pct": 8.8,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2006-06-15",
+      "regime": "panic",
+      "close": 1256.16,
+      "drawdown_pct": -5.2,
+      "r3m_pct": 4.8,
+      "r1y_pct": 22,
+      "r2y_pct": 8.3,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2008-01-24",
+      "regime": "panic",
+      "close": 1352.07,
+      "drawdown_pct": -13.6,
+      "r3m_pct": 2.7,
+      "r1y_pct": -38.5,
+      "r2y_pct": -18.9,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2008-11-24",
+      "regime": "bear",
+      "close": 851.81,
+      "drawdown_pct": -43.8,
+      "r3m_pct": -12.7,
+      "r1y_pct": 29.8,
+      "r2y_pct": 40.7,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2009-03-12",
+      "regime": "bear",
+      "close": 750.74,
+      "drawdown_pct": -47.4,
+      "r3m_pct": 25.9,
+      "r1y_pct": 53.2,
+      "r2y_pct": 72.7,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2010-06-10",
+      "regime": "panic",
+      "close": 1086.84,
+      "drawdown_pct": -10.7,
+      "r3m_pct": 1.6,
+      "r1y_pct": 16.9,
+      "r2y_pct": 20.4,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2010-07-07",
+      "regime": "panic",
+      "close": 1060.27,
+      "drawdown_pct": -12.9,
+      "r3m_pct": 9.4,
+      "r1y_pct": 27.6,
+      "r2y_pct": 27.8,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2011-08-12",
+      "regime": "panic",
+      "close": 1178.81,
+      "drawdown_pct": -13.6,
+      "r3m_pct": 7.2,
+      "r1y_pct": 19.1,
+      "r2y_pct": 43.3,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2011-08-23",
+      "regime": "panic",
+      "close": 1162.35,
+      "drawdown_pct": -14.8,
+      "r3m_pct": 2.2,
+      "r1y_pct": 21.6,
+      "r2y_pct": 42.6,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2014-10-16",
+      "regime": "panic",
+      "close": 1862.76,
+      "drawdown_pct": -7.4,
+      "r3m_pct": 7,
+      "r1y_pct": 9.1,
+      "r2y_pct": 14.2,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2015-08-26",
+      "regime": "panic",
+      "close": 1940.51,
+      "drawdown_pct": -8.9,
+      "r3m_pct": 7.6,
+      "r1y_pct": 12,
+      "r2y_pct": 25.9,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2016-01-14",
+      "regime": "panic",
+      "close": 1921.84,
+      "drawdown_pct": -9.8,
+      "r3m_pct": 8.4,
+      "r1y_pct": 18.4,
+      "r2y_pct": 44.5,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2016-01-22",
+      "regime": "panic",
+      "close": 1906.9,
+      "drawdown_pct": -10.5,
+      "r3m_pct": 9.7,
+      "r1y_pct": 18.8,
+      "r2y_pct": 48.6,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2018-10-31",
+      "regime": "panic",
+      "close": 2711.74,
+      "drawdown_pct": -7.5,
+      "r3m_pct": -1.1,
+      "r1y_pct": 12,
+      "r2y_pct": 20.6,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2018-12-28",
+      "regime": "panic",
+      "close": 2485.74,
+      "drawdown_pct": -15.2,
+      "r3m_pct": 14,
+      "r1y_pct": 29.6,
+      "r2y_pct": 50.3,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2020-03-26",
+      "regime": "panic",
+      "close": 2630.07,
+      "drawdown_pct": -22.3,
+      "r3m_pct": 17.3,
+      "r1y_pct": 51.1,
+      "r2y_pct": 74,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2022-10-17",
+      "regime": "bear",
+      "close": 3677.95,
+      "drawdown_pct": -23.3,
+      "r3m_pct": 8.5,
+      "r1y_pct": 18.9,
+      "r2y_pct": 58.9,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2025-03-17",
+      "regime": "panic",
+      "close": 5675.12,
+      "drawdown_pct": -7.6,
+      "r3m_pct": 6.3,
+      "r1y_pct": 18.3,
+      "r2y_pct": null,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2025-04-09",
+      "regime": "panic",
+      "close": 5456.9,
+      "drawdown_pct": -11.2,
+      "r3m_pct": 14.8,
+      "r1y_pct": 25.1,
+      "r2y_pct": null,
+      "basis": "back-tested"
+    },
+    {
+      "date": "2026-04-01",
+      "regime": "panic",
+      "close": 6575.32,
+      "drawdown_pct": -5.8,
+      "r3m_pct": 13.8,
+      "r1y_pct": null,
+      "r2y_pct": null,
+      "basis": "back-tested"
+    }
+  ],
+  "signal_stats": {
+    "count": 28,
+    "first": "1998-08-17",
+    "last": "2026-04-01",
+    "live_count": 0,
+    "per_decade": 9.1,
+    "matured_1y": 27,
+    "positive_1y": 23,
+    "median_3m_pct": 7.1,
+    "median_1y_pct": 18.9,
+    "median_2y_pct": 27.8,
+    "worst_1y_pct": -38.5,
+    "best_1y_pct": 53.2
+  }
+}

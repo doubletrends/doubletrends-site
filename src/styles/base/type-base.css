@@ -1,57 +1,94 @@
-﻿    .text-grad-hero {
-      background-image: var(--gradient-text-hero);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .text-grad-section {
-      background-image: var(--gradient-text);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .data-label {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--color-muted);
-    }
-    .data-value {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 2.25rem;
-      color: var(--color-dark);
-      line-height: 1;
-    }
-    .code-block {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      background: var(--color-light);
-      color: var(--color-dark);
-      padding: 1.25rem;
-      border: 1px solid rgba(0,0,0,0.08);
-      overflow-x: auto;
-      white-space: pre-wrap;
-    }
-    .tag-overline {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 1.2rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--color-rust);
-    }
-    .hero-lede {
-      font-size: 1.1rem;
-      color: rgba(var(--color-light-rgb),0.82);
-      max-width: 34rem;
-    }
-    .ask-ai-heading {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.15rem;
-      line-height: 1.3;
-      color: rgba(var(--color-light-rgb),0.88);
-      margin-bottom: 0.9rem;
-    }
+﻿/* Typography. Serif for display and long-form reading; sans for interface,
+   labels and data. Sentence case throughout; uppercase only for the small
+   tracked "kicker" labels. Proportional figures for display numbers,
+   tabular figures wherever numbers align (tables, axes). */
+
+h1, h2, h3, h4 { margin: 0; font-weight: 600; color: var(--ink); text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+
+.display {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2.25rem, 1.6rem + 2.4vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+}
+.h1 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2rem, 1.55rem + 1.7vw, 2.875rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+.h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+}
+.h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.3125rem;
+  line-height: 1.3;
+}
+.h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.kicker {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.kicker-muted { color: var(--muted); }
+
+.dek {
+  font-family: var(--font-serif);
+  font-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  line-height: 1.5;
+  color: #3A4452;
+  max-width: 44em;
+}
+.body-lg { font-size: 1.125rem; line-height: 1.6; max-width: 40em; }
+.muted { color: var(--muted); }
+.fine { font-size: 0.8125rem; line-height: 1.55; color: var(--muted); }
+.num, .tabular { font-variant-numeric: tabular-nums lining-nums; }
+.figure-num { font-variant-numeric: proportional-nums lining-nums; }
+
+.link, .prose a, .text-link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: rgba(20, 33, 61, 0.45);
+  transition: text-decoration-color 0.15s ease;
+}
+.link:hover, .prose a:hover, .text-link:hover { text-decoration-color: var(--ink); }
+.link-arrow { font-weight: 600; text-decoration: none; color: var(--ink); white-space: nowrap; }
+.link-arrow::after { content: " →"; }
+.link-arrow:hover { text-decoration: underline; text-underline-offset: 0.18em; }
+
+/* Long-form reading (methodology, research notes, firm documents). */
+.prose { font-family: var(--font-serif); font-size: 1.1875rem; line-height: 1.65; color: var(--text); max-width: 38em; }
+.prose > * + * { margin-top: 1.05em; }
+.prose h2 { font-size: 1.625rem; line-height: 1.25; margin-top: 2.2em; }
+.prose h3 { font-size: 1.25rem; line-height: 1.3; margin-top: 1.8em; }
+.prose h2 + *, .prose h3 + * { margin-top: 0.6em; }
+.prose ul, .prose ol { padding-left: 1.3em; }
+.prose ul.plain-list { list-style: none; padding-left: 0; }
+.prose li + li { margin-top: 0.4em; }
+.prose strong { font-weight: 600; color: var(--ink); }
+.prose .fine { font-family: var(--font-sans); }
+
+.section-no { font-family: var(--font-sans); font-weight: 600; color: var(--muted); margin-right: 0.6em; font-variant-numeric: tabular-nums; }

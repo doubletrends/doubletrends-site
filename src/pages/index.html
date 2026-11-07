@@ -1,148 +1,156 @@
-<!-- ══════════════════════════════════════════════════════════════
-     HERO
-     ══════════════════════════════════════════════════════════════ -->
-<section class="decor-banner decor-banner-dark home-hero relative w-full min-h-[100dvh] overflow-hidden">
-  <img src="{{ROOT}}public/product/hero-1.webp" alt="" aria-hidden="true"
-       class="home-decor-img absolute inset-y-0 right-0 h-full w-2/3 object-cover object-right pointer-events-none" />
+<!-- Indicator overview: identity + latest reading, key figures, the history
+     exhibit, regime definitions, recent signals, research, subscription.
+     Every number on this page is generated from src/data/indicator.json. -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">S&amp;P 500 &middot; Published each trading day after the close</span>
+      <h1 class="display">The DoubleTrends Regime Indicator</h1>
+      <p class="dek">A rules-based classification of U.S. equity market stress. Each trading day, the S&amp;P 500 is assigned one of four regimes &mdash; calm, correction, panic or bear. A reversal signal is eligible to fire only under stress, and has fired {{SIG_COUNT}} times since {{SIG_FIRST}}.</p>
+      <div class="hero-actions">
+        <a class="btn" href="method.html">Read the methodology</a>
+        <a class="link-arrow" href="data.html">Historical data</a>
+      </div>
+    </div>
 
-  <div class="relative z-10 home-container">
-    <div class="hero-inner">
-      <div class="hero-grid">
-
-        <!-- Left: statement + primary actions -->
-        <div class="hero-copy flex flex-col gap-6">
-          <span class="tag-overline">Market Regime &middot; Quantitative Research</span>
-          <h1 class="hero-title font-noto text-grad-hero">Discipline over Hype.</h1>
-          <p class="hero-lede font-open leading-relaxed">
-            A quantitative research firm helping S&amp;P 500 investors navigate selloffs with rules and evidence, not noise.
-          </p>
-          <div class="hero-cta-row flex gap-3">
-            <a href="#track-record" class="button-rust">View the signal</a>
-            <a href="#history" class="button-hero">Historical returns</a>
-          </div>
+    <aside class="reading" aria-labelledby="reading-title">
+      <div class="reading-head">
+        <h2 id="reading-title" class="reading-title">Latest reading</h2>
+        <span class="reading-asof">As of the {{IND_AS_OF}} close</span>
+      </div>
+      <div class="reading-regime">
+        <span class="swatch regime-key-{{IND_REGIME_KEY}}" aria-hidden="true"></span>
+        <div>
+          <div class="reading-regime-value">{{IND_REGIME}}</div>
+          <div class="reading-regime-note">Regime since {{IND_REGIME_SINCE}} &middot; {{IND_REGIME_SESSIONS}} sessions</div>
         </div>
+      </div>
+      <dl>
+        <dt>S&amp;P 500 close</dt><dd>{{IND_CLOSE}}</dd>
+        <dt>From one-year high</dt><dd>{{IND_DRAWDOWN}}</dd>
+        <dt>Signal</dt><dd>{{IND_SIGNAL_STATE}}</dd>
+        <dt>Most recent signal</dt><dd>{{IND_LAST_SIGNAL}}</dd>
+      </dl>
+      <p class="reading-foot">Readings on this site are as of the date shown. Subscribers receive each day&rsquo;s reading shortly after the 4:00&nbsp;p.m. ET close, and any signal the same day.</p>
+    </aside>
+  </div>
+</section>
 
-        <!-- Right: ask-AI interactive card -->
-        <div class="hero-ai-card">
-          <p class="ask-ai-heading">Ask your favorite AI about us</p>
-          <div class="flex flex-col gap-2">
-            <a href="https://claude.ai/new?q=Explain+how+retail+investors+can+easily+understand+the+technical+framework+behind+the+DoubleTrends%E2%84%A2+signal+%28doubletrends.com%29%2C+and+how+it+makes+part+of+hedge+funds+logic+accessible+to+retail+investors." target="_blank" rel="noopener noreferrer" class="button-hero button-hero-ai">
-              <img src="{{ROOT}}public/product/icon-claude.svg" alt="" aria-hidden="true">
-              Ask Claude
-            </a>
-            <a href="https://chatgpt.com/?q=Explain+how+retail+investors+can+easily+understand+the+technical+framework+behind+the+DoubleTrends%E2%84%A2+signal+%28doubletrends.com%29%2C+and+how+it+makes+part+of+hedge+funds+logic+accessible+to+retail+investors." target="_blank" rel="noopener noreferrer" class="button-hero button-hero-ai">
-              <img src="{{ROOT}}public/product/icon-chatgpt.svg" alt="" aria-hidden="true">
-              Ask ChatGPT
-            </a>
-            <a href="https://www.google.com/search?udm=50&q=Explain+how+retail+investors+can+easily+understand+the+technical+framework+behind+the+DoubleTrends%E2%84%A2+signal%2C+and+how+it+makes+part+of+hedge+funds+logic+accessible+to+retail+investors." target="_blank" rel="noopener noreferrer" class="button-hero button-hero-ai">
-              <img src="{{ROOT}}public/product/icon-gemini.svg" alt="" aria-hidden="true">
-              Ask Gemini
-            </a>
-          </div>
+<section aria-label="Key figures">
+  <div class="wrap">
+    <div class="key-figures">
+      <div class="key-figure">
+        <div class="key-figure-value">{{SIG_COUNT}}</div>
+        <div class="key-figure-label">Signals since {{SIG_FIRST}}</div>
+        <div class="key-figure-note">About {{SIG_PER_DECADE}} per decade</div>
+      </div>
+      <div class="key-figure">
+        <div class="key-figure-value">{{SIG_POSITIVE_1Y}}</div>
+        <div class="key-figure-label">Followed by a higher S&amp;P 500 one year later</div>
+        <div class="key-figure-note">Signals with a full year of history</div>
+      </div>
+      <div class="key-figure">
+        <div class="key-figure-value">{{SIG_MEDIAN_1Y}}</div>
+        <div class="key-figure-label">Median one-year S&amp;P 500 return after a signal</div>
+        <div class="key-figure-note">Range {{SIG_WORST_1Y}} to {{SIG_BEST_1Y}}</div>
+      </div>
+      <div class="key-figure">
+        <div class="key-figure-value">{{IND_TRADING_DAYS}}</div>
+        <div class="key-figure-label">Trading days classified</div>
+        <div class="key-figure-note">Since {{IND_FIRST_DATE}}</div>
+      </div>
+    </div>
+    <p class="fine" style="margin-top: 0.9rem;">Price returns of the S&amp;P 500 index from the signal-day close, excluding dividends. Signals before {{IND_LIVE_SINCE}} are back-tested. Past results do not guarantee future results.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <figure class="exhibit" data-exhibit="series">
+      <figcaption class="exhibit-head">
+        <div>
+          <span class="exhibit-no">Exhibit 1</span>
+          <span class="exhibit-title">The S&amp;P 500 and its regime classification since {{IND_FIRST_MONTH}}</span>
         </div>
+        {{EXHIBIT_LEGEND}}
+      </figcaption>
+      <div class="exhibit-body">
+        <div class="exhibit-interactive exhibit-scroll" tabindex="0" aria-describedby="ex1-help">{{EXHIBIT_REGIME_HISTORY}}</div>
+      </div>
+      <script type="application/json">{{EXHIBIT_REGIME_HISTORY_DATA}}</script>
+      <p class="exhibit-source">Weekly closes on a logarithmic scale; the ribbon shows the daily regime. Source: DoubleTrends, point-in-time reconstruction from S&amp;P 500, Cboe VIX and Federal Reserve Economic Data (FRED) series. Readings before {{IND_LIVE_SINCE}} are back-tested. <span id="ex1-help" class="sr-only">Focus the chart and use the left and right arrow keys to move week by week; hold Shift to move a year at a time.</span></p>
+      <p class="sr-only ex-live-region" aria-live="polite"></p>
+    </figure>
+  </div>
+</section>
 
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">The four regimes</span>
+        <h2 class="h2">Stress is classified before any signal is considered</h2>
+        <p>Most selling is routine. The indicator first decides what kind of market it is looking at; the reversal signal is only eligible when that market is under acute or persistent stress.</p>
+      </div>
+      <a class="link-arrow" href="method.html#regimes">Classification rules</a>
+    </div>
+    <div class="table-scroll">{{TABLE_REGIMES}}</div>
+    <p class="table-foot">Share of sessions, episode counts and median episode length over {{IND_TRADING_DAYS}} trading days since {{IND_FIRST_DATE}}. An episode is an uninterrupted run of sessions in one regime.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Signal record</span>
+        <h2 class="h2">The most recent signals</h2>
+        <p>Every signal is published with what followed it, including the ones that were early. The full record since {{SIG_FIRST}} is on the historical data page.</p>
+      </div>
+      <a class="link-arrow" href="data.html#signals">All {{SIG_COUNT}} signals</a>
+    </div>
+    <div class="table-scroll">{{TABLE_SIGNALS_RECENT}}</div>
+    <p class="table-foot">S&amp;P 500 price return from the signal-day close to the first close on or after 3 months, 1 year and 2 years later. &ldquo;Pending&rdquo; returns have not yet matured.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Research</span>
+        <h2 class="h2">Recent research notes</h2>
+      </div>
+      <a class="link-arrow" href="academy/index.html">Research library</a>
+    </div>
+    {{RESEARCH_RECENT}}
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="wrap split">
+    <div>
+      <span class="kicker">Subscription</span>
+      <h2 class="h2" style="margin-top: 0.6rem;">The daily reading, delivered the same day</h2>
+      <p class="body-lg" style="margin-top: 1rem;">Subscribers receive the regime classification and its inputs every trading day, an oversold alert when a stress regime turns deeply oversold, and the signal itself on the day it fires.</p>
+    </div>
+    <div class="offer">
+      <div class="offer-head">
+        <h3>Annual subscription</h3>
+        <p class="offer-price">USD 149 <span>per year &middot; USD 12.42 a month</span></p>
+      </div>
+      <div class="offer-body">
+        <ul>
+          <li>Daily regime reading with VIX, Fed funds, unemployment and CPI context</li>
+          <li>Oversold alert under stress; same-day signal delivery</li>
+          <li>Signal terminal: S&amp;P 500 price history with the regime overlay</li>
+          <li>30-day free trial; refund window if no signal is delivered</li>
+        </ul>
+      </div>
+      <div class="offer-foot">
+        <a class="btn" href="{{SUBSCRIBE_URL}}">Start the 30-day trial</a>
+        <a class="link-arrow" href="product.html">Subscription details</a>
       </div>
     </div>
   </div>
 </section>
-
-<!-- ══════════════════════════════════════════════════════════════
-     SIGNAL REPLAY
-     ══════════════════════════════════════════════════════════════ -->
-<section id="track-record" class="w-full">
-  <div class="home-container py-20">
-    <div class="flex flex-col">
-      <span class="tag-overline mb-5">Signal Replay</span>
-      <h2 class="section-heading mb-5">S&amp;P 500 &middot; 2016–present</h2>
-      <p class="section-body max-w-3xl">Point-in-time replay of the DoubleTrends&trade; signal from July 2016 onward. On each date, the system only sees data available at that point — no future information. The rule fired at every major stress event in this window: 2018 Q4, the COVID crash, the 2022 bear-market low, the 2025 tariff crash, and the March–April 2026 Iran war selloff.</p>
-    </div>
-    <div aria-hidden="true" style="height: 0.75rem;"></div>
-    <div id="replay-shell" class="terminal-shell relative overflow-hidden isolate">
-      <div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-4">
-        <div class="flex items-center gap-3 flex-wrap">
-          <span class="status-dot"></span>
-          <span class="data-label !text-white">DoubleTrends™ Signal Terminal (S&amp;P 500 &middot; Since 2016)</span>
-        </div>
-      </div>
-      <div class="relative overflow-hidden">
-        <div class="flex items-center justify-between gap-4 flex-wrap px-5 py-3" style="border-bottom: 1px solid rgba(30,37,48,0.10);">
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="status-pill" id="replay-state-pill"><span class="status-dot"></span>Live replay</span>
-            <span class="status-pill">Public data only</span>
-          </div>
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="status-pill" id="signal-pill">Signals: <b style="color:var(--color-rust);">0</b></span>
-            <span class="status-pill" id="date-pill">Date: <b style="color:var(--color-rust);">&mdash;</b></span>
-          </div>
-        </div>
-        <div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(var(--replay-alert-rgb), var(--replay-flash-alpha)); transition: opacity 0.45s ease;"></div>
-      </div>
-      <div id="chart" class="w-full" data-replay-src="{{ROOT}}public/replay/sp500.json" style="height: 480px;"></div>
-      <div class="relative overflow-hidden">
-        <div class="terminal-footer flex items-center justify-between gap-4 flex-wrap px-5 py-4">
-          <div class="flex items-center gap-4 flex-wrap">
-            <button id="replayBtn" class="button-rust" type="button"><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L9 5.5L0 11Z"/></svg>Replay</button>
-            <button id="fastForwardBtn" class="button-dark" type="button"><svg width="13" height="11" viewBox="0 0 13 11" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:0.45em;"><path d="M0 0L6 5.5L0 11Z"/><path d="M7 0L13 5.5L7 11Z"/></svg>Fast forward</button>
-            <span class="data-label" id="status">loading...</span>
-          </div>
-          <div class="flex items-center gap-4 flex-wrap">
-            <span class="data-label"><span class="replay-legend-swatch" data-regime="calm"></span> Calm</span>
-            <span class="data-label"><span class="replay-legend-swatch" data-regime="correction"></span> Correction</span>
-            <span class="data-label"><span class="replay-legend-swatch" data-regime="panic"></span> Panic</span>
-            <span class="data-label"><span class="replay-legend-swatch" data-regime="bear"></span> Bear</span>
-          </div>
-        </div>
-        <div class="flash-band absolute inset-0 pointer-events-none opacity-0" style="background: rgba(var(--replay-alert-rgb), var(--replay-flash-alpha)); transition: opacity 0.45s ease;"></div>
-      </div>
-    </div>
-    <p class="data-label mt-4" style="color: var(--color-muted);">Point-in-time causal replay: on each date the system only sees data available back then, not future frames.</p>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════════════════════════
-     SIGNAL HISTORY
-     ══════════════════════════════════════════════════════════════ -->
-<section id="history" class="decor-banner relative w-full overflow-hidden">
-  <div class="home-container relative z-10 py-20">
-    <div class="flex flex-col max-w-3xl">
-      <span class="tag-overline mb-5">Signal History</span>
-      <h2 class="section-heading mb-5">All signals &middot; 2004–present</h2>
-      <p class="section-body max-w-3xl">Every DoubleTrends&trade; signal since 2004 with 90-day, 1-year, and 2-year forward S&amp;P 500 returns. Outcomes shown as they stand at query time; pending entries have not yet matured.</p>
-    </div>
-    <div aria-hidden="true" style="height: 0.75rem;"></div>
-    <div class="terminal-shell overflow-hidden">
-      <div class="terminal-bar flex items-center justify-between gap-4 flex-wrap px-5 py-3">
-        <div class="flex items-center gap-3">
-          <span class="status-dot"></span>
-          <span class="data-label !text-white">DoubleTrends™ Signal History (S&amp;P 500 &middot; Since 2004)</span>
-        </div>
-      </div>
-      <div id="history-table-wrap" class="overflow-x-auto" style="background: var(--color-light);">
-        <table id="history-table" class="w-full text-sm font-mono" style="border-collapse: collapse;">
-          <thead>
-            <tr style="border-bottom: 1px solid rgba(30,37,48,0.10);">
-              <th class="text-left px-5 py-3 font-semibold" style="color: var(--color-muted);">Signal Date</th>
-              <th class="text-left px-3 py-3 font-semibold" style="color: var(--color-muted);">Regime</th>
-              <th class="text-right px-3 py-3 font-semibold" style="color: var(--color-muted);">Market Close</th>
-              <th class="text-right px-3 py-3 font-semibold" style="color: var(--color-muted);">90d Return</th>
-              <th class="text-right px-3 py-3 font-semibold" style="color: var(--color-muted);">1y Return</th>
-              <th class="text-right px-5 py-3 font-semibold" style="color: var(--color-muted);">2y Return</th>
-            </tr>
-          </thead>
-          <tbody id="history-table-body">
-            <tr><td colspan="6" class="px-5 py-6 text-center" style="color: var(--color-muted);">loading...</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="terminal-footer px-5 py-3 flex items-center justify-between gap-4 flex-wrap">
-        <span class="data-label" id="history-summary" style="color: var(--color-muted);">&mdash;</span>
-        <span class="data-label" style="color: var(--color-muted);">Forward returns computed at query time. <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--color-gain-rgb), 1);"></span> positive, <span aria-hidden="true" style="display:inline-block; width:0.62rem; height:0.62rem; margin-right:0.22rem; vertical-align:-0.08rem; background:rgba(var(--color-loss-rgb), 1);"></span> negative, <em>pending</em> not yet matured.</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-{{STORIES}}
-<script src="{{ROOT}}public/js/lightweight-charts.standalone.production.js"></script>
-<script src="{{ROOT}}public/js/replay-chart.js"></script>
-<script src="{{ROOT}}public/js/history-table.js"></script>

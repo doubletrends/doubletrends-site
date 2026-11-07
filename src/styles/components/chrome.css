@@ -1,0 +1,76 @@
+/* Site chrome: utility bar, masthead navigation, footer. No sticky header,
+   no blur, no shadow — a ruled masthead like a printed publication. */
+
+.wrap { width: 100%; max-width: 76rem; margin-inline: auto; padding-inline: 1.5rem; }
+.wrap-narrow { width: 100%; max-width: 48rem; margin-inline: auto; padding-inline: 1.5rem; }
+
+/* ── Utility bar ─────────────────────────────────────────────────────────── */
+.utility-bar { background: var(--ink); color: #DDE3EC; font-size: 0.8125rem; }
+.utility-bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.25rem; }
+.utility-bar p { margin: 0; color: #B9C3D1; }
+.utility-bar nav { display: flex; gap: 1.5rem; }
+.utility-bar a { color: #fff; text-decoration: none; font-weight: 500; }
+.utility-bar a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+
+/* ── Masthead ────────────────────────────────────────────────────────────── */
+.site-header { background: var(--paper); border-bottom: 1px solid var(--rule); }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 2rem; min-height: 4.75rem; }
+.brand { display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; color: var(--ink); }
+.brand-mark { width: 2.125rem; height: 2.125rem; flex: none; }
+.brand-name { font-family: var(--font-serif); font-weight: 600; font-size: 1.4375rem; letter-spacing: -0.005em; line-height: 1; }
+.brand-name small { display: block; margin-top: 0.3rem; font-family: var(--font-sans); font-weight: 500; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+.site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 0.25rem; }
+.site-nav a {
+  display: block; padding: 0.55rem 0.8rem; text-decoration: none;
+  font-size: 0.96875rem; font-weight: 500; color: var(--text);
+  border-bottom: 2px solid transparent;
+}
+.site-nav a:hover { color: var(--ink); border-bottom-color: var(--rule); }
+.site-nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--ink); }
+
+.nav-toggle { display: none; }
+.nav-toggle summary {
+  list-style: none; cursor: pointer; font-weight: 600; font-size: 0.9375rem; color: var(--ink);
+  padding: 0.45rem 0.8rem; border: 1px solid var(--rule); border-radius: 2px;
+}
+.nav-toggle summary::-webkit-details-marker { display: none; }
+.nav-toggle[open] summary { background: var(--tint); }
+
+@media (max-width: 960px) {
+  .site-header .wrap { flex-wrap: wrap; gap: 0.75rem; padding-block: 0.85rem; }
+  .site-nav { display: none; }
+  .nav-toggle { display: block; }
+  .nav-toggle[open] + .site-nav { display: block; width: 100%; }
+  .site-nav ul { flex-direction: column; align-items: stretch; gap: 0; border-top: 1px solid var(--rule); }
+  .site-nav a { padding: 0.8rem 0; border-bottom: 1px solid var(--rule); }
+  .site-nav a[aria-current="page"] { border-bottom-color: var(--rule); box-shadow: inset 3px 0 0 var(--ink); padding-left: 0.75rem; }
+  .utility-bar p { display: none; }
+  .utility-bar .wrap { justify-content: flex-end; }
+}
+
+/* ── Breadcrumb ──────────────────────────────────────────────────────────── */
+.breadcrumb { font-size: 0.8125rem; color: var(--muted); }
+.breadcrumb ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.breadcrumb li + li::before { content: "/"; margin-right: 0.4rem; color: var(--faint); }
+.breadcrumb a { color: var(--muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--ink); text-decoration: underline; }
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+.site-footer { background: var(--ink); color: #C6CFDB; margin-top: 5rem; font-size: 0.875rem; }
+.site-footer a { color: #fff; text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.site-footer-top { display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 2.5rem; padding-block: 3.5rem 2.5rem; }
+.site-footer .brand { color: #fff; }
+.site-footer .brand-name small { color: #9FAABA; }
+.site-footer-about { max-width: 22rem; margin-top: 1rem; color: #AEB8C7; line-height: 1.55; }
+.site-footer h2 { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.09em; text-transform: uppercase; color: #fff; margin-bottom: 0.9rem; }
+.site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+.site-footer-legal { border-top: 1px solid rgba(255, 255, 255, 0.14); padding-block: 1.75rem 2.5rem; display: grid; gap: 0.85rem; font-size: 0.78125rem; line-height: 1.6; color: #9FAABA; }
+.site-footer-legal p { max-width: 70rem; }
+.site-footer-legal .entity { color: #DDE3EC; }
+@media (max-width: 960px) {
+  .site-footer-top { grid-template-columns: 1fr 1fr; }
+  .site-footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) { .site-footer-top { grid-template-columns: 1fr; } }

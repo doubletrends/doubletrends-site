@@ -1,33 +1,26 @@
-<!-- ═══════════ Honesty interstitial before Stripe checkout ═══════════
-     Body-level overlay injected into every page via the {{CHECKOUT_GATE}} slot.
-     Intercepts clicks on any link to Stripe checkout and shows a privacy /
-     read-the-terms note before proceeding. Pure JS, no dependencies. -->
-<div id="checkout-gate" class="fixed inset-0 z-50 hidden items-center justify-center px-5"
+<!-- Notice shown before Stripe checkout. Body-level overlay injected into every
+     page through the layout's checkout-gate slot; public/js/checkout-gate.js intercepts clicks on
+     any buy.stripe.com link and shows it first. IDs are the script's contract. -->
+<div id="checkout-gate" class="checkout-gate fixed inset-0 z-50 hidden items-center justify-center px-5"
      role="dialog" aria-modal="true" aria-labelledby="checkout-gate-title" aria-hidden="true">
-  <div id="checkout-gate-backdrop" class="absolute inset-0"
-       style="background: rgba(30,37,48,0.55); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);"></div>
-  <div class="relative w-full max-w-lg bg-white p-8 md:p-10"
-       style="border: 1px solid rgba(0,0,0,0.1); box-shadow: var(--shadow-card);">
-    <span class="tag-overline" style="font-size: 0.72rem;">A note before checkout</span>
-    <h2 id="checkout-gate-title" class="font-noto font-bold text-2xl text-dark mt-3 mb-4 leading-tight">
-      We&rsquo;d rather you go in informed.
-    </h2>
-    <p class="text-muted text-sm leading-relaxed mb-4">
-      Our marketing site uses no cookies, no analytics, no tracking. The subscriber portal maintains a minimal session cookie for login only. Checkout is handled by <strong class="text-dark">Stripe</strong> &mdash; we never see or store your card number.
+  <div id="checkout-gate-backdrop" class="absolute inset-0" style="background: rgba(20, 33, 61, 0.55);"></div>
+  <div class="gate-panel relative w-full max-w-lg bg-white" style="padding: 2rem 2.1rem;">
+    <span class="kicker">Before you subscribe</span>
+    <h2 id="checkout-gate-title" class="h2" style="margin: 0.7rem 0 1rem;">Please review the terms</h2>
+    <p style="font-size: 0.96875rem; line-height: 1.6; color: var(--text);">
+      Checkout is handled by Stripe; DoubleTrends never receives or stores your card number. This website sets no cookies and runs no analytics. The subscriber portal uses a single session cookie for sign-in.
     </p>
-    <p class="text-muted text-sm leading-relaxed mb-6">
-      Most people skip the fine print. <strong class="text-dark">You should not.</strong> This is financial decision-making involving real capital, not a casual click-through. Read the
-      <a href="{{ROOT}}legal/terms.html" target="_blank" rel="noopener" class="text-primary hover:underline">Terms of Service</a>,
-      <a href="{{ROOT}}legal/privacy.html" target="_blank" rel="noopener" class="text-primary hover:underline">Privacy Policy</a>,
-      <a href="{{ROOT}}legal/refund-policy.html" target="_blank" rel="noopener" class="text-primary hover:underline">Refund Policy</a>, and
-      <a href="{{ROOT}}legal/disclaimer.html" target="_blank" rel="noopener" class="text-primary hover:underline">Disclaimer</a> before continuing.
+    <p style="font-size: 0.96875rem; line-height: 1.6; color: var(--text); margin-top: 0.8rem;">
+      The subscription provides market information, not investment advice. Please read the
+      <a href="{{ROOT}}legal/terms.html" target="_blank" rel="noopener" class="link">Terms of Service</a>,
+      <a href="{{ROOT}}legal/privacy.html" target="_blank" rel="noopener" class="link">Privacy Policy</a>,
+      <a href="{{ROOT}}legal/refund-policy.html" target="_blank" rel="noopener" class="link">Refund Policy</a> and
+      <a href="{{ROOT}}legal/disclaimer.html" target="_blank" rel="noopener" class="link">Disclaimer</a> before continuing.
     </p>
-    <p class="text-muted text-xs leading-relaxed mb-4">
-      By clicking &ldquo;Agree and continue,&rdquo; you confirm you have fully read the above policies and accept them.
-    </p>
-    <div class="flex flex-col sm:flex-row gap-3 sm:justify-end">
-      <button type="button" id="checkout-gate-cancel" class="button-dark justify-center">Go back</button>
-      <a id="checkout-gate-continue" href="#" class="button-rust justify-center">Agree and continue</a>
+    <p class="fine" style="margin-top: 0.9rem;">By selecting &ldquo;Agree and continue&rdquo; you confirm that you have read and accept these documents.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+      <button type="button" id="checkout-gate-cancel" class="btn btn-secondary">Go back</button>
+      <a id="checkout-gate-continue" href="#" class="btn">Agree and continue</a>
     </div>
   </div>
 </div>

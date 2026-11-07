@@ -1,6 +1,0 @@
-﻿    :root {
-      --shadow-card: 0 10px 30px rgba(var(--color-dark-rgb),0.2);
-      --shadow-card-hover: 0 15px 40px rgba(var(--color-dark-rgb),0.3);
-      --shadow-section: 0 -5px 40px rgba(var(--color-dark-rgb),0.05), 0 5px 40px rgba(var(--color-dark-rgb),0.05);
-      --shadow-nav: 0 10px 20px rgba(var(--color-dark-rgb),0.10);
-    }
