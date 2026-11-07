@@ -47,7 +47,7 @@
     <div class="cols-3">
       <div>
         <h3 class="h3">Research</h3>
-        <p class="muted" style="margin-top: 0.6rem;">Notes on S&amp;P 500 drawdowns, investor behavior, and the measures behind market regimes &mdash; written in plain language, with the data shown and the limits stated.</p>
+        <p class="muted" style="margin-top: 0.6rem;">Notes on S&amp;P 500 drawdowns, investor behavior and the measures behind market regimes, and open-source software for testing market claims &mdash; with the data shown and the limits stated.</p>
         <p style="margin-top: 0.9rem;"><a class="link-arrow" href="academy/index.html">Research library</a></p>
       </div>
       <div>
@@ -61,6 +61,22 @@
         <p style="margin-top: 0.9rem;"><a class="link-arrow" href="company/consulting.html">Services</a></p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap split">
+    <div>
+      <span class="kicker">Open-source research</span>
+      <h2 class="h2" style="margin-top: 0.6rem;">AlphaVerify: does a signal beat chance?</h2>
+      <p class="body-lg" style="margin-top: 1rem;">An open-source framework that tests whether a trading signal&rsquo;s apparent edge beats 1,000 synthetic markets containing no signal. Popular conditions often do not: on the NASDAQ since 2015, the golden cross shows a 24.5-point swing in the odds &mdash; and signal-free markets produce one at least as strong 8.4% of the time.</p>
+      <p style="margin-top: 1.1rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;"><a class="link-arrow" href="alphaverify.html">Findings and method</a><a class="link-arrow" href="https://github.com/doubletrends/alpha-verify" rel="noopener">Source code</a></p>
+    </div>
+    <figure class="exhibit">
+      <figcaption class="exhibit-head"><div><span class="exhibit-no">From AlphaVerify</span><span class="exhibit-title">The golden cross, tested against 1,000 signal-free markets</span></div></figcaption>
+      <div class="exhibit-body"><img src="public/research/alphaverify/ma_cross_50_200__bin_09.webp" alt="Golden cross on the NASDAQ: a 24.5-point swing in the odds of a 4 percent move whose score falls below the 95th percentile of 1,000 synthetic markets." loading="lazy" /></div>
+      <p class="exhibit-source">Left: shift in the odds of each move while the condition holds. Right: its score (blue) against the synthetic markets; the dashed line is the 95th percentile it must beat. Not cleared.</p>
+    </figure>
   </div>
 </section>
 

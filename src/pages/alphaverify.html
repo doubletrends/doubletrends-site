@@ -1,0 +1,120 @@
+<!-- AlphaVerify: the firm's open-source signal-validation framework.
+     Facts and figures come from github.com/doubletrends/alpha-verify (CC0):
+     README findings, mathematics.tex, workspaces/nasdaq_daily/universe.json.
+     Limitations are stated as the specification states them. -->
+<div class="wrap">
+  <header class="page-head">
+    {{BREADCRUMB}}
+    <span class="kicker">Research &middot; Open-source software</span>
+    <h1 class="h1">AlphaVerify</h1>
+    <p class="dek">An open-source framework for one question every trading signal should face: does its apparent edge hold up against markets that contain no signal at all?</p>
+    <p class="page-head-meta">
+      <span><strong>Version</strong> 0.1.0, September 20, 2026</span>
+      <span><strong>License</strong> CC0 1.0 (public domain)</span>
+      <span><strong>Language</strong> Python 3.12, PyTorch</span>
+      <span><a class="link" href="https://github.com/doubletrends/alpha-verify" rel="noopener">Source code</a></span>
+      <span><a class="link" href="https://pypi.org/project/alphaverify/" rel="noopener">Python package</a></span>
+      <span><a class="link" href="https://github.com/doubletrends/alpha-verify/blob/master/mathematics.pdf" rel="noopener">Mathematical specification (PDF)</a></span>
+    </p>
+  </header>
+
+  <div class="doc">
+    <nav class="doc-toc" aria-label="Contents">
+      <span class="kicker kicker-muted">Contents</span>
+      <ol>
+        <li><a href="#question">1. The question</a></li>
+        <li><a href="#method">2. How it works</a></li>
+        <li><a href="#findings">3. Findings: four popular signals</a></li>
+        <li><a href="#limits">4. Limitations</a></li>
+        <li><a href="#use">5. Using it</a></li>
+      </ol>
+    </nav>
+
+    <div class="doc-body">
+      <section id="question">
+        <h2 class="h2"><span class="section-no">1</span>The question</h2>
+        <div class="prose">
+          <p>Market folklore is full of conditions said to change the odds: a golden cross, price above its 200-day average, unusually low bond yields. Measured on history, many of them do appear to shift the probability of a rise or a fall. The question is whether that shift is an edge or something any market would produce by chance.</p>
+          <p>AlphaVerify answers it by running the same measurement on a thousand synthetic markets built to have no memory &mdash; markets in which, by construction, nothing in the past can predict the next day. A condition counts as an edge only if its real score beats 95% of the scores those signal-free markets produce.</p>
+        </div>
+      </section>
+
+      <section id="method">
+        <h2 class="h2"><span class="section-no">2</span>How it works</h2>
+        <div class="prose"><p>Each condition is split into ranges (&ldquo;bins&rdquo;), and each bin passes through five stages. Every stage writes its results to disk; selection consumes only a current validation result, and the forecast only a current selection.</p></div>
+        <div class="table-scroll" style="margin-top: 1.25rem;">
+          <table class="data-table">
+            <thead><tr><th scope="col">Stage</th><th scope="col">Command</th><th scope="col">What it does</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">1. Measure</th><td><code>measure</code></td><td class="text">For each bin, the probability that the market moves by a given percentage within a given number of days.</td></tr>
+              <tr><th scope="row">2. Compare</th><td><code>compare</code></td><td class="text">Subtract the unconditional market baseline, leaving the shift the condition is associated with.</td></tr>
+              <tr><th scope="row">3. Validate</th><td><code>validate</code></td><td class="text">Score the shift and repeat the whole measurement on 1,000 synthetic markets. The bin clears if its score exceeds the 95th percentile of the synthetic scores.</td></tr>
+              <tr><th scope="row">4. Select</th><td><code>select</code></td><td class="text">Retain every bin that cleared, ranked by evidence. There is no top-k cut and no secondary filter.</td></tr>
+              <tr><th scope="row">5. Forecast</th><td><code>forecast</code></td><td class="text">Combine the cleared conditions active on the latest bar and compare with their historical joint rate.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="prose" style="margin-top: 1.5rem;">
+          <p><strong>The synthetic markets.</strong> Each simulated day is drawn independently, with the observed average and co-movement of its open, close, high and low. A simulated day therefore looks like a real one, but carries no information about the next. Outside data used by a condition (such as bond yields) is held fixed, so only the market&rsquo;s own history is randomized.</p>
+          <p>The full numerical specification &mdash; notation, worked examples and the decision rule &mdash; is published as a <a href="https://github.com/doubletrends/alpha-verify/blob/master/mathematics.pdf" rel="noopener">mathematical document</a>.</p>
+        </div>
+      </section>
+
+      <section id="findings">
+        <h2 class="h2"><span class="section-no">3</span>Findings: four popular signals</h2>
+        <div class="prose"><p>From the shipped NASDAQ workspace: the NASDAQ Composite, daily, since January 2015; moves of up to &plusmn;20% within 1 to 30 days. In each figure the left panel shows how the condition shifts the odds of each move (red: more likely than usual; blue: less likely), and the right panel places its score among the 1,000 synthetic markets.</p></div>
+
+        <figure class="exhibit" style="margin-top: 2rem;">
+          <figcaption class="exhibit-head"><div><span class="exhibit-no">Figure 1</span><span class="exhibit-title">The golden cross: folklore</span></div></figcaption>
+          <div class="exhibit-body"><img src="public/research/alphaverify/ma_cross_50_200__bin_09.webp" alt="Golden cross, 50-day average about 9 to 12 percent above the 200-day: the odds of a 4 percent drop rise and of a 4 percent rise fall, a 24.5-point swing; its score sits below the 95th percentile of the synthetic markets." loading="lazy" /></div>
+          <p class="exhibit-source">With the 50-day average about 10% above the 200-day, the odds of a 4% drop rise and of a 4% rise fall &mdash; a 24.5-point swing. Synthetic markets produce one at least this strong 8.4% of the time. <strong>Not an edge.</strong></p>
+        </figure>
+
+        <figure class="exhibit" style="margin-top: 2.25rem;">
+          <figcaption class="exhibit-head"><div><span class="exhibit-no">Figure 2</span><span class="exhibit-title">Above the 200-day average: a textbook mirror</span></div></figcaption>
+          <div class="exhibit-body"><img src="public/research/alphaverify/ma_ratio_200__bin_04.webp" alt="Price 4 to 6 percent above its 200-day average: rises more likely and drops less likely, a 27.4-point swing, well inside the range of the synthetic markets." loading="lazy" /></div>
+          <p class="exhibit-source">With price 4% to 6% above its 200-day average, rises become more likely and drops much less likely &mdash; a 27.4-point swing. Synthetic markets produce one at least this strong 23% of the time. <strong>Not an edge.</strong></p>
+        </figure>
+
+        <figure class="exhibit" style="margin-top: 2.25rem;">
+          <figcaption class="exhibit-head"><div><span class="exhibit-no">Figure 3</span><span class="exhibit-title">Low bond yields: the 42-point swing</span></div></figcaption>
+          <div class="exhibit-body"><img src="public/research/alphaverify/tnx_level__bin_01.webp" alt="Ten-year Treasury yield below 1.34 percent: an 8 percent rally becomes far more likely, a 42-point swing that grows with time, yet its score falls short of the 95th percentile of the synthetic markets." loading="lazy" /></div>
+          <p class="exhibit-source">With the 10-year Treasury yield below 1.34%, an 8% rally within a month becomes far more likely &mdash; a 42-point swing that grows steadily with time. Synthetic markets produce one at least this strong 7.6% of the time. <strong>Close, but not an edge.</strong></p>
+        </figure>
+
+        <figure class="exhibit" style="margin-top: 2.25rem;">
+          <figcaption class="exhibit-head"><div><span class="exhibit-no">Figure 4</span><span class="exhibit-title">Moderate yields: same input, opposite story</span></div></figcaption>
+          <div class="exhibit-body"><img src="public/research/alphaverify/tnx_level__bin_06.webp" alt="Ten-year yield between 2.5 and 2.9 percent: an 8 percent drop becomes likelier than a rise, a 21.2-point swing, well inside the synthetic range." loading="lazy" /></div>
+          <p class="exhibit-source">With the yield between 2.5% and 2.9%, an 8% drop becomes likelier than a rise &mdash; a 21.2-point swing that reads like a bearish regime. Synthetic markets produce one at least this strong 41% of the time. <strong>Not an edge.</strong></p>
+        </figure>
+        <p class="table-foot">Figures are produced by AlphaVerify and reproduced unedited from the project repository (CC0). Each can be regenerated with the commands in section 5.</p>
+      </section>
+
+      <section id="limits">
+        <h2 class="h2"><span class="section-no">4</span>Limitations</h2>
+        <div class="prose">
+          <ul>
+            <li><strong>A simple null.</strong> Synthetic days are drawn independently from a normal distribution. Real markets have volatility that clusters and heavier tails, so this null is easier to beat than reality; a condition that clears it has passed a necessary test, not a sufficient one.</li>
+            <li><strong>No multiple-testing correction in the decision rule.</strong> A bin clears at a raw p-value below 0.05. Benjamini&ndash;Hochberg adjusted values are reported alongside, but do not change the decision; with many bins tested, some will clear by chance.</li>
+            <li><strong>Resolution.</strong> With 1,000 synthetic markets, estimated p-values move in steps of 0.001.</li>
+            <li><strong>Scope.</strong> Findings hold for the data and period of the workspace that produced them. AlphaVerify is research software, not investment advice.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="use">
+        <h2 class="h2"><span class="section-no">5</span>Using it</h2>
+        <div class="prose"><p>Install from the Python Package Index and run the shipped NASDAQ workspace. PyTorch is required; a CUDA-capable GPU is strongly recommended. Workspaces for bitcoin (daily and hourly) are included as well.</p></div>
+<pre class="code-block"><code>python -m pip install alphaverify
+
+alphaverify init --workspace nasdaq_daily
+alphaverify measure
+alphaverify compare
+alphaverify validate
+alphaverify select
+alphaverify forecast</code></pre>
+        <p class="fine" style="margin-top: 0.8rem;">After <code>validate</code>, the figure for every tested bin is written to <code>workspaces/nasdaq_daily/03_validation/plot/</code>.</p>
+      </section>
+    </div>
+  </div>
+</div>

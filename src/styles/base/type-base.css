@@ -92,3 +92,9 @@ p { margin: 0; text-wrap: pretty; }
 .prose .fine { font-family: var(--font-sans); }
 
 .section-no { font-family: var(--font-sans); font-weight: 600; color: var(--accent); margin-right: 0.6em; font-variant-numeric: tabular-nums; }
+
+/* Code (software pages). */
+code { font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-size: 0.875em; background: var(--tint); padding: 0.08em 0.3em; }
+.code-block { margin: 1.25rem 0 0; padding: 1rem 1.2rem; background: var(--tint); border-left: 3px solid var(--accent); overflow-x: auto; font-size: 0.9375rem; line-height: 1.6; }
+.code-block code { background: none; padding: 0; font-size: inherit; }
+.exhibit-body img { width: 100%; height: auto; border: 1px solid var(--rule); }

@@ -173,15 +173,19 @@ ${related.map((a) => `<li><a href="${page.root}${a.src}">${escAmp(a.title)}</a><
 
 // Research library entries, generated from the registry (title, desc,
 // published, series) so listings never drift from the notes themselves.
-const SERIES_ORDER = ['Studies', 'Primers', 'Macro inputs'];
+const SERIES_ORDER = ['Software', 'Studies', 'Primers', 'Macro inputs'];
 const SERIES_BLURB = {
+  'Software': 'Open-source research software, published with its full specification.',
   'Studies': 'Market history and investor behavior: the base rates behind the indicator.',
   'Primers': 'The measures the indicator is built from, explained one at a time.',
   'Macro inputs': 'One note per macroeconomic series the regime classification reads.',
 };
-const ARTICLES = pages
-  .filter((p) => p.kind === 'article')
-  .sort((a, b) => (b.schema.datePublished.localeCompare(a.schema.datePublished)) || a.title.localeCompare(b.title));
+const SERIES_UNIT = { 'Software': ['project', 'projects'] };
+const byDate = (a, b) => (b.schema.datePublished.localeCompare(a.schema.datePublished)) || a.title.localeCompare(b.title);
+// Every registry page with a `series` is listed in the library (notes and
+// software); ARTICLES is the subset that are research notes.
+const LIBRARY = pages.filter((p) => p.series).sort(byDate);
+const ARTICLES = LIBRARY.filter((p) => p.kind === 'article');
 const escAmp = (s) => s.replace(/&(?![a-z]+;|#[0-9]+;)/gi, "&amp;");
 function entryHtml(a, root) {
   return `<li class="entry">
@@ -191,14 +195,15 @@ function entryHtml(a, root) {
 </li>`;
 }
 function researchRecent(root, n = 3) {
-  return `<ul class="entries">${ARTICLES.slice(0, n).map((a) => entryHtml(a, root)).join('\n')}</ul>`;
+  return `<ul class="entries">${LIBRARY.slice(0, n).map((a) => entryHtml(a, root)).join('\n')}</ul>`;
 }
 function researchLibrary(root) {
   return SERIES_ORDER.map((series) => {
-    const list = ARTICLES.filter((a) => a.series === series);
+    const list = LIBRARY.filter((a) => a.series === series);
     const id = series.toLowerCase().replace(/\s+/g, '-');
+    const [one, many] = SERIES_UNIT[series] || ['note', 'notes'];
     return `<section class="section" id="${id}"><div class="wrap">
-<div class="section-head"><div><span class="kicker">${series}</span><h2 class="h2">${SERIES_BLURB[series]}</h2></div><span class="fine">${list.length} notes</span></div>
+<div class="section-head"><div><span class="kicker">${series}</span><h2 class="h2">${SERIES_BLURB[series]}</h2></div><span class="fine">${list.length} ${list.length === 1 ? one : many}</span></div>
 <ul class="entries">${list.map((a) => entryHtml(a, root)).join('\n')}</ul>
 </div></section>`;
   }).join('\n');

@@ -56,6 +56,28 @@
 
 <section class="section">
   <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Case study &middot; The firm&rsquo;s own work</span>
+        <h2 class="h2">An open-source validation framework, specified in full</h2>
+        <p><a class="link" href="../alphaverify.html">AlphaVerify</a> tests whether a trading signal&rsquo;s edge survives comparison with markets that contain no signal &mdash; the kind of question research engagements exist to answer honestly.</p>
+      </div>
+    </div>
+    <dl class="facts">
+      <dt>The question</dt>
+      <dd>Does a market condition change the odds of a move by more than chance would? Answered for every range of every condition, across a grid of move sizes and horizons.</dd>
+      <dt>Method</dt>
+      <dd>Conditional move probabilities, baseline subtraction, and a null built from 1,000 synthetic markets with no memory. The full numerical specification is <a class="link" href="https://github.com/doubletrends/alpha-verify/blob/master/mathematics.pdf" rel="noopener">published</a>.</dd>
+      <dt>Engineering</dt>
+      <dd>A staged command-line pipeline in Python and PyTorch with GPU support, written artifacts at every stage, an architecture covered by tests, and reproducible workspaces for the NASDAQ and bitcoin.</dd>
+      <dt>Distribution</dt>
+      <dd>Released on the <a class="link" href="https://pypi.org/project/alphaverify/" rel="noopener">Python Package Index</a> under a public-domain (CC0) license, with its limitations stated alongside its findings.</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
     <div class="section-head"><div><span class="kicker">Engagements</span><h2 class="h2">How an engagement runs</h2></div></div>
     <ol class="steps">
       <li><h3>Scope</h3><p>Agree the question, the available data, constraints, timeline and what a useful answer looks like.</p></li>

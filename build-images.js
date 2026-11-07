@@ -30,6 +30,11 @@ const IMAGES = [
   { src: 'academy/mdd-3.png',            maxWidth: 1320, lossless: true }, // flat diagram
   { src: 'academy/volume-profile.png',   maxWidth: 1600, quality: 82 },
   { src: 'academy/vwap.png',             maxWidth: 1111, quality: 82 },
+  // AlphaVerify figures (CC0, from github.com/doubletrends/alpha-verify docs/).
+  { src: 'research/alphaverify/ma_cross_50_200__bin_09.png', maxWidth: 1800, quality: 84 },
+  { src: 'research/alphaverify/ma_ratio_200__bin_04.png',    maxWidth: 1800, quality: 84 },
+  { src: 'research/alphaverify/tnx_level__bin_01.png',       maxWidth: 1800, quality: 84 },
+  { src: 'research/alphaverify/tnx_level__bin_06.png',       maxWidth: 1800, quality: 84 },
 ];
 
 const webpName = (rel) => rel.replace(/\.(png|jpe?g|webp)$/i, '.webp');
