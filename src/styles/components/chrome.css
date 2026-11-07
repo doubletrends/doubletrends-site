@@ -10,7 +10,8 @@
 .utility-bar p { margin: 0; color: #B9C3D1; }
 .utility-bar nav { display: flex; gap: 1.5rem; }
 .utility-bar a { color: #fff; text-decoration: none; font-weight: 500; }
-.utility-bar a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.utility-bar a:hover, .utility-bar a[aria-current="page"] { text-decoration: underline; text-underline-offset: 0.2em; }
+.utility-bar a[aria-current="page"] { text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
 
 /* ── Masthead ────────────────────────────────────────────────────────────── */
 .site-header { background: var(--paper); border-bottom: 1px solid var(--rule); }
