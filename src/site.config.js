@@ -122,8 +122,6 @@ const pages = [
   page('alphaverify/index.html', {
     priority: 0.9,
     nav: 'validation',
-    series: 'Software',
-    section: 'Signal validation',
     title: 'AlphaVerify: Open-Source Signal Validation',
     crumb: 'AlphaVerify',
     desc:  'AlphaVerify, an open-source framework from DoubleTrends that tests whether a trading signal beats 1,000 markets containing no signal. Python package, CC0 license, full mathematical specification.',

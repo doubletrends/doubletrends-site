@@ -173,19 +173,15 @@ ${related.map((a) => `<li><a href="${page.root}${a.src}">${escAmp(a.title)}</a><
 
 // Research library entries, generated from the registry (title, desc,
 // published, series) so listings never drift from the notes themselves.
-const SERIES_ORDER = ['Software', 'Studies', 'Primers', 'Macro inputs'];
+const SERIES_ORDER = ['Studies', 'Primers', 'Macro inputs'];
 const SERIES_BLURB = {
-  'Software': 'Open-source research software, published with its full specification.',
   'Studies': 'Market history and investor behavior: the base rates behind the indicator.',
   'Primers': 'The measures the indicator is built from, explained one at a time.',
   'Macro inputs': 'One note per macroeconomic series the regime classification reads.',
 };
-const SERIES_UNIT = { 'Software': ['project', 'projects'] };
 const byDate = (a, b) => (b.schema.datePublished.localeCompare(a.schema.datePublished)) || a.title.localeCompare(b.title);
-// Every registry page with a `series` is listed in the library (notes and
-// software); ARTICLES is the subset that are research notes.
-const LIBRARY = pages.filter((p) => p.series).sort(byDate);
-const ARTICLES = LIBRARY.filter((p) => p.kind === 'article');
+// The library lists research notes only; AlphaVerify is its own section.
+const ARTICLES = pages.filter((p) => p.kind === 'article').sort(byDate);
 const escAmp = (s) => s.replace(/&(?![a-z]+;|#[0-9]+;)/gi, "&amp;");
 function entryHtml(a, root) {
   return `<li class="entry">
@@ -195,36 +191,17 @@ function entryHtml(a, root) {
 </li>`;
 }
 function researchRecent(root, n = 3) {
-  return `<ul class="entries">${LIBRARY.slice(0, n).map((a) => entryHtml(a, root)).join('\n')}</ul>`;
+  return `<ul class="entries">${ARTICLES.slice(0, n).map((a) => entryHtml(a, root)).join('\n')}</ul>`;
 }
 function researchLibrary(root) {
   return SERIES_ORDER.map((series) => {
-    const list = LIBRARY.filter((a) => a.series === series);
+    const list = ARTICLES.filter((a) => a.series === series);
     const id = series.toLowerCase().replace(/\s+/g, '-');
-    const [one, many] = SERIES_UNIT[series] || ['note', 'notes'];
     return `<section class="section" id="${id}"><div class="wrap">
-<div class="section-head"><div><span class="kicker">${series}</span><h2 class="h2">${SERIES_BLURB[series]}</h2></div><span class="fine">${list.length} ${list.length === 1 ? one : many}</span></div>
+<div class="section-head"><div><span class="kicker">${series}</span><h2 class="h2">${SERIES_BLURB[series]}</h2></div><span class="fine">${list.length} ${list.length === 1 ? 'note' : 'notes'}</span></div>
 <ul class="entries">${list.map((a) => entryHtml(a, root)).join('\n')}</ul>
 </div></section>`;
   }).join('\n');
-}
-
-// Primary-nav dropdowns. Research lists every note by series (software has
-// its own nav item); Validation lists the AlphaVerify pages. Menu links carry
-// no data-nav, so markCurrentNav only ever marks the top-level item.
-const shortTitle = (t) => escAmp(t.split(':')[0]);
-function navResearchMenu(page) {
-  const cols = SERIES_ORDER.filter((s) => s !== 'Software').map((series) => {
-    const list = ARTICLES.filter((a) => a.series === series);
-    return `<div><p class="menu-head">${series}</p><ul>${list.map((a) =>
-      `<li><a href="${page.root}${a.src}"${a.src === page.src ? ' aria-current="page"' : ''}>${shortTitle(a.title)}</a></li>`).join('')}</ul></div>`;
-  }).join('');
-  return `<div class="menu menu-wide">${cols}<p class="menu-foot"><a href="${page.root}research/index.html">All research</a></p></div>`;
-}
-function navValidationMenu(page) {
-  const items = pages.filter((p) => p.src.startsWith('alphaverify/'));
-  return `<div class="menu"><p class="menu-head">AlphaVerify</p><ul>${items.map((p) =>
-    `<li><a href="${page.root}${p.src}"${p.src === page.src ? ' aria-current="page"' : ''}>${p.src.endsWith('index.html') ? 'Overview' : p.crumb}</a></li>`).join('')}</ul></div>`;
 }
 
 function formatTitle(page) {
@@ -264,8 +241,6 @@ function renderPage(page) {
     BREADCRUMB: breadcrumbHtml(page),
     RESEARCH_RECENT: researchRecent(page.root),
     RESEARCH_LIBRARY: researchLibrary(page.root),
-    NAV_RESEARCH_MENU: navResearchMenu(page),
-    NAV_VALIDATION_MENU: navValidationMenu(page),
     ROOT: page.root,
     TITLE: formatTitle(page),
     DESC: page.desc,
