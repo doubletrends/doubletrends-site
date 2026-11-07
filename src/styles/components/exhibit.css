@@ -30,6 +30,11 @@
 .ex-note-strong { fill: var(--ink); font-weight: 600; }
 .ex-line { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .ex-signal { fill: var(--accent); stroke: var(--paper); stroke-width: 2; }
+.ex-line-thin { stroke-width: 1.5; }
+.ex-line-hair { stroke-width: 1; }
+.ex-area { fill: var(--ink); fill-opacity: 0.1; }
+.ex-dot { fill: var(--ink); stroke: var(--paper); stroke-width: 2; }
+.ex-regime-areas path { fill-opacity: 0.85; }
 .ex-end { fill: var(--ink); stroke: var(--paper); stroke-width: 2; }
 .ex-live { stroke: var(--ink); stroke-width: 1; shape-rendering: crispEdges; }
 .wash-bear { fill: var(--regime-bear); fill-opacity: 0.1; }
@@ -77,3 +82,6 @@
 .data-table tbody tr:hover td, .data-table tbody tr:hover th { background: #FAFBFC; }
 .table-foot { margin-top: 0.75rem; font-size: 0.78125rem; line-height: 1.55; color: var(--muted); }
 .data-table td.regime, .data-table tbody th { white-space: nowrap; }
+
+/* Exhibits inside research notes sit in the reading column. */
+.note-exhibit { margin: 2rem 0 0.5rem; }

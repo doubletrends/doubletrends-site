@@ -10,8 +10,7 @@
  *
  * Brand assets (og-image, wordmarks, banner, favicons, logos) are left as-is:
  * social scrapers favour PNG, and SVGs are vector. sharp decodes by file
- * *content*, not extension, so mislabeled files are fine (research/mdd-1.png is
- * actually JPEG).
+ * *content*, not extension, so mislabeled files are fine.
  */
 
 const fs   = require('fs');
@@ -25,9 +24,6 @@ const IMAGES = [
   { src: 'research/dtep-1.png',           maxWidth: 1468, quality: 82 },
   { src: 'research/dtep-2.png',           maxWidth: 1151, quality: 82 },
   { src: 'research/dtep-3.png',           maxWidth: 1143, quality: 82 },
-  { src: 'research/mdd-1.png',            maxWidth: 1600, quality: 80 }, // 3400px JPEG
-  { src: 'research/mdd-2.png',            maxWidth: 1425, lossless: true }, // flat diagram
-  { src: 'research/mdd-3.png',            maxWidth: 1320, lossless: true }, // flat diagram
   // AlphaVerify figures (CC0, from github.com/doubletrends/alpha-verify docs/).
   { src: 'alphaverify/ma_cross_50_200__bin_09.png', maxWidth: 1800, quality: 84 },
   { src: 'alphaverify/ma_ratio_200__bin_04.png',    maxWidth: 1800, quality: 84 },

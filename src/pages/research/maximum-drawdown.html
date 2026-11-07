@@ -14,9 +14,11 @@
 <h2 class="article-h2"> Depth from a trailing high </h2>
 <p class="prose-p mb-4"> The drawdown on any given day is just one subtraction: today's close, expressed as a percentage below the highest close inside some lookback window. Pick a window, find the high, compare to today, report the percentage. </p>
 <p class="prose-p mb-6"> The crucial choice is the window. Drawdown from an <em>all-time</em> high tells you something about long-run market memory but reacts slowly; drawdown from a <em>10-day</em> high reacts instantly but is mostly noise. The DoubleTrends engine measures drawdown from a trailing one-year high. One year is long enough to ignore weekly chop and short enough that the &ldquo;recent peak&rdquo; is still relevant to today's market psychology. </p>
-<div class="media-frame overflow-hidden">
-<img src="{{ROOT}}public/research/mdd-1.webp" alt="Drawdown from trailing one-year high" class="w-full" />
-</div>
+<figure class="exhibit note-exhibit">
+<figcaption class="exhibit-head"><div><span class="exhibit-no">Exhibit 1</span><span class="exhibit-title">S&amp;P 500 drawdown from its trailing one-year high</span></div></figcaption>
+<div class="exhibit-body">{{EXHIBIT_MDD_DEPTH}}</div>
+<p class="exhibit-source">Weekly low of the daily reading, January 1996 to {{IND_AS_OF}}. Drawdown is the close&rsquo;s distance below the highest close of the previous 252 sessions. Source: DoubleTrends calculations on S&amp;P 500 daily closes.</p>
+</figure>
 </section>
 
 <!-- Duration -->
@@ -36,9 +38,11 @@
 </div>
 <p class="prose-p mb-4"> The depth is identical. The market is structurally different. The discipline is to look at both axes at once &mdash; depth and duration &mdash; instead of letting the percentage speak alone. </p>
 <p class="prose-p"> The engine tracks duration as the time elapsed since the trailing one-year high. Short duration with deep depth maps to panic. Long duration with deep depth is one of the inputs the bear overlay watches for. </p>
-<div class="media-frame overflow-hidden mt-6">
-<img src="{{ROOT}}public/research/mdd-2.webp" alt="Depth and duration as two axes of stress" class="w-full" />
-</div>
+<figure class="exhibit note-exhibit">
+<figcaption class="exhibit-head"><div><span class="exhibit-no">Exhibit 2</span><span class="exhibit-title">Depth and duration: every 10% decline since 1996</span></div></figcaption>
+<div class="exhibit-body">{{EXHIBIT_MDD_DURATION}}</div>
+<p class="exhibit-source">Each point is one decline of 10% or more from a record close ({{MDD_DECLINE_COUNT}} since 1996), placed by its depth and by the trading sessions it took to reach its trough. Declines that began below an earlier record, such as 2010 and 2011, are part of the episode that started at that record. Source: DoubleTrends calculations on S&amp;P 500 daily closes.</p>
+</figure>
 </section>
 
 <!-- Sharpness -->
@@ -75,9 +79,11 @@
 <a href="{{ROOT}}method.html" class="text-primary hover:underline font-open text-sm font-semibold">See how drawdown feeds the regime classifier &rarr;</a>
 </div>
 </div>
-<div class="media-frame overflow-hidden mt-6">
-<img src="{{ROOT}}public/research/mdd-3.webp" alt="Drawdown thresholds and the regime classifier" class="w-full" />
-</div>
+<figure class="exhibit note-exhibit">
+<figcaption class="exhibit-head"><div><span class="exhibit-no">Exhibit 3</span><span class="exhibit-title">The same drawdown, read as a regime: 2018 to date</span></div>{{EXHIBIT_LEGEND_REGIMES}}</figcaption>
+<div class="exhibit-body">{{EXHIBIT_MDD_REGIME}}</div>
+<p class="exhibit-source">Drawdown from the trailing one-year high, each day shaded by the regime the indicator assigned. The classifier also reads volatility and macroeconomic inputs, so equal depths can fall in different regimes. Readings before {{IND_LIVE_SINCE}} are back-tested. Source: DoubleTrends.</p>
+</figure>
 </section>
 
 <!-- CTA -->
