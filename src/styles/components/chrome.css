@@ -14,11 +14,11 @@
 .utility-bar a[aria-current="page"] { text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
 
 /* ── Masthead ────────────────────────────────────────────────────────────── */
-.site-header { background: var(--paper); }
-/* Regime ribbon (generated: public/brand/regime-ribbon.svg). Decorative;
-   the footer caption explains it. */
-.regime-ribbon { height: 4px; background: url("../brand/regime-ribbon.svg") 0 0 / 100% 100% no-repeat; }
-.regime-ribbon-footer { height: 8px; }
+.site-header {
+  border-bottom: 1px solid var(--rule);
+  /* Guilloche (generated: build-guilloche.js) — a woven band behind the masthead. */
+  background: var(--paper) url("../brand/guilloche-nav.svg") 0 50% / auto 100% repeat-x;
+}
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 2rem; min-height: 4.75rem; }
 .brand { display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; color: var(--ink); }
 .brand-mark { width: 2.125rem; height: 2.125rem; flex: none; }
@@ -63,7 +63,11 @@
 .breadcrumb a:hover { color: var(--ink); text-decoration: underline; }
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
-.site-footer { background: var(--ink); color: #C6CFDB; margin-top: 5rem; font-size: 0.875rem; }
+.site-footer {
+  color: #C6CFDB; margin-top: 5rem; font-size: 0.875rem; border-top: 3px solid var(--accent);
+  /* Guilloche rosette, navy on navy, anchored past the right edge. */
+  background: var(--ink) url("../brand/guilloche-footer.svg") right -17rem top -6rem / 46rem auto no-repeat;
+}
 .site-footer a { color: #fff; text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .site-footer-top { display: grid; grid-template-columns: 1.3fr repeat(5, 1fr); column-gap: 2rem; gap: 2.5rem; padding-block: 3.5rem 2.5rem; }
@@ -81,9 +85,3 @@
 }
 @media (max-width: 520px) { .site-footer-top { grid-template-columns: 1fr; } }
 
-.ribbon-caption .ribbon-key { white-space: nowrap; }
-.ribbon-key::before { content: ""; display: inline-block; width: 0.6rem; height: 0.6rem; margin: 0 0.3rem 0 0.15rem; vertical-align: -0.02rem; }
-.ribbon-calm::before { background: var(--regime-calm); }
-.ribbon-correction::before { background: var(--regime-correction); }
-.ribbon-panic::before { background: var(--regime-panic); }
-.ribbon-bear::before { background: var(--regime-bear); }
