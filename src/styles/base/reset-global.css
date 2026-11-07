@@ -2,8 +2,8 @@
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  /* Guilloche net (generated: build-guilloche.js), barely visible. */
-  background: var(--paper) url("../brand/guilloche-paper.svg") 0 0 / 168px 168px repeat;
+  /* Guilloche bands (generated: build-guilloche.js), barely visible. */
+  background: var(--paper) url("../brand/guilloche-paper.svg") 0 0 / 180px 76px repeat;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 1.0625rem;

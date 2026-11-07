@@ -14,11 +14,7 @@
 .utility-bar a[aria-current="page"] { text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
 
 /* ── Masthead ────────────────────────────────────────────────────────────── */
-.site-header {
-  border-bottom: 1px solid var(--rule);
-  /* Guilloche (generated: build-guilloche.js) — a woven band behind the masthead. */
-  background: var(--paper) url("../brand/guilloche-nav.svg") 0 50% / auto 100% repeat-x;
-}
+.site-header { background: var(--paper); border-bottom: 1px solid var(--rule); }
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 2rem; min-height: 4.75rem; }
 .brand { display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; color: var(--ink); }
 .brand-mark { width: 2.125rem; height: 2.125rem; flex: none; }

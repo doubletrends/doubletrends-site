@@ -1,13 +1,11 @@
 /**
  * build-guilloche.js
- * Generates the site's three guilloche patterns (the engraved line-work of
+ * Generates the site's guilloche patterns (the engraved line-work of
  * banknotes and share certificates) as SVG into dist/public/brand/:
  *
- *   guilloche-nav.svg     a woven band of phase-shifted waves, tiled
- *                         horizontally behind the masthead
+ *   guilloche-paper.svg   woven bands of phase-shifted waves, tiled in rows
+ *                         behind every page
  *   guilloche-footer.svg  a spirograph rosette, set navy-on-navy in the footer
- *   guilloche-paper.svg   a faint seamless field of phase-shifted waves,
- *                         the page background
  *
  * Every curve is periodic in its tile, so tiled patterns join without seams.
  * Line colour and opacity live in the SVG (they are used as CSS backgrounds,
@@ -33,10 +31,11 @@ function svg(width, height, paths, { stroke, opacity, strokeWidth }) {
     + '</g></svg>\n';
 }
 
-// Nav: N waves sharing one envelope, each shifted in phase, so they cross
+// Paper: N waves sharing one envelope, each shifted in phase, so they cross
 // into the lattice of a banknote border. All frequencies are whole multiples
-// of the tile width, so the band tiles seamlessly.
-function navBand() {
+// of the tile width and every curve stays inside the tile's height, so the
+// band tiles seamlessly across and stacks into rows down the page.
+function paperBands() {
   const W = 180, H = 76, N = 18, mid = H / 2, steps = 180;
   const paths = [];
   for (let k = 0; k < N; k++) {
@@ -50,7 +49,7 @@ function navBand() {
     }
     paths.push(pathFrom(pts));
   }
-  return svg(W, H, paths, { stroke: COLORS.primary, opacity: 0.07, strokeWidth: 0.6 });
+  return svg(W, H, paths, { stroke: COLORS.primary, opacity: 0.045, strokeWidth: 0.6 });
 }
 
 // Footer: rings of hypotrochoids (spirograph). Each keeps its pen inside the
@@ -83,32 +82,11 @@ function footerRosette() {
   return svg(S, S, paths, { stroke: '#FFFFFF', opacity: 0.08, strokeWidth: 0.7 });
 }
 
-// Paper: one family of identical waves, each shifted in phase by a fixed
-// step, which crosses into the fine moiré of a banknote background. Twelve
-// lines span one tile and their phase completes one cycle, so the tile
-// repeats seamlessly in both directions.
-function paperNet() {
-  const T = 168, lines = 12, steps = 96, paths = [];
-  const gap = T / lines, amp = gap * 1.6;
-  for (let k = -3; k < lines + 3; k++) {
-    const phase = (k / lines) * TAU;
-    const pts = [];
-    for (let i = 0; i <= steps; i++) {
-      const x = (i / steps) * T;
-      const t = (x / T) * TAU;
-      pts.push([x, (k + 0.5) * gap + amp * Math.sin(t + phase) + 2 * Math.sin(3 * t - phase)]);
-    }
-    paths.push(pathFrom(pts));
-  }
-  return svg(T, T, paths, { stroke: COLORS.primary, opacity: 0.04, strokeWidth: 0.6 });
-}
-
 function writeGuilloches(brandDir) {
   fs.mkdirSync(brandDir, { recursive: true });
   const out = {
-    'guilloche-nav.svg': navBand(),
+    'guilloche-paper.svg': paperBands(),
     'guilloche-footer.svg': footerRosette(),
-    'guilloche-paper.svg': paperNet(),
   };
   for (const [name, body] of Object.entries(out)) fs.writeFileSync(path.join(brandDir, name), body, 'utf8');
   return Object.keys(out);
