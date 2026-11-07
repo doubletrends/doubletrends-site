@@ -5,6 +5,8 @@
  *
  *   guilloche-paper.svg   moiré beat: two woven strand families at different
  *                         frequencies, tiled in rows behind every page
+ *   guilloche-topbar.svg  rosette medallions linked by strands, white on the
+ *                         navy top bar
  *   guilloche-footer.svg  a spirograph rosette, set navy-on-navy in the footer
  *
  * Every curve is periodic in its tile, so tiled patterns join without seams.
@@ -19,6 +21,18 @@ const { COLORS } = require('./src/brand.config');
 const TAU = Math.PI * 2;
 const f = (n) => (Math.round(n * 100) / 100).toString();
 
+// Relative-command path through points rounded to 0.1 px first, so the
+// deltas carry no accumulated drift and the file stays small.
+function relPath(points, close = false) {
+  const r1 = (n) => Math.round(n * 10) / 10;
+  const pts = points.map(([x, y]) => [r1(x), r1(y)]);
+  let d = `M${pts[0][0]} ${pts[0][1]}l`;
+  for (let i = 1; i < pts.length; i++) {
+    d += `${i > 1 ? ' ' : ''}${r1(pts[i][0] - pts[i - 1][0])} ${r1(pts[i][1] - pts[i - 1][1])}`;
+  }
+  return d.replace(/ -/g, '-') + (close ? 'z' : '');
+}
+
 // Polyline path through sampled points.
 function pathFrom(points) {
   return 'M' + points.map(([x, y]) => `${f(x)} ${f(y)}`).join('L');
@@ -32,7 +46,7 @@ function svg(width, height, paths, { stroke, opacity, strokeWidth }) {
 }
 
 // Paper — locked in the guilloche lab (round 3, 2026-11-08): round-2 sample
-// "3 Moiré beat" at 200% scale, line strength 0.060 (lowered from 0.150 via 0.100 and 0.075 on review). Two families of 22
+// "3 Moiré beat" at 200% scale, line strength 0.050 (lowered from 0.150 via 0.100, 0.075 and 0.060 on review). Two families of 22
 // phase-shifted strands, at 2 and 3 waves per tile, cross and interfere.
 // Drawn natively at the 200% size (720 x 192, 0.8 px lines). Every frequency
 // is a whole multiple of the tile width and strands are sampled a little past
@@ -63,7 +77,34 @@ function paperBeat() {
     paths.push(strand((t) => MID + AMP * 0.92 * env4(t) * Math.sin(2 * t + ph)));
     paths.push(strand((t) => MID + AMP * 0.8 * env6(t) * Math.sin(3 * t + ph)));
   }
-  return svg(W, H, paths, { stroke: COLORS.primary, opacity: 0.06, strokeWidth: 0.8 });
+  return svg(W, H, paths, { stroke: COLORS.primary, opacity: 0.05, strokeWidth: 0.8 });
+}
+
+// Top bar — locked in the top-bar lab (round 1 sample T5 "Rosette links",
+// 2026-11-08), white at 0.15 on the navy utility bar. Every 160px a
+// medallion — two circle-rosettes (12 circles on a 6.5px ring, 8 on a 3.2px
+// ring) — joined by 8 phase-shifted strands that pinch into each medallion.
+// Tile 160 x 36 (the bar's height), repeated horizontally.
+function topBarRosettes() {
+  const W = 160, H = 36, MID = H / 2, steps = 240, margin = 8, paths = [];
+  for (let k = 0; k < 8; k++) {
+    const ph = (k / 8) * TAU, pts = [];
+    for (let i = 0; i <= steps; i++) {
+      const x = -margin + (i / steps) * (W + 2 * margin), t = (x / W) * TAU;
+      pts.push([x, MID + 10 * (0.15 + 0.85 * Math.sin(t) ** 2) * Math.sin(2 * t + ph)]);
+    }
+    paths.push(relPath(pts));
+  }
+  for (const cx of [0, W]) {
+    for (const [ringR, circR, count, rot] of [[6.5, 6.5, 12, 0], [3.2, 3.2, 8, Math.PI / 8]]) {
+      for (let i = 0; i < count; i++) {
+        const a = rot + (i / count) * TAU, ox = cx + ringR * Math.cos(a), oy = MID + ringR * Math.sin(a), pts = [];
+        for (let j = 0; j < 40; j++) { const b = (j / 40) * TAU; pts.push([ox + circR * Math.cos(b), oy + circR * Math.sin(b)]); }
+        paths.push(relPath(pts, true));
+      }
+    }
+  }
+  return svg(W, H, paths, { stroke: '#FFFFFF', opacity: 0.15, strokeWidth: 0.5 });
 }
 
 // Footer: rings of hypotrochoids (spirograph). Each keeps its pen inside the
@@ -100,6 +141,7 @@ function writeGuilloches(brandDir) {
   fs.mkdirSync(brandDir, { recursive: true });
   const out = {
     'guilloche-paper.svg': paperBeat(),
+    'guilloche-topbar.svg': topBarRosettes(),
     'guilloche-footer.svg': footerRosette(),
   };
   for (const [name, body] of Object.entries(out)) fs.writeFileSync(path.join(brandDir, name), body, 'utf8');

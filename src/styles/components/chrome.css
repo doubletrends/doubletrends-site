@@ -5,7 +5,11 @@
 .wrap-narrow { width: 100%; max-width: 48rem; margin-inline: auto; padding-inline: 1.5rem; }
 
 /* ── Utility bar ─────────────────────────────────────────────────────────── */
-.utility-bar { background: var(--ink); color: #DDE3EC; font-size: 0.8125rem; border-bottom: 2px solid var(--accent); }
+.utility-bar {
+  color: #DDE3EC; font-size: 0.8125rem; border-bottom: 2px solid var(--accent);
+  /* Guilloche rosette links (generated: build-guilloche.js; locked in the lab). */
+  background: var(--ink) url("../brand/guilloche-topbar.svg") 0 50% / 160px 36px repeat-x;
+}
 .utility-bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.25rem; }
 .utility-bar p { margin: 0; color: #B9C3D1; }
 .utility-bar nav { display: flex; gap: 1.5rem; }
