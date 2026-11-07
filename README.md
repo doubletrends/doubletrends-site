@@ -137,13 +137,13 @@ Every page has three distinct identities. Keep them separate:
 
 | Identity | Example (for "method") | Where it lives |
 | --- | --- | --- |
-| **Source of truth** (file) | `dist/method.html` | build output only — never linked or published |
+| **Source of truth** (file) | `dist/indicator/methodology.html` | build output only — never linked or published |
 | **Canonical URL** (served 200) | `/method` | canonical tag, sitemap, llms.txt, JSON-LD, Open Graph, internal links |
-| **Alternate spellings** | `/method.html`, `/method/` | only as `_redirects` sources → redirect to the canonical |
+| **Alternate spellings** | `/indicator/methodology.html`, `/indicator/methodology/` | only as `_redirects` sources → redirect to the canonical |
 
 ### Source of truth
 
-Pages are authored as `.html` files under `src/pages/` and emitted **flat** to `dist/` — `method.html` → `dist/method.html`. One source file = one page = one URL. `src/site.config.js` and `tests/test-page-registry.js` mirror this so `rootFor` derives `{{ROOT}}` depth from the same path.
+Pages are authored as `.html` files under `src/pages/` and emitted to `dist/` at their source path — `method.html` → `dist/indicator/methodology.html`. One source file = one page = one URL. `src/site.config.js` and `tests/test-page-registry.js` mirror this so `rootFor` derives `{{ROOT}}` depth from the same path.
 
 > Do **not** emit pages as `<slug>/index.html`. That was tried (commit `90032ff`) on the assumption Cloudflare would serve `/method` directly with 200. It does not — see below.
 
@@ -173,8 +173,8 @@ This is the platform default (`auto-trailing-slash` HTML handling), not somethin
 | Type | Source file | Canonical (200) | `.html` form | wrong-slash / `index.html` form |
 | --- | --- | --- | --- | --- |
 | **Root** | `index.html` | `/` | `/index.html` → **301** → `/` | — |
-| **Section index** | `academy/index.html` | `/academy/` | — | `/academy` → **307** → `/academy/`; `/academy/index.html` → **301** → `/academy/` |
-| **Leaf page** | `method.html` | `/method` | `/method.html` → **301** → `/method` | `/method/` → **307** → `/method` |
+| **Section index** | `research/index.html` | `/research/` | — | `/research` → **307** → `/research/`; `/research/index.html` → **301** → `/research/` |
+| **Leaf page** | `indicator/methodology.html` | `/indicator/methodology` | `/indicator/methodology.html` → **301** → `/indicator/methodology` | `/indicator/methodology/` → **307** → `/indicator/methodology` |
 
 A slash means "collection," no slash means "document." That split is correct, not an inconsistency.
 
@@ -188,7 +188,7 @@ A slash means "collection," no slash means "document." That split is correct, no
 | Helper | `src` | Defaults |
 | --- | --- | --- |
 | `page(src, o)` | as given | `kind: 'webpage'`, priority 0.7 |
-| `article(slug, { published, ... })` | `academy/${slug}.html` | `kind: 'article'`, `nav: 'research'`; `published` → dateline + JSON-LD `datePublished` |
+| `article(slug, { published, ... })` | `research/${slug}.html` | `kind: 'article'`, `nav: 'research'`; `published` → dateline + JSON-LD `datePublished` |
 | `companyPage(slug, o)` | `company/${slug}.html` | `nav: 'about'`, priority 0.5 |
 | `legalPage(slug, o)` | `legal/${slug}.html` | priority 0.3 |
 

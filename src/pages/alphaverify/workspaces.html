@@ -1,0 +1,84 @@
+<!-- AlphaVerify workspaces. Facts from workspaces/*/universe.json and
+     workspaces/*/data.py in alpha-verify v0.1.0. -->
+<div class="wrap">
+  <header class="page-head">
+    {{BREADCRUMB}}
+    <span class="kicker">AlphaVerify &middot; Workspaces</span>
+    <h1 class="h1">Workspaces</h1>
+    <p class="dek">A workspace fixes everything a study depends on before any result is seen: the market, its data sources, the grid of moves and horizons, and the conditions to test. Three ship with AlphaVerify.</p>
+  </header>
+</div>
+
+<section class="section">
+  <div class="wrap">
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead><tr><th scope="col">Workspace</th><th scope="col">Market</th><th scope="col">From</th><th scope="col">Moves tested</th><th scope="col">Horizons</th><th scope="col">Conditions</th></tr></thead>
+        <tbody>
+          <tr><th scope="row"><a class="link" href="#nasdaq"><code>nasdaq_daily</code></a></th><td class="text">NASDAQ Composite, daily</td><td>Jan 2015</td><td>&minus;20% to +20%, 1% steps</td><td>1&ndash;30 days</td><td>57 in 13 families</td></tr>
+          <tr><th scope="row"><a class="link" href="#btc-daily"><code>btc_daily</code></a></th><td class="text">Bitcoin, daily</td><td>Jan 2015</td><td>&minus;20% to +20%, 1% steps</td><td>1&ndash;30 days</td><td>65 in 12 families</td></tr>
+          <tr><th scope="row"><a class="link" href="#btc-hourly"><code>btc_hourly</code></a></th><td class="text">Bitcoin, hourly</td><td>Jan 2018</td><td>&minus;3% to +3%, 0.25% steps</td><td>1&ndash;12 hours</td><td>23 in 6 families</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-foot">Every condition is split into ten bins by its own quantiles. Data snapshots and a cleaning version are recorded with each run, so results can be traced to the exact inputs that produced them.</p>
+  </div>
+</section>
+
+<section class="section" id="nasdaq">
+  <div class="wrap cols-2">
+    <div>
+      <span class="kicker">nasdaq_daily</span>
+      <h2 class="h2" style="margin-top: 0.6rem;">NASDAQ daily: the reference workspace</h2>
+      <p style="margin-top: 1rem;">The workspace behind the published <a class="link" href="findings.html">findings</a>. Prices are unadjusted daily bars for the NASDAQ Composite from Yahoo Finance; the VIX, the 10-year Treasury yield and the U.S. dollar index are taken on the same dates.</p>
+    </div>
+    <dl class="facts">
+      <dt>Momentum</dt><dd>RSI (4), Williams %R (4), stochastic (3), rate of change (6), MACD (3)</dd>
+      <dt>Trend</dt><dd>Moving-average ratios and crosses, including the 50/200-day golden cross (8)</dd>
+      <dt>Volatility and volume</dt><dd>Realized volatility, ATR, Bollinger position and width (8); volume ratios (3)</dd>
+      <dt>Drawdown</dt><dd>Distance from recent highs, and recovery (5)</dd>
+      <dt>Outside data</dt><dd>VIX (5), 10-year Treasury yield (4), dollar index (3)</dd>
+      <dt>Calendar</dt><dd>Day of the week (1)</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="section" id="btc-daily">
+  <div class="wrap cols-2">
+    <div>
+      <span class="kicker">btc_daily</span>
+      <h2 class="h2" style="margin-top: 0.6rem;">Bitcoin daily: on-chain and halving-cycle conditions</h2>
+      <p style="margin-top: 1rem;">Daily bitcoin prices from Yahoo Finance, with network data from the Coin Metrics community API. Besides the standard technical families, this workspace adds conditions that exist only for bitcoin.</p>
+    </div>
+    <dl class="facts">
+      <dt>Technical</dt><dd>RSI (6), Williams %R (4), rate of change (5), stochastic (3), MACD (3), moving averages (10), volatility (9), volume (3), drawdown (7)</dd>
+      <dt>On-chain</dt><dd>Market value to realized value (MVRV), hash-rate trend, active-address trend (5)</dd>
+      <dt>Halving cycle</dt><dd>Days since the last halving, position within the cycle, days to the next (3)</dd>
+      <dt>Outside data</dt><dd>Dollar index (7)</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="section" id="btc-hourly">
+  <div class="wrap cols-2">
+    <div>
+      <span class="kicker">btc_hourly</span>
+      <h2 class="h2" style="margin-top: 0.6rem;">Bitcoin hourly: an exploratory grid</h2>
+      <p style="margin-top: 1rem;">Hourly bitcoin bars from a public dataset on GitHub, in UTC and not resampled. The grid of moves and horizons was matched to hourly volatility and fixed before any hourly validation result was seen.</p>
+    </div>
+    <dl class="facts">
+      <dt>Momentum</dt><dd>RSI (4), rate of change (4)</dd>
+      <dt>Trend</dt><dd>Moving averages (4)</dd>
+      <dt>Volatility and volume</dt><dd>Volatility (6), volume (2)</dd>
+      <dt>Drawdown</dt><dd>Drawdown and recovery (3)</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <span class="kicker">Your own</span>
+    <h2 class="h2" style="margin-top: 0.6rem;">Building a workspace</h2>
+    <p style="margin-top: 1rem; max-width: 46rem;">A workspace is a folder with a declared feature universe (<code>universe.json</code>) and a data loader (<code>data.py</code>); market-specific conditions can be added as a plugin, as the bitcoin workspace does for on-chain and halving data. Copy a shipped workspace with <code>alphaverify init</code> and edit it, or see the <a class="link" href="https://github.com/doubletrends/alpha-verify" rel="noopener">repository</a> for the format.</p>
+  </div>
+</section>

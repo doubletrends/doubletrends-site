@@ -104,8 +104,8 @@ function replace(template, vars) {
 }
 
 // Rewrite internal .html hrefs to the extensionless form Cloudflare's asset
-// handling serves with 200 (method.html → method, academy/index.html →
-// academy/), so in-site navigation skips the 307 and links agree with the
+// handling serves with 200 (indicator/methodology.html → indicator/methodology,
+// research/index.html → research/), so in-site navigation skips the 307 and links agree with the
 // canonical URLs. Sources keep authoring plain .html file paths. External URLs,
 // in-page anchors, and non-.html targets pass through untouched. A bare
 // index.html link becomes ./ to stay resolvable.
@@ -156,10 +156,10 @@ function decorateArticle(html, page) {
 <span class="tag-overline">Further reading</span>
 <ul class="further-list">
 ${related.map((a) => `<li><a href="${page.root}${a.src}">${escAmp(a.title)}</a><span>${a.series} &middot; ${fmtDateLong(a.schema.datePublished)}</span></li>`).join('\n')}
-<li><a href="${page.root}method.html">Methodology</a><span>How the regime classification and the signal are constructed</span></li>
-<li><a href="${page.root}data.html">Historical data</a><span>Every signal since ${EXHIBITS.SIG_FIRST}, with what followed</span></li>
+<li><a href="${page.root}indicator/methodology.html">Methodology</a><span>How the regime classification and the signal are constructed</span></li>
+<li><a href="${page.root}indicator/data.html">Historical data</a><span>Every signal since ${EXHIBITS.SIG_FIRST}, with what followed</span></li>
 </ul>
-<p class="fine-print">DoubleTrends research is published alongside the <a href="${page.root}indicator.html">DoubleTrends Regime Indicator</a>.</p>
+<p class="fine-print">DoubleTrends research is published alongside the <a href="${page.root}indicator/index.html">DoubleTrends Regime Indicator</a>.</p>
 </section>`;
   html = html.replace(/<section class="cta-panel article-cta">[\s\S]*?<\/section>/, () => further);
 
@@ -296,7 +296,7 @@ const urls = pages
   .filter((p) => p.sitemap !== false)
   .map((p) => `  <url>
     <loc>${canonicalFor(p.src)}</loc>
-    <changefreq>${p.kind === 'home' || p.src === 'data.html' ? 'weekly' : 'monthly'}</changefreq>
+    <changefreq>${p.kind === 'home' || p.src === 'indicator/data.html' ? 'weekly' : 'monthly'}</changefreq>
     <priority>${(p.priority ?? 0.7).toFixed(1)}</priority>
   </url>`)
   .join('\n\n');
@@ -315,7 +315,30 @@ console.log('✓  sitemap.xml generated');
 const redirectLines = pages
   .filter((p) => p.src !== '404.html')
   .map((p) => `/${p.src} ${canonicalFor(p.src).slice(SITE_URL.length) || '/'} 301`);
-fs.writeFileSync(path.join(DIST, '_redirects'), redirectLines.join('\n') + '\n', 'utf8');
+// URLs retired by the November 2026 restructure. Each old address (with and
+// without .html) 301s to its new canonical, so links and rankings carry over.
+const LEGACY = [
+  ['/academy', '/research/'],
+  ['/academy/', '/research/'],
+  ['/academy/index.html', '/research/'],
+  ...pages.filter((p) => p.kind === 'article').flatMap((p) => {
+    const slug = p.src.slice('research/'.length, -'.html'.length);
+    return [[`/academy/${slug}`, `/research/${slug}`], [`/academy/${slug}.html`, `/research/${slug}`]];
+  }),
+  ['/indicator', '/indicator/'],
+  ['/indicator.html', '/indicator/'],
+  ['/method', '/indicator/methodology'],
+  ['/method.html', '/indicator/methodology'],
+  ['/data', '/indicator/data'],
+  ['/data.html', '/indicator/data'],
+  ['/product', '/indicator/subscription'],
+  ['/product.html', '/indicator/subscription'],
+  ['/alphaverify', '/alphaverify/'],
+  ['/alphaverify.html', '/alphaverify/'],
+  ['/public/academy/*', '/public/research/:splat'],
+];
+const legacyLines = LEGACY.map(([from, to]) => `${from} ${to} 301`);
+fs.writeFileSync(path.join(DIST, '_redirects'), [...legacyLines, ...redirectLines].join('\n') + '\n', 'utf8');
 console.log('✓  _redirects generated');
 
 // ─── llms.txt ────────────────────────────────────────────────────────────────
@@ -323,13 +346,15 @@ console.log('✓  _redirects generated');
 // About / Legal children.
 const LLMS_SECTIONS = [
   { key: 'main',    heading: 'Primary Pages' },
-  { key: 'academy', heading: 'Research' },
+  { key: 'research', heading: 'Research' },
+  { key: 'indicator', heading: 'The DoubleTrends Regime Indicator' },
+  { key: 'alphaverify', heading: 'AlphaVerify' },
   { key: 'company', heading: 'About' },
   { key: 'legal',   heading: 'Legal' },
 ];
 function llmsSectionKey(src) {
   const prefix = src.split('/')[0];
-  return ['academy', 'company', 'legal'].includes(prefix) && !src.endsWith('index.html') ? prefix : 'main';
+  return ['research', 'indicator', 'alphaverify', 'company', 'legal'].includes(prefix) && !src.endsWith('index.html') ? prefix : 'main';
 }
 const llmsSections = LLMS_SECTIONS.map(({ key, heading }) => {
   const entries = pages

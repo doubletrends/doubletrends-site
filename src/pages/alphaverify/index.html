@@ -1,0 +1,116 @@
+<!-- AlphaVerify overview. Facts and figures come from
+     github.com/doubletrends/alpha-verify (CC0): README, mathematics.tex and
+     workspaces/*/universe.json. Depth lives on method, findings, workspaces. -->
+<div class="wrap">
+  <header class="page-head">
+    {{BREADCRUMB}}
+    <span class="kicker">AlphaVerify</span>
+    <h1 class="h1">Open-source signal validation</h1>
+    <p class="dek">AlphaVerify is an open-source framework for one question every trading signal should face: does its apparent edge hold up against markets that contain no signal at all?</p>
+    <p class="page-head-meta">
+      <span><strong>Version</strong> 0.1.0, September 20, 2026</span>
+      <span><strong>License</strong> CC0 1.0 (public domain)</span>
+      <span><strong>Language</strong> Python 3.12, PyTorch</span>
+      <span><a class="link" href="https://github.com/doubletrends/alpha-verify" rel="noopener">Source code</a></span>
+      <span><a class="link" href="https://pypi.org/project/alphaverify/" rel="noopener">Python package</a></span>
+      <span><a class="link" href="https://github.com/doubletrends/alpha-verify/blob/master/mathematics.pdf" rel="noopener">Mathematical specification (PDF)</a></span>
+    </p>
+  </header>
+</div>
+
+<section class="section">
+  <div class="wrap split">
+    <div class="prose">
+      <span class="kicker">The question</span>
+      <h2 class="h2" style="margin-top: 0.6rem;">An edge, or something any market would produce?</h2>
+      <p>Market folklore is full of conditions said to change the odds: a golden cross, price above its 200-day average, unusually low bond yields. Measured on history, many of them do appear to shift the probability of a rise or a fall. The question is whether that shift is an edge or something any market would produce by chance.</p>
+      <p>AlphaVerify answers it by running the same measurement on a thousand synthetic markets built to have no memory &mdash; markets in which, by construction, nothing in the past can predict the next day. A condition counts only if its real score beats 95% of the scores those signal-free markets produce.</p>
+    </div>
+    <figure class="exhibit">
+      <figcaption class="exhibit-head"><div><span class="exhibit-no">Example</span><span class="exhibit-title">The golden cross against 1,000 signal-free markets</span></div></figcaption>
+      <div class="exhibit-body"><img src="../public/alphaverify/ma_cross_50_200__bin_09.webp" alt="Golden cross on the NASDAQ: a 24.5-point swing in the odds of a 4 percent move whose score falls below the 95th percentile of 1,000 synthetic markets." loading="lazy" /></div>
+      <p class="exhibit-source">Left: shift in the odds of each move while the condition holds. Right: its score (blue) among the synthetic markets; the dashed line is the 95th percentile it must beat. Not cleared. <a class="link" href="findings.html">All four findings</a></p>
+    </figure>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Findings</span>
+        <h2 class="h2">Four popular signals, none cleared</h2>
+        <p>NASDAQ Composite, daily, since January 2015. &ldquo;Swing&rdquo; is the largest shift in the odds of a move; &ldquo;matched by chance&rdquo; is how often synthetic markets score at least as high.</p>
+      </div>
+      <a class="link-arrow" href="findings.html">Figures and detail</a>
+    </div>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead><tr><th scope="col">Condition</th><th scope="col">Swing</th><th scope="col">Matched by chance</th><th scope="col">Result</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Golden cross (50-day about 10% above the 200-day)</th><td>24.5 pts</td><td>8.4%</td><td class="text">Not cleared</td></tr>
+          <tr><th scope="row">Price 4% to 6% above its 200-day average</th><td>27.4 pts</td><td>23.2%</td><td class="text">Not cleared</td></tr>
+          <tr><th scope="row">10-year Treasury yield below 1.34%</th><td>42 pts</td><td>7.6%</td><td class="text">Not cleared</td></tr>
+          <tr><th scope="row">10-year Treasury yield 2.5% to 2.9%</th><td>21.2 pts</td><td>40.7%</td><td class="text">Not cleared</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Method</span>
+        <h2 class="h2">Five stages, each written to disk</h2>
+        <p>Each condition is split into ranges (&ldquo;bins&rdquo;), and each bin passes through five stages. Selection consumes only a current validation result, and the forecast only a current selection.</p>
+      </div>
+      <a class="link-arrow" href="method.html">The method in full</a>
+    </div>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead><tr><th scope="col">Stage</th><th scope="col">Command</th><th scope="col">What it does</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">1. Measure</th><td><code>measure</code></td><td class="text">For each bin, the probability that the market moves by a given percentage within a given number of days.</td></tr>
+          <tr><th scope="row">2. Compare</th><td><code>compare</code></td><td class="text">Subtract the unconditional market baseline, leaving the shift the condition is associated with.</td></tr>
+          <tr><th scope="row">3. Validate</th><td><code>validate</code></td><td class="text">Score the shift and repeat the whole measurement on 1,000 synthetic markets. The bin clears if fewer than 5% of them score as high.</td></tr>
+          <tr><th scope="row">4. Select</th><td><code>select</code></td><td class="text">Keep every bin that cleared, ranked by evidence, with adjusted values for how many would clear by chance.</td></tr>
+          <tr><th scope="row">5. Forecast</th><td><code>forecast</code></td><td class="text">Combine the kept conditions active on the latest bar, and compare with their historical joint rate.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap cols-2">
+    <div>
+      <span class="kicker">Limitations</span>
+      <h2 class="h2" style="margin-top: 0.6rem;">What clearing does and does not mean</h2>
+      <dl class="facts" style="margin-top: 1.25rem;">
+        <dt>A memoryless null</dt>
+        <dd>Synthetic days are drawn independently, so the null has no volatility clustering or regimes. Clearing means a condition beats a market without memory &mdash; a necessary test, not proof of a usable edge.</dd>
+        <dt>Many tests</dt>
+        <dd>A bin clears at a raw p-value below 0.05, without multiple-testing correction. Benjamini&ndash;Hochberg adjusted values are reported for context; with many bins tested, some will clear by chance.</dd>
+        <dt>Scope</dt>
+        <dd>Findings hold for the data and period of the workspace that produced them. AlphaVerify is research software, not investment advice.</dd>
+      </dl>
+      <p class="fine" style="margin-top: 0.9rem;">The <a class="link" href="method.html#limits">method</a> states every limitation in full.</p>
+    </div>
+    <div>
+      <span class="kicker">Using it</span>
+      <h2 class="h2" style="margin-top: 0.6rem;">Install and run a workspace</h2>
+      <p style="margin-top: 1rem;">PyTorch is required; a CUDA-capable GPU is strongly recommended. Three <a class="link" href="workspaces.html">workspaces</a> ship with the package: NASDAQ daily, bitcoin daily and bitcoin hourly.</p>
+<pre class="code-block"><code>python -m pip install alphaverify
+
+alphaverify init --workspace nasdaq_daily
+alphaverify measure
+alphaverify compare
+alphaverify validate
+alphaverify select
+alphaverify forecast</code></pre>
+      <p class="fine" style="margin-top: 0.8rem;">After <code>validate</code>, the figure for every tested bin is written to <code>workspaces/nasdaq_daily/03_validation/plot/</code>.</p>
+    </div>
+  </div>
+</section>

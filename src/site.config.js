@@ -56,7 +56,7 @@ function page(src, overrides = {}) {
 // `series` groups the library, `published` is the date the note first shipped
 // (from version history) and feeds the dateline + JSON-LD.
 function article(slug, { published, ...overrides }) {
-  return page(`academy/${slug}.html`, {
+  return page(`research/${slug}.html`, {
     kind: 'article',
     nav: 'research',
     priority: 0.7,
@@ -80,30 +80,28 @@ const pages = [
     title: 'Quantitative Market Research',
     desc:  'DoubleTrends is an independent quantitative research firm studying market regimes, drawdowns and investor behavior. It publishes its research and the DoubleTrends Regime Indicator openly, and offers research and data engineering services.',
   }),
-  page('indicator.html', {
+  page('indicator/index.html', {
     priority: 0.9,
     nav: 'indicator',
     title: 'The DoubleTrends Regime Indicator',
     crumb: 'Indicator',
     desc:  'The DoubleTrends Regime Indicator: a rules-based daily classification of S&P 500 market stress — calm, correction, panic, bear — with a reversal signal eligible only under stress. Published as research, with history from December 1995.',
   }),
-  page('method.html', {
+  page('indicator/methodology.html', {
     priority: 0.9,
     nav: 'methodology',
     title: 'Methodology',
     crumb: 'Methodology',
-    schema: { breadcrumbs: [{ name: 'Indicator', url: '/indicator' }, { name: 'Methodology', url: '/method' }] },
     desc:  'How the DoubleTrends Regime Indicator is constructed: data inputs, derived measures, the four-state regime classification, signal eligibility and confirmation, publication timing, and point-in-time validation.',
   }),
-  page('data.html', {
+  page('indicator/data.html', {
     priority: 0.9,
     nav: 'data',
-    schema: { breadcrumbs: [{ name: 'Indicator', url: '/indicator' }, { name: 'Historical data', url: '/data' }] },
     title: 'Historical Data: Regimes and Signals Since 1995',
     crumb: 'Historical data',
     desc:  'Every DoubleTrends signal since 1998 with 3-month, 1-year and 2-year S&P 500 forward returns, the regime mix by year since 1996, regime statistics, and a CSV download.',
   }),
-  page('product.html', {
+  page('indicator/subscription.html', {
     priority: 0.9,
     kind: 'product',
     nav: 'indicator',
@@ -111,27 +109,44 @@ const pages = [
     crumb: 'Subscriber access',
     desc:  'Subscriber access to the daily DoubleTrends regime reading and same-day signals. The USD 149 annual fee covers the infrastructure that computes and delivers the reading; 30-day free trial and a refund window.',
     schema: {
-      breadcrumbs: [{ name: 'Indicator', url: '/indicator' }, { name: 'Subscriber access', url: '/product' }],
       productName: 'DoubleTrends Regime Indicator — Annual Subscription',
       price: '149.00',
       monthlyPrice: 12.42,
       priceCurrency: 'USD',
     },
   }),
-  page('alphaverify.html', {
+  page('alphaverify/index.html', {
     priority: 0.9,
-    nav: 'research',
+    nav: 'alphaverify',
     series: 'Software',
     section: 'Signal validation',
     title: 'AlphaVerify: Open-Source Signal Validation',
     crumb: 'AlphaVerify',
-    desc:  'AlphaVerify, an open-source framework from DoubleTrends that tests whether a trading signal beats 1,000 markets containing no signal. Findings on the golden cross, the 200-day average and bond yields; full mathematical specification.',
-    schema: {
-      datePublished: '2026-09-20',
-      breadcrumbs: [{ name: 'Research', url: '/academy/' }, { name: 'AlphaVerify', url: '/alphaverify' }],
-    },
+    desc:  'AlphaVerify, an open-source framework from DoubleTrends that tests whether a trading signal beats 1,000 markets containing no signal. Python package, CC0 license, full mathematical specification.',
+    schema: { datePublished: '2026-09-20' },
   }),
-  page('academy/index.html', {
+  page('alphaverify/method.html', {
+    priority: 0.7,
+    nav: 'alphaverify',
+    title: 'AlphaVerify Method: Surfaces, Scores and the Null',
+    crumb: 'Method',
+    desc:  'How AlphaVerify measures a condition: barrier-touch probability surfaces, baseline subtraction, the mirror-asymmetry score, the memoryless synthetic-market null, the Monte Carlo p-value, selection with Benjamini-Hochberg context, and naive Bayes combination.',
+  }),
+  page('alphaverify/findings.html', {
+    priority: 0.7,
+    nav: 'alphaverify',
+    title: 'AlphaVerify Findings: Four Popular Signals on the NASDAQ',
+    crumb: 'Findings',
+    desc:  'The golden cross, price above the 200-day average, and low and moderate bond yields, tested on the NASDAQ Composite since 2015 against 1,000 synthetic markets. None clears.',
+  }),
+  page('alphaverify/workspaces.html', {
+    priority: 0.6,
+    nav: 'alphaverify',
+    title: 'AlphaVerify Workspaces: NASDAQ and Bitcoin',
+    crumb: 'Workspaces',
+    desc:  'The three workspaces shipped with AlphaVerify (NASDAQ daily, bitcoin daily and bitcoin hourly): data sources, test grids and the feature families each one tests.',
+  }),
+  page('research/index.html', {
     priority: 0.9,
     kind: 'collection',
     nav: 'research',

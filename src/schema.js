@@ -6,11 +6,20 @@ function toJsonLdScript(node) {
   return `  <script type="application/ld+json">\n${escapeJsonLd(JSON.stringify(node, null, 2))}\n  </script>`;
 }
 
+// Top-level folders that form site sections, with their breadcrumb label.
+const SECTIONS = {
+  research: 'Research',
+  indicator: 'Indicator',
+  alphaverify: 'AlphaVerify',
+  company: 'About',
+  legal: 'Legal',
+};
+
 function canonicalFor(siteUrl, src) {
-  // Pages are emitted flat (method.html → dist/method.html) and Cloudflare
-  // serves them at their extensionless URL with 200: /method is canonical,
-  // /method.html 301-redirects to it. Directory indexes (academy/index.html)
-  // keep their trailing slash and serve at /academy/.
+  // Pages are emitted at their source path (indicator/methodology.html →
+  // dist/indicator/methodology.html) and Cloudflare serves them at their
+  // extensionless URL with 200: /indicator/methodology is canonical. Section
+  // indexes (research/index.html) keep their trailing slash: /research/.
   return `${siteUrl}/${src.replace(/index\.html$/, '').replace(/\.html$/, '')}`;
 }
 
@@ -53,51 +62,17 @@ function breadcrumbItems(page, siteUrl) {
     );
   }
 
-  const parts = page.src.split('/');
-  if (parts[0] === 'academy') {
+  // Sectioned pages: Home › Section › Page (the section index stops at
+  // Home › Section). SECTIONS maps each top-level folder to its label.
+  const [folder, ...rest] = page.src.split('/');
+  if (rest.length && SECTIONS[folder]) {
     items.push({
       '@type': 'ListItem',
       position: 2,
-      name: 'Research',
-      item: `${siteUrl}/academy/`,
+      name: SECTIONS[folder],
+      item: `${siteUrl}/${folder}/`,
     });
-    if (page.src !== 'academy/index.html') {
-      items.push({
-        '@type': 'ListItem',
-        position: 3,
-        name: breadcrumbLabel(page),
-        item: canonicalFor(siteUrl, page.src),
-      });
-    }
-    return items;
-  }
-
-  if (parts[0] === 'company') {
-    items.push({
-      '@type': 'ListItem',
-      position: 2,
-      name: 'About',
-      item: `${siteUrl}/company/`,
-    });
-    if (page.src !== 'company/index.html') {
-      items.push({
-        '@type': 'ListItem',
-        position: 3,
-        name: breadcrumbLabel(page),
-        item: canonicalFor(siteUrl, page.src),
-      });
-    }
-    return items;
-  }
-
-  if (parts[0] === 'legal') {
-    items.push({
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Legal',
-      item: `${siteUrl}/legal/`,
-    });
-    if (page.src !== 'legal/index.html') {
+    if (page.src !== `${folder}/index.html`) {
       items.push({
         '@type': 'ListItem',
         position: 3,
@@ -289,6 +264,7 @@ function buildJsonLdScripts(context) {
 
 module.exports = {
   buildJsonLdScripts,
+  SECTIONS,
   canonicalFor,
   pageDisplayName,
   breadcrumbItems,

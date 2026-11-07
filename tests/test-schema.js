@@ -1,6 +1,7 @@
 const fs   = require('fs');
 const path = require('path');
 const { pages } = require('../src/site.config');
+const { SECTIONS } = require('../src/schema');
 const { DIST, isNoindex, report } = require('./test-utils');
 
 const JSONLD_BLOCK_RE = /<script\s+type=["']application\/ld\+json["'][^>]*>\s*([\s\S]*?)\s*<\/script>/gi;
@@ -58,9 +59,9 @@ function main() {
       errors.push(`${page.src}: non-article page must not emit Article schema`);
     }
 
-    // All sectioned sub-pages (academy, company, legal) must emit BreadcrumbList.
+    // All sectioned sub-pages must emit BreadcrumbList.
     const isSubPage = (prefix) => page.src.startsWith(prefix) && page.src !== `${prefix}index.html`;
-    if (isSubPage('academy/') || isSubPage('company/') || isSubPage('legal/')) {
+    if (Object.keys(SECTIONS).some((dir) => isSubPage(`${dir}/`))) {
       if (!hasType(nodes, 'BreadcrumbList')) {
         errors.push(`${page.src}: sectioned sub-page must emit BreadcrumbList schema`);
       }

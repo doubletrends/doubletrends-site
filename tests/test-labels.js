@@ -15,7 +15,7 @@
 const fs   = require('fs');
 const path = require('path');
 const { pages } = require('../src/site.config');
-const { DIST, SECTIONS, decode, report } = require('./test-utils');
+const { DIST, SECTIONS, LOOSE_SECTIONS, decode, report } = require('./test-utils');
 
 const MAIN_RE    = /<main\b[^>]*>([\s\S]*?)<\/main>/;
 const KICKER_RE  = /<span\b[^>]*class="[^"]*\b(?:kicker|tag-overline)\b[^"]*"[^>]*>([^<]+)<\/span>/;
@@ -32,6 +32,18 @@ function main() {
   if (!fs.existsSync(DIST)) throw new Error('dist/ not found — run npm run build first');
   const errors = [];
   const counts = { A: 0, B: 0, C: 0, D: 0 };
+
+  // Loose sections: every sub-page kicker starts with "Section · ".
+  for (const [dir, sectionName] of Object.entries(LOOSE_SECTIONS)) {
+    const subPages = pages.filter((p) => p.src.startsWith(`${dir}/`) && p.src !== `${dir}/index.html`);
+    if (!subPages.length) errors.push(`${dir}/: no sub-pages found (test would be vacuous)`);
+    for (const page of subPages) {
+      const kicker = kickerOf(read(page.src));
+      if (!kicker || !kicker.startsWith(`${sectionName}${SEP}`)) {
+        errors.push(`${page.src}: kicker must start with "${sectionName}${SEP}", got "${kicker ?? '(missing)'}"`);
+      }
+    }
+  }
 
   // A–C: sections.
   for (const [dir, sectionName] of Object.entries(SECTIONS)) {

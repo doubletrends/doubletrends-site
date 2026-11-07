@@ -6,8 +6,8 @@ const { report } = require('./test-utils');
 const SRC_PAGES    = path.join(__dirname, '..', 'src', 'pages');
 const ALLOWED_KINDS = new Set(['home', 'webpage', 'collection', 'services', 'contact', 'about', 'article', 'product']);
 
-// Pages are emitted flat: method.html → dist/method.html (output path = source
-// path), so root depth is derived straight from the source path.
+// Pages are emitted at their source path: indicator/methodology.html →
+// dist/indicator/methodology.html, so root depth is derived straight from the source path.
 function outPathFor(src) {
   return src;
 }
@@ -76,21 +76,21 @@ function main() {
     }
 
     if (page.kind === 'article') {
-      if (!page.src.startsWith('academy/')) {
-        errors.push(`${page.src}: article pages must live under academy/`);
+      if (!page.src.startsWith('research/')) {
+        errors.push(`${page.src}: article pages must live under research/`);
       }
-      if (page.src === 'academy/index.html') {
-        errors.push(`${page.src}: academy index cannot be kind "article"`);
+      if (page.src === 'research/index.html') {
+        errors.push(`${page.src}: research index cannot be kind "article"`);
       }
     }
 
     if (
       page.kind === 'collection' &&
-      !page.src.startsWith('academy/') &&
+      !page.src.startsWith('research/') &&
       !page.src.startsWith('company/') &&
       !page.src.startsWith('legal/')
     ) {
-      errors.push(`${page.src}: collection pages must live under academy/, company/, or legal/`);
+      errors.push(`${page.src}: collection pages must live under research/, company/, or legal/`);
     }
   }
 

@@ -3,7 +3,7 @@
 <div class="wrap">
   <header class="page-head">
     {{BREADCRUMB}}
-    <span class="kicker">Methodology</span>
+    <span class="kicker">Indicator &middot; Methodology</span>
     <h1 class="h1">How the DoubleTrends Regime Indicator is constructed</h1>
     <p class="dek">The indicator classifies the S&amp;P 500 into one of four regimes each trading day, and fires a reversal signal only when an oversold turn coincides with acute or persistent stress. This document sets out the inputs, the classification, the signal rules, publication timing, and how the history was built.</p>
     <p class="page-head-meta"><span><strong>Coverage</strong> S&amp;P 500 index</span><span><strong>Frequency</strong> Daily, after the U.S. close</span><span><strong>History</strong> From {{IND_FIRST_DATE}}</span><span><strong>Live since</strong> {{IND_LIVE_SINCE}}</span></p>
@@ -57,7 +57,7 @@
         <div class="prose">
           <h3>3.1 Dual-horizon momentum</h3>
           <p>Williams&nbsp;%R &mdash; a 1970s momentum oscillator that locates the latest close within its recent high&ndash;low range &mdash; is computed over a short and a long lookback, and each is smoothed. A single horizon is either too noisy (short) or too slow (long); requiring both to agree removes most false readings. A market is <strong>oversold</strong> when both smoothed readings sit deep in the bottom of their ranges, and a <strong>reversal candidate</strong> occurs on the session in which that condition ends.</p>
-          <p>A momentum reading on its own is not treated as an edge. DoubleTrends&rsquo; open-source <a href="alphaverify.html">AlphaVerify</a> framework tests single market conditions against synthetic markets that contain no signal, and widely followed ones &mdash; the golden cross, price above its 200-day average &mdash; do not clear that test on the NASDAQ. This is why a reversal candidate is only considered inside a stress regime (sections 4 and 5).</p>
+          <p>A momentum reading on its own is not treated as an edge. DoubleTrends&rsquo; open-source <a href="../alphaverify/index.html">AlphaVerify</a> framework tests single market conditions against synthetic markets that contain no signal, and widely followed ones &mdash; the golden cross, price above its 200-day average &mdash; do not clear that test on the NASDAQ. This is why a reversal candidate is only considered inside a stress regime (sections 4 and 5).</p>
           <h3>3.2 The shape of a decline</h3>
           <p>Four measures describe what a decline is doing, not only where it has reached: <strong>depth</strong> (distance below the trailing one-year closing high), <strong>duration</strong> (sessions since that high), <strong>sharpness</strong> (the worst ten-session move within the trailing month) and a <strong>reference high</strong> (the recent ceiling the rest is measured against). Together they distinguish a 3% drift over six weeks from a 15% fall in four.</p>
           <h3>3.3 Volatility and macro context</h3>
