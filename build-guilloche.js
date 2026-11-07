@@ -32,7 +32,7 @@ function svg(width, height, paths, { stroke, opacity, strokeWidth }) {
 }
 
 // Paper — locked in the guilloche lab (round 3, 2026-11-08): round-2 sample
-// "3 Moiré beat" at 200% scale, line strength 0.100 (lowered from 0.150 on review). Two families of 22
+// "3 Moiré beat" at 200% scale, line strength 0.075 (lowered from 0.150, then 0.100, on review). Two families of 22
 // phase-shifted strands, at 2 and 3 waves per tile, cross and interfere.
 // Drawn natively at the 200% size (720 x 192, 0.8 px lines). Every frequency
 // is a whole multiple of the tile width and strands are sampled a little past
@@ -63,7 +63,7 @@ function paperBeat() {
     paths.push(strand((t) => MID + AMP * 0.92 * env4(t) * Math.sin(2 * t + ph)));
     paths.push(strand((t) => MID + AMP * 0.8 * env6(t) * Math.sin(3 * t + ph)));
   }
-  return svg(W, H, paths, { stroke: COLORS.primary, opacity: 0.1, strokeWidth: 0.8 });
+  return svg(W, H, paths, { stroke: COLORS.primary, opacity: 0.075, strokeWidth: 0.8 });
 }
 
 // Footer: rings of hypotrochoids (spirograph). Each keeps its pen inside the
