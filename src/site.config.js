@@ -89,7 +89,7 @@ const pages = [
   }),
   page('method.html', {
     priority: 0.9,
-    nav: 'indicator',
+    nav: 'methodology',
     title: 'Methodology',
     crumb: 'Methodology',
     schema: { breadcrumbs: [{ name: 'Indicator', url: '/indicator' }, { name: 'Methodology', url: '/method' }] },
@@ -97,7 +97,7 @@ const pages = [
   }),
   page('data.html', {
     priority: 0.9,
-    nav: 'indicator',
+    nav: 'data',
     schema: { breadcrumbs: [{ name: 'Indicator', url: '/indicator' }, { name: 'Historical data', url: '/data' }] },
     title: 'Historical Data: Regimes and Signals Since 1995',
     crumb: 'Historical data',
