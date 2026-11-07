@@ -34,6 +34,7 @@ const { COLORS } = require('./src/brand.config');
 const { buildExhibits, fmtDateLong } = require('./src/charts');
 const { optimizeImages } = require('./build-images');
 const { writeGuilloches } = require('./build-guilloche');
+const ARCHIVE = require('./src/data/archive-images.json').images;
 const canonicalFor = (src) => canonicalForRaw(SITE_URL, src);
 
 function todayInTimeZone(timeZone) {
@@ -205,6 +206,28 @@ function researchLibrary(root) {
   }).join('\n');
 }
 
+// Archival background image (src/data/archive-images.json) behind the page's
+// title block: the first page head, or the hero on pages that open with one.
+// The credit line is printed in the block; the image itself is decorative.
+function applyHeadImage(html, page) {
+  if (!page.headImage) return html;
+  const img = ARCHIVE[page.headImage];
+  if (!img) throw new Error(`${page.src}: unknown headImage "${page.headImage}"`);
+  const rendition = img.renditions.includes('hero') ? 'hero' : 'head';
+  // Root-absolute: a relative url() inside a custom property resolves against
+  // the stylesheet that reads it (public/css/), not against this page.
+  const url = `/public/img/archive/${page.headImage}-${rendition}.jpg`;
+  // The link test does not follow style attributes, so check the file here.
+  if (!fs.existsSync(path.join(__dirname, url))) throw new Error(`${page.src}: missing ${url} (run npm run archive-images)`);
+  // One credit per image per page: a page that also shows the image as a
+  // band credits it there.
+  const credit = html.includes(`${page.headImage}-band.jpg`) ? '' : `<p class="image-credit">Image: ${escAmp(img.credit)}</p>`;
+  const re = /<(header|section) class="(page-head|hero)">([\s\S]*?)<\/\1>/;
+  if (!re.test(html)) throw new Error(`${page.src}: headImage set but no page-head or hero found`);
+  return html.replace(re, (_m, tag, cls, body) =>
+    `<${tag} class="${cls} has-image" style="--head-image: url('${url}')">${body}${credit}\n</${tag}>`);
+}
+
 function formatTitle(page) {
   return page.kind === 'home' ? `${SITE_NAME} — ${page.title}` : `${page.title} | ${SITE_NAME}`;
 }
@@ -243,6 +266,7 @@ function renderPage(page) {
     RESEARCH_RECENT: researchRecent(page.root),
     RESEARCH_LIBRARY: researchLibrary(page.root),
     ROOT: page.root,
+    ARCHIVE_CREDIT_FACADE1908: escAmp(ARCHIVE.facade1908.credit),
     TITLE: formatTitle(page),
     DESC: page.desc,
     CANONICAL: canonicalFor(page.src),
@@ -268,6 +292,7 @@ function renderPage(page) {
     }),
   });
   html = decorateArticle(html, page);
+  html = applyHeadImage(html, page);
   html = markCurrentNav(html, page);
   html = html.replace('</body>', scriptsFor(html, page.root));
 

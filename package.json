@@ -18,7 +18,8 @@
     "test:labels": "node build.js && node tests/test-labels.js",
     "test:brand-tokens": "node tests/test-brand-tokens.js",
     "dev": "node build.js && wrangler dev",
-    "deploy": "node build.js && wrangler deploy"
+    "deploy": "node build.js && wrangler deploy",
+    "archive-images": "node build-archive-images.js"
   },
   "devDependencies": {
     "@fontsource/source-sans-3": "^5.3.1",

@@ -1,4 +1,4 @@
-﻿html { -webkit-text-size-adjust: 100%; }
+﻿html { -webkit-text-size-adjust: 100%; overflow-x: clip; } /* full-bleed image washes extend to 100vw */
 * { box-sizing: border-box; }
 body {
   margin: 0;

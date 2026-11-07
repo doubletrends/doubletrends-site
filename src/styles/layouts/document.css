@@ -146,3 +146,31 @@
 .wrap:has(> .page-head) + .section > .wrap > :is(.entries, .table-scroll):first-child {
   background-image: none; padding-top: 0; border-top: 1px solid var(--rule-strong);
 }
+
+/* Archival images (src/data/archive-images.json). Behind a title block the
+   image runs full-bleed under a paper wash that is strongest where the text
+   sits; the band shows the full duotone. Credits are printed, small. */
+.page-head.has-image, .hero.has-image { position: relative; isolation: isolate; }
+.page-head.has-image::before {
+  content: ""; position: absolute; z-index: -1; top: 0; bottom: 8px;
+  left: calc(50% - 50vw); right: calc(50% - 50vw);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--paper) 96%, transparent) 0%, color-mix(in srgb, var(--paper) 88%, transparent) 45%, color-mix(in srgb, var(--paper) 45%, transparent) 100%),
+    var(--head-image) center / cover no-repeat;
+}
+.hero.has-image {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--paper) 96%, transparent) 0%, color-mix(in srgb, var(--paper) 88%, transparent) 42%, color-mix(in srgb, var(--paper) 50%, transparent) 100%),
+    var(--head-image) center / cover no-repeat;
+}
+.image-credit {
+  position: absolute; right: max(1rem, calc(50% - 50vw + 1rem)); bottom: 1rem; z-index: 1; margin: 0;
+  max-width: 36rem; text-align: right; font-size: 0.6875rem; line-height: 1.4; color: var(--muted);
+}
+.page-head.has-image .image-credit { right: 0; bottom: 1.1rem; }
+.image-band { position: relative; margin: 0; height: clamp(180px, 22vw, 320px); background: var(--band-image) center / cover no-repeat; border-bottom: 1px solid var(--rule); }
+.image-band .image-credit { right: 1rem; bottom: 0.7rem; color: var(--paper); background: color-mix(in srgb, var(--ink) 70%, transparent); padding: 0.15rem 0.5rem; }
+@media (max-width: 760px) {
+  .page-head.has-image::before, .hero.has-image { background-image: linear-gradient(color-mix(in srgb, var(--paper) 90%, transparent), color-mix(in srgb, var(--paper) 90%, transparent)), var(--head-image); }
+  .page-head.has-image .image-credit, .hero.has-image > .image-credit { position: static; text-align: left; margin-top: 1rem; }
+}

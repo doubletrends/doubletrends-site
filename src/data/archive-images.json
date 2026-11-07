@@ -1,0 +1,168 @@
+{
+  "_about": "Archival background images. Every entry is public domain or CC0 on Wikimedia Commons; `page` is the source record. Processed renditions in public/img/archive/ are produced by build-archive-images.js (originals are downloaded to .cache/, not committed). `crop.box` is the picture area as [left, top, right, bottom] fractions; `crop.focus` is the vertical centre of wide crops (0 top, 1 bottom). `credit` is the line printed on the page.",
+  "images": {
+    "facade1908": {
+      "title": "New York Stock Exchange, Broad Street LCCN00650325.tif",
+      "page": "https://commons.wikimedia.org/wiki/File:New_York_Stock_Exchange,_Broad_Street_LCCN00650325.tif",
+      "licence": "Public domain",
+      "credit": "New York Stock Exchange, Broad Street, 1908. Photograph by Irving Underhill. Library of Congress.",
+      "crop": {
+        "box": [
+          0.085,
+          0.05,
+          0.925,
+          0.95
+        ],
+        "focus": 0.42
+      },
+      "renditions": [
+        "hero",
+        "band"
+      ]
+    },
+    "reading1911": {
+      "title": "New York City public library reading room LCCN2007682035.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:New_York_City_public_library_reading_room_LCCN2007682035.jpg",
+      "licence": "Public domain",
+      "credit": "New York Public Library reading room, 1911. Library of Congress.",
+      "crop": {
+        "box": [
+          0.05,
+          0.05,
+          0.95,
+          0.95
+        ],
+        "focus": 0.55
+      },
+      "renditions": [
+        "head"
+      ]
+    },
+    "assay1861": {
+      "title": "The popular loan to the federal government - scene in the main room of the Assay Office, Wall Street, New York LCCN2003668330.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:The_popular_loan_to_the_federal_government_-_scene_in_the_main_room_of_the_Assay_Office,_Wall_Street,_New_York_LCCN2003668330.jpg",
+      "licence": "Public domain",
+      "credit": "The popular loan to the federal government, Assay Office, Wall Street, 1861. Library of Congress.",
+      "crop": {
+        "box": [
+          0.06,
+          0.13,
+          0.92,
+          0.86
+        ],
+        "focus": 0.45
+      },
+      "renditions": [
+        "head"
+      ]
+    },
+    "drafting1870": {
+      "title": "Louis-Emile Durandelle, Charles Garnier in the Drafting Room While Designing the New Paris Opera, ca. 1870.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Louis-Emile_Durandelle,_Charles_Garnier_in_the_Drafting_Room_While_Designing_the_New_Paris_Opera,_ca._1870.jpg",
+      "licence": "Public domain",
+      "credit": "Charles Garnier in the drafting room while designing the Paris Opéra, c. 1870. Photograph by Louis-Émile Durandelle. The Metropolitan Museum of Art.",
+      "crop": {
+        "box": [
+          0.2,
+          0.22,
+          0.9,
+          0.8
+        ],
+        "focus": 0.45
+      },
+      "renditions": [
+        "head"
+      ]
+    },
+    "ticker1922": {
+      "title": "Automatic ticker apparatus, New York Stock Exchange. Central control station LCCN2013647237.tif",
+      "page": "https://commons.wikimedia.org/wiki/File:Automatic_ticker_apparatus,_New_York_Stock_Exchange._Central_control_station_LCCN2013647237.tif",
+      "licence": "Public domain",
+      "credit": "Automatic ticker apparatus, New York Stock Exchange, 1922. Library of Congress.",
+      "crop": {
+        "box": [
+          0.02,
+          0.02,
+          0.98,
+          0.98
+        ],
+        "focus": 0.55
+      },
+      "renditions": [
+        "head"
+      ]
+    },
+    "weather1900": {
+      "title": "Early 1900s photo of the Hatteras Weather Bureau Station shows the Signal Tower fitted with a water tank (51758001607).jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Early_1900s_photo_of_the_Hatteras_Weather_Bureau_Station_shows_the_Signal_Tower_fitted_with_a_water_tank_(51758001607).jpg",
+      "licence": "Public domain",
+      "credit": "Hatteras Weather Bureau station and signal tower, early 1900s. National Park Service, Cape Hatteras National Seashore.",
+      "crop": {
+        "box": [
+          0.04,
+          0.04,
+          0.96,
+          0.96
+        ],
+        "focus": 0.41
+      },
+      "renditions": [
+        "head"
+      ]
+    },
+    "wallst1834": {
+      "title": "View from Trinity Church, looking down Wall Street with sketches of the buildings on each side (NYPL Hades-1785949-1650735).tiff",
+      "page": "https://commons.wikimedia.org/wiki/File:View_from_Trinity_Church,_looking_down_Wall_Street_with_sketches_of_the_buildings_on_each_side_(NYPL_Hades-1785949-1650735).tiff",
+      "licence": "Public domain",
+      "credit": "View from Trinity Church, looking down Wall Street. Engraving. The New York Public Library.",
+      "crop": {
+        "box": [
+          0.148,
+          0.13,
+          0.822,
+          0.765
+        ],
+        "focus": 0.55
+      },
+      "renditions": [
+        "head"
+      ]
+    },
+    "justice": {
+      "title": "Detail view of lunette with Justice sculpture on west wall of gallery, with scale - U.S. Capitol, Old Supreme Court Chamber, Intersection of North, South, and East Capitol Streets and HABS DC-38-B-10.tif",
+      "page": "https://commons.wikimedia.org/wiki/File:Detail_view_of_lunette_with_Justice_sculpture_on_west_wall_of_gallery,_with_scale_-_U.S._Capitol,_Old_Supreme_Court_Chamber,_Intersection_of_North,_South,_and_East_Capitol_Streets_and_HABS_DC-38-B-10.tif",
+      "licence": "Public domain",
+      "credit": "Justice, Old Supreme Court Chamber, U.S. Capitol. Historic American Buildings Survey, Library of Congress.",
+      "crop": {
+        "box": [
+          0.24,
+          0.1,
+          0.92,
+          0.72
+        ],
+        "focus": 0.69
+      },
+      "renditions": [
+        "head"
+      ]
+    },
+    "progress1876": {
+      "title": "The progress of the century - the lightning steam press, the electric telegraph, the locomotive, (and) the steamboat LCCN90716345.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:The_progress_of_the_century_-_the_lightning_steam_press,_the_electric_telegraph,_the_locomotive,_(and)_the_steamboat_LCCN90716345.jpg",
+      "licence": "Public domain",
+      "credit": "The Progress of the Century: the lightning steam press, the electric telegraph, 1876. Currier & Ives. Library of Congress.",
+      "crop": {
+        "box": [
+          0.155,
+          0.06,
+          0.845,
+          0.7
+        ],
+        "focus": 0.45
+      },
+      "renditions": [
+        "head"
+      ]
+    }
+  }
+}
