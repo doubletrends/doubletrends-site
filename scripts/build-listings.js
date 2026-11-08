@@ -7,6 +7,7 @@
  */
 const { SERIES, pages } = require('../src/site.config');
 const { fmtDateLong, escAmp } = require('../src/format');
+const { partial, replace } = require('./placeholders');
 
 const SERIES_ORDER = Object.keys(SERIES);
 const byDate = (a, b) => (b.schema.datePublished.localeCompare(a.schema.datePublished)) || a.title.localeCompare(b.title);
@@ -23,10 +24,11 @@ function entryHtml(a, root) {
 
 // Footer Research column: every research note, in library order (series,
 // then registry order), under its page name. The first FOOTER_NOTES_SHOWN are
-// always visible; a toggle at the bottom of the list reveals the rest. Without
-// JavaScript every note shows and the toggle stays hidden.
+// always visible; a toggle at the bottom of the list (footer-more.html, run
+// by footer-more.js) reveals the rest. Without JavaScript every note shows
+// and the toggle stays hidden.
 const FOOTER_NOTES_SHOWN = 5;
-const FOOTER_MORE_JS = "(function(){var b=document.querySelector('.footer-more-toggle');if(!b)return;var r=document.querySelectorAll('.footer-more-item');function s(o){for(var i=0;i<r.length;i++)r[i].hidden=!o;b.setAttribute('aria-expanded',String(o))}s(false);b.parentNode.hidden=false;b.addEventListener('click',function(){s(b.getAttribute('aria-expanded')!=='true')})})()";
+const footerMore = replace(partial('footer-more.html', { inline: true }), { FOOTER_MORE_JS: partial('footer-more.js', { inline: true }) });
 function footerNotes(root) {
   const item = (a, cls = '') => `<li${cls}><a href="${root}${a.src}">${escAmp(a.crumb || a.title)}</a></li>`;
   const notes = SERIES_ORDER.flatMap((series) => pages.filter((p) => p.kind === 'article' && p.series === series));
@@ -36,8 +38,7 @@ function footerNotes(root) {
   return [
     ...shown,
     ...rest.map((a) => `          ${item(a, ' class="footer-more-item"')}`),
-    `          <li hidden><button type="button" class="footer-more-toggle" aria-expanded="true"><span class="footer-more-closed">${rest.length} more notes</span><span class="footer-more-open">Fewer notes</span></button></li>`,
-    `          <script>${FOOTER_MORE_JS}</script>`,
+    replace(footerMore, { COUNT: String(rest.length) }),
   ].join('\n');
 }
 
@@ -57,19 +58,17 @@ function researchLibrary(root) {
 }
 
 // The notes' original closing promo blocks are replaced by one standard
-// further-reading block: related notes from the same series, the method,
-// the record, and a pointer to the indicator — no sales line.
+// further-reading block (further-reading.html): related notes from the same
+// series, the method, the record, and a pointer to the indicator — no sales
+// line.
+const furtherReadingHtml = partial('further-reading.html', { inline: true });
 function furtherReading(page, sigFirst) {
   const related = ARTICLES.filter((a) => a.series === page.series && a.src !== page.src).slice(0, 2);
-  return `<section class="article-section article-further">
-<span class="tag-overline">Further reading</span>
-<ul class="further-list">
-${related.map((a) => `<li><a href="${page.root}${a.src}">${escAmp(a.title)}</a><span>${a.series} &middot; ${fmtDateLong(a.schema.datePublished)}</span></li>`).join('\n')}
-<li><a href="${page.root}indicator/methodology.html">Methodology</a><span>How the regime classification and the signal are constructed</span></li>
-<li><a href="${page.root}indicator/performance.html">Performance</a><span>Every signal since ${sigFirst}, with what followed</span></li>
-</ul>
-<p class="fine-print">DoubleTrends research is published alongside the <a href="${page.root}indicator/index.html">DoubleTrends Regime Indicator</a>.</p>
-</section>`;
+  return replace(furtherReadingHtml, {
+    RELATED: related.map((a) => `<li><a href="${page.root}${a.src}">${escAmp(a.title)}</a><span>${a.series} &middot; ${fmtDateLong(a.schema.datePublished)}</span></li>`).join('\n'),
+    ROOT: page.root,
+    SIG_FIRST: sigFirst,
+  });
 }
 
 module.exports = { footerNotes, researchRecent, researchLibrary, furtherReading };

@@ -1,0 +1,1 @@
+(function(){var b=document.querySelector('.footer-more-toggle');if(!b)return;var r=document.querySelectorAll('.footer-more-item');function s(o){for(var i=0;i<r.length;i++)r[i].hidden=!o;b.setAttribute('aria-expanded',String(o))}s(false);b.parentNode.hidden=false;b.addEventListener('click',function(){s(b.getAttribute('aria-expanded')!=='true')})})()

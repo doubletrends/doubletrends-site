@@ -1,8 +1,11 @@
 /**
  * placeholders.js
- * The {{NAME}} placeholder mechanism shared by every generated file: pages,
- * and llms.txt, and the site facts every one of them can use.
+ * The {{NAME}} placeholder mechanism shared by every generated file (pages
+ * and llms.txt), the site facts every one of them can use, and the reader for
+ * src/partials/.
  */
+const fs = require('fs');
+const path = require('path');
 const { SITE_URL, SITE_NAME, SUBSCRIBE_URL, PORTAL_URL, PUBLISHER } = require('../src/site.config');
 
 const SITE_VARS = {
@@ -13,6 +16,14 @@ const SITE_VARS = {
   SUBSCRIBE_URL,
   PORTAL_URL,
 };
+
+// A partial's text. Fragments placed inside a line drop the file's final
+// newline: partial(name, { inline: true }).
+const PARTIALS = path.join(__dirname, '..', 'src', 'partials');
+function partial(name, { inline = false } = {}) {
+  const text = fs.readFileSync(path.join(PARTIALS, name), 'utf8');
+  return inline ? text.replace(/\r?\n$/, '') : text;
+}
 
 // Function replacer: values are inserted literally ("$&", "$1" in generated
 // markup must not be read as replacement patterns).
@@ -27,4 +38,4 @@ function assertResolved(text, where) {
   return text;
 }
 
-module.exports = { SITE_VARS, replace, assertResolved };
+module.exports = { SITE_VARS, partial, replace, assertResolved };

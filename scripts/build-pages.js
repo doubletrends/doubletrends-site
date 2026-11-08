@@ -24,20 +24,22 @@ const { extensionless, canonicalFor, breadcrumbItems } = require('../src/urls');
 const { buildJsonLdScripts, isoDate } = require('../src/schema');
 const { COLORS } = require('../src/brand.config');
 const { fmtDateLong, escAmp } = require('../src/format');
-const { SITE_VARS, replace, assertResolved } = require('./placeholders');
+const { SITE_VARS, partial, replace, assertResolved } = require('./placeholders');
 const { footerNotes, researchRecent, researchLibrary, furtherReading } = require('./build-listings');
 const ARCHIVE = require('../src/data/archive-images.json').images;
 
 const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
 
-const partialsDir = path.join(ROOT, 'src', 'partials');
-const read = (name) => fs.readFileSync(path.join(partialsDir, name), 'utf8');
-const layout       = read('layout.html');
-const head         = read('head.html');
-const header       = read('header.html');
-const footer       = read('footer.html');
-const checkoutGate = read('checkout-gate.html');
-const readingCard  = read('reading-card.html');
+const layout       = partial('layout.html');
+const head         = partial('head.html');
+const header       = partial('header.html');
+const footer       = partial('footer.html');
+const checkoutGate = partial('checkout-gate.html');
+const readingCard  = partial('reading-card.html');
+const readingLink  = partial('reading-link.html', { inline: true });
+const articleMeta  = partial('article-meta.html', { inline: true });
+const splash       = partial('splash.html', { inline: true });
+const splashFitJs  = partial('splash-fit.js', { inline: true });
 
 // Rewrite internal .html hrefs to their served form (extensionless in
 // src/urls.js: method.html → method, research/index.html → research/), so
@@ -94,9 +96,11 @@ function breadcrumbHtml(page) {
 // the research library lists them.
 function decorateArticle(html, page, exhibits) {
   if (page.kind !== 'article') return html;
-  const meta = `<p class="article-meta"><span><strong>${page.series}</strong> &middot; ${page.section}</span>`
-    + `<span>Published ${fmtDateLong(page.schema.datePublished)}</span>`
-    + '<span>DoubleTrends Research</span></p>';
+  const meta = replace(articleMeta, {
+    SERIES: page.series,
+    SECTION: page.section,
+    PUBLISHED: fmtDateLong(page.schema.datePublished),
+  });
   html = html.replace(/<section class="cta-panel article-cta">[\s\S]*?<\/section>/, () => furtherReading(page, exhibits.SIG_FIRST));
 
   // Anchor both insertions to the article's own <header>: the site masthead is
@@ -107,16 +111,14 @@ function decorateArticle(html, page, exhibits) {
   );
 }
 
-// The splash (hero + band) ends exactly at the bottom of the first screen:
-// CSS sizes it to the viewport less --chrome-h (utility bar + masthead). The
-// stylesheet carries the desktop value; this measures the real one, which
-// differs on narrow screens where the masthead wraps.
-const SPLASH_FIT = "(function(){var r=document.documentElement,m=document.getElementById('main');function f(){r.style.setProperty('--chrome-h',m.offsetTop+'px')}f();addEventListener('resize',f)})()";
-
-// Archival image splash (src/data/archive-images.json), the same on the
-// homepage and every section index: the soft-toned rendition behind the page's
-// hero, then the full-tone rendition as a band directly beneath it. The image
-// is decorative; its credit is printed once, on the band.
+// Archival image splash (src/data/archive-images.json, markup in splash.html),
+// the same on the homepage and every section index: the soft-toned rendition
+// behind the page's hero, then the full-tone rendition as a band directly
+// beneath it. The image is decorative; its credit is printed once, on the band.
+// The splash ends exactly at the bottom of the first screen: CSS sizes it to
+// the viewport less --chrome-h (utility bar + masthead). The stylesheet carries
+// the desktop value; splash-fit.js measures the real one, which differs on
+// narrow screens where the masthead wraps.
 function applyHeadImage(html, page) {
   if (!page.headImage) return html;
   const img = ARCHIVE[page.headImage];
@@ -130,14 +132,13 @@ function applyHeadImage(html, page) {
   }
   const re = /<section class="hero">([\s\S]*?)<\/section>/;
   if (!re.test(html)) throw new Error(`${page.src}: headImage set but no hero found`);
-  return html.replace(re, (_m, body) =>
-    `<div class="splash">
-<section class="hero has-image" style="--head-image: url('${url('hero')}')">${body}</section>
-<figure class="image-band" style="--band-image: url('${url('band')}')">
-  <figcaption class="image-credit">Image: ${escAmp(img.credit)}</figcaption>
-</figure>
-</div>
-<script>${SPLASH_FIT}</script>`);
+  return html.replace(re, (_m, body) => replace(splash, {
+    HERO_URL: url('hero'),
+    BAND_URL: url('band'),
+    CREDIT: escAmp(img.credit),
+    SPLASH_FIT_JS: splashFitJs,
+    HERO_BODY: body, // last: the page's own text is never searched for placeholders
+  }));
 }
 
 function formatTitle(page) {
@@ -184,7 +185,7 @@ function renderPage(page, { dist, exhibits, today }) {
     RESEARCH_RECENT: researchRecent(page.root),
     RESEARCH_LIBRARY: researchLibrary(page.root),
     FOOTER_NOTES: footerNotes(page.root),
-    READING_LINK: page.readingLink === false ? '' : ` <a class="link" href="${page.root}indicator/index.html">About the indicator</a>`,
+    READING_LINK: page.readingLink === false ? '' : readingLink,
     ROOT: page.root,
     TITLE: formatTitle(page),
     DESC: page.desc,

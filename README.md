@@ -107,7 +107,7 @@ Placeholder families: `ROOT`, `TITLE`, `DESC`, `CANONICAL` … (page metadata), 
 
 ### Partials vs. templates
 
-- **`src/partials/`** — injected into every page: `layout`, `head`, `header` (utility bar with the latest reading + primary nav), `footer` (disclosures, trademark notice), `checkout-gate` (notice shown before Stripe checkout).
+- **`src/partials/`** — markup the build injects, read with `partial()` (`scripts/placeholders.js`). In every page: `layout`, `head`, `header` (utility bar with the latest reading + primary nav), `footer` (disclosures, trademark notice), `checkout-gate` (notice shown before Stripe checkout). Where a page needs them: `reading-card` + `reading-link`, `splash` (archival image hero and band), and for research notes `article-meta` (dateline) and `further-reading`; `footer-more` is the footer's notes toggle. The small scripts inlined with them are `splash-fit.js` and `footer-more.js`. Every word the build adds to a page is in one of these files.
 - **`src/templates/`** — copy-to-create scaffolds (`article`, `legal`), not read by the build.
 
 ---
