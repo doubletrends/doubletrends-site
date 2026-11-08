@@ -10,7 +10,6 @@
 (function () {
   'use strict';
 
-  var REGIME = { c: 'Calm', k: 'Correction', p: 'Panic', b: 'Bear' };
   var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   function fmtDate(iso) {
@@ -70,11 +69,11 @@
       fig.setAttribute('data-active', '');
       tip.innerHTML = '<b>Week ending ' + fmtDate(p[2]) + '</b>'
         + '<div class="row"><span>S&amp;P 500</span><span>' + fmtNum(p[3]) + '</span></div>'
-        + '<div class="row"><span>Regime</span><span>' + REGIME[p[4]] + '</span></div>';
+        + '<div class="row"><span>Regime</span><span>' + p[4] + '</span></div>';
       var scale = svg.getBoundingClientRect().width / data.w;
       var svgTop = svg.getBoundingClientRect().top - body.getBoundingClientRect().top;
       place(tip, body, p[0] * scale, svgTop + p[1] * scale);
-      if (announce && live) live.textContent = fmtDate(p[2]) + ': S&P 500 ' + fmtNum(p[3]) + ', ' + REGIME[p[4]] + ' regime.';
+      if (announce && live) live.textContent = fmtDate(p[2]) + ': S&P 500 ' + fmtNum(p[3]) + ', ' + p[4] + ' regime.';
     }
     function hide() {
       fig.removeAttribute('data-active');

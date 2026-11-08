@@ -123,7 +123,7 @@ ${xTicks}
   // Hover payload: plot geometry + weekly points (x in viewBox units).
   const hover = {
     w: W, plotLeft: padL, plotRight: W - padR, top: padT, bottom,
-    points: weekly.map((p) => [r1(X(p.date)), r1(Y(p.close)), p.date, p.close, p.regime[0]]),
+    points: weekly.map((p) => [r1(X(p.date)), r1(Y(p.close)), p.date, p.close, REGIME_LABEL[p.regime]]),
   };
   return { svg, hover: JSON.stringify(hover) };
 }
