@@ -1,7 +1,8 @@
 /**
  * charts.js — house-style exhibits rendered to static SVG at build time.
  *
- * Inputs come from src/data/ (see build-indicator-data.js). Output is plain
+ * Inputs are the parsed src/data/ files, passed in by build.js (see
+ * build-indicator-data.js). Output is plain
  * markup injected into pages via {{EXHIBIT_*}} placeholders, so every chart
  * renders without JavaScript and prints cleanly. public/scripts/exhibits.js layers
  * the interactive parts on top (crosshair + tooltip, keyboard stepping).
@@ -11,18 +12,13 @@
  *   regime ribbon / mix bars / bear washes · 2px surface ring on markers ·
  *   right-hand log axis · sparse direct labels.
  */
-const fs = require('fs');
-const path = require('path');
-
-const DATA_DIR = path.join(__dirname, 'data');
-
 const REGIME_ORDER = ['calm', 'correction', 'panic', 'bear'];
 const REGIME_LABEL = { calm: 'Calm', correction: 'Correction', panic: 'Panic', bear: 'Bear' };
 const CODE_TO_REGIME = { c: 'calm', k: 'correction', p: 'panic', b: 'bear' };
 
-function loadData() {
-  const daily = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'regimes-daily.json'), 'utf8'));
-  const indicator = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'indicator.json'), 'utf8'));
+// `daily` is src/data/regimes-daily.json, `indicator` src/data/indicator.json;
+// the caller reads them, so this module never touches the file system.
+function toData(daily, indicator) {
   const rows = daily.rows.map(([date, close, code]) => ({ date, close, regime: CODE_TO_REGIME[code] }));
   return { rows, indicator };
 }
@@ -423,9 +419,8 @@ function sinceFigures(signals, from, key) {
 }
 
 // ─── Placeholder map for build.js ───────────────────────────────────────────
-function buildExhibits() {
-  const data = loadData();
-  const { indicator } = data;
+function buildExhibits({ daily, indicator }) {
+  const data = toData(daily, indicator);
   const L = indicator.latest, S = indicator.signal_stats;
   const history = regimeHistoryChart(data);
 

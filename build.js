@@ -35,6 +35,8 @@ const { buildExhibits, fmtDateLong } = require('./src/charts');
 const { optimizeImages } = require('./build-images');
 const { writeGuilloches } = require('./build-guilloche');
 const ARCHIVE = require('./src/data/archive-images.json').images;
+const DAILY = require('./src/data/regimes-daily.json');
+const INDICATOR = require('./src/data/indicator.json');
 const canonicalFor = (src) => canonicalForRaw(SITE_URL, src);
 
 function todayInTimeZone(timeZone) {
@@ -45,7 +47,7 @@ function todayInTimeZone(timeZone) {
 const TODAY = todayInTimeZone('America/New_York');
 
 // Figures and exhibits, computed once from src/data/ (build-indicator-data.js).
-const EXHIBITS = buildExhibits();
+const EXHIBITS = buildExhibits({ daily: DAILY, indicator: INDICATOR });
 
 // ─── Prepare output directory ────────────────────────────────────────────────
 const DIST = path.join(__dirname, 'dist');
@@ -89,10 +91,13 @@ const cssInputTmp = path.join(stylesDir, '.build-input.css');
 const cssOut      = path.join(DIST, 'public', 'scripts', 'site.css');
 fs.mkdirSync(path.dirname(cssOut), { recursive: true });
 fs.writeFileSync(cssInputTmp, entryCSS + '\n' + customCSS, 'utf8');
+// The CLI through the package's declared entry (its `bin`), not a path into it.
+const tailwindPkg = require.resolve('tailwindcss/package.json');
+const tailwindCli = path.join(path.dirname(tailwindPkg), require(tailwindPkg).bin.tailwindcss);
 try {
   execFileSync(
     process.execPath,
-    [path.join(__dirname, 'node_modules', 'tailwindcss', 'lib', 'cli.js'), '-i', cssInputTmp, '-o', cssOut, '--minify'],
+    [tailwindCli, '-i', cssInputTmp, '-o', cssOut, '--minify'],
     { stdio: 'inherit' },
   );
 } finally {

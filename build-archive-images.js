@@ -4,6 +4,8 @@
  * Produces the archival background images in public/img/archive/ from the
  * manifest in src/data/archive-images.json. Run by hand when the manifest
  * changes (it needs the network); the normal build only copies the results.
+ * Downloads go through the system `curl` (bundled with Windows 10+, macOS and
+ * Linux), which honours HTTPS_PROXY; Node's fetch does not without an opt-in.
  *
  * For each image: download a 2400px rendition from Wikimedia Commons into
  * .cache/archive/ (skipped if cached; the licence is re-checked and must be
@@ -35,7 +37,7 @@ const RENDITIONS = {
 };
 
 function fetchJson(url) {
-  return JSON.parse(execFileSync('curl', ['-s', '-m', '60', '-A', UA, url], { maxBuffer: 64 << 20 }).toString());
+  return JSON.parse(execFileSync('curl', ['-sf', '-m', '60', '-A', UA, url], { maxBuffer: 64 << 20 }).toString());
 }
 
 function download(id, title) {
@@ -48,7 +50,7 @@ function download(id, title) {
   const licence = String(ii.extmetadata?.LicenseShortName?.value || '');
   if (!/public domain|cc0/i.test(licence)) throw new Error(`${id}: licence is "${licence}", not public domain/CC0`);
   fs.mkdirSync(CACHE, { recursive: true });
-  execFileSync('curl', ['-s', '-m', '120', '-L', '-A', UA, '-o', file, ii.thumburl || ii.url]);
+  execFileSync('curl', ['-sf', '-m', '120', '-L', '-A', UA, '-o', file, ii.thumburl || ii.url]);
   return file;
 }
 
