@@ -12,7 +12,8 @@
  *
  * Outputs keep every historical filename so external links never break:
  *   logo.svg · logo-on-dark.svg · logo-{light,dark}.png   the mark, no background
- *   favicon.svg · favicon-{32,180}.png                    the mark on a navy tile
+ *   favicon.svg · favicon-32.png                          the mark, no background
+ *   favicon-180.png                                       iOS home-screen icon, navy ground
  *   avatar-{navy,white}.png                               social avatars, 1024 square
  *   wordmark.svg · wordmark-{light,dark}.png · og-image.{svg,png} · banner.{svg,png}
  *   linkedin-banner.{svg,png} (LinkedIn company-page cover)
@@ -96,21 +97,31 @@ function markShapes(ink) {
 }
 
 // The mark alone, cropped to MARK_BOX: the logo every page and asset uses.
-function markSvg({ ink }) {
+// `ink` may be a colour or "currentColor".
+function markSvg({ ink, style = '' }) {
   const { x, y, size } = MARK_BOX;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${x} ${y} ${size} ${size}" width="64" height="64">
-${markShapes(ink)}
+${style}${markShapes(ink)}
 </svg>`;
 }
 
-// The mark on a square ground, for places that need an opaque icon: browser
-// and home-screen icons (`rounded`, at the mark's own size on the tile) and
-// social avatars (square to the edge, the mark at `fill` of the width so a
-// circular crop clears it).
-function tileSvg({ plate, ink, rounded = false, fill = MARK_BOX.size / 64 }) {
+// The favicon: the mark alone, navy in a light browser tab and white in a
+// dark one (an SVG favicon follows the browser's colour scheme).
+function faviconSvg() {
+  return markSvg({
+    ink: 'currentColor',
+    style: `<style>svg{color:${NAVY}}@media (prefers-color-scheme:dark){svg{color:#FFFFFF}}</style>
+`,
+  });
+}
+
+// The mark on a square ground, for places that need an opaque icon: the iOS
+// home-screen icon (at the mark's own size; iOS rounds the corners) and the
+// social avatars (the mark at `fill` of the width, so a circular crop clears it).
+function tileSvg({ plate, ink, fill = MARK_BOX.size / 64 }) {
   const k = (fill * 64) / MARK_BOX.size;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-<rect width="64" height="64"${rounded ? ' rx="6"' : ''} fill="${plate}"/>
+<rect width="64" height="64" fill="${plate}"/>
 <g transform="translate(32 32) scale(${k}) translate(-32 -32)">${markShapes(ink)}</g>
 </svg>`;
 }
@@ -139,24 +150,35 @@ ${inner}
 // field under the site's paper moiré and a double-ruled frame, with an
 // archival photo (its navy duotone `card` rendition, OG_PHOTO in
 // site.config.js) on the right, fading into the field. On the left, centred
-// in the height, the firm itself: the wordmark, a rust rule, and its line;
-// the address at the foot. Nothing is offered. `scale` sizes the type;
-// `photoFrom` is where the photo starts, as a share of the width (it is fully
-// in by 55% of its own width); `address: false` leaves the foot empty, for a
-// cover whose page shows its own details there.
+// in the height, the firm itself: the wordmark, a rust rule, its line, and a
+// two-line statement in the serif; the address at the foot. Nothing is
+// offered. `scale` sizes the type; `photoFrom` is where the photo starts, as a
+// share of the width (it is fully in by 55% of its own width); `address:
+// false` leaves the foot empty, for a cover whose page shows its own details
+// there; `statement: 'beside'` sets the statement to the right of the
+// wordmark, after a hairline, for a cover too shallow to stack it below.
+const STATEMENT = ['Research on markets under stress,', 'published in the open.'];
 const PHOTO = `data:image/jpeg;base64,${fs.readFileSync(path.join(__dirname, '..', 'public', 'img', 'archive', `${OG_PHOTO}-card.jpg`)).toString('base64')}`;
 
-function cardSvg(W, H, { scale: s = 1, photoFrom = 0.42, left = 96 * s, address = true } = {}) {
+function cardSvg(W, H, { scale: s = 1, photoFrom = 0.42, left = 96 * s, address = true, statement = 'below' } = {}) {
   const PAPER = COLORS.light;
   const x = left;
   const wm = wordmarkSvg({ dark: true });
   const wmInner = wm.svg.replace(/^<svg[^>]*>|<\/svg>$/g, '');
 
   // Wordmark, rule, line: wm.H + 84 units from the wordmark's top to the
-  // line's baseline, centred in the height.
-  const wmY = (H - (wm.H + 84) * s) / 2;
+  // line's baseline. Below them, the statement: its baselines 62 and 106
+  // units further down, its descenders 8 more. The whole is centred in the
+  // height. Beside them, the statement is centred on its own, after a hairline.
+  const below = statement === 'below';
+  const wmY = (H - (wm.H + 84 + (below ? 114 : 0)) * s) / 2;
   const ruleY = wmY + (wm.H + 40) * s;
-  const line = outline(SANS, 'MARKET REGIME RESEARCH', 18 * s, x, ruleY + 47 * s, 3.2 * s);
+  const lineY = ruleY + 47 * s;
+  const line = outline(SANS, 'MARKET REGIME RESEARCH', 18 * s, x, lineY, 3.2 * s);
+  const stX = below ? x : x + (wm.W + 72) * s;
+  const stY = below ? lineY + 62 * s : H / 2 - 11 * s;
+  const stmt = STATEMENT.map((t, i) => outline(SERIF, t, 34 * s, stX, stY + i * 44 * s));
+  const hairline = below ? '' : `<rect x="${x + (wm.W + 36) * s}" y="${H / 2 - 52 * s}" width="${1.2 * s}" height="${104 * s}" fill="${PAPER}" fill-opacity="0.3"/>`;
   const site = outline(SANS, 'DOUBLETRENDS.COM', 15 * s, x, H - 72 * s, 2.5 * s);
 
   // The paper moiré tiled over the field; the photo fills the right side.
@@ -180,6 +202,8 @@ ${frame(31 * s, 0.6, 0.18)}
 <g transform="translate(${x} ${wmY}) scale(${s})">${wmInner}</g>
 <rect x="${x}" y="${ruleY}" width="${56 * s}" height="${3 * s}" fill="${RUST}"/>
 <path d="${line.d}" fill="${PAPER}" fill-opacity="0.72"/>
+${hairline}
+${stmt.map((t) => `<path d="${t.d}" fill="${PAPER}" fill-opacity="0.92"/>`).join('')}
 ${address ? `<path d="${site.d}" fill="${PAPER}" fill-opacity="0.55"/>` : ''}
 </svg>`;
 }
@@ -204,11 +228,12 @@ async function writeBrand(OUT) {
   await png(logo, 'logo-light.png', { size: 512 });
   await png(logoOnDark, 'logo-dark.png', { size: 512 });
 
-  // Browser and home-screen icons need an opaque ground: the mark on a navy tile.
-  const favicon = tileSvg({ plate: NAVY, ink: '#FFFFFF', rounded: true });
-  write('favicon.svg', favicon);
-  await png(favicon, 'favicon-32.png', { size: 32 });
-  await png(favicon, 'favicon-180.png', { size: 180 });
+  // Favicons: the mark alone (the SVG follows the tab's colour scheme; the PNG
+  // fallback is navy). The iOS home-screen icon keeps a navy ground, since
+  // iOS fills transparency with black.
+  write('favicon.svg', faviconSvg());
+  await png(logo, 'favicon-32.png', { size: 32 });
+  await png(tileSvg({ plate: NAVY, ink: '#FFFFFF' }), 'favicon-180.png', { size: 180 });
 
   // The social duo: square avatars to upload to profiles, navy and white.
   await png(tileSvg({ plate: NAVY, ink: '#FFFFFF', fill: 0.56 }), 'avatar-navy.png', { size: 1024 });
@@ -234,7 +259,7 @@ async function writeBrand(OUT) {
   // LinkedIn company-page cover: 1128 × 191, drawn at 2× for high-density
   // screens. The page's logo overlaps the bottom-left corner and its name and
   // details sit below, so the text starts clear of that corner, with no address.
-  const linkedin = cardSvg(2256, 382, { scale: 1.2, photoFrom: 0.62, left: 460, address: false });
+  const linkedin = cardSvg(2256, 382, { scale: 1.2, photoFrom: 0.7, left: 400, address: false, statement: 'beside' });
   write('linkedin-banner.svg', linkedin);
   await png(linkedin, 'linkedin-banner.png', { width: 2256 });
 
