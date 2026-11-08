@@ -1,5 +1,5 @@
 /**
- * regimes.js — the four regimes of the DoubleTrends Regime Indicator, in order
+ * regimes.js — the four regimes of the DoubleTrends™ Regime Indicator, in order
  * of rising stress: the one list every exhibit, legend, table, tooltip and data
  * file reads. Each regime's color is a brand token (REGIME_COLORS in
  * brand.config.js); tests/test-brand-tokens.js keeps the two key lists equal.

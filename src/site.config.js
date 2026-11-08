@@ -7,7 +7,7 @@ const TIME_ZONE = 'America/New_York';
 // tags and JSON-LD declare. The wordmark's height follows from its outlines;
 // the build fails if the rendered PNG differs from the size declared here.
 const OG_IMAGE = `${SITE_URL}/public/brand/og-image.png`;
-const OG_IMAGE_ALT = 'DoubleTrends — Market Regime Research';
+const OG_IMAGE_ALT = 'DoubleTrends L.L.C. — Market Regime Research';
 const OG_IMAGE_SIZE = { width: 1200, height: 630 };
 // The archival photo (src/data/archive-images.json, with a `card` rendition)
 // that fades into the OG image and banner.
@@ -19,7 +19,7 @@ const PUBLISHER = {
   name: 'DoubleTrends L.L.C.',
   url: SITE_URL,
   legalName: 'DoubleTrends L.L.C.',
-  description: 'Publisher of the DoubleTrends Regime Indicator, a rules-based daily classification of U.S. equity market stress, and of research on S&P 500 drawdowns and market regimes.',
+  description: 'Publisher of the DoubleTrends™ Regime Indicator, a rules-based daily classification of U.S. equity market stress, and of research on S&P 500 drawdowns and market regimes.',
   email: 'info@doubletrends.com',
   logo: {
     '@type': 'ImageObject',
@@ -29,7 +29,7 @@ const PUBLISHER = {
   },
   brand: {
     '@type': 'Brand',
-    name: 'DoubleTrends',
+    name: 'DoubleTrends™',
   },
   sameAs: [
     'https://www.crunchbase.com/organization/doubletrends-l-l-c',
@@ -117,16 +117,16 @@ const pages = [
     kind: 'home',
     nav: 'home',
     title: 'Market Regime Research',
-    desc:  'DoubleTrends is a quantitative research firm studying market regimes, drawdowns and investor behavior. It publishes its research and the DoubleTrends Regime Indicator openly, and offers research and data engineering services.',
+    desc:  'DoubleTrends L.L.C. is a quantitative research firm studying market regimes, drawdowns and investor behavior. It publishes its research and the DoubleTrends™ Regime Indicator openly, and offers research and data engineering services.',
   }),
   page('indicator/index.html', {
     readingLink: false,
     headImage: 'westernunion',
     priority: 0.9,
     nav: 'indicator',
-    title: 'The DoubleTrends Regime Indicator',
+    title: 'The DoubleTrends™ Regime Indicator',
     crumb: 'DoubleTrends™',
-    desc:  'The DoubleTrends Regime Indicator: a rules-based daily classification of S&P 500 market stress — calm, correction, panic, bear — with a reversal signal eligible only under stress. Published as research, with history from December 1995.',
+    desc:  'The DoubleTrends™ Regime Indicator: a rules-based daily classification of S&P 500 market stress — calm, correction, panic, bear — with a reversal signal eligible only under stress. Published as research, with history from December 1995.',
   }),
   page('indicator/methodology.html', {
     headImage: 'sorter1940',
@@ -134,7 +134,7 @@ const pages = [
     nav: 'methodology',
     title: 'Methodology',
     crumb: 'Methodology',
-    desc:  'How the DoubleTrends Regime Indicator is constructed: data inputs, derived measures, the four-state regime classification, signal eligibility and confirmation, publication timing, and point-in-time validation.',
+    desc:  'How the DoubleTrends™ Regime Indicator is constructed: data inputs, derived measures, the four-state regime classification, signal eligibility and confirmation, publication timing, and point-in-time validation.',
   }),
   page('indicator/performance.html', {
     headImage: 'royalexchange',
@@ -143,7 +143,7 @@ const pages = [
     nav: 'data',
     title: 'Performance: Regimes and Signals Since 1995',
     crumb: 'Performance',
-    desc:  'Every DoubleTrends signal since 1998 with 3-month, 1-year and 2-year S&P 500 forward returns, the regime mix by year since 1996, regime statistics, and a CSV download.',
+    desc:  'Every DoubleTrends™ signal since 1998 with 3-month, 1-year and 2-year S&P 500 forward returns, the regime mix by year since 1996, regime statistics, and a CSV download.',
   }),
   page('indicator/subscription.html', {
     headImage: 'mailcarrier1923',
@@ -152,9 +152,9 @@ const pages = [
     nav: 'subscription',
     title: 'Subscription',
     crumb: 'Subscription',
-    desc:  'Subscriber access to the daily DoubleTrends regime reading and same-day signals. The USD 149 annual fee covers the infrastructure that computes and delivers the reading; 30-day free trial and a refund window.',
+    desc:  'Subscriber access to the daily DoubleTrends™ regime reading and same-day signals. The USD 149 annual fee covers the infrastructure that computes and delivers the reading; 30-day free trial and a refund window.',
     schema: {
-      productName: 'DoubleTrends Regime Indicator — Annual Subscription',
+      productName: 'DoubleTrends™ Regime Indicator — Annual Subscription',
       price: '149.00',
       monthlyPrice: 12.42,
       priceCurrency: 'USD',
@@ -166,7 +166,7 @@ const pages = [
     nav: 'validation',
     title: 'AlphaVerify: Open-Source Signal Validation',
     crumb: 'Validation',
-    desc:  'AlphaVerify, an open-source framework from DoubleTrends that tests whether a trading signal beats 1,000 markets containing no signal. Python package, CC0 license, full mathematical specification.',
+    desc:  'AlphaVerify, an open-source framework from DoubleTrends L.L.C. that tests whether a trading signal beats 1,000 markets containing no signal. Python package, CC0 license, full mathematical specification.',
     schema: { datePublished: '2026-09-20' },
   }),
   page('validation/methodology.html', {
@@ -197,14 +197,14 @@ const pages = [
     nav: 'research',
     title: 'Research',
     crumb: 'Research',
-    desc:  'DoubleTrends research notes: studies of S&P 500 drawdowns and investor behavior, primers on the measures behind the indicator, and one note per macro input (VIX, Fed funds, unemployment, CPI).',
+    desc:  'Research notes from DoubleTrends L.L.C.: studies of S&P 500 drawdowns and investor behavior, primers on the measures behind the indicator, and one note per macro input (VIX, Fed funds, unemployment, CPI).',
   }),
   page('company/index.html', {
     schema: { organization: true },
     headImage: 'wallst1834',
     priority: 0.6,
     kind: 'collection',
-    title: 'About DoubleTrends',
+    title: 'About the Firm',
     crumb: 'The Firm',
     desc:  'About DoubleTrends L.L.C.: what the firm publishes, the principles behind the indicator, research services, careers and contact.',
   }),
@@ -214,50 +214,50 @@ const pages = [
     kind: 'collection',
     title: 'Legal',
     crumb: 'Legal',
-    desc:  'The documents that govern the DoubleTrends website and subscription: Terms of Service, Privacy Policy, Refund Policy and Disclaimer.',
+    desc:  'The documents that govern the DoubleTrends L.L.C. website and the DoubleTrends™ subscription: Terms of Service, Privacy Policy, Refund Policy and Disclaimer.',
   }),
 
   // ── about ─────────────────────────────────────────────────────────────────
   companyPage('mission', {
     kind: 'about',
     title: 'Principles',
-    desc:  'The principles behind the DoubleTrends Regime Indicator: published rules, a complete public record, one narrow question answered well, and education over dependency.',
+    desc:  'The principles behind the DoubleTrends™ Regime Indicator: published rules, a complete public record, one narrow question answered well, and education over dependency.',
   }),
   companyPage('consulting', {
     priority: 0.8,
     kind: 'services',
     title: 'Research Services',
     crumb: 'Research services',
-    desc:  'Quantitative research and data engineering from the team behind the DoubleTrends Regime Indicator: market data pipelines, statistical studies, forecasting and model validation.',
+    desc:  'Quantitative research and data engineering from the team behind the DoubleTrends™ Regime Indicator: market data pipelines, statistical studies, forecasting and model validation.',
   }),
   companyPage('careers', {
     title: 'Careers',
-    desc:  'Careers at DoubleTrends: all positions are currently filled. How the firm hires, and how to send an open application.',
+    desc:  'Careers at DoubleTrends L.L.C.: all positions are currently filled. How the firm hires, and how to send an open application.',
   }),
   companyPage('contact', {
     priority: 0.6,
     kind: 'contact',
     title: 'Contact',
-    desc:  'Contact DoubleTrends for subscription questions, research services inquiries, press and partnerships, or legal and privacy matters.',
+    desc:  'Contact DoubleTrends L.L.C. for subscription questions, research services inquiries, press and partnerships, or legal and privacy matters.',
   }),
 
   // ── legal ────────────────────────────────────────────────────────────────
   legalPage('refund-policy', {
     priority: 0.4,
     title: 'Refund Policy',
-    desc:  'The DoubleTrends subscription begins with a 30-day free trial. After that, a full refund is available within 14 days of any charge if no signal has been delivered.',
+    desc:  'The DoubleTrends™ subscription begins with a 30-day free trial. After that, a full refund is available within 14 days of any charge if no signal has been delivered.',
   }),
   legalPage('terms', {
     title: 'Terms of Service',
-    desc:  'The terms for using the DoubleTrends website and subscription: billing, acceptable use, disclaimers and limitation of liability. Governed by Ontario law.',
+    desc:  'The terms for using the DoubleTrends L.L.C. website and the DoubleTrends™ subscription: billing, acceptable use, disclaimers and limitation of liability. Governed by Ontario law.',
   }),
   legalPage('privacy', {
     title: 'Privacy Policy',
-    desc:  'How DoubleTrends handles personal data: no cookies, analytics or tracking on this website; only what is needed to bill through Stripe and authenticate subscriber access.',
+    desc:  'How DoubleTrends L.L.C. handles personal data: no cookies, analytics or tracking on this website; only what is needed to bill through Stripe and authenticate subscriber access.',
   }),
   legalPage('disclaimer', {
     title: 'Disclaimer',
-    desc:  'DoubleTrends provides educational, rules-based market information only — not financial, investment, trading, tax or legal advice. Investing involves risk.',
+    desc:  'DoubleTrends L.L.C. provides educational, rules-based market information only — not financial, investment, trading, tax or legal advice. Investing involves risk.',
   }),
 
   // ── utility pages ────────────────────────────────────────────────────────
@@ -275,7 +275,7 @@ const pages = [
     nav: 'subscription',
     title: 'Subscription Confirmed',
     crumb: 'Subscription confirmed',
-    desc:  'Your DoubleTrends subscription is active. Check your email for the sign-in link to the subscriber portal.',
+    desc:  'Your DoubleTrends™ subscription is active. Check your email for the sign-in link to the subscriber portal.',
   }),
 
   // ── research: studies ────────────────────────────────────────────────────
@@ -303,10 +303,10 @@ const pages = [
     published: '2026-05-25',
     series: 'Studies',
     priority: 0.8,
-    title:   'Every DoubleTrends Signal on the S&P 500 Since July 2016',
+    title:   'Every DoubleTrends™ Signal on the S&P 500 Since July 2016',
     crumb:   'Signals since 2016',
     section: 'Track record',
-    desc:  'Every DoubleTrends signal on the S&P 500 since July 2016, the regime and drawdown around each, and the forward returns that followed.',
+    desc:  'Every DoubleTrends™ signal on the S&P 500 since July 2016, the regime and drawdown around each, and the forward returns that followed.',
     schema: { about: ['S&P 500 index', 'oversold reversal'] },
   }),
 
@@ -378,8 +378,8 @@ const pages = [
   }),
 ];
 
-const SITE_NAME = 'DoubleTrends';
-const SITE_DESCRIPTION = 'DoubleTrends is a quantitative research firm: research on market regimes and drawdowns, the DoubleTrends Regime Indicator, and research services.';
+const SITE_NAME = 'DoubleTrends L.L.C.';
+const SITE_DESCRIPTION = 'DoubleTrends L.L.C. is a quantitative research firm: research on market regimes and drawdowns, the DoubleTrends™ Regime Indicator, and research services.';
 
 module.exports = {
   SITE_URL,

@@ -39,12 +39,12 @@ Link targets are resolved the way Cloudflare's auto-trailing-slash asset handlin
 ### Trademark (`trademark`)
 
 - Every built page carries the footer notice "DoubleTrends™ is a trademark of DoubleTrends L.L.C." exactly once.
-- Outside `legal/`, the ™ appears only in that notice: running text, titles, metadata and JSON-LD use plain "DoubleTrends".
-- Legal documents may mark the name wherever their drafting does.
+- Every "DoubleTrends" in a built text file (pages, `llms.txt`, sitemap, data) and in `LISTING.md` is either "DoubleTrends L.L.C." (the company) or "DoubleTrends™" (the mark), including titles, metadata, JSON-LD, alt text and aria-labels.
+- The only exception is the wordmark and logo (split text in the header and footer, images under `public/brand/`), which never contain the string.
 
 ### Metadata completeness (`metadata`)
 
-Each built page has `<title>`, meta description, robots, canonical, `og:title`, `og:description`, `twitter:title`, `twitter:description`, and (unless `noindex`) a JSON-LD block. The three titles match and follow the convention `{Page} | DoubleTrends`, or `DoubleTrends — {title}` on the homepage; the three descriptions match. Where the canonical points is `urls`'s rule; JSON-LD presence is `schema`'s.
+Each built page has `<title>`, meta description, robots, canonical, `og:title`, `og:description`, `twitter:title`, `twitter:description`, and (unless `noindex`) a JSON-LD block. The three titles match and follow the convention `{Page} | DoubleTrends L.L.C.`, or `DoubleTrends L.L.C. — {title}` on the homepage; the three descriptions match. Where the canonical points is `urls`'s rule; JSON-LD presence is `schema`'s.
 
 ### Page registry integrity (`page-registry`)
 

@@ -72,7 +72,7 @@ function regimeHistoryChart({ rows, indicator }) {
   const first = fmtMonthYear(rows[0].date), last = fmtMonthYear(lastRow.date);
   const bears = indicator.bear_episodes.length;
   const svg = `<svg class="exhibit-svg" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="ex1-title ex1-desc" preserveAspectRatio="xMidYMid meet">
-<title id="ex1-title">S&amp;P 500 and the DoubleTrends regime classification, ${first} to ${last}</title>
+<title id="ex1-title">S&amp;P 500 and the DoubleTrends&trade; regime classification, ${first} to ${last}</title>
 <desc id="ex1-desc">Weekly S&amp;P 500 closes on a logarithmic scale, with the ${fmtCount(bears)} bear-regime episode${bears === 1 ? '' : 's'} shaded, ${indicator.signals.length} signal dates marked, and a ribbon below showing the daily regime: calm, correction, panic or bear. Readings are back-tested unless they were published on the day.</desc>
 <g class="ex-washes">${washes}</g>
 <g class="ex-grid-g">${grid}</g>

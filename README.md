@@ -1,6 +1,6 @@
-# DoubleTrends Site
+# DoubleTrends L.L.C. Site
 
-Public site of DoubleTrends, served at `doubletrends.com`. The site presents a quantitative research firm: research notes, the DoubleTrends Regime Indicator as public research (overview, methodology, historical data, subscriber access), research services, and the firm pages. Navigation: Research · Indicator · Methodology · Data · Services · About. The rules and record are public; the subscription pays for timely delivery and is described as priced close to its running cost. The founder acts on the signal with their own capital.
+Public site of DoubleTrends L.L.C., served at `doubletrends.com`. The site presents a quantitative research firm: research notes, the DoubleTrends™ Regime Indicator as public research (overview, methodology, historical data, subscriber access), research services, and the firm pages. Navigation: Research · Indicator · Methodology · Data · Services · About. The rules and record are public; the subscription pays for timely delivery and is described as priced close to its running cost. The founder acts on the signal with their own capital.
 
 Static HTML/CSS/JS — no framework. A single Node.js build (`scripts/build.js`) assembles pages, renders the data exhibits, derives all metadata, compiles the stylesheet and optimizes images; `dist/` is deployed as a Cloudflare Worker (Static Assets).
 
@@ -120,7 +120,7 @@ The site is designed to read like an index provider's publication, not a product
 - **Color:** the brand's two colors from the original wordmark — navy `#2A3340` for text and chrome, rust `#C2410C` for highlights only (kickers, active nav, accent rules, "Double" in the wordmark, and signal markers on the exhibits). The four regime colors (`--regime-*`: calm green, correction yellow, panic crimson, bear purple) appear only where they encode a regime and are kept clear of rust — panic is magenta, not red, so it is never confused with the brand accent. The palette was validated for color-vision deficiency (all regime pairs CVD ΔE ≥ 8.4, normal ≥ 18.1; each ≥ 16.4 from rust); the ochre is below 3:1 on white, so regimes are always labelled in text and every exhibit has a table view.
 - **Structure:** ruled sections, numbered exhibits with a source line, document pages with a contents column. No cards, shadows, gradients, scroll animation or stock photography.
 - **Voice:** sentence case, plain and specific, figures with their basis. Readings before the live date are always labelled **back-tested**; the full signal record, including early signals, is always published.
-- **Trademark:** `DoubleTrends` in running text; the ™ appears in the footer notice and the legal documents (enforced by `tests/test-trademark.js`).
+- **Trademark:** the name is never bare. The company is `DoubleTrends L.L.C.`, or "we" / "the firm" in running text; the mark is `DoubleTrends™` ("the DoubleTrends™ Regime Indicator"), used where a page first names it, with later mentions saying "the indicator". This holds for titles, metadata, JSON-LD, alt text and aria-labels too; only the wordmark and logo are exempt. Every page carries the footer notice once (enforced by `tests/test-trademark.js`).
 
 ### Styles (`src/styles/`)
 
@@ -211,7 +211,7 @@ A slash means "collection," no slash means "document." That split is correct, no
 | `companyPage(slug, o)` | `company/${slug}.html` | `nav: 'about'`, priority 0.5 |
 | `legalPage(slug, o)` | `legal/${slug}.html` | priority 0.3 |
 
-Research notes also set `section` (topic, shown as "Research · {section}") and `series` (`Studies`, `Primers`, `Macro inputs`), which group the library. Titles render as `{page.title} | DoubleTrends`; the homepage as `DoubleTrends — {title}`.
+Research notes also set `section` (topic, shown as "Research · {section}") and `series` (`Studies`, `Primers`, `Macro inputs`), which group the library. Titles render as `{page.title} | DoubleTrends L.L.C.`; the homepage as `DoubleTrends L.L.C. — {title}`.
 
 ---
 

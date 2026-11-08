@@ -104,7 +104,7 @@ function buildSchemaNodes({ page, today, formattedTitle }) {
       '@id': `${canonical}#product`,
       name: schema.productName,
       description: page.desc,
-      brand: { '@type': 'Brand', name: 'DoubleTrends' },
+      brand: { '@type': 'Brand', name: 'DoubleTrends™' },
       offers: {
         '@type': 'Offer',
         url: canonical,

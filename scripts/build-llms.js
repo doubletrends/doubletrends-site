@@ -12,11 +12,11 @@ const { SITE_VARS, replace, assertResolved } = require('./placeholders');
 const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
 
 // Sections mirror the breadcrumb model: top-level pages (section indexes
-// included), then each section's children under the section's name. No ™ here:
-// it appears only in the footer notice and the legal documents.
+// included), then each section's children under the section's name, which
+// keeps its ™ (tests/test-trademark.js).
 const LLMS_SECTIONS = [
   { key: 'main', heading: 'Primary Pages' },
-  ...Object.entries(SECTIONS).map(([key, label]) => ({ key, heading: label.replace('™', '') })),
+  ...Object.entries(SECTIONS).map(([key, label]) => ({ key, heading: label })),
 ];
 function llmsSectionKey(src) {
   const prefix = src.split('/')[0];

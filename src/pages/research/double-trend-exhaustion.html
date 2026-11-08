@@ -1,10 +1,10 @@
-<!-- ARTICLE: The DoubleTrends Signal — Williams %R, doubled -->
+<!-- ARTICLE: The DoubleTrends™ Signal — Williams %R, doubled -->
 <article class="article-page">
 
 <!-- Header -->
 <header class="article-hero article-hero-frame">
 <h1 class="article-title"> Double trend exhaustion </h1>
-<p class="lead"> Double trend exhaustion means downside momentum has stretched so far, on both a short clock and a long clock, that both start turning back up out of deep oversold territory together. DoubleTrends puts that idea into practice with a fifty-year-old indicator, Williams %R, run on two horizons at once and smoothed before the trigger is allowed to fire. </p>
+<p class="lead"> Double trend exhaustion means downside momentum has stretched so far, on both a short clock and a long clock, that both start turning back up out of deep oversold territory together. The DoubleTrends&trade; Regime Indicator puts that idea into practice with a fifty-year-old indicator, Williams %R, run on two horizons at once and smoothed before the trigger is allowed to fire. </p>
 </header>
 
 <!-- Origin & formula -->
@@ -45,14 +45,14 @@
 <span class="tag-overline">Smoothing</span>
 <h2 class="article-h2"> EMA over the raw line </h2>
 <p class="prose-p mb-4"> Raw Williams %R is jagged. A single down day can push it from &minus;60 to &minus;95 and back. Acting on the raw value means acting on noise. The standard fix is to smooth %R with an exponential moving average (EMA), which weights recent values more heavily than older ones. An EMA damps the day-to-day chop without adding much lag. The line still bends at the same time, it just stops shaking so much. </p>
-<p class="prose-p"> The DoubleTrends engine smooths both of its %R lines this way. The shapes stay the same, but the noise floor drops and the threshold crossings start to mean something. </p>
+<p class="prose-p"> The indicator smooths both of its %R lines this way. The shapes stay the same, but the noise floor drops and the threshold crossings start to mean something. </p>
 </section>
 
 <!-- Two timeframes -->
 <section class="article-section">
 <span class="tag-overline">Two timeframes, not one</span>
 <h2 class="article-h2"> The short clock and the long clock </h2>
-<p class="prose-p mb-4"> The core idea behind DoubleTrends is to quit choosing between &ldquo;noisy and fast&rdquo; vs &ldquo;clean and slow&rdquo; &mdash; and to require both at once. The engine runs %R on two windows and smooths each: </p>
+<p class="prose-p mb-4"> The core idea behind the indicator is to quit choosing between &ldquo;noisy and fast&rdquo; vs &ldquo;clean and slow&rdquo; &mdash; and to require both at once. The engine runs %R on two windows and smooths each: </p>
 <div class="terminal-shell flex flex-col mb-6">
 <div class="px-5 py-4 flex items-start gap-4 flex-wrap" style="border-bottom: 1px solid rgba(30,37,48,0.06);">
 <div style="min-width: 10rem;">
@@ -81,10 +81,10 @@
 <section class="article-section">
 <span class="tag-overline">The trigger</span>
 <h2 class="article-h2"> Oversold first, then the turn </h2>
-<p class="prose-p mb-4"> Deep-oversold by itself is a warning, not a signal. Markets can stay oversold for weeks. The actual DoubleTrends trigger is the <em>exit</em>: the bar where both smoothed %R values rise back above the deep-oversold threshold after having sat below it on the prior bar. </p>
+<p class="prose-p mb-4"> Deep-oversold by itself is a warning, not a signal. Markets can stay oversold for weeks. The actual trigger is the <em>exit</em>: the bar where both smoothed %R values rise back above the deep-oversold threshold after having sat below it on the prior bar. </p>
 <p class="prose-p mb-4"> That moment &mdash; not the descent into oversold &mdash; is what gets passed up to the regime gate and the confirmation gate. This matters because waiting for the turn rather then the entry gets rid of a whole class of false alarms automatically. Markets that go deeply oversold and stay there do not fire. Only the ones that bend back up do. </p>
 <div class="media-frame overflow-hidden">
-<img src="{{ROOT}}public/img/research/dtep-3.webp" alt="DoubleTrends buy reversal trigger" class="w-full" />
+<img src="{{ROOT}}public/img/research/dtep-3.webp" alt="The indicator&rsquo;s buy reversal trigger" class="w-full" />
 </div>
 </section>
 
@@ -92,7 +92,7 @@
 <section class="article-section">
 <span class="tag-overline">Why only the oversold side</span>
 <h2 class="article-h2"> A dip-buying tool, not a top-caller </h2>
-<p class="prose-p mb-4"> Williams %R is symmetric &mdash; it computes overbought extremes near 0 as cleanly as oversold extremes near &minus;100. DoubleTrends ignores the overbought half entirely. The reason is empirical: on broad-index daily charts, oversold reversals carry strong forward expected returns; overbought reversals do not. Markets can stay overbought for years (look at any structural bull run) without producing exploitable reversals. Equities drift up over time, and that asymmetry is the reason. </p>
+<p class="prose-p mb-4"> Williams %R is symmetric &mdash; it computes overbought extremes near 0 as cleanly as oversold extremes near &minus;100. The indicator ignores the overbought half entirely. The reason is empirical: on broad-index daily charts, oversold reversals carry strong forward expected returns; overbought reversals do not. Markets can stay overbought for years (look at any structural bull run) without producing exploitable reversals. Equities drift up over time, and that asymmetry is the reason. </p>
 <p class="prose-p"> So the engine only reads the side where the math has paid off historically. It is a dip-buying tool, not a top-calling tool. </p>
 </section>
 
@@ -113,14 +113,14 @@
 <!-- CTA -->
 <section class="cta-panel article-cta">
 <h3 class="text-dark font-noto font-bold text-2xl mb-3">Get the signal, not the screen-watching.</h3>
-<p class="prose-p mb-6"> DoubleTrends tracks the S&amp;P 500 index every day and sends a single alert when the dual Williams %R reversal clears its regime and confirmation gates &mdash; built for ETF investors using funds such as VOO, SPY, or IVV. The goal isn't to guess the exact bottom, it's to make the moment visible when the rule says selling has run its course. </p>
+<p class="prose-p mb-6"> We track the S&amp;P 500 index every day and send a single alert when the dual Williams %R reversal clears its regime and confirmation gates &mdash; built for ETF investors using funds such as VOO, SPY, or IVV. The goal isn't to guess the exact bottom, it's to make the moment visible when the rule says selling has run its course. </p>
 <a href="{{ROOT}}indicator/subscription.html" class="button-rust">See the product</a>
 </section>
 
 <!-- Reference & method -->
 <section class="hairline pt-6">
 <p class="data-label mb-3">Reference &amp; method</p>
-<p class="fine-print"> Williams %R is a standard momentum oscillator introduced by Larry Williams (1973). For a third-party reference, see <a href="https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/williams-r" class="text-primary hover:underline break-all">Fidelity's Williams %R guide</a>. The DoubleTrends implementation uses two smoothed timeframes &mdash; a short clock and a long clock &mdash; and only acts on the bar that crosses back out of a deep-oversold zone on both clocks at once. Exact window lengths, smoothing constants, threshold values, regime parameters, and confirmation rules are part of the production logic and are not published. Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results. </p>
+<p class="fine-print"> Williams %R is a standard momentum oscillator introduced by Larry Williams (1973). For a third-party reference, see <a href="https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/williams-r" class="text-primary hover:underline break-all">Fidelity's Williams %R guide</a>. Our implementation uses two smoothed timeframes &mdash; a short clock and a long clock &mdash; and only acts on the bar that crosses back out of a deep-oversold zone on both clocks at once. Exact window lengths, smoothing constants, threshold values, regime parameters, and confirmation rules are part of the production logic and are not published. Educational information only &mdash; not financial, investment, or trading advice. Past performance does not guarantee future results. </p>
 </section>
 
 </article>

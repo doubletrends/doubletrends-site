@@ -18,7 +18,7 @@ superlatives, no calls to act, and no offer (price, trial, refund) outside the S
 | Field                                  | Value                                                                    |
 | -------------------------------------- | ------------------------------------------------------------------------ |
 | Legal name                             | DoubleTrends L.L.C.                                                      |
-| Name                                   | DoubleTrends                                                             |
+| Name                                   | DoubleTrends L.L.C.                                                      |
 | Website                                | https://doubletrends.com                                                 |
 | Headquarters                           | 14th Floor, 955 Bay Street, Toronto, ON M5S 0C6, Canada                  |
 | Research services, partnerships, press | info@doubletrends.com                                                    |
@@ -49,7 +49,7 @@ The two texts the profiles below are built from.
 **Short description** (140 characters or fewer)
 
 ```text
-DoubleTrends is a quantitative research firm studying market regimes, drawdowns and investor behavior.
+DoubleTrends L.L.C. is a quantitative research firm studying market regimes, drawdowns and investor behavior.
 ```
 
 **Long description** (2,000 characters or fewer)
@@ -57,9 +57,9 @@ DoubleTrends is a quantitative research firm studying market regimes, drawdowns 
 ```text
 DoubleTrends L.L.C. is a quantitative research firm. Its work keeps coming back to one question: how to tell market stress apart from noise.
 
-The firm publishes its research openly: studies of S&P 500 drawdowns and investor behavior, primers on the measures it relies on, and notes on the macroeconomic series it reads. It also publishes the DoubleTrends Regime Indicator, a rules-based daily classification of S&P 500 market stress (calm, correction, panic or bear) with a back-tested history from December 1995. The structure of every rule and the complete record, misses included, are public.
+The firm publishes its research openly: studies of S&P 500 drawdowns and investor behavior, primers on the measures it relies on, and notes on the macroeconomic series it reads. It also publishes the DoubleTrends™ Regime Indicator, a rules-based daily classification of S&P 500 market stress (calm, correction, panic or bear) with a back-tested history from December 1995. The structure of every rule and the complete record, misses included, are public.
 
-Alongside its own work, DoubleTrends offers quantitative research and data engineering to a small number of clients at a time: data pipelines, statistical studies and forecasting, and predictive models handed over with reproducible code.
+Alongside its own work, the firm offers quantitative research and data engineering to a small number of clients at a time: data pipelines, statistical studies and forecasting, and predictive models handed over with reproducible code.
 
 The firm takes no money from brokers or exchanges and runs no advertising.
 ```
@@ -71,7 +71,7 @@ The firm takes no money from brokers or exchanges and runs no advertising.
 **Description** (160 characters or fewer)
 
 ```text
-Quantitative research firm. Research on market regimes and drawdowns, and the DoubleTrends Regime Indicator, published in the open.
+Quantitative research firm. Research on market regimes and drawdowns, and the DoubleTrends™ Regime Indicator, published in the open.
 ```
 
 - **URL:** `doubletrends.com`
@@ -94,7 +94,7 @@ AlphaVerify: tests whether a trading signal beats 1,000 markets containing no si
 `doubletrends-site` **description** (350 characters or fewer)
 
 ```text
-The DoubleTrends website: static build, research notes and exhibits.
+The DoubleTrends L.L.C. website: static build, research notes and exhibits.
 ```
 
 - **Website:** https://doubletrends.com
@@ -158,7 +158,7 @@ Daily classification of S&P 500 market stress
 **Description** (260 characters or fewer)
 
 ```text
-The DoubleTrends Regime Indicator classifies S&P 500 market stress every trading day as calm, correction, panic or bear, from public data alone. The structure of its rules and its complete record since 1995, misses included, are public.
+The DoubleTrends™ Regime Indicator classifies S&P 500 market stress every trading day as calm, correction, panic or bear, from public data alone. The structure of its rules and its complete record since 1995, misses included, are public.
 ```
 
 - **Link:** https://doubletrends.com/indicator/

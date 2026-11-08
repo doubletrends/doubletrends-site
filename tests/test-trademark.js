@@ -1,55 +1,54 @@
-// Trademark convention (as established publishers handle marks):
+// Trademark convention: the name is never bare. Every "DoubleTrends" is one of
 //
-//   1. Every built page carries the footer notice
-//      "DoubleTrends™ is a trademark of DoubleTrends L.L.C.".
-//   2. Outside the legal documents, the ™ symbol appears only in that notice
-//      and where "DoubleTrends™" is the name of the indicator section — a
-//      label whose whole text is the mark (primary nav, footer heading,
-//      breadcrumb, navigation links) and the matching JSON-LD breadcrumb
-//      name. Running text, titles and metadata say plain "DoubleTrends".
-//      (Marking every mention reads as defensive; the notice preserves the claim.)
-//   3. Legal documents (legal/*) may mark the name wherever their drafting does.
+//   - "DoubleTrends L.L.C."  the company (in running text the company is
+//                            also "we" or "the firm", which need no name);
+//   - "DoubleTrends™"        the mark, as in "the DoubleTrends™ Regime
+//                            Indicator". A page marks the name where it first
+//                            uses it; later mentions say "the indicator".
+//
+// The only exception is the wordmark and logo, which are artwork: the header
+// and footer set the wordmark as split text (<span>Double</span>Trends) and
+// public/brand/ holds the images, so neither contains the string.
+//
+// Checked over every text file the build publishes and over LISTING.md (the
+// firm's profiles elsewhere). Every built page also carries the footer notice
+// "DoubleTrends™ is a trademark of DoubleTrends L.L.C." exactly once.
 const fs   = require('fs');
-const { DIST, walk, relPosix, report } = require('./utils');
+const path = require('path');
+const { ROOT, DIST, walk, relPosix, report } = require('./utils');
 
+const TEXT_EXT  = /\.(html|txt|xml|csv|json|js|css|md)$|_redirects$/;
 const NOTICE_RE = /DoubleTrends(?:™|&trade;) is a trademark of DoubleTrends L\.L\.C\./g;
-const MARK_RE   = /DoubleTrends(?:™|&trade;|%E2%84%A2)/g;
-// The primary-nav item must carry the mark.
-const NAV_RE    = /data-nav="indicator"(?: aria-current="page")?>DoubleTrends(?:™|&trade;)<\/a>/g;
+const BARE_RE   = /DoubleTrends(?!™|&trade;|&#8482;|%E2%84%A2| L\.L\.C\.|&nbsp;L\.L\.C\.)/g;
 
-// A mark is sanctioned when it is the footer notice, a whole label, or the
-// JSON-LD breadcrumb name.
-function sanctioned(html, index, match) {
-  const after = html.slice(index, index + 60);
-  if (/^DoubleTrends(?:™|&trade;) is a trademark/.test(after)) return true;
-  const before = html[index - 1];
-  const next = html[index + match.length];
-  if (before === '>' && next === '<') return true;
-  return html.slice(Math.max(0, index - 9), index) === '"name": "' && next === '"';
+function bareLines(text) {
+  return [...text.matchAll(BARE_RE)].map((m) => text.slice(0, m.index).split('\n').length);
 }
 
 function main() {
   if (!fs.existsSync(DIST)) throw new Error('dist/ not found — run npm run build first');
-  const files = walk(DIST).filter((f) => f.endsWith('.html'));
   const errors = [];
+  const files = walk(DIST).filter((f) => TEXT_EXT.test(f) && !relPosix(f, DIST).startsWith('public/brand/'));
+  let pages = 0;
 
   for (const file of files) {
     const rel = relPosix(file, DIST);
-    const html = fs.readFileSync(file, 'utf8');
-    const notices = (html.match(NOTICE_RE) || []).length;
-    if (notices !== 1) errors.push(`${rel}: expected the footer trademark notice once, found ${notices}`);
-    if (rel.startsWith('legal/')) continue;
-    const navMarks = (html.match(NAV_RE) || []).length;
-    if (navMarks !== 1) errors.push(`${rel}: expected the "DoubleTrends™" nav label once, found ${navMarks}`);
-    const extra = [];
-    for (const m of html.matchAll(MARK_RE)) {
-      if (!sanctioned(html, m.index, m[0])) extra.push(html.slice(0, m.index).split('\n').length);
+    const text = fs.readFileSync(file, 'utf8');
+    if (rel.endsWith('.html')) {
+      pages++;
+      const notices = (text.match(NOTICE_RE) || []).length;
+      if (notices !== 1) errors.push(`${rel}: expected the footer trademark notice once, found ${notices}`);
     }
-    if (extra.length) errors.push(`${rel}: ™ outside the notice and section labels on line(s) ${extra.join(', ')}`);
+    const lines = bareLines(text);
+    if (lines.length) errors.push(`${rel}: bare "DoubleTrends" on line(s) ${lines.join(', ')}`);
   }
 
-  if (!files.length) errors.push('no built pages found');
-  report(errors, `Trademark test (${files.length} pages)`);
+  const listing = fs.readFileSync(path.join(ROOT, 'LISTING.md'), 'utf8');
+  const lines = bareLines(listing);
+  if (lines.length) errors.push(`LISTING.md: bare "DoubleTrends" on line(s) ${lines.join(', ')}`);
+
+  if (!pages) errors.push('no built pages found');
+  report(errors, `Trademark test (${files.length} files)`);
 }
 
 main();
