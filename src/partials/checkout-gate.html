@@ -3,22 +3,22 @@
      any buy.stripe.com link and shows it first. IDs are the script's contract. -->
 <div id="checkout-gate" class="checkout-gate fixed inset-0 z-50 hidden items-center justify-center px-5"
      role="dialog" aria-modal="true" aria-labelledby="checkout-gate-title" aria-hidden="true">
-  <div id="checkout-gate-backdrop" class="absolute inset-0" style="background: rgba(42, 51, 64, 0.6);"></div>
-  <div class="gate-panel relative w-full max-w-lg bg-white" style="padding: 2rem 2.1rem;">
+  <div id="checkout-gate-backdrop" class="gate-backdrop absolute inset-0"></div>
+  <div class="gate-panel relative w-full max-w-lg bg-white">
     <span class="kicker">Before you subscribe</span>
-    <h2 id="checkout-gate-title" class="h2" style="margin: 0.7rem 0 1rem;">Please review the terms</h2>
-    <p style="font-size: 0.96875rem; line-height: 1.6; color: var(--text);">
+    <h2 id="checkout-gate-title" class="h2 gate-title">Please review the terms</h2>
+    <p class="gate-body">
       Checkout is handled by Stripe; DoubleTrends never receives or stores your card number. This website sets no cookies and runs no analytics. The subscriber portal uses a single session cookie for sign-in.
     </p>
-    <p style="font-size: 0.96875rem; line-height: 1.6; color: var(--text); margin-top: 0.8rem;">
+    <p class="gate-body">
       The subscription provides market information, not investment advice. Please read the
       <a href="{{ROOT}}legal/terms.html" target="_blank" rel="noopener" class="link">Terms of Service</a>,
       <a href="{{ROOT}}legal/privacy.html" target="_blank" rel="noopener" class="link">Privacy Policy</a>,
       <a href="{{ROOT}}legal/refund-policy.html" target="_blank" rel="noopener" class="link">Refund Policy</a> and
       <a href="{{ROOT}}legal/disclaimer.html" target="_blank" rel="noopener" class="link">Disclaimer</a> before continuing.
     </p>
-    <p class="fine" style="margin-top: 0.9rem;">By selecting &ldquo;Agree and continue&rdquo; you confirm that you have read and accept these documents.</p>
-    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+    <p class="fine gate-note">By selecting &ldquo;Agree and continue&rdquo; you confirm that you have read and accept these documents.</p>
+    <div class="gate-actions">
       <button type="button" id="checkout-gate-cancel" class="btn btn-secondary">Go back</button>
       <a id="checkout-gate-continue" href="#" class="btn">Agree and continue</a>
     </div>

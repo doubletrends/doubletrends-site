@@ -17,3 +17,13 @@
   background: transparent; color: var(--ink); border-color: var(--ink);
 }
 .btn-secondary:hover { background: var(--tint); color: var(--ink); border-color: var(--ink); }
+
+/* Checkout gate (src/partials/checkout-gate.html): the notice over a navy
+   scrim before Stripe checkout. Shadow in texture.css. */
+.checkout-gate .gate-backdrop { background: color-mix(in srgb, var(--ink) 60%, transparent); }
+.checkout-gate .gate-panel { padding: 2rem 2.1rem; border-top: 3px solid var(--accent); }
+.checkout-gate .gate-title { margin: 0.7rem 0 1rem; }
+.checkout-gate .gate-body { font-size: 0.96875rem; line-height: 1.6; color: var(--text); }
+.checkout-gate .gate-body + .gate-body { margin-top: 0.8rem; }
+.checkout-gate .gate-note { margin-top: 0.9rem; }
+.checkout-gate .gate-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; }
