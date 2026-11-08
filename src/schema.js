@@ -23,10 +23,6 @@ function canonicalFor(siteUrl, src) {
   return `${siteUrl}/${src.replace(/index\.html$/, '').replace(/\.html$/, '')}`;
 }
 
-function pageDisplayName(page) {
-  return page.title;
-}
-
 function breadcrumbLabel(page) {
   // The breadcrumb leaf names the page itself. Prefer the short crumb (the
   // visible <h1>); fall back to the full title for pages that don't set one.
@@ -49,18 +45,6 @@ function breadcrumbItems(page, siteUrl) {
       item: siteUrl,
     },
   ];
-
-  const custom = page.schema?.breadcrumbs;
-  if (custom?.length) {
-    return items.concat(
-      custom.map((crumb, index) => ({
-        '@type': 'ListItem',
-        position: index + 2,
-        name: crumb.name,
-        item: crumb.url.startsWith('http') ? crumb.url : `${siteUrl}${crumb.url}`,
-      }))
-    );
-  }
 
   // Sectioned pages: Home › Section › Page (the section index stops at
   // Home › Section). SECTIONS maps each top-level folder to its label.
@@ -137,7 +121,7 @@ function organizationReference(publisher) {
   };
 }
 
-function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher, ogImage, today, defaultArticlePublished, formattedTitle }) {
+function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher, ogImage, today, formattedTitle }) {
   if (!shouldEmitJsonLd(page)) return [];
 
   const canonical = canonicalFor(siteUrl, page.src);
@@ -165,11 +149,11 @@ function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher,
     '@type': pageTypeFor(page.kind),
     '@id': `${canonical}#webpage`,
     url: canonical,
-    name: formattedTitle || `${siteName} | ${page.title}`,
+    name: formattedTitle,
     description: page.desc,
     ...(shouldIncludeWebSite(page) ? { isPartOf: { '@id': `${siteUrl}/#website` } } : {}),
     inLanguage: 'en-US',
-    dateModified: isoDate(schema.dateModified || today),
+    dateModified: isoDate(today),
   });
 
   const crumbs = breadcrumbItems(page, siteUrl);
@@ -197,19 +181,19 @@ function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher,
     nodes.push({
       '@type': 'Product',
       '@id': `${canonical}#product`,
-      name: schema.productName || page.title,
+      name: schema.productName,
       description: page.desc,
       brand: { '@type': 'Brand', name: 'DoubleTrends' },
       offers: {
         '@type': 'Offer',
         url: canonical,
-        price: schema.price || '149.00',
-        priceCurrency: schema.priceCurrency || 'USD',
+        price: schema.price,
+        priceCurrency: schema.priceCurrency,
         availability: 'https://schema.org/InStock',
         priceSpecification: {
           '@type': 'UnitPriceSpecification',
-          price: schema.monthlyPrice || 12.42,
-          priceCurrency: schema.priceCurrency || 'USD',
+          price: schema.monthlyPrice,
+          priceCurrency: schema.priceCurrency,
           referenceQuantity: {
             '@type': 'QuantitativeValue',
             value: '1',
@@ -240,11 +224,11 @@ function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher,
         width: 1200,
         height: 630,
       },
-      articleSection: page.section || 'Academy',
-      about: schema.about || ['S&P 500 index', 'ETF investing'],
+      articleSection: page.section,
+      about: schema.about,
       isAccessibleForFree: true,
-      datePublished: isoDate(schema.datePublished || defaultArticlePublished),
-      dateModified: isoDate(schema.dateModified || today),
+      datePublished: isoDate(schema.datePublished),
+      dateModified: isoDate(today),
       inLanguage: 'en-US',
     });
   }
@@ -266,7 +250,6 @@ module.exports = {
   buildJsonLdScripts,
   SECTIONS,
   canonicalFor,
-  pageDisplayName,
   breadcrumbItems,
   isoDate,
 };

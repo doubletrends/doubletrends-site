@@ -10,7 +10,6 @@
 //      (Marking every mention reads as defensive; the notice preserves the claim.)
 //   3. Legal documents (legal/*) may mark the name wherever their drafting does.
 const fs   = require('fs');
-const path = require('path');
 const { DIST, walk, relPosix, report } = require('./test-utils');
 
 const NOTICE_RE = /DoubleTrends(?:™|&trade;) is a trademark of DoubleTrends L\.L\.C\./g;

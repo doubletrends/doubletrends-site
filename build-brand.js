@@ -74,7 +74,7 @@ function outline(font, text, size, x = 0, y = 0, tracking = 0) {
 // the bracket's arms; capital, shaft and base stand between. The rust bar
 // becomes the threshold of the portico. Drawn on a 64-unit grid, left half
 // mirrored, so the mark is exactly symmetric.
-function markSvg({ plate, ink, size = 64 }) {
+function markSvg({ plate, ink }) {
   const half = `<rect x="10.5" y="9" width="16.5" height="2.6"/>
 <rect x="11.5" y="11.6" width="10" height="2.2"/>
 <rect x="12" y="13.8" width="6" height="33.6"/>
@@ -82,7 +82,7 @@ function markSvg({ plate, ink, size = 64 }) {
 <rect x="10.5" y="49.6" width="16.5" height="2.6"/>`;
   // A single flute down each shaft, cut in the plate colour.
   const flute = `<rect x="14.6" y="16" width="0.8" height="29" fill="${plate}" fill-opacity="0.55"/>`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="${size}" height="${size}">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
 <rect width="64" height="64" rx="6" fill="${plate}"/>
 <g fill="${ink}">${half}<g transform="translate(64 0) scale(-1 1)">${half}</g></g>
 ${flute}<g transform="translate(64 0) scale(-1 1)">${flute}</g>

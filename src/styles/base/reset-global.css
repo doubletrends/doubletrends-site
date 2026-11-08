@@ -25,7 +25,7 @@ a { color: inherit; }
 .skip-link:focus { top: 0.75rem; }
 
 @media print {
-  .utility-bar, .site-nav, .site-footer-nav, .no-print, .checkout-gate { display: none !important; }
+  .utility-bar, .site-nav, .site-footer-nav, .checkout-gate { display: none !important; }
   body { font-size: 11pt; }
   a { text-decoration: none; }
 }

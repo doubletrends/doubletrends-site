@@ -21,14 +21,14 @@ const f = (n) => (Math.round(n * 100) / 100).toString();
 
 // Relative-command path through points rounded to 0.1 px first, so the
 // deltas carry no accumulated drift and the file stays small.
-function relPath(points, close = false) {
+function relPath(points) {
   const r1 = (n) => Math.round(n * 10) / 10;
   const pts = points.map(([x, y]) => [r1(x), r1(y)]);
   let d = `M${pts[0][0]} ${pts[0][1]}l`;
   for (let i = 1; i < pts.length; i++) {
     d += `${i > 1 ? ' ' : ''}${r1(pts[i][0] - pts[i - 1][0])} ${r1(pts[i][1] - pts[i - 1][1])}`;
   }
-  return d.replace(/ -/g, '-') + (close ? 'z' : '');
+  return d.replace(/ -/g, '-');
 }
 
 // Polyline path through sampled points.

@@ -1,5 +1,4 @@
 const fs   = require('fs');
-const path = require('path');
 const { SITE_URL, SITE_NAME } = require('../src/site.config');
 const { DIST, walk, relPosix, isNoindex, report } = require('./test-utils');
 

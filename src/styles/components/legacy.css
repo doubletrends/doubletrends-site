@@ -8,7 +8,6 @@
 .data-label { font-family: var(--font-sans); font-size: 0.8125rem; letter-spacing: 0; text-transform: none; color: var(--muted); }
 .data-value { font-family: var(--font-sans); font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
 .fine-print { font-family: var(--font-sans); font-size: 0.8125rem; line-height: 1.55; color: var(--muted); }
-.text-grad-hero, .text-grad-section { color: var(--ink); background: none; -webkit-text-fill-color: currentColor; }
 .font-mono { font-variant-numeric: tabular-nums; }
 
 /* Document pages (legal, firm) */
@@ -17,9 +16,7 @@
 .page-hero .tag-overline, .page-hero-center .tag-overline { margin-bottom: 0.9rem; }
 .page-hero .breadcrumb { margin-bottom: 0.9rem; }
 .page-title { font-family: var(--font-serif); font-weight: 600; font-size: clamp(2rem, 1.55rem + 1.7vw, 2.875rem); line-height: 1.12; letter-spacing: -0.01em; color: var(--ink); }
-.page-subtitle { font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.5; color: #3A4452; max-width: 44em; margin-top: 1rem; }
 .page-content-legal { max-width: 46rem; }
-.page-content-wide { display: grid; gap: 2rem; }
 .legal-section + .legal-section { margin-top: 2.25rem; padding-top: 2.25rem; border-top: 1px solid var(--rule); }
 .legal-section .prose-p + .prose-p { margin-top: 0.85em; }
 
@@ -36,21 +33,18 @@
 .article-section + .article-section { margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--rule); }
 .article-section > .tag-overline { margin-bottom: 0.6rem; color: var(--accent); }
 .article-h2 { font-family: var(--font-serif); font-weight: 600; font-size: 1.625rem; line-height: 1.25; color: var(--ink); margin-bottom: 1rem; }
-.article-h3, .card-heading, .panel-heading { font-family: var(--font-serif); font-weight: 600; font-size: 1.25rem; line-height: 1.3; color: var(--ink); }
+.article-h3 { font-family: var(--font-serif); font-weight: 600; font-size: 1.25rem; line-height: 1.3; color: var(--ink); }
 .prose-p { font-family: var(--font-serif); font-size: 1.1875rem; line-height: 1.65; color: var(--text); }
-.panel-body, .section-body { font-size: 1rem; line-height: 1.6; color: var(--muted); }
-.article-page .text-muted, .page-shell .text-muted { color: #4A5361; }
 .article-page a:not([class*="button"]):not(.btn):not(.breadcrumb a), .page-shell a:not([class*="button"]):not(.btn):not(.breadcrumb a) {
   color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; text-decoration-color: rgba(194, 65, 12, 0.55);
 }
 
 /* Panels → ruled boxes (no radius, no lift; shadows in texture.css) */
-.terminal-shell, .product-panel, .cta-panel, .article-cta, .metric-tile {
+.terminal-shell, .product-panel, .cta-panel, .article-cta {
   background: var(--paper); border: 1px solid var(--rule); border-radius: 0; box-shadow: none;
 }
 .terminal-shell { border-top: 2px solid var(--ink); }
 .article-cta, .cta-panel { background: var(--tint); border: 0; border-left: 3px solid var(--accent); padding: 1.5rem 1.6rem; }
-.hover-lift-rust, .hover-lift-rust:hover { transform: none; box-shadow: none; }
 .hairline { border-top: 1px solid var(--rule); }
 .media-frame { border: 1px solid var(--rule); background: var(--paper); }
 .media-frame img { width: 100%; height: auto; }

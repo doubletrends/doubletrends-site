@@ -8,7 +8,7 @@
  *   {{ROOT}} {{TITLE}} {{DESC}} {{CANONICAL}} …   page metadata (see renderPage)
  *   {{HEAD}} {{HEADER}} {{CONTENT}} {{FOOTER}} {{CHECKOUT_GATE}}   layout slots
  *   {{BREADCRUMB}}                                 visible breadcrumb (same items as JSON-LD)
- *   {{IND_*}} {{SIG_*}} {{REG_*}}                  figures from src/data/indicator.json
+ *   {{IND_*}} {{SIG_*}} {{MDD_*}}                  figures from src/data/indicator.json
  *   {{EXHIBIT_*}} {{TABLE_*}}                      SVG exhibits and data tables (src/charts.js)
  *
  * Page fields (src/site.config.js): src, root, title, desc, kind, nav (which
@@ -29,7 +29,7 @@ const {
   PUBLISHER,
   pages,
 } = require('./src/site.config');
-const { buildJsonLdScripts, canonicalFor: canonicalForRaw, pageDisplayName, breadcrumbItems, isoDate } = require('./src/schema');
+const { buildJsonLdScripts, canonicalFor: canonicalForRaw, breadcrumbItems, isoDate } = require('./src/schema');
 const { COLORS } = require('./src/brand.config');
 const { buildExhibits, fmtDateLong } = require('./src/charts');
 const { optimizeImages } = require('./build-images');
@@ -125,7 +125,6 @@ function extensionlessLinks(html) {
   });
 }
 
-// Mark the current primary-nav item (page.nav names it).
 // Content sections alternate plain and tinted, site-wide: the first section
 // after the hero (or page head) is plain, the second tinted, and so on. Pages
 // never set section-tint themselves; the build assigns it here.
@@ -140,6 +139,7 @@ function stripeSections(html) {
   });
 }
 
+// Mark the current primary-nav item (page.nav names it).
 function markCurrentNav(html, page) {
   if (!page.nav) return html;
   return html.replace(`data-nav="${page.nav}"`, `data-nav="${page.nav}" aria-current="page"`);
@@ -164,9 +164,8 @@ function breadcrumbHtml(page) {
 // dateline carries the series and topic, as the research library lists them.
 function decorateArticle(html, page) {
   if (page.kind !== 'article') return html;
-  const published = page.schema?.datePublished;
   const meta = `<p class="article-meta"><span><strong>${page.series}</strong> &middot; ${page.section}</span>`
-    + (published ? `<span>Published ${fmtDateLong(published)}</span>` : '')
+    + `<span>Published ${fmtDateLong(page.schema.datePublished)}</span>`
     + '<span>DoubleTrends Research</span></p>';
   // The notes' original closing promo blocks are replaced by one standard
   // further-reading block: related notes from the same series, the method,
@@ -282,10 +281,9 @@ function formatTitle(page) {
 
 function socialExtraFor(page) {
   if (page.kind !== 'article') return '';
-  const published = page.schema?.datePublished;
-  return `  <meta property="article:published_time" content="${isoDate(published)}" />
+  return `  <meta property="article:published_time" content="${isoDate(page.schema.datePublished)}" />
   <meta property="article:modified_time" content="${isoDate(TODAY)}" />
-  <meta property="article:section" content="${page.section || 'Research'}" />`;
+  <meta property="article:section" content="${page.section}" />`;
 }
 
 // Pages that carry exhibits load the interaction layer.
@@ -330,7 +328,6 @@ function renderPage(page) {
     OG_IMAGE,
     OG_IMAGE_ALT,
     SOCIAL_EXTRA: socialExtraFor(page),
-    HEAD_PRELOADS: '',
     ROBOTS: page.robots ?? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
     JSONLD_SCRIPTS: buildJsonLdScripts({
       page,
@@ -340,7 +337,6 @@ function renderPage(page) {
       publisher: PUBLISHER,
       ogImage: OG_IMAGE,
       today: TODAY,
-      defaultArticlePublished: page.schema?.datePublished,
       formattedTitle: formatTitle(page),
     }),
   });
@@ -372,7 +368,7 @@ const urls = pages
   .map((p) => `  <url>
     <loc>${canonicalFor(p.src)}</loc>
     <changefreq>${p.kind === 'home' || p.src === 'indicator/performance.html' ? 'weekly' : 'monthly'}</changefreq>
-    <priority>${(p.priority ?? 0.7).toFixed(1)}</priority>
+    <priority>${p.priority.toFixed(1)}</priority>
   </url>`)
   .join('\n\n');
 fs.writeFileSync(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
@@ -463,7 +459,7 @@ function llmsSectionKey(src) {
 const llmsSections = LLMS_SECTIONS.map(({ key, heading }) => {
   const entries = pages
     .filter((p) => p.sitemap !== false && llmsSectionKey(p.src) === key)
-    .map((p) => `- ${pageDisplayName(p)}: ${canonicalFor(p.src)}\n  ${p.desc}`)
+    .map((p) => `- ${p.title}: ${canonicalFor(p.src)}\n  ${p.desc}`)
     .join('\n');
   return `## ${heading}\n\n${entries}`;
 }).join('\n\n');

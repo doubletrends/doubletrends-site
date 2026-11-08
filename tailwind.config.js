@@ -9,7 +9,6 @@ module.exports = {
     extend: {
       colors: COLORS,
       fontFamily: FONTS,
-      maxWidth: { site: '76rem', hero: '62rem' },
     },
   },
 };

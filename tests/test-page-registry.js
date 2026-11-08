@@ -8,13 +8,8 @@ const ALLOWED_KINDS = new Set(['home', 'webpage', 'collection', 'services', 'con
 
 // Pages are emitted at their source path: validation/methodology.html →
 // dist/validation/methodology.html, so root depth is derived straight from the source path.
-function outPathFor(src) {
-  return src;
-}
-
 function rootFor(src) {
-  const out = outPathFor(src);
-  const depth = out.split('/').length - 1;
+  const depth = src.split('/').length - 1;
   return depth === 0 ? '' : '../'.repeat(depth);
 }
 

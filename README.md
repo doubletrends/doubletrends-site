@@ -84,7 +84,7 @@ Readings on the site are as of the last build (the date is printed beside them).
 5. Rewrites internal `.html` links to the extensionless URLs Cloudflare serves with 200.
 6. Writes `sitemap.xml`, `_redirects` and `llms.txt`; copies `public/`, re-encoding managed images to WebP.
 
-Placeholder families: `ROOT`, `TITLE`, `DESC`, `CANONICAL` … (page metadata), `BREADCRUMB`, `RESEARCH_RECENT` / `RESEARCH_LIBRARY`, `IND_*` (latest reading, history span), `SIG_*` (signal record), `REG_*` (regime shares), `EXHIBIT_*` and `TABLE_*` (SVG exhibits, data tables), each written in double braces in page markup. The full list is the return value of `buildExhibits()` in `src/charts.js`.
+Placeholder families: `ROOT`, `TITLE`, `DESC`, `CANONICAL` … (page metadata), `BREADCRUMB`, `RESEARCH_RECENT` / `RESEARCH_LIBRARY`, `IND_*` (latest reading, history span), `SIG_*` (signal record), `MDD_*` (drawdown study), `EXHIBIT_*` and `TABLE_*` (SVG exhibits, data tables), each written in double braces in page markup. The full list is the return value of `buildExhibits()` in `src/charts.js`.
 
 ### Partials vs. templates
 

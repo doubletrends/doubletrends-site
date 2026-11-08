@@ -28,7 +28,6 @@
 .ex-axis { stroke: #9AA1AC; stroke-width: 1; shape-rendering: crispEdges; }
 .ex-tick { font-size: 13px; fill: var(--muted); font-variant-numeric: tabular-nums; }
 .ex-note { font-size: 12.5px; fill: var(--muted); }
-.ex-note-strong { fill: var(--ink); font-weight: 600; }
 .ex-line { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .ex-signal { fill: var(--signal); stroke: var(--paper); stroke-width: 1.75; stroke-linejoin: round; }
 .ex-line-thin { stroke-width: 1.5; }

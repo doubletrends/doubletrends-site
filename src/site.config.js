@@ -41,15 +41,11 @@ const PUBLISHER = {
 // `title` is the longer <title>/headline form. Breadcrumbs mirror navigation:
 // Home › Section › Page for folders, Home › Page for everything else.
 
-// Pages are emitted flat: method.html → dist/method.html. Cloudflare serves
-// each at its extensionless URL (/method) with 200, so the output path is just
-// the source path.
-function outPathFor(src) {
-  return src;
-}
-
+// Pages are emitted at their source path: method.html → dist/method.html.
+// Cloudflare serves each at its extensionless URL (/method) with 200, so
+// {{ROOT}} depth comes straight from the source path.
 function rootFor(src) {
-  const depth = outPathFor(src).split('/').length - 1;
+  const depth = src.split('/').length - 1;
   return depth === 0 ? '' : '../'.repeat(depth);
 }
 
@@ -64,7 +60,6 @@ function article(slug, { published, ...overrides }) {
   return page(`research/${slug}.html`, {
     kind: 'article',
     nav: 'research',
-    priority: 0.7,
     ...overrides,
     schema: { ...(overrides.schema || {}), datePublished: published },
   });

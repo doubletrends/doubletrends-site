@@ -302,7 +302,7 @@ ${dots}
 }
 
 // Exhibit: drawdown since 2018, each day coloured by its published regime.
-function mddRegimeChart({ rows, indicator }) {
+function mddRegimeChart({ rows }) {
   const from = '2018-01-01';
   const dd = trailingDrawdown(rows);
   const start = rows.findIndex((r) => r.date >= from);
@@ -428,8 +428,6 @@ function buildExhibits() {
   const { indicator } = data;
   const L = indicator.latest, S = indicator.signal_stats;
   const history = regimeHistoryChart(data);
-  const daysSinceSignal = Math.round((toMs(L.date) - toMs(L.last_signal)) / DAY);
-  const signalState = L.signal_active ? 'Active' : L.setup ? 'Setup forming' : L.watch ? 'Watch' : 'None active';
 
   return {
     EXHIBIT_REGIME_HISTORY: history.svg,
@@ -446,23 +444,17 @@ function buildExhibits() {
     MDD_DECLINE_COUNT: String(recordDeclines(data.rows.filter((r) => r.date >= '1996-01-01')).length),
 
     IND_AS_OF: fmtDateLong(L.date),
-    IND_AS_OF_ISO: L.date,
     IND_REGIME: REGIME_LABEL[L.regime],
     IND_REGIME_KEY: L.regime,
     IND_REGIME_SINCE: fmtDateShort(L.regime_since),
     IND_REGIME_SESSIONS: String(L.regime_days),
     IND_CLOSE: fmtNum(L.close),
     IND_DRAWDOWN: fmtPct(L.drawdown_pct),
-    IND_SIGNAL_STATE: signalState,
-    IND_LAST_SIGNAL: fmtDateShort(L.last_signal),
-    IND_DAYS_SINCE_SIGNAL: daysSinceSignal.toLocaleString('en-US'),
 
     IND_FIRST_DATE: fmtDateLong(indicator.first_date),
     IND_FIRST_YEAR: indicator.first_date.slice(0, 4),
     IND_FIRST_MONTH: MONTHS[Number(indicator.first_date.slice(5, 7)) - 1] + ' ' + indicator.first_date.slice(0, 4),
     IND_TRADING_DAYS: indicator.trading_days.toLocaleString('en-US'),
-    IND_LIVE_SINCE: fmtDateLong(indicator.live_since),
-    IND_LIVE_SINCE_SHORT: fmtDateShort(indicator.live_since),
 
     SIG_COUNT: String(S.count),
     ...sinceFigures(indicator.signals, '2016-07-01', 'JUL_2016'),
@@ -474,12 +466,7 @@ function buildExhibits() {
     SIG_MEDIAN_2Y: fmtPct(S.median_2y_pct),
     SIG_WORST_1Y: fmtPct(S.worst_1y_pct),
     SIG_BEST_1Y: fmtPct(S.best_1y_pct),
-
-    REG_PANIC_SHARE: `${indicator.regimes.panic.share_pct.toFixed(0)}%`,
-    REG_BEAR_SHARE: `${indicator.regimes.bear.share_pct.toFixed(0)}%`,
-    REG_CALM_SHARE: `${indicator.regimes.calm.share_pct.toFixed(0)}%`,
-    REG_CORRECTION_SHARE: `${indicator.regimes.correction.share_pct.toFixed(0)}%`,
   };
 }
 
-module.exports = { buildExhibits, fmtDateLong, fmtDateShort };
+module.exports = { buildExhibits, fmtDateLong };
