@@ -239,3 +239,4 @@ Research notes also set `section` (topic, shown as "Research · {section}") and 
 - Build: `scripts/build.js` (steps in `scripts/build-*.js`) · placeholders: `scripts/placeholders.js`
 - Formatting of dates and numbers: `src/format.js` · regimes (order, code, label, definition, signal eligibility): `src/regimes.js`; their colors: `REGIME_COLORS` in `src/brand.config.js`
 - Site sections and research series: `SECTIONS`, `SERIES` in `src/site.config.js`
+- The firm's profiles elsewhere (GitHub, LinkedIn, Crunchbase, Wellfound, Product Hunt), ready to paste: [`LISTING.md`](LISTING.md)

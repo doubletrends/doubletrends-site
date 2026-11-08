@@ -18,6 +18,7 @@ Site validation suite. `npm test` builds the site and runs every check below; CI
 | `labels` | kickers, research sections, About index and navigation state agree |
 | `brand-tokens` | `src/styles/tokens/colors.css` mirrors `src/brand.config.js` |
 | `data` | `indicator.json`, the daily history and the signal CSV agree |
+| `listing` | `LISTING.md` texts fit their form limits, its facts match the site, its images are the built ones |
 
 A new check is a `tests/test-<name>.js` file that calls `report()` from `tests/utils.js`; the runner picks it up.
 
