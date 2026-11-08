@@ -19,7 +19,9 @@
 .brand { display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; color: var(--ink); }
 .brand-mark { width: 2.125rem; height: 2.125rem; flex: none; }
 .brand-accent { color: var(--accent); }
-.brand-name { font-family: var(--font-serif); font-weight: 600; font-size: 1.4375rem; letter-spacing: -0.005em; line-height: 1; }
+/* The cursor bar of the original wordmark, on the baseline after "Trends". */
+.brand-cursor { display: inline-block; width: 0.34em; height: 0.08em; margin-left: 0.07em; background: var(--accent); }
+.brand-name { font-family: var(--font-serif); font-weight: 600; font-size: 1.4375rem; letter-spacing: -0.005em; line-height: 1; white-space: nowrap; }
 .brand-name small { display: block; margin-top: 0.3rem; font-family: var(--font-sans); font-weight: 500; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 
 .site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 0.25rem; }

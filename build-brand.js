@@ -1,11 +1,12 @@
 /**
  * build-brand.js — `npm run brand` — generates public/brand/.
  *
- * Identity in the brand's two colors: a navy plate carrying a white "DT"
- * monogram over a rust bar, and the name "DoubleTrends" split as in the
- * original wordmark ("Double" rust, "Trends" navy), both set in Source Serif
- * 4 Semibold and converted to outlines (opentype.js),
- * so the SVGs render identically everywhere with no font dependency. The OG
+ * Identity in the brand's two colors: the portico (the original [_] mark
+ * redrawn as two pilasters with a rust threshold) on a navy tile, and the
+ * name "DoubleTrends" split as in the original wordmark ("Double" rust,
+ * "Trends" navy, rust cursor bar), set in Source Serif 4 Semibold and
+ * converted to outlines (opentype.js), so the SVGs render identically
+ * everywhere with no font dependency. The OG
  * image carries the real regime ribbon (1996 → latest), drawn from
  * src/data/regimes-daily.json — the house exhibit, not decoration.
  *
@@ -67,21 +68,25 @@ function outline(font, text, size, x = 0, y = 0, tracking = 0) {
   return { d: paths.join(''), width: cursor - x - tracking, top: top - y, bottom: bottom - y };
 }
 
-// ─── Mark: plate + DT ───────────────────────────────────────────────────────
+// ─── Mark: the portico ──────────────────────────────────────────────────────
+// The original mark was a bracket pair holding a rust cursor bar: [_]. Here
+// each bracket is a classical pilaster: abacus and plinth reach inward like
+// the bracket's arms; capital, shaft and base stand between. The rust bar
+// becomes the threshold of the portico. Drawn on a 64-unit grid, left half
+// mirrored, so the mark is exactly symmetric.
 function markSvg({ plate, ink, size = 64 }) {
-  const k = size / 64;
-  const fs_ = 32 * k;
-  const t = outline(SERIF, 'DT', fs_, 0, 0, -1 * k);
-  const capH = -t.top;                         // glyph top is negative (y-up)
-  const x = (size - t.width) / 2;
-  const y = size * 0.45 + capH / 2;            // sits above centre to leave room for the bar
-  const g = outline(SERIF, 'DT', fs_, x, y, -1 * k);
-  // Rust bar under the letters — the accent of the original wordmark's underscore.
-  const barW = Math.max(t.width * 0.9, 30 * k), barH = 4 * k;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
-<rect width="${size}" height="${size}" rx="${3 * k}" fill="${plate}"/>
-<path d="${g.d}" fill="${ink}"/>
-<rect x="${((size - barW) / 2).toFixed(2)}" y="${(y + 6 * k).toFixed(2)}" width="${barW.toFixed(2)}" height="${barH.toFixed(2)}" fill="${RUST}"/>
+  const half = `<rect x="10.5" y="9" width="16.5" height="2.6"/>
+<rect x="11.5" y="11.6" width="10" height="2.2"/>
+<rect x="12" y="13.8" width="6" height="33.6"/>
+<rect x="11.5" y="47.4" width="10" height="2.2"/>
+<rect x="10.5" y="49.6" width="16.5" height="2.6"/>`;
+  // A single flute down each shaft, cut in the plate colour.
+  const flute = `<rect x="14.6" y="16" width="0.8" height="29" fill="${plate}" fill-opacity="0.55"/>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="${size}" height="${size}">
+<rect width="64" height="64" rx="6" fill="${plate}"/>
+<g fill="${ink}">${half}<g transform="translate(64 0) scale(-1 1)">${half}</g></g>
+${flute}<g transform="translate(64 0) scale(-1 1)">${flute}</g>
+<rect x="26" y="43.4" width="12" height="4" fill="${RUST}"/>
 </svg>`;
 }
 
@@ -97,12 +102,15 @@ function wordmarkSvg({ dark = false } = {}) {
   const first = outline(SERIF, 'Double', size, mark + gap, y);
   const kernET = (SERIF.getKerningValue(SERIF.charToGlyph('e'), SERIF.charToGlyph('T')) / SERIF.unitsPerEm) * size;
   const second = outline(SERIF, 'Trends', size, mark + gap + first.width + kernET, y);
-  const W = Math.ceil(mark + gap + first.width + kernET + second.width + 4);
-  const inner = markSvg({ plate, ink: plateInk, size: mark }).replace(/^<svg[^>]*>|<\/svg>$/g, '');
+  // The cursor bar of the original wordmark, sitting on the baseline after "Trends".
+  const barX = mark + gap + first.width + kernET + second.width + 0.07 * size, barW = 0.34 * size, barH = 0.08 * size;
+  const W = Math.ceil(barX + barW + 4);
+  const inner = `<g transform="scale(${mark / 64})">${markSvg({ plate, ink: plateInk }).replace(/^<svg[^>]*>|<\/svg>$/g, '')}</g>`;
   return { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
 ${inner}
 <path d="${first.d}" fill="${RUST}"/>
 <path d="${second.d}" fill="${ink}"/>
+<rect x="${barX.toFixed(2)}" y="${(y - barH).toFixed(2)}" width="${barW.toFixed(2)}" height="${barH.toFixed(2)}" fill="${RUST}"/>
 </svg>`, W, H };
 }
 
