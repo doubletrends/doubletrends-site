@@ -168,5 +168,4 @@ The DoubleTrends™ Regime Indicator classifies S&P 500 market stress every trad
 ## Where the site points at these
 
 The site's JSON-LD names the Crunchbase, Wellfound and Product Hunt profiles as the firm's other pages (`sameAs` in
-`PUBLISHER`, `src/site.config.js`). The footer and contact page link LinkedIn and GitHub. A profile added or closed
-changes there too.
+`PUBLISHER`, `src/site.config.js`). The footer's Profiles column and the contact page link all five. A profile added or closed changes there too.
