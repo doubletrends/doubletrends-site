@@ -20,95 +20,95 @@
         "band"
       ]
     },
-    "reading1911": {
-      "title": "New York City public library reading room LCCN2007682035.jpg",
-      "page": "https://commons.wikimedia.org/wiki/File:New_York_City_public_library_reading_room_LCCN2007682035.jpg",
+    "libcongress1898": {
+      "title": "Washington. West façade Library of Congress-LCCN2008678234.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Washington._West_façade_Library_of_Congress-LCCN2008678234.jpg",
       "licence": "Public domain",
-      "credit": "New York Public Library reading room, 1911. Library of Congress.",
+      "credit": "Library of Congress, west façade, Washington, 1898. Photochrom print, Detroit Publishing Co. Library of Congress.",
       "crop": {
         "box": [
-          0.05,
-          0.05,
-          0.95,
-          0.95
+          0,
+          0.02,
+          0.82,
+          0.92
         ],
-        "focus": 0.55
+        "focus": 0.47
       },
       "renditions": [
         "hero",
         "band"
       ]
     },
-    "assay1861": {
-      "title": "The popular loan to the federal government - scene in the main room of the Assay Office, Wall Street, New York LCCN2003668330.jpg",
-      "page": "https://commons.wikimedia.org/wiki/File:The_popular_loan_to_the_federal_government_-_scene_in_the_main_room_of_the_Assay_Office,_Wall_Street,_New_York_LCCN2003668330.jpg",
+    "massbalance": {
+      "title": "MassStandards 003.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:MassStandards_003.jpg",
       "licence": "Public domain",
-      "credit": "The popular loan to the federal government, Assay Office, Wall Street, 1861. Library of Congress.",
+      "credit": "Comparing mass standards on a Rueprecht balance, National Bureau of Standards. National Institute of Standards and Technology.",
       "crop": {
         "box": [
           0.06,
-          0.13,
-          0.92,
-          0.86
-        ],
-        "focus": 0.45
-      },
-      "renditions": [
-        "hero",
-        "band"
-      ]
-    },
-    "drafting1870": {
-      "title": "Louis-Emile Durandelle, Charles Garnier in the Drafting Room While Designing the New Paris Opera, ca. 1870.jpg",
-      "page": "https://commons.wikimedia.org/wiki/File:Louis-Emile_Durandelle,_Charles_Garnier_in_the_Drafting_Room_While_Designing_the_New_Paris_Opera,_ca._1870.jpg",
-      "licence": "Public domain",
-      "credit": "Charles Garnier in the drafting room while designing the Paris Opéra, c. 1870. Photograph by Louis-Émile Durandelle. The Metropolitan Museum of Art.",
-      "crop": {
-        "box": [
-          0.2,
-          0.22,
-          0.9,
-          0.8
-        ],
-        "focus": 0.45
-      },
-      "renditions": [
-        "hero",
-        "band"
-      ]
-    },
-    "ticker1922": {
-      "title": "Automatic ticker apparatus, New York Stock Exchange. Central control station LCCN2013647237.tif",
-      "page": "https://commons.wikimedia.org/wiki/File:Automatic_ticker_apparatus,_New_York_Stock_Exchange._Central_control_station_LCCN2013647237.tif",
-      "licence": "Public domain",
-      "credit": "Automatic ticker apparatus, New York Stock Exchange, 1922. Library of Congress.",
-      "crop": {
-        "box": [
-          0.02,
-          0.02,
-          0.98,
-          0.98
-        ],
-        "focus": 0.55
-      },
-      "renditions": [
-        "hero",
-        "band"
-      ]
-    },
-    "weather1900": {
-      "title": "Early 1900s photo of the Hatteras Weather Bureau Station shows the Signal Tower fitted with a water tank (51758001607).jpg",
-      "page": "https://commons.wikimedia.org/wiki/File:Early_1900s_photo_of_the_Hatteras_Weather_Bureau_Station_shows_the_Signal_Tower_fitted_with_a_water_tank_(51758001607).jpg",
-      "licence": "Public domain",
-      "credit": "Hatteras Weather Bureau station and signal tower, early 1900s. National Park Service, Cape Hatteras National Seashore.",
-      "crop": {
-        "box": [
-          0.04,
           0.04,
           0.96,
           0.96
         ],
-        "focus": 0.41
+        "focus": 0.33
+      },
+      "renditions": [
+        "hero",
+        "band"
+      ]
+    },
+    "curies1904": {
+      "title": "Pierre and Marie Curie.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Pierre_and_Marie_Curie.jpg",
+      "licence": "Public domain",
+      "credit": "Pierre and Marie Curie in their laboratory, Paris, c. 1904.",
+      "crop": {
+        "box": [
+          0.005,
+          0.005,
+          0.98,
+          0.98
+        ],
+        "focus": 0.335
+      },
+      "renditions": [
+        "hero",
+        "band"
+      ]
+    },
+    "royalexchange": {
+      "title": "Royal Exchange, London, England-LCCN2002696923.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Royal_Exchange,_London,_England-LCCN2002696923.jpg",
+      "licence": "Public domain",
+      "credit": "The Royal Exchange, London, 1890s. Photochrom print, Detroit Publishing Co. Library of Congress.",
+      "crop": {
+        "box": [
+          0.02,
+          0.02,
+          0.97,
+          0.98
+        ],
+        "focus": 0.52
+      },
+      "renditions": [
+        "hero",
+        "band"
+      ]
+    },
+    "southstack": {
+      "title": "South Stack Lighthouse, Holyhead, Wales-LCCN2001703489.tif",
+      "page": "https://commons.wikimedia.org/wiki/File:South_Stack_Lighthouse,_Holyhead,_Wales-LCCN2001703489.tif",
+      "licence": "Public domain",
+      "credit": "South Stack Lighthouse, Holyhead, Wales, 1890s. Photochrom print, Detroit Publishing Co. Library of Congress.",
+      "crop": {
+        "box": [
+          0.02,
+          0.03,
+          0.98,
+          0.93
+        ],
+        "focus": 0.42
       },
       "renditions": [
         "hero",
@@ -153,19 +153,19 @@
         "band"
       ]
     },
-    "progress1876": {
-      "title": "The progress of the century - the lightning steam press, the electric telegraph, the locomotive, (and) the steamboat LCCN90716345.jpg",
-      "page": "https://commons.wikimedia.org/wiki/File:The_progress_of_the_century_-_the_lightning_steam_press,_the_electric_telegraph,_the_locomotive,_(and)_the_steamboat_LCCN90716345.jpg",
+    "pennstation": {
+      "title": "Detroit Publishing - New Pennsylvania Station, New York, N.Y..jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Detroit_Publishing_-_New_Pennsylvania_Station,_New_York,_N.Y..jpg",
       "licence": "Public domain",
-      "credit": "The Progress of the Century: the lightning steam press, the electric telegraph, 1876. Currier & Ives. Library of Congress.",
+      "credit": "Pennsylvania Station, New York, c. 1910. Detroit Publishing Co. Library of Congress.",
       "crop": {
         "box": [
-          0.155,
-          0.06,
-          0.845,
-          0.7
+          0.02,
+          0.05,
+          0.98,
+          0.95
         ],
-        "focus": 0.45
+        "focus": 0.46
       },
       "renditions": [
         "hero",

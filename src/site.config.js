@@ -83,7 +83,7 @@ const pages = [
     desc:  'DoubleTrends is an independent quantitative research firm studying market regimes, drawdowns and investor behavior. It publishes its research and the DoubleTrends Regime Indicator openly, and offers research and data engineering services.',
   }),
   page('indicator.html', {
-    headImage: 'weather1900',
+    headImage: 'southstack',
     priority: 0.9,
     nav: 'indicator',
     title: 'The DoubleTrends Regime Indicator',
@@ -91,7 +91,7 @@ const pages = [
     desc:  'The DoubleTrends Regime Indicator: a rules-based daily classification of S&P 500 market stress — calm, correction, panic, bear — with a reversal signal eligible only under stress. Published as research, with history from December 1995.',
   }),
   page('method.html', {
-    headImage: 'drafting1870',
+    headImage: 'libcongress1898',
     priority: 0.9,
     nav: 'methodology',
     title: 'Methodology',
@@ -100,7 +100,7 @@ const pages = [
     desc:  'How the DoubleTrends Regime Indicator is constructed: data inputs, derived measures, the four-state regime classification, signal eligibility and confirmation, publication timing, and point-in-time validation.',
   }),
   page('data.html', {
-    headImage: 'ticker1922',
+    headImage: 'royalexchange',
     priority: 0.9,
     nav: 'data',
     schema: { breadcrumbs: [{ name: 'Indicator', url: '/indicator' }, { name: 'Historical data', url: '/data' }] },
@@ -109,7 +109,7 @@ const pages = [
     desc:  'Every DoubleTrends signal since 1998 with 3-month, 1-year and 2-year S&P 500 forward returns, the regime mix by year since 1996, regime statistics, and a CSV download.',
   }),
   page('product.html', {
-    headImage: 'progress1876',
+    headImage: 'pennstation',
     priority: 0.9,
     kind: 'product',
     nav: 'subscription',
@@ -125,7 +125,7 @@ const pages = [
     },
   }),
   page('alphaverify/index.html', {
-    headImage: 'assay1861',
+    headImage: 'massbalance',
     priority: 0.9,
     nav: 'validation',
     title: 'AlphaVerify: Open-Source Signal Validation',
@@ -155,7 +155,7 @@ const pages = [
     desc:  'The three workspaces shipped with AlphaVerify (NASDAQ daily, bitcoin daily and bitcoin hourly): data sources, test grids and the feature families each one tests.',
   }),
   page('research/index.html', {
-    headImage: 'reading1911',
+    headImage: 'curies1904',
     priority: 0.9,
     kind: 'collection',
     nav: 'research',
