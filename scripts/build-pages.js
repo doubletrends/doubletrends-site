@@ -21,7 +21,8 @@ const fs = require('fs');
 const path = require('path');
 const { SITE_URL, SITE_NAME } = require('../src/site.config');
 const { extensionless, canonicalFor, breadcrumbItems } = require('../src/urls');
-const { buildJsonLdScripts, isoDate } = require('../src/schema');
+const { buildJsonLdScripts } = require('../src/schema');
+const { isoMidnight } = require('../src/dates');
 const { COLORS } = require('../src/brand.config');
 const { fmtDateLong, escAmp } = require('../src/format');
 const { SITE_VARS, partial, replace, assertResolved } = require('./placeholders');
@@ -147,8 +148,8 @@ function formatTitle(page) {
 
 function socialExtraFor(page, today) {
   if (page.kind !== 'article') return '';
-  return `  <meta property="article:published_time" content="${isoDate(page.schema.datePublished)}" />
-  <meta property="article:modified_time" content="${isoDate(today)}" />
+  return `  <meta property="article:published_time" content="${isoMidnight(page.schema.datePublished)}" />
+  <meta property="article:modified_time" content="${isoMidnight(today)}" />
   <meta property="article:section" content="${page.section}" />`;
 }
 

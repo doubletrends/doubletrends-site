@@ -6,6 +6,7 @@
 const { SITE_URL, SITE_NAME, SITE_DESCRIPTION, PUBLISHER, OG_IMAGE, OG_IMAGE_SIZE } = require('./site.config');
 const { canonicalFor, breadcrumbItems } = require('./urls');
 const { jsonInScript } = require('./format');
+const { isoMidnight } = require('./dates');
 
 function toJsonLdScript(node) {
   return `  <script type="application/ld+json">\n${jsonInScript(JSON.stringify(node, null, 2))}\n  </script>`;
@@ -16,10 +17,6 @@ function pageTypeFor(kind) {
   if (kind === 'contact') return 'ContactPage';
   if (kind === 'collection') return 'CollectionPage';
   return 'WebPage';
-}
-
-function isoDate(date) {
-  return `${date}T00:00:00+08:00`;
 }
 
 function shouldEmitJsonLd(page) {
@@ -77,7 +74,7 @@ function buildSchemaNodes({ page, today, formattedTitle }) {
     description: page.desc,
     ...(shouldIncludeWebSite(page) ? { isPartOf: { '@id': `${SITE_URL}/#website` } } : {}),
     inLanguage: 'en-US',
-    dateModified: isoDate(today),
+    dateModified: isoMidnight(today),
   });
 
   const crumbs = breadcrumbItems(page);
@@ -151,8 +148,8 @@ function buildSchemaNodes({ page, today, formattedTitle }) {
       articleSection: page.section,
       about: schema.about,
       isAccessibleForFree: true,
-      datePublished: isoDate(schema.datePublished),
-      dateModified: isoDate(today),
+      datePublished: isoMidnight(schema.datePublished),
+      dateModified: isoMidnight(today),
       inLanguage: 'en-US',
     });
   }
@@ -170,4 +167,4 @@ function buildJsonLdScripts(context) {
   });
 }
 
-module.exports = { buildJsonLdScripts, isoDate };
+module.exports = { buildJsonLdScripts };

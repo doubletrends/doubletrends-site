@@ -7,6 +7,7 @@ const fs   = require('fs');
 const path = require('path');
 const { pages } = require('../src/site.config');
 const { dailyRows } = require('../src/regimes');
+const { today: todayInNewYork } = require('../src/dates');
 const { buildExhibits } = require('../src/exhibits');
 const { compileCss } = require('./build-css');
 const { renderPage } = require('./build-pages');
@@ -18,12 +19,6 @@ const { writeBrand } = require('./build-brand');
 
 const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
 const DIST = path.join(ROOT, 'dist');
-
-function todayInTimeZone(timeZone) {
-  const parts = new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
-  const get = (type) => parts.find((part) => part.type === type).value;
-  return `${get('year')}-${get('month')}-${get('day')}`;
-}
 
 function cleanDist() {
   try {
@@ -43,7 +38,7 @@ async function main() {
   // are computed from it once.
   const rows = dailyRows(require('../src/data/regimes-daily.json'));
   const exhibits = buildExhibits({ rows, indicator: require('../src/data/indicator.json') });
-  const today = todayInTimeZone('America/New_York');
+  const today = todayInNewYork();
 
   cleanDist();
 
