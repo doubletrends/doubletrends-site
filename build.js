@@ -385,51 +385,64 @@ ${urls}
 console.log('✓  sitemap.xml generated');
 
 // ─── _redirects ──────────────────────────────────────────────────────────────
-// Cloudflare's built-in .html stripping issues 307 (temporary) redirects.
-// Explicit 301s upgrade them so search engines consolidate on the canonical.
-const redirectLines = pages
-  .filter((p) => p.src !== '404.html')
-  .map((p) => `/${p.src} ${canonicalFor(p.src).slice(SITE_URL.length) || '/'} 301`);
-// URLs retired by the November 2026 restructure. Each old address (with and
-// without .html) 301s to its new canonical, so links and rankings carry over.
-const LEGACY = [
-  ['/academy', '/research/'],
-  ['/academy/', '/research/'],
-  ['/academy/index.html', '/research/'],
-  ...pages.filter((p) => p.kind === 'article').flatMap((p) => {
-    const slug = p.src.slice('research/'.length, -'.html'.length);
-    return [[`/academy/${slug}`, `/research/${slug}`], [`/academy/${slug}.html`, `/research/${slug}`]];
-  }),
-  // AlphaVerify's pages moved to validation/ (November 2026).
-  ['/alphaverify', '/validation/'],
-  ['/alphaverify/', '/validation/'],
-  ['/alphaverify/index.html', '/validation/'],
-  ['/alphaverify/method', '/validation/methodology'],
-  ['/alphaverify/method.html', '/validation/methodology'],
-  ['/alphaverify/findings', '/validation/findings'],
-  ['/alphaverify/findings.html', '/validation/findings'],
-  ['/alphaverify/workspaces', '/validation/workspaces'],
-  ['/alphaverify/workspaces.html', '/validation/workspaces'],
-  ['/validation', '/validation/'],
-  // The indicator pages moved under indicator/ (November 2026).
-  ['/indicator', '/indicator/'],
-  ['/indicator.html', '/indicator/'],
-  ['/method', '/indicator/methodology'],
-  ['/method.html', '/indicator/methodology'],
-  ['/data', '/indicator/performance'],
-  ['/data.html', '/indicator/performance'],
-  ['/product', '/indicator/subscription'],
-  ['/product.html', '/indicator/subscription'],
-  ['/success', '/indicator/success'],
-  ['/success.html', '/indicator/success'],
-  ['/alphaverify.html', '/validation/'],
-  ['/public/academy/*', '/public/img/research/:splat'],
-  // Asset folders reorganised (November 2026).
-  ['/public/research/*', '/public/img/research/:splat'],
-  ['/public/alphaverify/*', '/public/img/validation/:splat'],
+// Two sections, so each can be audited on its own:
+//   1. Canonical form: every page's .html spelling, and every section folder
+//      without its trailing slash, 301 to the canonical URL. Cloudflare's own
+//      .html stripping issues 307s; explicit 301s let search engines settle on
+//      the canonical. Generated from the page registry.
+//   2. Moved URLs: addresses that were live on the deployed site (main) and
+//      moved in the November 2026 restructure, grouped by move. Each old
+//      address (with and without .html) 301s to its new home. Paths that only
+//      ever existed on a branch get no redirect.
+// A source may appear only once across both sections.
+const CANONICAL_FORM = [
+  ...pages.filter((p) => p.src !== '404.html')
+    .map((p) => [`/${p.src}`, canonicalFor(p.src).slice(SITE_URL.length) || '/']),
+  ...pages.filter((p) => /\/index\.html$/.test(p.src))
+    .map((p) => { const dir = p.src.slice(0, -'/index.html'.length); return [`/${dir}`, `/${dir}/`]; }),
+].sort(([a], [b]) => a.localeCompare(b));
+const MOVED = [
+  { heading: 'academy/ → research/', rules: [
+    ['/academy', '/research/'],
+    ['/academy/', '/research/'],
+    ['/academy/index.html', '/research/'],
+    ...pages.filter((p) => p.kind === 'article').flatMap((p) => {
+      const slug = p.src.slice('research/'.length, -'.html'.length);
+      return [[`/academy/${slug}`, `/research/${slug}`], [`/academy/${slug}.html`, `/research/${slug}`]];
+    }),
+  ] },
+  { heading: 'Indicator pages → indicator/', rules: [
+    ['/method', '/indicator/methodology'],
+    ['/method.html', '/indicator/methodology'],
+    ['/product', '/indicator/subscription'],
+    ['/product.html', '/indicator/subscription'],
+    ['/success', '/indicator/success'],
+    ['/success.html', '/indicator/success'],
+  ] },
+  { heading: 'public/academy/ → public/img/research/', rules: [
+    ['/public/academy/*', '/public/img/research/:splat'],
+  ] },
 ];
-const legacyLines = LEGACY.map(([from, to]) => `${from} ${to} 301`);
-fs.writeFileSync(path.join(DIST, '_redirects'), [...legacyLines, ...redirectLines].join('\n') + '\n', 'utf8');
+{
+  const seen = new Map();
+  const all = [['canonical form', CANONICAL_FORM], ...MOVED.map((g) => [g.heading, g.rules])];
+  for (const [group, rules] of all) for (const [from] of rules) {
+    if (seen.has(from)) throw new Error(`_redirects: ${from} appears in "${seen.get(from)}" and "${group}"`);
+    seen.set(from, group);
+  }
+}
+const line = ([from, to]) => `${from} ${to} 301`;
+const redirectsFile = [
+  '# ── 1. Canonical form ─────────────────────────────────────────────',
+  '# .html spellings and folders without a trailing slash → canonical URL.',
+  '# Generated from the page registry (src/site.config.js).',
+  ...CANONICAL_FORM.map(line),
+  '',
+  '# ── 2. Moved URLs ─────────────────────────────────────────────────',
+  '# Addresses live before the November 2026 restructure → their new home.',
+  ...MOVED.flatMap((g) => ['', `# ${g.heading}`, ...g.rules.map(line)]),
+];
+fs.writeFileSync(path.join(DIST, '_redirects'), redirectsFile.join('\n') + '\n', 'utf8');
 console.log('✓  _redirects generated');
 
 // ─── llms.txt ────────────────────────────────────────────────────────────────
