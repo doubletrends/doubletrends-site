@@ -5,7 +5,7 @@
  */
 const { REGIMES } = require('../regimes');
 const { regimeEpisodes } = require('../measures');
-const { fmtDateShort, fmtMonthYear, fmtCount } = require('../format');
+const { fmtDateLong, fmtDateShort, fmtMonthYear, fmtNum, fmtCount } = require('../format');
 const { r1, toMs, DAY, SIGNAL_ARROW } = require('./shared');
 
 function regimeHistoryChart({ rows, indicator }) {
@@ -85,10 +85,11 @@ ${xTicks}
 <g class="ex-hover" aria-hidden="true"><line class="ex-cross" x1="0" x2="0" y1="${padT}" y2="${bottom}"/><circle class="ex-cross-dot" r="4.5" cx="0" cy="0"/></g>
 </svg>`;
 
-  // Hover payload: plot geometry + weekly points (x in viewBox units).
+  // Hover payload: plot geometry + weekly points (x, y in viewBox units), with
+  // the date, close and regime already worded, so the script formats nothing.
   const hover = {
     w: W, plotLeft: padL, plotRight: W - padR, top: padT, bottom,
-    points: weekly.map((p) => [r1(X(p.date)), r1(Y(p.close)), p.date, p.close, REGIMES[p.regime].label]),
+    points: weekly.map((p) => [r1(X(p.date)), r1(Y(p.close)), fmtDateLong(p.date), fmtNum(p.close), REGIMES[p.regime].label]),
   };
   return { svg, hover: JSON.stringify(hover) };
 }

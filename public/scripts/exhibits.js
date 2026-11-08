@@ -10,15 +10,6 @@
 (function () {
   'use strict';
 
-  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-  function fmtDate(iso) {
-    var p = iso.split('-');
-    return MONTHS[+p[1] - 1] + ' ' + (+p[2]) + ', ' + p[0];
-  }
-  function fmtNum(x) {
-    return x.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
   function tooltipFor(body) {
     var tip = document.createElement('div');
     tip.className = 'ex-tooltip';
@@ -46,6 +37,8 @@
     var body = fig.querySelector('.exhibit-body');
     if (!dataEl || !svg || !body) return;
     var data = JSON.parse(dataEl.textContent);
+    // [x, y, date, close, regime]: x and y in viewBox units; date, close and
+    // regime as the build wrote them (src/exhibits/regime-history.js).
     var pts = data.points;
     var cross = svg.querySelector('.ex-cross');
     var dot = svg.querySelector('.ex-cross-dot');
@@ -67,13 +60,13 @@
       cross.setAttribute('x1', p[0]); cross.setAttribute('x2', p[0]);
       dot.setAttribute('cx', p[0]); dot.setAttribute('cy', p[1]);
       fig.setAttribute('data-active', '');
-      tip.innerHTML = '<b>Week ending ' + fmtDate(p[2]) + '</b>'
-        + '<div class="row"><span>S&amp;P 500</span><span>' + fmtNum(p[3]) + '</span></div>'
+      tip.innerHTML = '<b>Week ending ' + p[2] + '</b>'
+        + '<div class="row"><span>S&amp;P 500</span><span>' + p[3] + '</span></div>'
         + '<div class="row"><span>Regime</span><span>' + p[4] + '</span></div>';
       var scale = svg.getBoundingClientRect().width / data.w;
       var svgTop = svg.getBoundingClientRect().top - body.getBoundingClientRect().top;
       place(tip, body, p[0] * scale, svgTop + p[1] * scale);
-      if (announce && live) live.textContent = fmtDate(p[2]) + ': S&P 500 ' + fmtNum(p[3]) + ', ' + p[4] + ' regime.';
+      if (announce && live) live.textContent = p[2] + ': S&P 500 ' + p[3] + ', ' + p[4] + ' regime.';
     }
     function hide() {
       fig.removeAttribute('data-active');
