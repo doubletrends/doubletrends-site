@@ -68,6 +68,7 @@ const head         = read('head.html');
 const header       = read('header.html');
 const footer       = read('footer.html');
 const checkoutGate = read('checkout-gate.html');
+const readingCard  = read('reading-card.html');
 
 // ─── Build CSS ───────────────────────────────────────────────────────────────
 // entry.css (Tailwind directives) + the house style, in cascade order:
@@ -306,6 +307,9 @@ function renderPage(page) {
     FOOTER: footer,
     CHECKOUT_GATE: checkoutGate,
     CONTENT: fs.readFileSync(srcPath, 'utf8'),
+    // After CONTENT, so a page's {{READING_CARD}} slot is filled; the card's
+    // own figures are filled by the pass below.
+    READING_CARD: readingCard,
   });
   let html = replace(assembled, {
     ...EXHIBITS,
@@ -313,6 +317,8 @@ function renderPage(page) {
     RESEARCH_RECENT: researchRecent(page.root),
     RESEARCH_LIBRARY: researchLibrary(page.root),
     FOOTER_NOTES: footerNotes(page.root),
+    // The card links to the indicator from everywhere but the indicator itself.
+    READING_LINK: page.src === 'indicator/index.html' ? '' : ` <a class="link" href="${page.root}indicator/index.html">About the indicator</a>`,
     ROOT: page.root,
     TITLE: formatTitle(page),
     DESC: page.desc,
@@ -451,9 +457,9 @@ const llmsSections = LLMS_SECTIONS.map(({ key, heading }) => {
 
 fs.writeFileSync(path.join(DIST, 'llms.txt'), `# DoubleTrends
 
-DoubleTrends is a quantitative research firm. It publishes research on market regimes, drawdowns and investor behavior, and the DoubleTrends Regime Indicator: a rules-based daily classification of U.S. equity market stress (calm, correction, panic, bear) for the S&P 500, with a reversal signal that is eligible to fire only in panic and bear regimes. It does not sell trading signals; a subscription to the daily reading covers the infrastructure that produces it. It accepts no payments from brokers or exchanges and also offers research and data engineering services. History is a point-in-time reconstruction from ${EXHIBITS.IND_FIRST_YEAR}; live publication began ${EXHIBITS.IND_LIVE_SINCE}. The site also publishes research notes on drawdowns, investor behavior, and the indicator's inputs.
+DoubleTrends is a quantitative research firm. It publishes research on market regimes, drawdowns and investor behavior, and the DoubleTrends Regime Indicator: a rules-based daily classification of U.S. equity market stress (calm, correction, panic, bear) for the S&P 500, with a reversal signal that is eligible to fire only in panic and bear regimes. It does not sell trading signals; a subscription to the daily reading covers the infrastructure that produces it. It accepts no payments from brokers or exchanges and also offers research and data engineering services. History is a point-in-time reconstruction from ${EXHIBITS.IND_FIRST_YEAR}. The site also publishes research notes on drawdowns, investor behavior, and the indicator's inputs.
 
-Important: the content is educational market information only. It is not financial, investment, trading, tax, or legal advice, and it is not a recommendation to buy, sell, or hold any security. Readings before ${EXHIBITS.IND_LIVE_SINCE} are back-tested.
+Important: the content is educational market information only. It is not financial, investment, trading, tax, or legal advice, and it is not a recommendation to buy, sell, or hold any security. Readings are back-tested unless they were published on the day.
 
 ${llmsSections}
 

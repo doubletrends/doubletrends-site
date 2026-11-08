@@ -36,7 +36,6 @@
 .ex-dot { fill: var(--ink); stroke: var(--paper); stroke-width: 2; }
 .ex-regime-areas path { fill-opacity: 0.85; }
 .ex-end { fill: var(--ink); stroke: var(--paper); stroke-width: 2; }
-.ex-live { stroke: var(--ink); stroke-width: 1; shape-rendering: crispEdges; }
 .wash-bear { fill: var(--regime-bear); fill-opacity: 0.1; }
 .fill-calm { fill: var(--regime-calm); }
 .fill-correction { fill: var(--regime-correction); }

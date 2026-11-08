@@ -13,26 +13,7 @@
       </div>
     </div>
 
-    <aside class="reading" aria-labelledby="reading-title">
-      <div class="reading-head">
-        <h2 id="reading-title" class="reading-title">From the research desk</h2>
-        <span class="reading-asof">As of the {{IND_AS_OF}} close</span>
-      </div>
-      <p class="fine" style="margin-top: 0.9rem;">The DoubleTrends Regime Indicator &mdash; S&amp;P 500</p>
-      <div class="reading-regime" style="margin-top: 0.5rem;">
-        <span class="swatch regime-key-{{IND_REGIME_KEY}}" aria-hidden="true"></span>
-        <div>
-          <div class="reading-regime-value">{{IND_REGIME}}</div>
-          <div class="reading-regime-note">Regime since {{IND_REGIME_SINCE}} &middot; {{IND_REGIME_SESSIONS}} sessions</div>
-        </div>
-      </div>
-      <dl>
-        <dt>S&amp;P 500 close</dt><dd>{{IND_CLOSE}}</dd>
-        <dt>From one-year high</dt><dd>{{IND_DRAWDOWN}}</dd>
-        <dt>Signal</dt><dd>{{IND_SIGNAL_STATE}}</dd>
-      </dl>
-      <p class="reading-foot">A rules-based daily classification of market stress, published as research. <a class="link" href="indicator/index.html">About the indicator</a></p>
-    </aside>
+    {{READING_CARD}}
   </div>
 </section>
 
@@ -57,7 +38,7 @@
       </div>
       <div>
         <h3 class="h3">The Regime Indicator</h3>
-        <p class="muted" style="margin-top: 0.6rem;">A rules-based daily classification of S&amp;P 500 stress since {{IND_FIRST_MONTH}}, published with its methodology, its complete signal record and every correction.</p>
+        <p class="muted" style="margin-top: 0.6rem;">A rules-based daily classification of S&amp;P 500 stress since {{IND_FIRST_MONTH}}, published with its methodology and its complete signal record.</p>
         <p style="margin-top: 0.9rem;"><a class="link-arrow" href="indicator/index.html">DoubleTrends&trade;</a></p>
       </div>
     </div>
@@ -104,7 +85,6 @@
     <dl class="facts">
       <dt>Methods are published</dt><dd>The structure of every rule the indicator applies is set out in its <a class="link" href="indicator/methodology.html">methodology</a>.</dd>
       <dt>Records are complete</dt><dd>Every signal since {{SIG_FIRST}} is listed with what followed, including the ones that came early. Back-tested history is labelled as such.</dd>
-      <dt>Corrections are public</dt><dd>Revisions to published data are logged with their reason on the <a class="link" href="indicator/performance.html#revisions">historical data</a> page.</dd>
       <dt>How we are paid</dt><dd>Subscriber fees cover the infrastructure behind the indicator&rsquo;s daily reading; research services are billed per engagement. DoubleTrends accepts no payments from brokers or exchanges and does not sell trading signals. <a class="link" href="company/index.html#paid">Details</a></dd>
     </dl>
   </div>

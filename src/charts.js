@@ -97,12 +97,6 @@ function regimeHistoryChart({ rows, indicator }) {
       + `<text x="${xx}" y="${bottom + 22}" text-anchor="middle" class="ex-tick">${y}</text>`;
   }).join('');
 
-  // Live publication boundary.
-  const live = indicator.live_since;
-  const xl = r1(X(live));
-  const liveMark = `<line x1="${xl}" x2="${xl}" y1="${padT - 14}" y2="${bottom}" class="ex-live"/>`
-    + `<text x="${xl - 6}" y="${padT - 18}" text-anchor="end" class="ex-note">Back-tested</text>`
-    + `<text x="${xl + 6}" y="${padT - 18}" class="ex-note ex-note-strong">Live</text>`;
 
   // Signals: ringed markers on the line.
   const closeOn = new Map(rows.map((r) => [r.date, r.close]));
@@ -116,7 +110,7 @@ function regimeHistoryChart({ rows, indicator }) {
   const first = fmtMonthYear(rows[0].date), last = fmtMonthYear(lastRow.date);
   const svg = `<svg class="exhibit-svg" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="ex1-title ex1-desc" preserveAspectRatio="xMidYMid meet">
 <title id="ex1-title">S&amp;P 500 and the DoubleTrends regime classification, ${first} to ${last}</title>
-<desc id="ex1-desc">Weekly S&amp;P 500 closes on a logarithmic scale, with the three bear-regime episodes shaded, ${indicator.signals.length} signal dates marked, and a ribbon below showing the daily regime: calm, correction, panic or bear. Readings before ${fmtDateLong(live)} are back-tested.</desc>
+<desc id="ex1-desc">Weekly S&amp;P 500 closes on a logarithmic scale, with the three bear-regime episodes shaded, ${indicator.signals.length} signal dates marked, and a ribbon below showing the daily regime: calm, correction, panic or bear. Readings are back-tested unless they were published on the day.</desc>
 <g class="ex-washes">${washes}</g>
 <g class="ex-grid-g">${grid}</g>
 <path d="${line}" class="ex-line"/>
@@ -125,7 +119,6 @@ ${endLabel}
 <g class="ex-ribbon">${ribbon}</g>
 <line x1="${padL}" x2="${W - padR}" y1="${bottom}" y2="${bottom}" class="ex-axis"/>
 ${xTicks}
-${liveMark}
 <g class="ex-hover" aria-hidden="true"><line class="ex-cross" x1="0" x2="0" y1="${padT}" y2="${bottom}"/><circle class="ex-cross-dot" r="4.5" cx="0" cy="0"/></g>
 </svg>`;
 
@@ -337,7 +330,7 @@ function mddRegimeChart({ rows, indicator }) {
   for (let y = 2018; y <= lastYear; y++) ticks.push(`<text x="${r1(X(`${y}-07-01`))}" y="${H - 8}" text-anchor="middle" class="ex-tick">${y}</text>`);
   return `<svg class="exhibit-svg" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="mdd3-title mdd3-desc">
 <title id="mdd3-title">S&amp;P 500 drawdown from its trailing one-year high since 2018, coloured by regime</title>
-<desc id="mdd3-desc">Each day's drawdown is shaded by the regime the indicator assigned: calm, correction, panic or bear. Shallow drawdowns are mostly calm or correction; the fast 2020 decline is panic; the slow 2022 decline is mostly bear, and bear throughout its deepest stretch. Readings before ${fmtDateLong(indicator.live_since)} are back-tested.</desc>
+<desc id="mdd3-desc">Each day's drawdown is shaded by the regime the indicator assigned: calm, correction, panic or bear. Shallow drawdowns are mostly calm or correction; the fast 2020 decline is panic; the slow 2022 decline is mostly bear, and bear throughout its deepest stretch. Readings are back-tested unless they were published on the day.</desc>
 ${grid}
 <g class="ex-regime-areas">${areas}</g>
 <path d="${outline}" class="ex-line ex-line-hair"/>

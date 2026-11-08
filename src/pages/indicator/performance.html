@@ -38,7 +38,7 @@
       <div class="exhibit-body">
         <div class="exhibit-interactive exhibit-scroll" tabindex="0" aria-describedby="ex2-help">{{EXHIBIT_REGIME_MIX}}</div>
       </div>
-      <p class="exhibit-source">* Year to date. Source: DoubleTrends. Readings before {{IND_LIVE_SINCE}} are back-tested. <span id="ex2-help" class="sr-only">Focus the chart and use the arrow keys to step through each year and regime.</span></p>
+      <p class="exhibit-source">* Year to date. Source: DoubleTrends. Readings are back-tested unless they were published on the day. <span id="ex2-help" class="sr-only">Focus the chart and use the arrow keys to step through each year and regime.</span></p>
       <p class="sr-only ex-live-region" aria-live="polite"></p>
     </figure>
   </div>
@@ -59,43 +59,6 @@
   </div>
 </section>
 
-<section class="section" id="revisions">
-  <div class="wrap">
-    <div class="section-head">
-      <div>
-        <span class="kicker">Revisions</span>
-        <h2 class="h2">Changes to published data</h2>
-        <p>Any change to a reading after its publication date is recorded here with its reason. Readings are otherwise final once the next session begins.</p>
-      </div>
-    </div>
-    <div class="table-scroll">
-      <table class="data-table">
-        <thead><tr><th scope="col">Date</th><th scope="col">Sessions affected</th><th scope="col">Change</th><th scope="col">Effect on regime or signal</th></tr></thead>
-        <tbody>
-          <tr>
-            <td class="date">2026-11-07</td>
-            <td>20 sessions, 2026-06-22 to 2026-11-06 (19 Fridays and June 22)</td>
-            <td class="text">Not published at the time because of a scheduling fault. Computed after the fact with the published method and added. The fault was corrected the same day.</td>
-            <td class="text">None carried a signal.</td>
-          </tr>
-          <tr>
-            <td class="date">2026-11-07</td>
-            <td>2026-08-06 and 2026-10-21</td>
-            <td class="text">The final reading did not publish (on October 21 an upstream data source was unavailable at the close); the published value was a provisional intraday reading. Replaced with the final reading computed with the published method.</td>
-            <td class="text">Regime and signal state unchanged; closing values updated.</td>
-          </tr>
-          <tr>
-            <td class="date">2026-11-07</td>
-            <td>Back-tested history</td>
-            <td class="text">The <a class="link" href="methodology.html#history">methodology</a> now discloses that monthly macroeconomic inputs are applied from the start of the month they describe in the back-tested history, before their release.</td>
-            <td class="text">Disclosure only; no readings changed.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
 <section class="section">
   <div class="wrap cols-2">
     <div>
@@ -110,7 +73,7 @@
     </div>
     <div class="disclosure">
       <h2>About back-tested results</h2>
-      <p>Readings and signals dated before {{IND_LIVE_SINCE}} are hypothetical. They were produced after the fact by applying the current method to historical data, with the benefit of hindsight in its design, and were not available to anyone at the time. Back-tested results have inherent limitations and do not represent actual investment results.</p>
+      <p>Back-tested readings and signals are hypothetical. They were produced after the fact by applying the current method to historical data, with the benefit of hindsight in its design, and were not available to anyone at the time. Back-tested results have inherent limitations and do not represent actual investment results.</p>
       <p>Returns shown are S&amp;P 500 index price returns. They exclude dividends, transaction costs and taxes, and the index cannot be invested in directly. Past and back-tested results do not guarantee future results.</p>
     </div>
   </div>

@@ -15,26 +15,7 @@
       </div>
     </div>
 
-    <aside class="reading" aria-labelledby="reading-title">
-      <div class="reading-head">
-        <h2 id="reading-title" class="reading-title">Latest reading</h2>
-        <span class="reading-asof">As of the {{IND_AS_OF}} close</span>
-      </div>
-      <div class="reading-regime">
-        <span class="swatch regime-key-{{IND_REGIME_KEY}}" aria-hidden="true"></span>
-        <div>
-          <div class="reading-regime-value">{{IND_REGIME}}</div>
-          <div class="reading-regime-note">Regime since {{IND_REGIME_SINCE}} &middot; {{IND_REGIME_SESSIONS}} sessions</div>
-        </div>
-      </div>
-      <dl>
-        <dt>S&amp;P 500 close</dt><dd>{{IND_CLOSE}}</dd>
-        <dt>From one-year high</dt><dd>{{IND_DRAWDOWN}}</dd>
-        <dt>Signal</dt><dd>{{IND_SIGNAL_STATE}}</dd>
-        <dt>Most recent signal</dt><dd>{{IND_LAST_SIGNAL}}</dd>
-      </dl>
-      <p class="reading-foot">Readings on this site are as of the date shown. Subscribers receive each day&rsquo;s reading shortly after the 4:00&nbsp;p.m. ET close, and any signal the same day.</p>
-    </aside>
+    {{READING_CARD}}
   </div>
 </section>
 
@@ -57,9 +38,9 @@
         <div class="key-figure-note">About {{SIG_PER_DECADE}} per decade</div>
       </div>
       <div class="key-figure">
-        <div class="key-figure-value">{{IND_LIVE_SINCE_SHORT}}</div>
-        <div class="key-figure-label">Live publication began</div>
-        <div class="key-figure-note">Earlier readings are back-tested</div>
+        <div class="key-figure-value">Daily</div>
+        <div class="key-figure-label">One reading after each U.S. close</div>
+        <div class="key-figure-note">Signals delivered the same day</div>
       </div>
     </div>
   </div>
@@ -94,7 +75,7 @@
         <div class="exhibit-interactive exhibit-scroll" tabindex="0" aria-describedby="ex1-help">{{EXHIBIT_REGIME_HISTORY}}</div>
       </div>
       <script type="application/json">{{EXHIBIT_REGIME_HISTORY_DATA}}</script>
-      <p class="exhibit-source">Weekly closes on a logarithmic scale; the ribbon shows the daily regime. Source: DoubleTrends, point-in-time reconstruction from S&amp;P 500, Cboe VIX and Federal Reserve Economic Data (FRED) series. Readings before {{IND_LIVE_SINCE}} are back-tested. <span id="ex1-help" class="sr-only">Focus the chart and use the left and right arrow keys to move week by week; hold Shift to move a year at a time.</span></p>
+      <p class="exhibit-source">Weekly closes on a logarithmic scale; the ribbon shows the daily regime. Source: DoubleTrends, point-in-time reconstruction from S&amp;P 500, Cboe VIX and Federal Reserve Economic Data (FRED) series. Readings are back-tested unless they were published on the day. <span id="ex1-help" class="sr-only">Focus the chart and use the left and right arrow keys to move week by week; hold Shift to move a year at a time.</span></p>
       <p class="sr-only ex-live-region" aria-live="polite"></p>
     </figure>
   </div>
@@ -122,7 +103,7 @@
       <h2 class="h2" style="margin-top: 0.6rem;">Why the daily reading has a fee</h2>
     </div>
     <div class="body-lg">
-      <p>DoubleTrends does not sell trading signals. The indicator is published as research: its rules, its complete record and every correction are public on this site.</p>
+      <p>DoubleTrends does not sell trading signals. The indicator is published as research: its rules and its complete record are public on this site.</p>
       <p style="margin-top: 1rem;">Computing and delivering the reading each trading day runs on servers and data services the firm rents. Subscribers receive each day&rsquo;s reading shortly after the close and any signal the same day, for USD 149 a year &mdash; a fee set to cover that upkeep.</p>
       <p style="margin-top: 1.25rem;"><a class="link-arrow" href="subscription.html">Subscription</a></p>
     </div>

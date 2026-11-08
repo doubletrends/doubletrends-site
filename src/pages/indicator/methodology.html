@@ -6,7 +6,7 @@
       {{BREADCRUMB}}
       <h1 class="display">How the DoubleTrends Regime Indicator is constructed</h1>
       <p class="dek">The indicator classifies the S&amp;P 500 into one of four regimes each trading day, and fires a reversal signal only when an oversold turn coincides with acute or persistent stress. This document sets out the inputs, the classification, the signal rules, publication timing, and how the history was built.</p>
-      <p class="page-head-meta"><span><strong>Coverage</strong> S&amp;P 500 index</span><span><strong>Frequency</strong> Daily, after the U.S. close</span><span><strong>History</strong> From {{IND_FIRST_DATE}}</span><span><strong>Live since</strong> {{IND_LIVE_SINCE}}</span></p>
+      <p class="page-head-meta"><span><strong>Coverage</strong> S&amp;P 500 index</span><span><strong>Frequency</strong> Daily, after the U.S. close</span><span><strong>History</strong> From {{IND_FIRST_DATE}}</span></p>
     </div>
   </div>
 </section>
@@ -115,7 +115,7 @@
       <section id="history">
         <h2 class="h2"><span class="section-no">7</span>Historical reconstruction</h2>
         <div class="prose">
-          <p>Readings and signals before {{IND_LIVE_SINCE}} are <strong>back-tested</strong>: they were produced after the fact by applying the method to history, not published at the time. For prices and volatility the reconstruction is point-in-time &mdash; on each historical date the method sees only closes on or before that date.</p>
+          <p>Readings and signals are <strong>back-tested</strong> unless they were published on the day: they were produced after the fact by applying the method to history, not published at the time. For prices and volatility the reconstruction is point-in-time &mdash; on each historical date the method sees only closes on or before that date.</p>
           <p>Before history is published it is computed twice, separately: once over the full series and once by replaying each date separately with only the trailing window available on that date. The two must agree field by field on a random sample of dates and produce byte-identical output; otherwise nothing is published.</p>
           <p><strong>Macroeconomic timing.</strong> Monthly series are aligned to the month they describe, so in the back-tested history a month&rsquo;s value is applied from the first day of that month &mdash; between one and six weeks before it was actually released. Live readings use only values already published. These series enter only the bear overlay (section 4.2), so the effect is limited to the timing of bear-regime episodes.</p>
           <p><strong>Data vintage.</strong> Macroeconomic series are revised after first release. The reconstruction uses the series as currently published, which can differ from the values available at the time. Price and volatility inputs are not revised.</p>

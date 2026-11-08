@@ -1,0 +1,22 @@
+<!-- Latest-reading card, shared by the homepage and the DoubleTrends page:
+     pages place it with the READING_CARD slot. Figures come from src/data/.
+     No signal state here: signals are a subscriber feature. -->
+<aside class="reading" aria-labelledby="reading-title">
+  <div class="reading-head">
+    <h2 id="reading-title" class="reading-title"><span class="live-dot" aria-hidden="true"></span>Latest reading</h2>
+    <span class="reading-asof">As of the {{IND_AS_OF}} close</span>
+  </div>
+  <p class="reading-desk">From the research desk</p>
+  <p class="reading-subject">The DoubleTrends Regime Indicator &middot; S&amp;P 500</p>
+  <div class="reading-regime">
+    <span class="swatch regime-key-{{IND_REGIME_KEY}}" aria-hidden="true"></span>
+    <div>
+      <div class="reading-regime-value">{{IND_REGIME}}</div>
+      <div class="reading-regime-note">Regime since {{IND_REGIME_SINCE}} &middot; {{IND_REGIME_SESSIONS}} sessions</div>
+    </div>
+  </div>
+  <dl>
+    <dt>S&amp;P 500 close</dt><dd>{{IND_CLOSE}}</dd>
+    <dt>From one-year high</dt><dd>{{IND_DRAWDOWN}}</dd>  </dl>
+  <p class="reading-foot">Subscribers receive each day&rsquo;s reading shortly after the 4:00&nbsp;p.m. ET close, and any signal the same day.{{READING_LINK}}</p>
+</aside>
