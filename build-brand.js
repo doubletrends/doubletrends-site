@@ -4,7 +4,7 @@
  * Identity in the brand's two colors: the portico (the original [_] mark
  * redrawn as two pilasters with a rust threshold) on a navy tile, and the
  * name "DoubleTrends" split as in the original wordmark ("Double" rust,
- * "Trends" navy, rust cursor bar), set in Source Serif 4 Semibold and
+ * "Trends" navy), set in Source Serif 4 Semibold and
  * converted to outlines (opentype.js), so the SVGs render identically
  * everywhere with no font dependency. The OG
  * image carries the real regime ribbon (1996 → latest), drawn from
@@ -102,15 +102,12 @@ function wordmarkSvg({ dark = false } = {}) {
   const first = outline(SERIF, 'Double', size, mark + gap, y);
   const kernET = (SERIF.getKerningValue(SERIF.charToGlyph('e'), SERIF.charToGlyph('T')) / SERIF.unitsPerEm) * size;
   const second = outline(SERIF, 'Trends', size, mark + gap + first.width + kernET, y);
-  // The cursor bar of the original wordmark, sitting on the baseline after "Trends".
-  const barX = mark + gap + first.width + kernET + second.width + 0.07 * size, barW = 0.34 * size, barH = 0.08 * size;
-  const W = Math.ceil(barX + barW + 4);
+  const W = Math.ceil(mark + gap + first.width + kernET + second.width + 4);
   const inner = `<g transform="scale(${mark / 64})">${markSvg({ plate, ink: plateInk }).replace(/^<svg[^>]*>|<\/svg>$/g, '')}</g>`;
   return { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
 ${inner}
 <path d="${first.d}" fill="${RUST}"/>
 <path d="${second.d}" fill="${ink}"/>
-<rect x="${barX.toFixed(2)}" y="${(y - barH).toFixed(2)}" width="${barW.toFixed(2)}" height="${barH.toFixed(2)}" fill="${RUST}"/>
 </svg>`, W, H };
 }
 
