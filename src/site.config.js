@@ -88,7 +88,7 @@ const pages = [
     desc:  'DoubleTrends is a quantitative research firm studying market regimes, drawdowns and investor behavior. It publishes its research and the DoubleTrends Regime Indicator openly, and offers research and data engineering services.',
   }),
   page('indicator/index.html', {
-    headImage: 'southstack',
+    headImage: 'westernunion',
     priority: 0.9,
     nav: 'indicator',
     title: 'The DoubleTrends Regime Indicator',
@@ -96,7 +96,7 @@ const pages = [
     desc:  'The DoubleTrends Regime Indicator: a rules-based daily classification of S&P 500 market stress — calm, correction, panic, bear — with a reversal signal eligible only under stress. Published as research, with history from December 1995.',
   }),
   page('indicator/methodology.html', {
-    headImage: 'libcongress1898',
+    headImage: 'sorter1940',
     priority: 0.9,
     nav: 'methodology',
     title: 'Methodology',
@@ -112,7 +112,7 @@ const pages = [
     desc:  'Every DoubleTrends signal since 1998 with 3-month, 1-year and 2-year S&P 500 forward returns, the regime mix by year since 1996, regime statistics, and a CSV download.',
   }),
   page('indicator/subscription.html', {
-    headImage: 'pennstation',
+    headImage: 'mailcarrier1923',
     priority: 0.9,
     kind: 'product',
     nav: 'subscription',
@@ -157,7 +157,7 @@ const pages = [
     desc:  'The three workspaces shipped with AlphaVerify (NASDAQ daily, bitcoin daily and bitcoin hourly): data sources, test grids and the feature families each one tests.',
   }),
   page('research/index.html', {
-    headImage: 'curies1904',
+    headImage: 'microscope1936',
     priority: 0.9,
     kind: 'collection',
     nav: 'research',

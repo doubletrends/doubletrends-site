@@ -20,25 +20,6 @@
         "band"
       ]
     },
-    "libcongress1898": {
-      "title": "Washington. West façade Library of Congress-LCCN2008678234.jpg",
-      "page": "https://commons.wikimedia.org/wiki/File:Washington._West_façade_Library_of_Congress-LCCN2008678234.jpg",
-      "licence": "Public domain",
-      "credit": "Library of Congress, west façade, Washington, 1898. Photochrom print, Detroit Publishing Co. Library of Congress.",
-      "crop": {
-        "box": [
-          0,
-          0.02,
-          0.82,
-          0.92
-        ],
-        "focus": 0.47
-      },
-      "renditions": [
-        "hero",
-        "band"
-      ]
-    },
     "massbalance": {
       "title": "MassStandards 003.jpg",
       "page": "https://commons.wikimedia.org/wiki/File:MassStandards_003.jpg",
@@ -58,25 +39,6 @@
         "band"
       ]
     },
-    "curies1904": {
-      "title": "Pierre and Marie Curie.jpg",
-      "page": "https://commons.wikimedia.org/wiki/File:Pierre_and_Marie_Curie.jpg",
-      "licence": "Public domain",
-      "credit": "Pierre and Marie Curie in their laboratory, Paris, c. 1904.",
-      "crop": {
-        "box": [
-          0.005,
-          0.005,
-          0.98,
-          0.98
-        ],
-        "focus": 0.335
-      },
-      "renditions": [
-        "hero",
-        "band"
-      ]
-    },
     "royalexchange": {
       "title": "Royal Exchange, London, England-LCCN2002696923.jpg",
       "page": "https://commons.wikimedia.org/wiki/File:Royal_Exchange,_London,_England-LCCN2002696923.jpg",
@@ -90,25 +52,6 @@
           0.98
         ],
         "focus": 0.52
-      },
-      "renditions": [
-        "hero",
-        "band"
-      ]
-    },
-    "southstack": {
-      "title": "South Stack Lighthouse, Holyhead, Wales-LCCN2001703489.tif",
-      "page": "https://commons.wikimedia.org/wiki/File:South_Stack_Lighthouse,_Holyhead,_Wales-LCCN2001703489.tif",
-      "licence": "Public domain",
-      "credit": "South Stack Lighthouse, Holyhead, Wales, 1890s. Photochrom print, Detroit Publishing Co. Library of Congress.",
-      "crop": {
-        "box": [
-          0.02,
-          0.03,
-          0.98,
-          0.93
-        ],
-        "focus": 0.42
       },
       "renditions": [
         "hero",
@@ -153,19 +96,76 @@
         "band"
       ]
     },
-    "pennstation": {
-      "title": "Detroit Publishing - New Pennsylvania Station, New York, N.Y..jpg",
-      "page": "https://commons.wikimedia.org/wiki/File:Detroit_Publishing_-_New_Pennsylvania_Station,_New_York,_N.Y..jpg",
+    "microscope1936": {
+      "title": "Man using microscope in laboratory LCCN2016882745.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Man_using_microscope_in_laboratory_LCCN2016882745.jpg",
       "licence": "Public domain",
-      "credit": "Pennsylvania Station, New York, c. 1910. Detroit Publishing Co. Library of Congress.",
+      "credit": "Man using a microscope in a laboratory, Washington, 1936. Harris & Ewing. Library of Congress.",
+      "crop": {
+        "box": [
+          0.04,
+          0.05,
+          0.96,
+          0.95
+        ],
+        "focus": 0.3
+      },
+      "renditions": [
+        "hero",
+        "band"
+      ]
+    },
+    "sorter1940": {
+      "title": "Card sorter for tabulating machine LCCN2016877177.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Card_sorter_for_tabulating_machine_LCCN2016877177.jpg",
+      "licence": "Public domain",
+      "credit": "Card sorter for a tabulating machine, Washington, 1940. Harris & Ewing. Library of Congress.",
+      "crop": {
+        "box": [
+          0.04,
+          0.05,
+          0.96,
+          0.95
+        ],
+        "focus": 0.44
+      },
+      "renditions": [
+        "hero",
+        "band"
+      ]
+    },
+    "westernunion": {
+      "title": "Western Union Telegraph Building.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Western_Union_Telegraph_Building.jpg",
+      "licence": "Public domain",
+      "credit": "Western Union Telegraph Building, Broadway, New York. Stereograph, Robert N. Dennis collection. The New York Public Library.",
       "crop": {
         "box": [
           0.02,
-          0.05,
+          0.01,
           0.98,
+          0.98
+        ],
+        "focus": 0.3
+      },
+      "renditions": [
+        "hero",
+        "band"
+      ]
+    },
+    "mailcarrier1923": {
+      "title": "Mail carrier LCCN2016892840.tif",
+      "page": "https://commons.wikimedia.org/wiki/File:Mail_carrier_LCCN2016892840.tif",
+      "licence": "Public domain",
+      "credit": "Mail carrier, Washington, 1923. Harris & Ewing. Library of Congress.",
+      "crop": {
+        "box": [
+          0.04,
+          0.05,
+          0.96,
           0.95
         ],
-        "focus": 0.46
+        "focus": 0.52
       },
       "renditions": [
         "hero",
