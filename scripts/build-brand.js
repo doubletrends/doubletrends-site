@@ -3,15 +3,17 @@
  * Called from build.js; nothing here is committed.
  *
  * Identity in the brand's two colors: the portico (the original [_] mark
- * redrawn as two pilasters with a rust threshold) on a navy tile, and the
- * name "DoubleTrends" split as in the original wordmark ("Double" rust,
- * "Trends" navy), set in Source Serif 4 Semibold and
+ * redrawn as two pilasters with a rust threshold), with no background except
+ * on icons and avatars, and the name "DoubleTrends" split as in the original
+ * wordmark ("Double" rust, "Trends" navy), set in Source Serif 4 Semibold and
  * converted to outlines (opentype.js), so the SVGs render identically
- * everywhere with no font dependency. The OG image and banner are engraved
- * cards on navy, in the guilloche line-work of build-guilloche.js.
+ * everywhere with no font dependency. The OG image and banners are navy
+ * cards under the paper moiré of build-guilloche.js, with an archival photo.
  *
  * Outputs keep every historical filename so external links never break:
- *   logo.svg · logo-on-dark.svg · logo-{light,dark}.png · favicon-{32,180}.png
+ *   logo.svg · logo-on-dark.svg · logo-{light,dark}.png   the mark, no background
+ *   favicon.svg · favicon-{32,180}.png                    the mark on a navy tile
+ *   avatar-{navy,white}.png                               social avatars, 1024 square
  *   wordmark.svg · wordmark-{light,dark}.png · og-image.{svg,png} · banner.{svg,png}
  *   linkedin-banner.{svg,png} (LinkedIn company-page cover)
  */
@@ -74,30 +76,49 @@ function outline(font, text, size, x = 0, y = 0, tracking = 0) {
 // each bracket is a classical pilaster: abacus and plinth reach inward like
 // the bracket's arms; capital, shaft and base stand between. The rust bar
 // becomes the threshold of the portico. Drawn on a 64-unit grid, left half
-// mirrored, so the mark is exactly symmetric; the pilasters span y 10.4 to
-// 53.6, the same 10.4 from the top and the bottom of the tile.
-function markSvg({ plate, ink }) {
+// mirrored, so the mark is exactly symmetric; it fills MARK_BOX, the square
+// from 10.4 to 53.6 on both axes, centred on the grid.
+//
+// The mark has no background. Each shaft has a single flute, cut as a hole
+// and filled with the ink at 45%, so on any ground it reads as the old flute
+// cut in the plate colour did.
+const MARK_BOX = { x: 10.4, y: 10.4, size: 43.2 };
+
+function markShapes(ink) {
   const half = `<rect x="10.5" y="10.4" width="16.5" height="2.6"/>
 <rect x="11.5" y="13" width="10" height="2.2"/>
-<rect x="12" y="15.2" width="6" height="33.6"/>
+<path fill-rule="evenodd" d="M12 15.2h6v33.6h-6zM14.6 17.4v29h0.8v-29z"/>
 <rect x="11.5" y="48.8" width="10" height="2.2"/>
-<rect x="10.5" y="51" width="16.5" height="2.6"/>`;
-  // A single flute down each shaft, cut in the plate colour.
-  const flute = `<rect x="14.6" y="17.4" width="0.8" height="29" fill="${plate}" fill-opacity="0.55"/>`;
+<rect x="10.5" y="51" width="16.5" height="2.6"/>
+<rect x="14.6" y="17.4" width="0.8" height="29" fill-opacity="0.45"/>`;
+  return `<g fill="${ink}">${half}<g transform="translate(64 0) scale(-1 1)">${half}</g></g>
+<rect x="26" y="44.8" width="12" height="4" fill="${RUST}"/>`;
+}
+
+// The mark alone, cropped to MARK_BOX: the logo every page and asset uses.
+function markSvg({ ink }) {
+  const { x, y, size } = MARK_BOX;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${x} ${y} ${size} ${size}" width="64" height="64">
+${markShapes(ink)}
+</svg>`;
+}
+
+// The mark on a square ground, for places that need an opaque icon: browser
+// and home-screen icons (`rounded`, at the mark's own size on the tile) and
+// social avatars (square to the edge, the mark at `fill` of the width so a
+// circular crop clears it).
+function tileSvg({ plate, ink, rounded = false, fill = MARK_BOX.size / 64 }) {
+  const k = (fill * 64) / MARK_BOX.size;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-<rect width="64" height="64" rx="6" fill="${plate}"/>
-<g fill="${ink}">${half}<g transform="translate(64 0) scale(-1 1)">${half}</g></g>
-${flute}<g transform="translate(64 0) scale(-1 1)">${flute}</g>
-<rect x="26" y="44.8" width="12" height="4" fill="${RUST}"/>
+<rect width="64" height="64"${rounded ? ' rx="6"' : ''} fill="${plate}"/>
+<g transform="translate(32 32) scale(${k}) translate(-32 -32)">${markShapes(ink)}</g>
 </svg>`;
 }
 
 // ─── Wordmark: mark + name ──────────────────────────────────────────────────
 function wordmarkSvg({ dark = false } = {}) {
   const ink = dark ? '#FFFFFF' : NAVY;
-  const plate = dark ? '#FFFFFF' : NAVY;
-  const plateInk = dark ? NAVY : '#FFFFFF';
-  const H = 80, mark = 80, gap = 22, size = 50;
+  const H = 80, mark = 54, gap = 30, size = 50;
   const probe = outline(SERIF, 'DoubleTrends', size);
   const y = H / 2 + (-probe.top) / 2 - 1;
   // "Double" in rust, "Trends" in navy (white on dark), as in the original wordmark.
@@ -105,7 +126,7 @@ function wordmarkSvg({ dark = false } = {}) {
   const kernET = (SERIF.getKerningValue(SERIF.charToGlyph('e'), SERIF.charToGlyph('T')) / SERIF.unitsPerEm) * size;
   const second = outline(SERIF, 'Trends', size, mark + gap + first.width + kernET, y);
   const W = Math.ceil(mark + gap + first.width + kernET + second.width + 4);
-  const inner = `<g transform="scale(${mark / 64})">${markSvg({ plate, ink: plateInk }).replace(/^<svg[^>]*>|<\/svg>$/g, '')}</g>`;
+  const inner = `<g transform="translate(0 ${(H - mark) / 2}) scale(${mark / MARK_BOX.size}) translate(${-MARK_BOX.x} ${-MARK_BOX.y})">${markShapes(ink)}</g>`;
   return { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
 ${inner}
 <path d="${first.d}" fill="${RUST}"/>
@@ -174,14 +195,24 @@ async function writeBrand(OUT) {
     return img.png().toFile(path.join(OUT, name));
   };
 
-  const logo = markSvg({ plate: NAVY, ink: '#FFFFFF' });
-  const logoOnDark = markSvg({ plate: '#FFFFFF', ink: NAVY });
+  // The mark alone, for pages and other assets: navy for light grounds,
+  // white for dark ones.
+  const logo = markSvg({ ink: NAVY });
+  const logoOnDark = markSvg({ ink: '#FFFFFF' });
   write('logo.svg', logo);
   write('logo-on-dark.svg', logoOnDark);
-  await png(logo, 'favicon-32.png', { size: 32 });
-  await png(logo, 'favicon-180.png', { size: 180 });
   await png(logo, 'logo-light.png', { size: 512 });
   await png(logoOnDark, 'logo-dark.png', { size: 512 });
+
+  // Browser and home-screen icons need an opaque ground: the mark on a navy tile.
+  const favicon = tileSvg({ plate: NAVY, ink: '#FFFFFF', rounded: true });
+  write('favicon.svg', favicon);
+  await png(favicon, 'favicon-32.png', { size: 32 });
+  await png(favicon, 'favicon-180.png', { size: 180 });
+
+  // The social duo: square avatars to upload to profiles, navy and white.
+  await png(tileSvg({ plate: NAVY, ink: '#FFFFFF', fill: 0.56 }), 'avatar-navy.png', { size: 1024 });
+  await png(tileSvg({ plate: '#FFFFFF', ink: NAVY, fill: 0.56 }), 'avatar-white.png', { size: 1024 });
 
   const wm = wordmarkSvg();
   const wmDark = wordmarkSvg({ dark: true });

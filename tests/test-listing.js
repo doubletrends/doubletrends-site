@@ -48,7 +48,7 @@ async function main() {
 
   // C. Images, from the table rows: | `name.png` | W × H | use |
   let images = 0;
-  for (const [, file, w, h] of md.matchAll(/\| `([a-z0-9-]+\.png)` \| (\d+) × (\d+) \|/g)) {
+  for (const [, file, w, h] of md.matchAll(/\|\s*`([a-z0-9-]+\.png)`\s*\|\s*(\d+) × (\d+)\s*\|/g)) {
     images++;
     const built = path.join(DIST, 'public', 'brand', file);
     if (!fs.existsSync(built)) { errors.push(`LISTING.md names ${file}, which the build does not produce`); continue; }
