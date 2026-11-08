@@ -20,9 +20,8 @@
 // markup change can never turn this test into a silent pass.
 const fs   = require('fs');
 const path = require('path');
-const { pages } = require('../src/site.config');
-const { SECTIONS } = require('../src/schema');
-const { DIST, decode, report } = require('./test-utils');
+const { pages, SECTIONS } = require('../src/site.config');
+const { DIST, decode, report } = require('./utils');
 
 const MAIN_RE       = /<main\b[^>]*>([\s\S]*?)<\/main>/;
 const H1_RE         = /<h1\b[^>]*>\s*([^<]+?)\s*<\/h1>/;

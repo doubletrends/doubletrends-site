@@ -115,7 +115,7 @@ ${inner}
 // ─── Regime ribbon from data ────────────────────────────────────────────────
 function ribbon(x, y, w, h) {
   const daily = JSON.parse(fs.readFileSync(path.join(ROOT, 'src', 'data', 'regimes-daily.json'), 'utf8'));
-  const color = { c: REGIMES.calm.hex, k: REGIMES.correction.hex, p: REGIMES.panic.hex, b: REGIMES.bear.hex };
+  const color = Object.fromEntries(Object.entries(daily.codes).map(([g, c]) => [c, REGIMES[g].hex]));
   const rows = daily.rows;
   const n = rows.length;
   const out = [];

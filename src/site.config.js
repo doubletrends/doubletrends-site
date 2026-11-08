@@ -50,8 +50,26 @@ function rootFor(src) {
 }
 
 function page(src, overrides = {}) {
-  return { src, root: rootFor(src), priority: 0.7, kind: 'webpage', ...overrides };
+  return { src, root: rootFor(src), priority: 0.7, changefreq: 'monthly', kind: 'webpage', ...overrides };
 }
+
+// Top-level folders that are site sections, with the label the breadcrumb,
+// JSON-LD and llms.txt give each. A page in any other folder is a top-level page.
+const SECTIONS = {
+  indicator: 'DoubleTrends™',
+  research: 'Research',
+  validation: 'Validation',
+  company: 'The Firm',
+  legal: 'Legal',
+};
+
+// Research series, in library order, with the line the library shows under
+// each. Every article names one of these as its `series`.
+const SERIES = {
+  'Studies': 'Market history and investor behavior: the base rates behind the indicator.',
+  'Primers': 'The measures the indicator is built from, explained one at a time.',
+  'Macro inputs': 'One note per macroeconomic series the regime classification reads.',
+};
 
 // Research notes. `section` is the topic (shown in the dateline after the series),
 // `series` groups the library, `published` is the date the note first shipped
@@ -77,6 +95,7 @@ const pages = [
   page('index.html', {
     headImage: 'facade1908',
     priority: 1.0,
+    changefreq: 'weekly',
     kind: 'home',
     nav: 'home',
     title: 'Market Regime Research',
@@ -101,6 +120,7 @@ const pages = [
   page('indicator/performance.html', {
     headImage: 'royalexchange',
     priority: 0.9,
+    changefreq: 'weekly', // the record grows with each signal
     nav: 'data',
     title: 'Performance: Regimes and Signals Since 1995',
     crumb: 'Performance',
@@ -349,5 +369,7 @@ module.exports = {
   OG_IMAGE,
   OG_IMAGE_ALT,
   PUBLISHER,
+  SECTIONS,
+  SERIES,
   pages,
 };

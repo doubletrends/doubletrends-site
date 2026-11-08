@@ -13,7 +13,7 @@
 const fs   = require('fs');
 const path = require('path');
 const { SITE_URL } = require('../src/site.config');
-const { DIST, walk, relPosix, isNoindex, report } = require('./test-utils');
+const { DIST, walk, relPosix, isNoindex, report } = require('./utils');
 
 // The built file Cloudflare answers with 200 for a URL path, or null when it
 // redirects or 404s: "/dir/" → dir/index.html, "/page" → page.html; any

@@ -1,7 +1,7 @@
 const fs   = require('fs');
 const path = require('path');
-const { pages } = require('../src/site.config');
-const { report } = require('./test-utils');
+const { pages, SERIES } = require('../src/site.config');
+const { report } = require('./utils');
 
 const SRC_PAGES    = path.join(__dirname, '..', 'src', 'pages');
 const ALLOWED_KINDS = new Set(['home', 'webpage', 'collection', 'services', 'contact', 'about', 'article', 'product']);
@@ -65,6 +65,10 @@ function main() {
       }
       if (page.src === 'research/index.html') {
         errors.push(`${page.src}: research index cannot be kind "article"`);
+      }
+      // An unknown series drops the note from the library and the footer.
+      if (!Object.hasOwn(SERIES, page.series)) {
+        errors.push(`${page.src}: series "${page.series}" is not one of ${Object.keys(SERIES).join(', ')}`);
       }
     }
   }

@@ -1,6 +1,6 @@
 const fs   = require('fs');
 const path = require('path');
-const { DIST, walk, relPosix, report } = require('./test-utils');
+const { DIST, walk, relPosix, report } = require('./utils');
 
 const HTML_EXT        = '.html';
 const ATTR_RE         = /\b(?:href|src)=["']([^"'#][^"']*|#[^"']*)["']/gi;

@@ -1,0 +1,21 @@
+# DoubleTrends
+
+DoubleTrends is a quantitative research firm. It publishes research on market regimes, drawdowns and investor behavior, and the DoubleTrends Regime Indicator: a rules-based daily classification of U.S. equity market stress (calm, correction, panic, bear) for the S&P 500, with a reversal signal that is eligible to fire only in panic and bear regimes. Its rules and complete record are public; a subscription delivers the daily reading and any signal on the day, priced close to what it costs to run. It accepts no payments from brokers or exchanges and also offers research and data engineering services. History is a point-in-time reconstruction from {{IND_FIRST_YEAR}}. The site also publishes research notes on drawdowns, investor behavior, and the indicator's inputs.
+
+Important: the content is educational market information only. It is not financial, investment, trading, tax, or legal advice, and it is not a recommendation to buy, sell, or hold any security. Readings are back-tested unless they were published on the day.
+
+{{LLMS_SECTIONS}}
+
+## Machine-Readable Data
+
+- Signal history with forward returns (CSV): {{SITE_URL}}/public/data/doubletrends-signals.csv
+- XML sitemap: {{SITE_URL}}/sitemap.xml
+
+## Entity Summary
+
+- Brand: DoubleTrends (a trademark of DoubleTrends L.L.C.)
+- Operator: DoubleTrends L.L.C.
+- Coverage: S&P 500 index (DoubleTrends is not affiliated with S&P Dow Jones Indices)
+- Publication: daily regime reading after the U.S. close; signals delivered same day to subscribers
+- Signal history: {{SIG_COUNT}} signals since {{SIG_FIRST}}, all back-tested unless marked live
+- Contact: info@doubletrends.com

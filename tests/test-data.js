@@ -1,5 +1,5 @@
 // The published record agrees with itself (README: "No number is typed by
-// hand"). build-indicator-data.js writes three files from one backfill and
+// hand"). indicator-data.js writes three files from one backfill and
 // they are committed together; this fails when they drift apart — a partial
 // regeneration, a hand edit, or a generator change that updates one output
 // and not another.
@@ -21,7 +21,7 @@
 // daily file keeps closes to the cent.
 const fs   = require('fs');
 const path = require('path');
-const { ROOT, report } = require('./test-utils');
+const { ROOT, report } = require('./utils');
 
 const indicator = require('../src/data/indicator.json');
 const daily     = require('../src/data/regimes-daily.json');

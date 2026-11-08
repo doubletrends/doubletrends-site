@@ -1,6 +1,6 @@
 const fs   = require('fs');
 const { SITE_NAME } = require('../src/site.config');
-const { DIST, walk, relPosix, report } = require('./test-utils');
+const { DIST, walk, relPosix, report } = require('./utils');
 
 const HTML_EXT        = '.html';
 // Title convention: page first, firm last ("Methodology | DoubleTrends");

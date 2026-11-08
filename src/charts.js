@@ -2,7 +2,7 @@
  * charts.js — house-style exhibits rendered to static SVG at build time.
  *
  * Inputs are the parsed src/data/ files, passed in by build.js (see
- * build-indicator-data.js). Output is plain
+ * indicator-data.js). Output is plain
  * markup injected into pages via {{EXHIBIT_*}} placeholders, so every chart
  * renders without JavaScript and prints cleanly. public/scripts/exhibits.js layers
  * the interactive parts on top (crosshair + tooltip, keyboard stepping).
@@ -12,27 +12,21 @@
  *   regime ribbon / mix bars / bear washes · 2px surface ring on markers ·
  *   right-hand log axis · sparse direct labels.
  */
-const REGIME_ORDER = ['calm', 'correction', 'panic', 'bear'];
-const REGIME_LABEL = { calm: 'Calm', correction: 'Correction', panic: 'Panic', bear: 'Bear' };
-const CODE_TO_REGIME = { c: 'calm', k: 'correction', p: 'panic', b: 'bear' };
+const { REGIMES } = require('./brand.config');
+const { fmtDateLong, fmtDateShort, fmtMonthYear, fmtMonthYearLong, fmtNum, fmtPct, esc } = require('./format');
+
+const REGIME_ORDER = Object.keys(REGIMES);
+const REGIME_LABEL = Object.fromEntries(REGIME_ORDER.map((g) => [g, REGIMES[g].label]));
 
 // `daily` is src/data/regimes-daily.json, `indicator` src/data/indicator.json;
 // the caller reads them, so this module never touches the file system.
 function toData(daily, indicator) {
-  const rows = daily.rows.map(([date, close, code]) => ({ date, close, regime: CODE_TO_REGIME[code] }));
+  // regimes-daily.json stores one-letter codes and carries its own key.
+  const codeToRegime = Object.fromEntries(Object.entries(daily.codes).map(([g, c]) => [c, g]));
+  const rows = daily.rows.map(([date, close, code]) => ({ date, close, regime: codeToRegime[code] }));
   return { rows, indicator };
 }
 
-// ─── Formatting ─────────────────────────────────────────────────────────────
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const MON = MONTHS.map((m) => m.slice(0, 3));
-const parts = (iso) => iso.split('-').map(Number);
-const fmtDateLong = (iso) => { const [y, m, d] = parts(iso); return `${MONTHS[m - 1]} ${d}, ${y}`; };
-const fmtDateShort = (iso) => { const [y, m, d] = parts(iso); return `${MON[m - 1]} ${d}, ${y}`; };
-const fmtMonthYear = (iso) => { const [y, m] = parts(iso); return `${MON[m - 1]} ${y}`; };
-const fmtNum = (x, d = 2) => x.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
-const fmtPct = (x, d = 1) => (x === null || x === undefined ? null : `${x > 0 ? '+' : x < 0 ? '−' : ''}${Math.abs(x).toFixed(d)}%`);
-const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const r1 = (x) => Math.round(x * 10) / 10;
 
 const toMs = (iso) => Date.parse(`${iso}T00:00:00Z`);
@@ -448,7 +442,7 @@ function buildExhibits({ daily, indicator }) {
 
     IND_FIRST_DATE: fmtDateLong(indicator.first_date),
     IND_FIRST_YEAR: indicator.first_date.slice(0, 4),
-    IND_FIRST_MONTH: MONTHS[Number(indicator.first_date.slice(5, 7)) - 1] + ' ' + indicator.first_date.slice(0, 4),
+    IND_FIRST_MONTH: fmtMonthYearLong(indicator.first_date),
     IND_TRADING_DAYS: indicator.trading_days.toLocaleString('en-US'),
 
     SIG_COUNT: String(S.count),
@@ -464,4 +458,4 @@ function buildExhibits({ daily, indicator }) {
   };
 }
 
-module.exports = { buildExhibits, fmtDateLong };
+module.exports = { buildExhibits };

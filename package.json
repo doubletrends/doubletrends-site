@@ -7,20 +7,11 @@
   },
   "scripts": {
     "build": "node scripts/build.js",
-    "indicator-data": "node scripts/build-indicator-data.js",
-    "test": "node scripts/build.js && node tests/test-links.js && node tests/test-urls.js && node tests/test-trademark.js && node tests/test-metadata.js && node tests/test-page-registry.js && node tests/test-schema.js && node tests/test-labels.js && node tests/test-brand-tokens.js && node tests/test-data.js",
-    "test:links": "node scripts/build.js && node tests/test-links.js",
-    "test:urls": "node scripts/build.js && node tests/test-urls.js",
-    "test:trademark": "node scripts/build.js && node tests/test-trademark.js",
-    "test:metadata": "node scripts/build.js && node tests/test-metadata.js",
-    "test:registry": "node tests/test-page-registry.js",
-    "test:schema": "node scripts/build.js && node tests/test-schema.js",
-    "test:labels": "node scripts/build.js && node tests/test-labels.js",
-    "test:brand-tokens": "node tests/test-brand-tokens.js",
-    "test:data": "node tests/test-data.js",
+    "indicator-data": "node scripts/indicator-data.js",
+    "test": "node scripts/build.js && node tests/run.js",
     "dev": "node scripts/build.js && wrangler dev",
     "deploy": "node scripts/build.js && wrangler deploy",
-    "archive-images": "node scripts/build-archive-images.js"
+    "archive-images": "node scripts/archive-images.js"
   },
   "devDependencies": {
     "@fontsource/source-sans-3": "^5.3.1",

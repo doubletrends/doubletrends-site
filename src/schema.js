@@ -1,3 +1,5 @@
+const { SECTIONS } = require('./site.config');
+
 function escapeJsonLd(json) {
   return json.replace(/</g, '\\u003c');
 }
@@ -5,15 +7,6 @@ function escapeJsonLd(json) {
 function toJsonLdScript(node) {
   return `  <script type="application/ld+json">\n${escapeJsonLd(JSON.stringify(node, null, 2))}\n  </script>`;
 }
-
-// Top-level folders that form site sections, with their breadcrumb label.
-const SECTIONS = {
-  indicator: 'DoubleTrends™',
-  research: 'Research',
-  validation: 'Validation',
-  company: 'The Firm',
-  legal: 'Legal',
-};
 
 function canonicalFor(siteUrl, src) {
   // Pages are emitted at their source path (method.html → dist/method.html,
@@ -248,7 +241,6 @@ function buildJsonLdScripts(context) {
 
 module.exports = {
   buildJsonLdScripts,
-  SECTIONS,
   canonicalFor,
   breadcrumbItems,
   isoDate,

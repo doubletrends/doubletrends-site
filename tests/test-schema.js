@@ -1,7 +1,7 @@
 const fs   = require('fs');
 const path = require('path');
 const { pages } = require('../src/site.config');
-const { DIST, isNoindex, report } = require('./test-utils');
+const { DIST, isNoindex, report } = require('./utils');
 
 const JSONLD_BLOCK_RE = /<script\s+type=["']application\/ld\+json["'][^>]*>\s*([\s\S]*?)\s*<\/script>/gi;
 

@@ -42,11 +42,13 @@ const FONTS = {
   mono:  ['"Source Sans 3"', '"Helvetica Neue"', 'Arial', 'sans-serif'], // historical: data — tabular figures via CSS
 };
 
+// The four regimes, in order of rising stress: the one list every exhibit,
+// legend, table and tooltip reads (order, label, color).
 const REGIMES = {
-  calm:       { hex: '#3B9A5C' },
-  correction: { hex: '#DDAA22' },
-  panic:      { hex: '#A8223F' },
-  bear:       { hex: '#5E4596' },
+  calm:       { label: 'Calm',       hex: '#3B9A5C' },
+  correction: { label: 'Correction', hex: '#DDAA22' },
+  panic:      { label: 'Panic',      hex: '#A8223F' },
+  bear:       { label: 'Bear',       hex: '#5E4596' },
 };
 
 // Signed figures in performance tables: gains green, losses red. Text colors,

@@ -1,5 +1,5 @@
 /**
- * build-archive-images.js — `npm run archive-images`
+ * archive-images.js — `npm run archive-images`
  *
  * Produces the archival background images in public/img/archive/ from the
  * manifest in src/data/archive-images.json. Run by hand when the manifest
@@ -25,10 +25,13 @@ const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the r
 const CACHE = path.join(ROOT, 'build', 'archive');
 const OUT = path.join(ROOT, 'public', 'img', 'archive');
 const { images } = require('../src/data/archive-images.json');
-const UA = 'DoubleTrendsSiteDesign/1.0 (https://doubletrends.com)';
+const { SITE_URL } = require('../src/site.config');
+const { COLORS } = require('../src/brand.config');
+const UA = `DoubleTrendsSiteDesign/1.0 (${SITE_URL})`;
 
-const NAVY = [0x2A, 0x33, 0x40];
-const PAPER = [0xFB, 0xFA, 0xF7];
+const rgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+const NAVY = rgb(COLORS.primary);
+const PAPER = rgb(COLORS.light);
 const SOFT_DARK = [0x8A, 0x90, 0x99]; // navy lifted toward paper: sits behind text
 const RENDITIONS = {
   head: { w: 2400, h: 640, dark: SOFT_DARK, gamma: 0.9 },

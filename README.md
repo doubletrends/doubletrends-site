@@ -26,8 +26,8 @@ flowchart LR
 
 Load-bearing ideas:
 
-1. **`scripts/build.js` is the whole system.** Everything else is an input to it or an output of it.
-2. **No number is typed by hand.** Every figure on the site — the latest reading, signal counts, returns, regime shares, the exhibits — comes from `src/data/`, generated from the backend's validated backfill by `scripts/build-indicator-data.js`. Change the data, rebuild, and every page agrees.
+1. **The build (`scripts/build.js` and its `build-*.js` steps) is the whole system.** Everything else is an input to it or an output of it.
+2. **No number is typed by hand.** Every figure on the site — the latest reading, signal counts, returns, regime shares, the exhibits — comes from `src/data/`, generated from the backend's validated backfill by `scripts/indicator-data.js`. Change the data, rebuild, and every page agrees.
 3. **The page registry (`src/site.config.js`) is the single source of truth** for each page's URL, title, description, nav item, breadcrumb, JSON-LD and — for research notes — section, series and publication date. The research library and "further reading" blocks are generated from it.
 4. **URLs and metadata are derived once** (`canonicalFor` in `src/schema.js`) and feed the canonical tag, sitemap, `_redirects`, JSON-LD and Open Graph. See [URLs, serving & SEO](#urls-serving--seo).
 5. **`dist/` is disposable.** Never edit it.
@@ -90,14 +90,18 @@ Readings on the site are as of the last build (the date is printed beside them).
 
 ## How the build works
 
-`scripts/build.js` runs top to bottom:
+`scripts/build.js` only runs the steps, in this order; each lives in its own file:
 
-1. Computes figures and exhibits once from `src/data/` (`src/charts.js`).
-2. Compiles `src/styles/` into one minified `dist/public/styles/site.css` (Tailwind CLI; utilities remain available to older page markup).
-3. For each registry entry: wraps the page body in `layout.html` with head/header/footer/checkout-gate, resolves every placeholder, marks the current nav item (`aria-current`), and — for research notes — inserts the breadcrumb and dateline and replaces the note's closing promo block with a generated further-reading block.
-4. **Fails the build on any unresolved placeholder.**
-5. Rewrites internal `.html` links to the extensionless URLs Cloudflare serves with 200.
-6. Writes `sitemap.xml`, `_redirects` and `llms.txt`; copies `public/`, re-encoding managed images to WebP; generates the guilloche patterns and brand assets into `dist/public/brand/`.
+| Step | File | Does |
+| --- | --- | --- |
+| 1 | `src/charts.js` | computes figures and exhibits once from `src/data/` |
+| 2 | `build-css.js` | compiles `src/styles/` into one minified `dist/public/styles/site.css` (Tailwind CLI; utilities remain available to older page markup) |
+| 3 | `build-pages.js` | for each registry entry: wraps the body from `src/pages/` in `layout.html` with the partials, resolves every placeholder (**fails the build on any left over**), marks the current nav item, decorates research notes (breadcrumb, dateline, further reading from `build-listings.js`), stripes sections, and rewrites internal `.html` links to the extensionless URLs Cloudflare serves with 200 |
+| 4 | `build-urls.js` | `sitemap.xml` and `_redirects` from the registry |
+| 5 | `build-llms.js` | `llms.txt` from its template in `src/` |
+| 6 | `build-images.js`, `build-guilloche.js`, `build-brand.js` | copies `public/`, re-encoding managed images to WebP; generates the guilloche patterns and brand assets into `dist/public/brand/` |
+
+`scripts/placeholders.js` holds the `{{NAME}}` mechanism every step shares. `scripts/indicator-data.js` and `scripts/archive-images.js` are not build steps: they are run by hand (`npm run indicator-data`, `npm run archive-images`) and write committed files.
 
 Placeholder families: `ROOT`, `TITLE`, `DESC`, `CANONICAL` … (page metadata), `BREADCRUMB`, `RESEARCH_RECENT` / `RESEARCH_LIBRARY`, `IND_*` (latest reading, history span), `SIG_*` (signal record), `MDD_*` (drawdown study), `EXHIBIT_*` and `TABLE_*` (SVG exhibits, data tables), each written in double braces in page markup. The full list is the return value of `buildExhibits()` in `src/charts.js`.
 
@@ -134,7 +138,7 @@ The site is designed to read like an index provider's publication, not a product
 
 ## Data and exhibits
 
-`scripts/build-indicator-data.js` reads `../doubletrends-backend/signal/backfill/fast/backfill_fast.csv` — the point-in-time history produced and parity-checked by the backend's `python -m backfill.prod` — and writes:
+`scripts/indicator-data.js` reads `../doubletrends-backend/signal/backfill/fast/backfill_fast.csv` — the point-in-time history produced and parity-checked by the backend's `python -m backfill.prod` — and writes:
 
 - `src/data/indicator.json` — latest reading, regime statistics, bear episodes, every signal with 3-month / 1-year / 2-year S&P 500 price returns, and the summary figures. Build input.
 - `src/data/regimes-daily.json` — `[date, close, regime]` for every classified trading day. Build input; not shipped.
@@ -179,7 +183,7 @@ This is the platform default (`auto-trailing-slash` HTML handling), not somethin
 
 ### `_redirects` — a 307 → 301 upgrade, not a router
 
-`scripts/build.js` generates `dist/_redirects` mapping every legacy `.html` (and `index.html`) URL to its canonical form with a **301**. This does not *create* the redirect — Cloudflare already redirects `.html` natively — it **upgrades** it from 307 (temporary) to 301 (permanent), so Google drops the `.html` URL and consolidates ranking signals. `404.html` is deliberately excluded (it's `noindex`, so permanence is irrelevant, and it stays a clean control still showing the native 307).
+`scripts/build-urls.js` generates `dist/_redirects` mapping every legacy `.html` (and `index.html`) URL to its canonical form with a **301**. This does not *create* the redirect — Cloudflare already redirects `.html` natively — it **upgrades** it from 307 (temporary) to 301 (permanent), so Google drops the `.html` URL and consolidates ranking signals. `404.html` is deliberately excluded (it's `noindex`, so permanence is irrelevant, and it stays a clean control still showing the native 307).
 
 ### What each URL form does
 
@@ -230,6 +234,8 @@ Research notes also set `section` (topic, shown as "Research · {section}") and 
 ## Reading map
 
 - Page registry: `src/site.config.js` · structured data and canonical URLs: `src/schema.js`
-- Figures and exhibits: `src/charts.js` · data generator: `scripts/build-indicator-data.js`
+- Figures and exhibits: `src/charts.js` · data generator: `scripts/indicator-data.js`
 - Brand tokens: `src/brand.config.js` · brand generator: `scripts/build-brand.js`
-- Build: `scripts/build.js` · images: `scripts/build-images.js`
+- Build: `scripts/build.js` (steps in `scripts/build-*.js`) · placeholders: `scripts/placeholders.js`
+- Formatting of dates and numbers: `src/format.js` · regimes (order, label, color): `REGIMES` in `src/brand.config.js`
+- Site sections and research series: `SECTIONS`, `SERIES` in `src/site.config.js`

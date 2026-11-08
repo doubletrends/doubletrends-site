@@ -1,5 +1,5 @@
 /**
- * build-indicator-data.js — `npm run indicator-data`
+ * indicator-data.js — `npm run indicator-data`
  *
  * Reads the backend's point-in-time backfill
  *   ../doubletrends-backend/signal/backfill/fast/backfill_fast.csv
@@ -38,8 +38,9 @@ const LIVE_SINCE = '2026-06-15';
 // shown, including the early misses — a provider publishes its whole history.
 const SIGNAL_RECORD_START = '1996-01-01';
 
+// One-letter codes for regimes-daily.json; the file carries this key as `codes`.
 const REGIME_CODE = { calm: 'c', correction: 'k', panic: 'p', bear: 'b' };
-const REGIMES = ['calm', 'correction', 'panic', 'bear'];
+const REGIMES = Object.keys(require('../src/brand.config').REGIMES);
 
 // ─── Load ───────────────────────────────────────────────────────────────────
 if (!fs.existsSync(BACKEND_CSV)) {

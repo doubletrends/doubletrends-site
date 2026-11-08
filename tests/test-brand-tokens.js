@@ -5,7 +5,7 @@
 const fs   = require('fs');
 const path = require('path');
 const { COLORS, REGIMES, RETURNS } = require('../src/brand.config');
-const { ROOT, report } = require('./test-utils');
+const { ROOT, report } = require('./utils');
 
 // brand.config key → CSS custom property in colors.css.
 const COLOR_MIRROR = {
