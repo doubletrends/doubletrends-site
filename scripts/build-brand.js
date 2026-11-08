@@ -13,6 +13,7 @@
  * Outputs keep every historical filename so external links never break:
  *   logo.svg · logo-on-dark.svg · logo-{light,dark}.png · favicon-{32,180}.png
  *   wordmark.svg · wordmark-{light,dark}.png · og-image.{svg,png} · banner.{svg,png}
+ *   linkedin-banner.{svg,png} (LinkedIn company-page cover)
  */
 const fs = require('fs');
 const path = require('path');
@@ -112,7 +113,7 @@ ${inner}
 </svg>`, W, H };
 }
 
-// ─── OG image / banner ──────────────────────────────────────────────────────
+// ─── OG image / banners ─────────────────────────────────────────────────────
 // An engraved card in the manner of a share certificate: a navy field under
 // the site's paper moiré and a double-ruled frame, with an archival photo (its
 // navy duotone `card` rendition, OG_PHOTO in site.config.js) on the right,
@@ -120,20 +121,23 @@ ${inner}
 // rule over the firm's line, the indicator's name and the regimes it reads,
 // and the address at the foot. `scale` sizes the type; `titleLines` sets the
 // name on one line or two; `photoFrom` is where the photo starts, as a share
-// of the width (it is fully in by 55% of its own width).
+// of the width (it is fully in by 55% of its own width). With `brand: false`
+// the wordmark and address are left off, for a page that shows its own logo,
+// and the text sits centred in the height from `left`.
 const PHOTO = `data:image/jpeg;base64,${fs.readFileSync(path.join(__dirname, '..', 'public', 'img', 'archive', `${OG_PHOTO}-card.jpg`)).toString('base64')}`;
 
-function cardSvg(W, H, { scale: s = 1, titleLines = 2, photoFrom = 0.42 } = {}) {
+function cardSvg(W, H, { scale: s = 1, titleLines = 2, photoFrom = 0.42, brand = true, left = 96 * s } = {}) {
   const PAPER = COLORS.light;
-  const x = 96 * s;
+  const x = left;
   const wm = wordmarkSvg({ dark: true });
   const wmScale = 0.6 * s;
   const wmInner = wm.svg.replace(/^<svg[^>]*>|<\/svg>$/g, '');
 
-  // Text, top to bottom.
-  let y = 88 * s;
+  // Text, top to bottom: from the wordmark, or centred (rule to the regimes'
+  // baseline is 166 units for a one-line name, 68 more per extra line).
+  let y = brand ? 88 * s : (H - (166 + 68 * (titleLines - 1)) * s) / 2;
   const wmY = y;
-  y += wm.H * wmScale + 92 * s;
+  if (brand) y += wm.H * wmScale + 92 * s;
   const ruleY = y;
   y += 42 * s;
   const kicker = outline(SANS, 'MARKET REGIME RESEARCH', 17 * s, x, y, 3 * s);
@@ -161,12 +165,12 @@ ${tiles.join('')}
 <image x="${photoX}" y="0" width="${W - photoX}" height="${H}" preserveAspectRatio="xMidYMin slice" opacity="0.5" mask="url(#photo-fade)" href="${PHOTO}" xlink:href="${PHOTO}"/>
 ${frame(24 * s, 1, 0.3)}
 ${frame(31 * s, 0.6, 0.18)}
-<g transform="translate(${x} ${wmY}) scale(${wmScale})">${wmInner}</g>
+${brand ? `<g transform="translate(${x} ${wmY}) scale(${wmScale})">${wmInner}</g>` : ''}
 <rect x="${x}" y="${ruleY}" width="${56 * s}" height="${3 * s}" fill="${RUST}"/>
 <path d="${kicker.d}" fill="${PAPER}" fill-opacity="0.72"/>
 ${title.map((t) => `<path d="${t.d}" fill="${PAPER}"/>`).join('\n')}
 <path d="${sub.d}" fill="${PAPER}" fill-opacity="0.72"/>
-<path d="${site.d}" fill="${PAPER}" fill-opacity="0.55"/>
+${brand ? `<path d="${site.d}" fill="${PAPER}" fill-opacity="0.55"/>` : ''}
 </svg>`;
 }
 
@@ -207,6 +211,12 @@ async function writeBrand(OUT) {
   const banner = cardSvg(1500, 500, { scale: 0.9, titleLines: 1, photoFrom: 0.58 });
   write('banner.svg', banner);
   await png(banner, 'banner.png', { width: 1500 });
+  // LinkedIn company-page cover: 1128 × 191, drawn at 2× for high-density
+  // screens. The page's logo overlaps the bottom-left corner, so the card
+  // carries no wordmark and its text starts clear of that corner.
+  const linkedin = cardSvg(2256, 382, { titleLines: 1, photoFrom: 0.66, brand: false, left: 460 });
+  write('linkedin-banner.svg', linkedin);
+  await png(linkedin, 'linkedin-banner.png', { width: 2256 });
 
 }
 
