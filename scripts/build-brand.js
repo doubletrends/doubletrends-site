@@ -114,37 +114,28 @@ ${inner}
 }
 
 // ─── OG image / banners ─────────────────────────────────────────────────────
-// An engraved card in the manner of a share certificate: a navy field under
-// the site's paper moiré and a double-ruled frame, with an archival photo (its
-// navy duotone `card` rendition, OG_PHOTO in site.config.js) on the right,
-// fading into the field toward the text. On the left, the wordmark, a rust
-// rule over the firm's line, the indicator's name and the regimes it reads,
-// and the address at the foot. `scale` sizes the type; `titleLines` sets the
-// name on one line or two; `photoFrom` is where the photo starts, as a share
-// of the width (it is fully in by 55% of its own width). With `brand: false`
-// the wordmark and address are left off, for a page that shows its own logo,
-// and the text sits centred in the height from `left`.
+// The firm's card, in the manner of an engraved share certificate: a navy
+// field under the site's paper moiré and a double-ruled frame, with an
+// archival photo (its navy duotone `card` rendition, OG_PHOTO in
+// site.config.js) on the right, fading into the field. On the left, centred
+// in the height, the firm itself: the wordmark, a rust rule, and its line;
+// the address at the foot. Nothing is offered. `scale` sizes the type;
+// `photoFrom` is where the photo starts, as a share of the width (it is fully
+// in by 55% of its own width); `address: false` leaves the foot empty, for a
+// cover whose page shows its own details there.
 const PHOTO = `data:image/jpeg;base64,${fs.readFileSync(path.join(__dirname, '..', 'public', 'img', 'archive', `${OG_PHOTO}-card.jpg`)).toString('base64')}`;
 
-function cardSvg(W, H, { scale: s = 1, titleLines = 2, photoFrom = 0.42, brand = true, left = 96 * s } = {}) {
+function cardSvg(W, H, { scale: s = 1, photoFrom = 0.42, left = 96 * s, address = true } = {}) {
   const PAPER = COLORS.light;
   const x = left;
   const wm = wordmarkSvg({ dark: true });
-  const wmScale = 0.6 * s;
   const wmInner = wm.svg.replace(/^<svg[^>]*>|<\/svg>$/g, '');
 
-  // Text, top to bottom: from the wordmark, or centred (rule to the regimes'
-  // baseline is 166 units for a one-line name, 68 more per extra line).
-  let y = brand ? 88 * s : (H - (166 + 68 * (titleLines - 1)) * s) / 2;
-  const wmY = y;
-  if (brand) y += wm.H * wmScale + 92 * s;
-  const ruleY = y;
-  y += 42 * s;
-  const kicker = outline(SANS, 'MARKET REGIME RESEARCH', 17 * s, x, y, 3 * s);
-  const title = (titleLines === 2 ? ['The DoubleTrends', 'Regime Indicator'] : ['The DoubleTrends Regime Indicator'])
-    .map((line, i) => outline(SERIF, line, 60 * s, x, (y += (i ? 68 : 72) * s)));
-  y += 52 * s;
-  const sub = outline(SANS, 'S&P 500 · calm · correction · panic · bear', 22 * s, x, y);
+  // Wordmark, rule, line: wm.H + 84 units from the wordmark's top to the
+  // line's baseline, centred in the height.
+  const wmY = (H - (wm.H + 84) * s) / 2;
+  const ruleY = wmY + (wm.H + 40) * s;
+  const line = outline(SANS, 'MARKET REGIME RESEARCH', 18 * s, x, ruleY + 47 * s, 3.2 * s);
   const site = outline(SANS, 'DOUBLETRENDS.COM', 15 * s, x, H - 72 * s, 2.5 * s);
 
   // The paper moiré tiled over the field; the photo fills the right side.
@@ -165,12 +156,10 @@ ${tiles.join('')}
 <image x="${photoX}" y="0" width="${W - photoX}" height="${H}" preserveAspectRatio="xMidYMin slice" opacity="0.5" mask="url(#photo-fade)" href="${PHOTO}" xlink:href="${PHOTO}"/>
 ${frame(24 * s, 1, 0.3)}
 ${frame(31 * s, 0.6, 0.18)}
-${brand ? `<g transform="translate(${x} ${wmY}) scale(${wmScale})">${wmInner}</g>` : ''}
+<g transform="translate(${x} ${wmY}) scale(${s})">${wmInner}</g>
 <rect x="${x}" y="${ruleY}" width="${56 * s}" height="${3 * s}" fill="${RUST}"/>
-<path d="${kicker.d}" fill="${PAPER}" fill-opacity="0.72"/>
-${title.map((t) => `<path d="${t.d}" fill="${PAPER}"/>`).join('\n')}
-<path d="${sub.d}" fill="${PAPER}" fill-opacity="0.72"/>
-${brand ? `<path d="${site.d}" fill="${PAPER}" fill-opacity="0.55"/>` : ''}
+<path d="${line.d}" fill="${PAPER}" fill-opacity="0.72"/>
+${address ? `<path d="${site.d}" fill="${PAPER}" fill-opacity="0.55"/>` : ''}
 </svg>`;
 }
 
@@ -208,13 +197,13 @@ async function writeBrand(OUT) {
   const og = cardSvg(OG_IMAGE_SIZE.width, OG_IMAGE_SIZE.height);
   write('og-image.svg', og);
   await png(og, 'og-image.png', { width: OG_IMAGE_SIZE.width });
-  const banner = cardSvg(1500, 500, { scale: 0.9, titleLines: 1, photoFrom: 0.58 });
+  const banner = cardSvg(1500, 500, { scale: 0.9, photoFrom: 0.58 });
   write('banner.svg', banner);
   await png(banner, 'banner.png', { width: 1500 });
   // LinkedIn company-page cover: 1128 × 191, drawn at 2× for high-density
-  // screens. The page's logo overlaps the bottom-left corner, so the card
-  // carries no wordmark and its text starts clear of that corner.
-  const linkedin = cardSvg(2256, 382, { titleLines: 1, photoFrom: 0.66, brand: false, left: 460 });
+  // screens. The page's logo overlaps the bottom-left corner and its name and
+  // details sit below, so the text starts clear of that corner, with no address.
+  const linkedin = cardSvg(2256, 382, { scale: 1.2, photoFrom: 0.62, left: 460, address: false });
   write('linkedin-banner.svg', linkedin);
   await png(linkedin, 'linkedin-banner.png', { width: 2256 });
 
