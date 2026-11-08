@@ -38,6 +38,9 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
       - run: npm ci
+      # The build screenshots the primary-nav pages (scripts/build-screenshots.js)
+      # with the Chromium version package-lock.json pins.
+      - run: npx playwright install --with-deps chromium
       - run: npm test
 
   deploy:
@@ -51,6 +54,9 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
       - run: npm ci
+      # The build screenshots the primary-nav pages (scripts/build-screenshots.js)
+      # with the Chromium version package-lock.json pins.
+      - run: npx playwright install --with-deps chromium
       - run: npm run build
       - name: Deploy to Cloudflare
         run: npx wrangler deploy

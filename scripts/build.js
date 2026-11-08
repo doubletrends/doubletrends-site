@@ -16,6 +16,7 @@ const { writeLlms } = require('./build-llms');
 const { optimizeImages } = require('./build-images');
 const { writeGuilloches } = require('./build-guilloche');
 const { writeBrand } = require('./build-brand');
+const { writeScreenshots } = require('./build-screenshots');
 
 const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
 const DIST = path.join(ROOT, 'dist');
@@ -66,6 +67,10 @@ async function main() {
   console.log(`✓  ${guilloches.length} guilloche patterns generated`);
   await writeBrand(path.join(DIST, 'public', 'brand'));
   console.log('✓  brand assets generated (logo, favicons, wordmarks, og-image, banner)');
+
+  // Last: the screenshots show the finished pages.
+  const shots = await writeScreenshots(DIST);
+  console.log(`✓  ${shots.length} screenshots (${shots.join(', ')})`);
 }
 
 main().catch((err) => {

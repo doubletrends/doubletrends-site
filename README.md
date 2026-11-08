@@ -100,6 +100,7 @@ Readings on the site are as of the last build (the date is printed beside them).
 | 4 | `build-urls.js` | `sitemap.xml` and `_redirects` from the registry |
 | 5 | `build-llms.js` | `llms.txt` from its template in `src/` |
 | 6 | `build-images.js`, `build-guilloche.js`, `build-brand.js` | copies `public/`, re-encoding managed images to WebP; generates the guilloche patterns and brand assets into `dist/public/brand/` |
+| 7 | `build-screenshots.js` | one 1680 × 1080 first-screen PNG per primary-nav item into `dist/public/screenshots/` (`home`, `research`, `validation`, `methodology`, `performance`, `indicator`), published for linking. Serves `dist/` locally and captures with Playwright's Chromium, pinned by `package-lock.json` so every machine renders alike; install it once with `npx playwright install chromium` (CI does this before the build) |
 
 `scripts/placeholders.js` holds the `{{NAME}}` mechanism every step shares. `scripts/indicator-data.js` and `scripts/archive-images.js` are not build steps: they are run by hand (`npm run indicator-data`, `npm run archive-images`) and write committed files.
 
