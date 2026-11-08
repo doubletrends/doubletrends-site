@@ -18,14 +18,12 @@ const fs = require('fs');
 const path = require('path');
 const opentype = require('opentype.js');
 const sharp = require('sharp');
-const { COLORS, REGIME_COLORS } = require('../src/brand.config');
+const { COLORS } = require('../src/brand.config');
 const { OG_IMAGE_SIZE, PUBLISHER } = require('../src/site.config');
-const { regimeEpisodes } = require('../src/measures');
 const { paperBeatPaths, PAPER_TILE, rosettePaths } = require('./build-guilloche');
 
 const NAVY = COLORS.primary;
 const RUST = COLORS.accent;
-const MUTED = COLORS.muted;
 
 function loadFont(rel) {
   const buf = fs.readFileSync(require.resolve(rel));
@@ -114,17 +112,6 @@ ${inner}
 </svg>`, W, H };
 }
 
-// ─── Regime ribbon from data ────────────────────────────────────────────────
-// One band per regime episode, each session the same width.
-function ribbon(rows, x, y, w, h) {
-  const n = rows.length;
-  const out = regimeEpisodes(rows).map((e) => {
-    const x0 = x + (e.start / n) * w, x1 = x + ((e.end + 1) / n) * w;
-    return `<rect x="${x0.toFixed(2)}" y="${y}" width="${Math.max(0.5, x1 - x0).toFixed(2)}" height="${h}" fill="${REGIME_COLORS[e.regime].hex}"/>`;
-  });
-  return { svg: out.join(''), first: rows[0].date.slice(0, 4), last: rows[n - 1].date.slice(0, 4) };
-}
-
 // ─── OG image / banner ──────────────────────────────────────────────────────
 // An engraved card in the manner of a share certificate: a navy field under
 // the site's paper moiré, a double-ruled frame, and the footer's rosette as a
@@ -177,9 +164,7 @@ ${title.map((t) => `<path d="${t.d}" fill="${PAPER}"/>`).join('\n')}
 }
 
 // ─── Write ──────────────────────────────────────────────────────────────────
-// `rows` are the daily rows (dailyRows in src/regimes.js) the OG image and
-// banner draw their regime ribbon from.
-async function writeBrand(OUT, rows) {
+async function writeBrand(OUT) {
   fs.mkdirSync(OUT, { recursive: true });
   const write = (name, s) => fs.writeFileSync(path.join(OUT, name), s);
   const png = (svg, name, opts = {}) => {

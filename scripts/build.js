@@ -64,7 +64,7 @@ async function main() {
   console.log(`✓  public/ copied + ${count} images → WebP`);
   const guilloches = writeGuilloches(path.join(DIST, 'public', 'brand'));
   console.log(`✓  ${guilloches.length} guilloche patterns generated`);
-  await writeBrand(path.join(DIST, 'public', 'brand'), rows);
+  await writeBrand(path.join(DIST, 'public', 'brand'));
   console.log('✓  brand assets generated (logo, favicons, wordmarks, og-image, banner)');
 }
 
