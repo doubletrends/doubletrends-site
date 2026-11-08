@@ -18,6 +18,11 @@ on:
 permissions:
   contents: read
 
+# The Node version CI builds and deploys with; package.json `engines` is the
+# oldest that works.
+env:
+  NODE_VERSION: 24
+
 # A newer push to the same ref supersedes an in-flight run.
 concurrency:
   group: ci-${{ github.ref }}
@@ -30,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version-file: .nvmrc # single source of truth for the Node version
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
       - run: npm ci
       - run: npm test
@@ -43,7 +48,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version-file: .nvmrc
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
       - run: npm ci
       - run: npm run build

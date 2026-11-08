@@ -484,7 +484,6 @@ ${llmsSections}
 
 - Signal history with forward returns (CSV): ${SITE_URL}/public/data/doubletrends-signals.csv
 - XML sitemap: ${SITE_URL}/sitemap.xml
-- Robots policy: ${SITE_URL}/robots.txt
 
 ## Entity Summary
 
@@ -498,10 +497,6 @@ ${llmsSections}
 console.log('✓  llms.txt generated');
 
 // ─── Static assets ───────────────────────────────────────────────────────────
-fs.copyFileSync(path.join(ROOT, 'src', 'robots.txt'), path.join(DIST, 'robots.txt'));
-fs.copyFileSync(path.join(ROOT, 'src', '_headers'), path.join(DIST, '_headers'));
-console.log('✓  robots.txt, _headers copied');
-
 // public/ is copied verbatim EXCEPT the managed rasters, which are re-encoded to
 // resized WebP — see build-images.js; then the generated brand/ files are
 // written beside them. Awaited last; fails the build on error.
