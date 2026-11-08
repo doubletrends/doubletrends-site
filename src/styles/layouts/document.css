@@ -39,10 +39,16 @@
 .live-dot::after { content: ""; position: absolute; left: 50%; top: 50%; width: 1.5rem; height: 1.5rem; margin: -0.75rem 0 0 -0.75rem; border-radius: 50%; background: var(--accent); transform: scale(0.333); opacity: 0; will-change: transform, opacity; animation: live-pulse 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) infinite; }
 @keyframes live-pulse { 0% { transform: scale(0.333); opacity: 0.5; } 75%, 100% { transform: scale(1); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .live-dot::after { animation: none; opacity: 0; } }
-.reading-regime { display: flex; align-items: center; gap: 0.75rem; margin-top: 1.1rem; }
-.reading-regime .swatch { width: 0.9rem; height: 2.4rem; flex: none; }
-.reading-regime-value { font-family: var(--font-sans); font-weight: 600; font-size: 2.5rem; line-height: 1; color: var(--ink); font-variant-numeric: proportional-nums; }
-.reading-regime-note { font-size: 0.875rem; color: var(--muted); margin-top: 0.35rem; }
+/* The regime swatch runs from the cap top of the regime name to the baseline
+   of the note under it. It stretches to the text block, then is trimmed by
+   Source Sans 3's metrics (ascent 1.024, descent 0.4, cap top of "P" 0.654
+   em): the cap top sits 0.158em below the top of the name's line box (line
+   height 1), and the baseline 0.463em above the bottom of the note's (line
+   height 1.55). */
+.reading-regime { --value-size: 2.5rem; --note-size: 0.875rem; display: flex; align-items: stretch; gap: 0.75rem; margin-top: 1.1rem; }
+.reading-regime .swatch { width: 0.9rem; flex: none; margin: calc(var(--value-size) * 0.158) 0 calc(var(--note-size) * 0.463); }
+.reading-regime-value { font-family: var(--font-sans); font-weight: 600; font-size: var(--value-size); line-height: 1; color: var(--ink); font-variant-numeric: proportional-nums; }
+.reading-regime-note { font-size: var(--note-size); line-height: 1.55; color: var(--muted); margin-top: 0.35rem; }
 .reading dl { margin: 1.3rem 0 0; display: grid; grid-template-columns: 1fr auto; border-top: 1px solid var(--rule); }
 .reading dt, .reading dd { margin: 0; padding: 0.55rem 0; border-bottom: 1px solid var(--rule); font-size: 0.9375rem; }
 .reading dt { color: var(--muted); }
