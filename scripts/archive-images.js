@@ -15,6 +15,8 @@
  *   head  2400 x 640   soft tone, behind a section's page title
  *   hero  2000 x 834   soft tone, behind the homepage headline
  *   band  2400 x 600   full tone, a full-width band between sections
+ *   card   960 x 840   full tone, the photo that fades into the OG image and
+ *                      banner (build-brand.js; OG_PHOTO in site.config.js)
  */
 const fs = require('fs');
 const path = require('path');
@@ -37,6 +39,7 @@ const RENDITIONS = {
   head: { w: 2400, h: 640, dark: SOFT_DARK, gamma: 0.9 },
   hero: { w: 2000, h: 834, dark: SOFT_DARK, gamma: 0.9 },
   band: { w: 2400, h: 600, dark: NAVY, gamma: 1.0 },
+  card: { w: 960, h: 840, dark: NAVY, gamma: 1.0 },
 };
 
 function fetchJson(url) {

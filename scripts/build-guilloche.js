@@ -8,7 +8,7 @@
  *   guilloche-footer.svg  a spirograph rosette, set navy-on-navy in the footer
  *
  * Every curve is periodic in its tile, so tiled patterns join without seams.
- * The OG image and banner (build-brand.js) reuse both line-works.
+ * The OG image and banner (build-brand.js) reuse the paper moiré.
  * Line colour and opacity live in the SVG (they are used as CSS backgrounds,
  * where custom properties do not reach). Called from build.js.
  */
@@ -124,5 +124,5 @@ function writeGuilloches(brandDir) {
   return Object.keys(out);
 }
 
-// The line-work itself, for other generated art (build-brand.js's cards).
-module.exports = { writeGuilloches, paperBeatPaths, PAPER_TILE, rosettePaths };
+// The paper moiré's line-work, for the OG image and banner (build-brand.js).
+module.exports = { writeGuilloches, paperBeatPaths, PAPER_TILE };

@@ -19,8 +19,8 @@ const path = require('path');
 const opentype = require('opentype.js');
 const sharp = require('sharp');
 const { COLORS } = require('../src/brand.config');
-const { OG_IMAGE_SIZE, PUBLISHER } = require('../src/site.config');
-const { paperBeatPaths, PAPER_TILE, rosettePaths } = require('./build-guilloche');
+const { OG_IMAGE_SIZE, OG_PHOTO, PUBLISHER } = require('../src/site.config');
+const { paperBeatPaths, PAPER_TILE } = require('./build-guilloche');
 
 const NAVY = COLORS.primary;
 const RUST = COLORS.accent;
@@ -114,12 +114,16 @@ ${inner}
 
 // ─── OG image / banner ──────────────────────────────────────────────────────
 // An engraved card in the manner of a share certificate: a navy field under
-// the site's paper moiré, a double-ruled frame, and the footer's rosette as a
-// medallion on the right, cut off by the inner rule as an engraving would be. On the left, the wordmark, a rust rule
-// over the firm's line, the indicator's name and the regimes it reads, and the
-// address at the foot. `scale` sizes everything; `titleLines` sets the name
-// on one line or two.
-function cardSvg(W, H, { scale: s = 1, titleLines = 2 } = {}) {
+// the site's paper moiré and a double-ruled frame, with an archival photo (its
+// navy duotone `card` rendition, OG_PHOTO in site.config.js) on the right,
+// fading into the field toward the text. On the left, the wordmark, a rust
+// rule over the firm's line, the indicator's name and the regimes it reads,
+// and the address at the foot. `scale` sizes the type; `titleLines` sets the
+// name on one line or two; `photoFrom` is where the photo starts, as a share
+// of the width (it is fully in by 55% of its own width).
+const PHOTO = `data:image/jpeg;base64,${fs.readFileSync(path.join(__dirname, '..', 'public', 'img', 'archive', `${OG_PHOTO}-card.jpg`)).toString('base64')}`;
+
+function cardSvg(W, H, { scale: s = 1, titleLines = 2, photoFrom = 0.42 } = {}) {
   const PAPER = COLORS.light;
   const x = 96 * s;
   const wm = wordmarkSvg({ dark: true });
@@ -139,19 +143,22 @@ function cardSvg(W, H, { scale: s = 1, titleLines = 2 } = {}) {
   const sub = outline(SANS, 'S&P 500 · calm · correction · panic · bear', 22 * s, x, y);
   const site = outline(SANS, 'DOUBLETRENDS.COM', 15 * s, x, H - 72 * s, 2.5 * s);
 
-  // Line-work: the paper moiré tiled over the field, the rosette on the right.
+  // The paper moiré tiled over the field; the photo fills the right side.
   const tiles = [];
   for (let ty = 0; ty < H; ty += PAPER_TILE.height) {
     for (let tx = 0; tx < W; tx += PAPER_TILE.width) tiles.push(`<use href="#beat" x="${tx}" y="${ty}"/>`);
   }
-  const rosette = rosettePaths(W - 170 * s, H / 2, 1.35 * s).map((d) => `<path d="${d}"/>`).join('');
+  const photoX = Math.round(W * photoFrom);
   const frame = (inset, width, opacity) => `<rect x="${inset}" y="${inset}" width="${W - 2 * inset}" height="${H - 2 * inset}" fill="none" stroke="${PAPER}" stroke-opacity="${opacity}" stroke-width="${width}"/>`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
-<defs><clipPath id="panel"><rect x="${31 * s}" y="${31 * s}" width="${W - 62 * s}" height="${H - 62 * s}"/></clipPath><g id="beat" fill="none" stroke="${PAPER}" stroke-opacity="0.035" stroke-width="0.8" stroke-linejoin="round">${paperBeatPaths().map((d) => `<path d="${d}"/>`).join('')}</g></defs>
+<defs>
+<linearGradient id="fade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.55" stop-color="#fff" stop-opacity="1"/></linearGradient>
+<mask id="photo-fade" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#fade)"/></mask>
+<g id="beat" fill="none" stroke="${PAPER}" stroke-opacity="0.035" stroke-width="0.8" stroke-linejoin="round">${paperBeatPaths().map((d) => `<path d="${d}"/>`).join('')}</g></defs>
 <rect width="${W}" height="${H}" fill="${NAVY}"/>
 ${tiles.join('')}
-<g clip-path="url(#panel)" fill="none" stroke="${PAPER}" stroke-opacity="0.15" stroke-width="0.8" stroke-linejoin="round">${rosette}</g>
+<image x="${photoX}" y="0" width="${W - photoX}" height="${H}" preserveAspectRatio="xMidYMin slice" opacity="0.5" mask="url(#photo-fade)" href="${PHOTO}" xlink:href="${PHOTO}"/>
 ${frame(24 * s, 1, 0.3)}
 ${frame(31 * s, 0.6, 0.18)}
 <g transform="translate(${x} ${wmY}) scale(${wmScale})">${wmInner}</g>
@@ -197,7 +204,7 @@ async function writeBrand(OUT) {
   const og = cardSvg(OG_IMAGE_SIZE.width, OG_IMAGE_SIZE.height);
   write('og-image.svg', og);
   await png(og, 'og-image.png', { width: OG_IMAGE_SIZE.width });
-  const banner = cardSvg(1500, 500, { scale: 0.9, titleLines: 1 });
+  const banner = cardSvg(1500, 500, { scale: 0.9, titleLines: 1, photoFrom: 0.58 });
   write('banner.svg', banner);
   await png(banner, 'banner.png', { width: 1500 });
 

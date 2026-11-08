@@ -9,6 +9,9 @@ const TIME_ZONE = 'America/New_York';
 const OG_IMAGE = `${SITE_URL}/public/brand/og-image.png`;
 const OG_IMAGE_ALT = 'DoubleTrends — Market Regime Research';
 const OG_IMAGE_SIZE = { width: 1200, height: 630 };
+// The archival photo (src/data/archive-images.json, with a `card` rendition)
+// that fades into the OG image and banner.
+const OG_PHOTO = 'facade1908';
 
 const PUBLISHER = {
   '@type': 'Organization',
@@ -387,6 +390,7 @@ module.exports = {
   OG_IMAGE,
   OG_IMAGE_ALT,
   OG_IMAGE_SIZE,
+  OG_PHOTO,
   TIME_ZONE,
   PUBLISHER,
   SECTIONS,

@@ -223,7 +223,7 @@ Research notes also set `section` (topic, shown as "Research · {section}") and 
 
 ## Brand assets
 
-`scripts/build-brand.js`, called by the build, generates `dist/public/brand/`: the portico mark (two pilasters on a navy tile, a rust threshold) and the two-tone wordmark ("Double" rust, "Trends" navy) set in Source Serif 4 and converted to outlines (no font dependency), favicons, and the OG image and banner: engraved cards on navy, drawn with the guilloche line-work of `scripts/build-guilloche.js`. Every historical filename is still produced so external links keep working. Nothing in it is committed.
+`scripts/build-brand.js`, called by the build, generates `dist/public/brand/`: the portico mark (two pilasters on a navy tile, a rust threshold) and the two-tone wordmark ("Double" rust, "Trends" navy) set in Source Serif 4 and converted to outlines (no font dependency), favicons, and the OG image and banner: navy cards under the paper moiré of `scripts/build-guilloche.js`, with an archival photo (`OG_PHOTO`, its `card` rendition) fading in on the right. Every historical filename is still produced so external links keep working. Nothing in it is committed.
 
 ---
 
