@@ -7,9 +7,8 @@
  * name "DoubleTrends" split as in the original wordmark ("Double" rust,
  * "Trends" navy), set in Source Serif 4 Semibold and
  * converted to outlines (opentype.js), so the SVGs render identically
- * everywhere with no font dependency. The OG
- * image carries the real regime ribbon (first session → latest), drawn from
- * the daily rows build.js passes in — the house exhibit, not decoration.
+ * everywhere with no font dependency. The OG image and banner are engraved
+ * cards on navy, in the guilloche line-work of build-guilloche.js.
  *
  * Outputs keep every historical filename so external links never break:
  *   logo.svg · logo-on-dark.svg · logo-{light,dark}.png · favicon-{32,180}.png
@@ -22,6 +21,7 @@ const sharp = require('sharp');
 const { COLORS, REGIME_COLORS } = require('../src/brand.config');
 const { OG_IMAGE_SIZE, PUBLISHER } = require('../src/site.config');
 const { regimeEpisodes } = require('../src/measures');
+const { paperBeatPaths, PAPER_TILE, rosettePaths } = require('./build-guilloche');
 
 const NAVY = COLORS.primary;
 const RUST = COLORS.accent;
@@ -126,29 +126,53 @@ function ribbon(rows, x, y, w, h) {
 }
 
 // ─── OG image / banner ──────────────────────────────────────────────────────
-function cardSvg(rows, W, H, { scale = 1 } = {}) {
-  const pad = 80 * scale;
-  const wm = wordmarkSvg();
-  const wmScale = (0.62 * scale);
+// An engraved card in the manner of a share certificate: a navy field under
+// the site's paper moiré, a double-ruled frame, and the footer's rosette as a
+// medallion on the right, cut off by the inner rule as an engraving would be. On the left, the wordmark, a rust rule
+// over the firm's line, the indicator's name and the regimes it reads, and the
+// address at the foot. `scale` sizes everything; `titleLines` sets the name
+// on one line or two.
+function cardSvg(W, H, { scale: s = 1, titleLines = 2 } = {}) {
+  const PAPER = COLORS.light;
+  const x = 96 * s;
+  const wm = wordmarkSvg({ dark: true });
+  const wmScale = 0.6 * s;
   const wmInner = wm.svg.replace(/^<svg[^>]*>|<\/svg>$/g, '');
-  const sub = outline(SANS, 'MARKET REGIME RESEARCH', 20 * scale, pad, pad + wm.H * wmScale + 46 * scale, 2.4 * scale);
-  const line1 = outline(SERIF, 'The DoubleTrends Regime Indicator', 46 * scale, pad, H * 0.58);
-  const line2 = outline(SANS, 'S&P 500 · calm · correction · panic · bear', 24 * scale, pad, H * 0.58 + 48 * scale);
-  const rb = ribbon(rows, pad, H - pad - 26 * scale, W - 2 * pad, 26 * scale);
-  const yrs = outline(SANS, `${rb.first}`, 17 * scale, pad, H - pad + 26 * scale);
-  const yre = outline(SANS, `${rb.last}`, 17 * scale, 0, 0);
-  const yre2 = outline(SANS, `${rb.last}`, 17 * scale, W - pad - yre.width, H - pad + 26 * scale);
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
-<rect width="${W}" height="${H}" fill="#FFFFFF"/>
-<rect width="${W}" height="${10 * scale}" fill="${NAVY}"/>
-<rect y="${10 * scale}" width="${W}" height="${3 * scale}" fill="${RUST}"/>
-<g transform="translate(${pad} ${pad}) scale(${wmScale})">${wmInner}</g>
-<path d="${sub.d}" fill="${MUTED}"/>
-<path d="${line1.d}" fill="${NAVY}"/>
-<path d="${line2.d}" fill="${MUTED}"/>
-${rb.svg}
-<path d="${yrs.d}" fill="${MUTED}"/>
-<path d="${yre2.d}" fill="${MUTED}"/>
+
+  // Text, top to bottom.
+  let y = 88 * s;
+  const wmY = y;
+  y += wm.H * wmScale + 92 * s;
+  const ruleY = y;
+  y += 42 * s;
+  const kicker = outline(SANS, 'MARKET REGIME RESEARCH', 17 * s, x, y, 3 * s);
+  const title = (titleLines === 2 ? ['The DoubleTrends', 'Regime Indicator'] : ['The DoubleTrends Regime Indicator'])
+    .map((line, i) => outline(SERIF, line, 60 * s, x, (y += (i ? 68 : 72) * s)));
+  y += 52 * s;
+  const sub = outline(SANS, 'S&P 500 · calm · correction · panic · bear', 22 * s, x, y);
+  const site = outline(SANS, 'DOUBLETRENDS.COM', 15 * s, x, H - 72 * s, 2.5 * s);
+
+  // Line-work: the paper moiré tiled over the field, the rosette on the right.
+  const tiles = [];
+  for (let ty = 0; ty < H; ty += PAPER_TILE.height) {
+    for (let tx = 0; tx < W; tx += PAPER_TILE.width) tiles.push(`<use href="#beat" x="${tx}" y="${ty}"/>`);
+  }
+  const rosette = rosettePaths(W - 170 * s, H / 2, 1.35 * s).map((d) => `<path d="${d}"/>`).join('');
+  const frame = (inset, width, opacity) => `<rect x="${inset}" y="${inset}" width="${W - 2 * inset}" height="${H - 2 * inset}" fill="none" stroke="${PAPER}" stroke-opacity="${opacity}" stroke-width="${width}"/>`;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+<defs><clipPath id="panel"><rect x="${31 * s}" y="${31 * s}" width="${W - 62 * s}" height="${H - 62 * s}"/></clipPath><g id="beat" fill="none" stroke="${PAPER}" stroke-opacity="0.035" stroke-width="0.8" stroke-linejoin="round">${paperBeatPaths().map((d) => `<path d="${d}"/>`).join('')}</g></defs>
+<rect width="${W}" height="${H}" fill="${NAVY}"/>
+${tiles.join('')}
+<g clip-path="url(#panel)" fill="none" stroke="${PAPER}" stroke-opacity="0.15" stroke-width="0.8" stroke-linejoin="round">${rosette}</g>
+${frame(24 * s, 1, 0.3)}
+${frame(31 * s, 0.6, 0.18)}
+<g transform="translate(${x} ${wmY}) scale(${wmScale})">${wmInner}</g>
+<rect x="${x}" y="${ruleY}" width="${56 * s}" height="${3 * s}" fill="${RUST}"/>
+<path d="${kicker.d}" fill="${PAPER}" fill-opacity="0.72"/>
+${title.map((t) => `<path d="${t.d}" fill="${PAPER}"/>`).join('\n')}
+<path d="${sub.d}" fill="${PAPER}" fill-opacity="0.72"/>
+<path d="${site.d}" fill="${PAPER}" fill-opacity="0.55"/>
 </svg>`;
 }
 
@@ -185,10 +209,10 @@ async function writeBrand(OUT, rows) {
     throw new Error(`wordmark-light.png is ${width}×${height}; site.config.js PUBLISHER.logo declares ${PUBLISHER.logo.width}×${PUBLISHER.logo.height}`);
   }
 
-  const og = cardSvg(rows, OG_IMAGE_SIZE.width, OG_IMAGE_SIZE.height);
+  const og = cardSvg(OG_IMAGE_SIZE.width, OG_IMAGE_SIZE.height);
   write('og-image.svg', og);
   await png(og, 'og-image.png', { width: OG_IMAGE_SIZE.width });
-  const banner = cardSvg(rows, 1500, 500, { scale: 0.9 });
+  const banner = cardSvg(1500, 500, { scale: 0.9, titleLines: 1 });
   write('banner.svg', banner);
   await png(banner, 'banner.png', { width: 1500 });
 

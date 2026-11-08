@@ -8,6 +8,7 @@
  *   guilloche-footer.svg  a spirograph rosette, set navy-on-navy in the footer
  *
  * Every curve is periodic in its tile, so tiled patterns join without seams.
+ * The OG image and banner (build-brand.js) reuse both line-works.
  * Line colour and opacity live in the SVG (they are used as CSS backgrounds,
  * where custom properties do not reach). Called from build.js.
  */
@@ -51,8 +52,10 @@ function svg(width, height, paths, { stroke, opacity, strokeWidth }) {
 // both edges, so the tile repeats without seams; all curves stay inside the
 // tile's height, so rows stack cleanly. Paths use relative commands on
 // pre-rounded points (no drift) to keep the file small.
-function paperBeat() {
-  const W = 720, H = 192, MID = H / 2, AMP = 80, N = 22, steps = 240, margin = 24;
+const PAPER_TILE = { width: 720, height: 192 };
+function paperBeatPaths() {
+  const { width: W, height: H } = PAPER_TILE;
+  const MID = H / 2, AMP = 80, N = 22, steps = 240, margin = 24;
   const env4 = (t) => 0.62 + 0.38 * Math.cos(4 * t);
   const env6 = (t) => 0.55 + 0.45 * Math.cos(6 * t);
   const strand = (yOf) => {
@@ -69,16 +72,20 @@ function paperBeat() {
     paths.push(strand((t) => MID + AMP * 0.92 * env4(t) * Math.sin(2 * t + ph)));
     paths.push(strand((t) => MID + AMP * 0.8 * env6(t) * Math.sin(3 * t + ph)));
   }
-  return svg(W, H, paths, { stroke: COLORS.primary, opacity: 0.05, strokeWidth: 0.8 });
+  return paths;
+}
+function paperBeat() {
+  return svg(PAPER_TILE.width, PAPER_TILE.height, paperBeatPaths(), { stroke: COLORS.primary, opacity: 0.05, strokeWidth: 0.8 });
 }
 
 
 // Footer: rings of hypotrochoids (spirograph). Each keeps its pen inside the
 // rolling circle (d < R - r), so every layer is an annulus with an open
 // centre — the rosette of an engraved certificate. Each layer is drawn twice,
-// the copy turned by half a lobe, which interlaces the loops.
-function footerRosette() {
-  const S = 640, c = S / 2, paths = [];
+// the copy turned by half a lobe, which interlaces the loops. Centred on
+// (cx, cy), outer radius 236 × k.
+function rosettePaths(cx, cy, k = 1) {
+  const paths = [];
   const gcd = (a, b) => (b ? gcd(b, a % b) : a);
   const layers = [
     { R: 240, r: 66, d: 62 },   // outer ring: 40 lobes, radius 112..236
@@ -95,12 +102,16 @@ function footerRosette() {
         const t = (i / steps) * turns * TAU;
         const x = (R - r) * Math.cos(t) + d * Math.cos(((R - r) / r) * t);
         const y = (R - r) * Math.sin(t) - d * Math.sin(((R - r) / r) * t);
-        pts.push([c + x * Math.cos(rot) - y * Math.sin(rot), c + x * Math.sin(rot) + y * Math.cos(rot)]);
+        pts.push([cx + k * (x * Math.cos(rot) - y * Math.sin(rot)), cy + k * (x * Math.sin(rot) + y * Math.cos(rot))]);
       }
       paths.push(pathFrom(pts) + 'Z');
     }
   }
-  return svg(S, S, paths, { stroke: '#FFFFFF', opacity: 0.08, strokeWidth: 0.7 });
+  return paths;
+}
+function footerRosette() {
+  const S = 640;
+  return svg(S, S, rosettePaths(S / 2, S / 2), { stroke: '#FFFFFF', opacity: 0.08, strokeWidth: 0.7 });
 }
 
 function writeGuilloches(brandDir) {
@@ -113,4 +124,5 @@ function writeGuilloches(brandDir) {
   return Object.keys(out);
 }
 
-module.exports = { writeGuilloches };
+// The line-work itself, for other generated art (build-brand.js's cards).
+module.exports = { writeGuilloches, paperBeatPaths, PAPER_TILE, rosettePaths };
