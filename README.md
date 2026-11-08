@@ -29,7 +29,7 @@ Load-bearing ideas:
 1. **The build (`scripts/build.js` and its `build-*.js` steps) is the whole system.** Everything else is an input to it or an output of it.
 2. **No number is typed by hand.** Every figure on the site — the latest reading, signal counts, returns, regime shares, the exhibits — comes from `src/data/`, generated from the backend's validated backfill by `scripts/indicator-data.js`. Change the data, rebuild, and every page agrees.
 3. **The page registry (`src/site.config.js`) is the single source of truth** for each page's URL, title, description, nav item, breadcrumb, JSON-LD and — for research notes — section, series and publication date. The research library and "further reading" blocks are generated from it.
-4. **URLs and metadata are derived once** (`canonicalFor` in `src/schema.js`) and feed the canonical tag, sitemap, `_redirects`, JSON-LD and Open Graph. See [URLs, serving & SEO](#urls-serving--seo).
+4. **URLs and metadata are derived once** (`src/urls.js`) and feed the canonical tag, sitemap, `_redirects`, JSON-LD and Open Graph. See [URLs, serving & SEO](#urls-serving--seo).
 5. **`dist/` is disposable.** Never edit it.
 
 ---
@@ -177,9 +177,9 @@ So the canonical served form is: leaf page `foo.html` → `/foo` (no slash); dir
 
 This is the platform default (`auto-trailing-slash` HTML handling), not something we configure. See [Workers Static Assets · HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/). This repo deploys as a **Worker (Static Assets)**, whose built-in redirects are **307 (temporary)** — verified by curling `/404.html` (excluded from `_redirects`), which returns `307 → /404`.
 
-### `canonicalFor()` — one source for every URL we publish
+### `src/urls.js` — one source for every URL we publish
 
-`canonicalFor(siteUrl, src)` in `src/schema.js` computes the canonical served URL from a source path (strip `index.html`, then `.html`). It is the **single source** feeding the canonical tag, `sitemap.xml` `<loc>`, `llms.txt` links, JSON-LD, and `_redirects` targets — so they cannot drift. The published URL is always the served-200 form, **never the `.html` path**.
+`extensionless()` in `src/urls.js` turns a source path into its served form (strip `index.html`, then `.html`); `canonicalPath(src)` and `canonicalFor(src)` build on it. It is the **single source** feeding the canonical tag, `sitemap.xml` `<loc>`, `llms.txt` links, JSON-LD, breadcrumbs, `_redirects` targets and the internal links in built pages — so they cannot drift. The published URL is always the served-200 form, **never the `.html` path**.
 
 ### `_redirects` — a 307 → 301 upgrade, not a router
 
@@ -233,7 +233,7 @@ Research notes also set `section` (topic, shown as "Research · {section}") and 
 
 ## Reading map
 
-- Page registry: `src/site.config.js` · structured data and canonical URLs: `src/schema.js`
+- Page registry: `src/site.config.js` · canonical URLs and breadcrumbs: `src/urls.js` · structured data: `src/schema.js`
 - Figures and exhibits: `src/exhibits/` · calculations (drawdowns, declines, regime episodes): `src/measures.js` · data generator: `scripts/indicator-data.js`
 - Brand tokens: `src/brand.config.js` · brand generator: `scripts/build-brand.js`
 - Build: `scripts/build.js` (steps in `scripts/build-*.js`) · placeholders: `scripts/placeholders.js`

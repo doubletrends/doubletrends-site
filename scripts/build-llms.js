@@ -6,7 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const { SITE_URL, SECTIONS, pages } = require('../src/site.config');
-const { canonicalFor } = require('../src/schema');
+const { canonicalFor } = require('../src/urls');
 const { replace, assertResolved } = require('./placeholders');
 
 const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
@@ -27,7 +27,7 @@ function writeLlms(dist, exhibits) {
   const sections = LLMS_SECTIONS.map(({ key, heading }) => {
     const entries = pages
       .filter((p) => p.sitemap !== false && llmsSectionKey(p.src) === key)
-      .map((p) => `- ${p.title}: ${canonicalFor(SITE_URL, p.src)}\n  ${p.desc}`)
+      .map((p) => `- ${p.title}: ${canonicalFor(p.src)}\n  ${p.desc}`)
       .join('\n');
     return `## ${heading}\n\n${entries}`;
   }).join('\n\n');

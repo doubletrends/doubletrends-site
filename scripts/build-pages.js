@@ -17,17 +17,9 @@
  */
 const fs = require('fs');
 const path = require('path');
-const {
-  SITE_URL,
-  SITE_NAME,
-  SITE_DESCRIPTION,
-  SUBSCRIBE_URL,
-  PORTAL_URL,
-  OG_IMAGE,
-  OG_IMAGE_ALT,
-  PUBLISHER,
-} = require('../src/site.config');
-const { buildJsonLdScripts, canonicalFor, breadcrumbItems, isoDate } = require('../src/schema');
+const { SITE_URL, SITE_NAME, SUBSCRIBE_URL, PORTAL_URL, OG_IMAGE, OG_IMAGE_ALT } = require('../src/site.config');
+const { extensionless, canonicalFor, breadcrumbItems } = require('../src/urls');
+const { buildJsonLdScripts, isoDate } = require('../src/schema');
 const { COLORS } = require('../src/brand.config');
 const { fmtDateLong, escAmp } = require('../src/format');
 const { replace, assertResolved } = require('./placeholders');
@@ -45,21 +37,18 @@ const footer       = read('footer.html');
 const checkoutGate = read('checkout-gate.html');
 const readingCard  = read('reading-card.html');
 
-// Rewrite internal .html hrefs to the extensionless form Cloudflare's asset
-// handling serves with 200 (method.html → method, research/index.html →
-// research/), so in-site navigation skips the 307 and links agree with the
-// canonical URLs. Sources keep authoring plain .html file paths. External URLs,
-// in-page anchors, and non-.html targets pass through untouched. A bare
-// index.html link becomes ./ to stay resolvable.
+// Rewrite internal .html hrefs to their served form (extensionless in
+// src/urls.js: method.html → method, research/index.html → research/), so
+// in-site navigation skips the 307 and links agree with the canonical URLs.
+// Sources keep authoring plain .html file paths. External URLs, in-page
+// anchors, and non-.html targets pass through untouched. A bare index.html
+// link becomes ./ to stay resolvable.
 function extensionlessLinks(html) {
   return html.replace(/href="([^"]*)"/g, (attr, value) => {
     if (/^[a-z][a-z0-9+.-]*:/i.test(value) || value.startsWith('//') || value.startsWith('#')) return attr;
     const [, pathname, suffix = ''] = value.match(/^([^#?]*)([#?].*)?$/);
     if (!pathname.endsWith('.html')) return attr;
-    const out = pathname.endsWith('index.html')
-      ? pathname.slice(0, -'index.html'.length) || './'
-      : pathname.slice(0, -'.html'.length);
-    return `href="${out}${suffix}"`;
+    return `href="${extensionless(pathname) || './'}${suffix}"`;
   });
 }
 
@@ -85,7 +74,7 @@ function markCurrentNav(html, page) {
 
 // Visible breadcrumb, built from the same items as the JSON-LD BreadcrumbList.
 function breadcrumbHtml(page) {
-  const items = breadcrumbItems(page, SITE_URL);
+  const items = breadcrumbItems(page);
   if (items.length < 2) return '';
   const li = items.map((it, i) => {
     const last = i === items.length - 1;
@@ -197,7 +186,7 @@ function renderPage(page, { dist, exhibits, today }) {
     ROOT: page.root,
     TITLE: formatTitle(page),
     DESC: page.desc,
-    CANONICAL: canonicalFor(SITE_URL, page.src),
+    CANONICAL: canonicalFor(page.src),
     THEME_COLOR: COLORS.primary,
     SUBSCRIBE_URL,
     PORTAL_URL,
@@ -206,16 +195,7 @@ function renderPage(page, { dist, exhibits, today }) {
     OG_IMAGE_ALT,
     SOCIAL_EXTRA: socialExtraFor(page, today),
     ROBOTS: page.robots ?? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
-    JSONLD_SCRIPTS: buildJsonLdScripts({
-      page,
-      siteUrl: SITE_URL,
-      siteName: SITE_NAME,
-      siteDescription: SITE_DESCRIPTION,
-      publisher: PUBLISHER,
-      ogImage: OG_IMAGE,
-      today,
-      formattedTitle: formatTitle(page),
-    }),
+    JSONLD_SCRIPTS: buildJsonLdScripts({ page, today, formattedTitle: formatTitle(page) }),
   });
   html = decorateArticle(html, page, exhibits);
   html = applyHeadImage(html, page);

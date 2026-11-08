@@ -1,25 +1,14 @@
-const { SECTIONS } = require('./site.config');
-
-function escapeJsonLd(json) {
-  return json.replace(/</g, '\\u003c');
-}
+/**
+ * schema.js — the page's JSON-LD (schema.org) graph: organization, website,
+ * the page itself, its breadcrumb, and the service, product or article it
+ * describes. URLs come from urls.js, site facts from site.config.js.
+ */
+const { SITE_URL, SITE_NAME, SITE_DESCRIPTION, PUBLISHER, OG_IMAGE } = require('./site.config');
+const { canonicalFor, breadcrumbItems } = require('./urls');
+const { jsonInScript } = require('./format');
 
 function toJsonLdScript(node) {
-  return `  <script type="application/ld+json">\n${escapeJsonLd(JSON.stringify(node, null, 2))}\n  </script>`;
-}
-
-function canonicalFor(siteUrl, src) {
-  // Pages are emitted at their source path (method.html → dist/method.html,
-  // validation/findings.html → dist/validation/findings.html) and Cloudflare
-  // serves them at their extensionless URL with 200: /method is canonical.
-  // Section indexes (research/index.html) keep their trailing slash.
-  return `${siteUrl}/${src.replace(/index\.html$/, '').replace(/\.html$/, '')}`;
-}
-
-function breadcrumbLabel(page) {
-  // The breadcrumb leaf names the page itself. Prefer the short crumb (the
-  // visible <h1>); fall back to the full title for pages that don't set one.
-  return page.crumb || page.title;
+  return `  <script type="application/ld+json">\n${jsonInScript(JSON.stringify(node, null, 2))}\n  </script>`;
 }
 
 function pageTypeFor(kind) {
@@ -27,49 +16,6 @@ function pageTypeFor(kind) {
   if (kind === 'contact') return 'ContactPage';
   if (kind === 'collection') return 'CollectionPage';
   return 'WebPage';
-}
-
-function breadcrumbItems(page, siteUrl) {
-  const items = [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Home',
-      item: siteUrl,
-    },
-  ];
-
-  // Sectioned pages: Home › Section › Page (the section index stops at
-  // Home › Section). SECTIONS maps each top-level folder to its label.
-  const [folder, ...rest] = page.src.split('/');
-  if (rest.length && SECTIONS[folder]) {
-    items.push({
-      '@type': 'ListItem',
-      position: 2,
-      name: SECTIONS[folder],
-      item: `${siteUrl}/${folder}/`,
-    });
-    if (page.src !== `${folder}/index.html`) {
-      items.push({
-        '@type': 'ListItem',
-        position: 3,
-        name: breadcrumbLabel(page),
-        item: canonicalFor(siteUrl, page.src),
-      });
-    }
-    return items;
-  }
-
-  if (page.src !== 'index.html') {
-    items.push({
-      '@type': 'ListItem',
-      position: 2,
-      name: breadcrumbLabel(page),
-      item: canonicalFor(siteUrl, page.src),
-    });
-  }
-
-  return items;
 }
 
 function isoDate(date) {
@@ -88,52 +34,37 @@ function shouldIncludeWebSite(page) {
   return page.kind === 'home';
 }
 
-function organizationNode(publisher) {
+// How other nodes point at the publisher; the full node is PUBLISHER itself.
+function organizationReference() {
   return {
     '@type': 'Organization',
-    '@id': publisher['@id'],
-    name: publisher.name,
-    url: publisher.url,
-    legalName: publisher.legalName,
-    description: publisher.description,
-    email: publisher.email,
-    logo: publisher.logo,
-    brand: publisher.brand,
-    sameAs: publisher.sameAs,
-    knowsAbout: publisher.knowsAbout,
+    '@id': PUBLISHER['@id'],
+    name: PUBLISHER.name,
+    url: PUBLISHER.url,
+    logo: PUBLISHER.logo,
   };
 }
 
-function organizationReference(publisher) {
-  return {
-    '@type': 'Organization',
-    '@id': publisher['@id'],
-    name: publisher.name,
-    url: publisher.url,
-    logo: publisher.logo,
-  };
-}
-
-function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher, ogImage, today, formattedTitle }) {
+function buildSchemaNodes({ page, today, formattedTitle }) {
   if (!shouldEmitJsonLd(page)) return [];
 
-  const canonical = canonicalFor(siteUrl, page.src);
+  const canonical = canonicalFor(page.src);
   const schema = page.schema || {};
   const nodes = [];
-  const publisherRef = organizationReference(publisher);
+  const publisherRef = organizationReference();
 
   if (shouldIncludeOrganization(page)) {
-    nodes.push(organizationNode(publisher));
+    nodes.push(PUBLISHER);
   }
 
   if (shouldIncludeWebSite(page)) {
     nodes.push({
       '@type': 'WebSite',
-      '@id': `${siteUrl}/#website`,
-      url: siteUrl,
-      name: siteName,
-      description: siteDescription,
-      publisher: { '@id': publisher['@id'] },
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: SITE_NAME,
+      description: SITE_DESCRIPTION,
+      publisher: { '@id': PUBLISHER['@id'] },
       inLanguage: 'en-US',
     });
   }
@@ -144,12 +75,12 @@ function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher,
     url: canonical,
     name: formattedTitle,
     description: page.desc,
-    ...(shouldIncludeWebSite(page) ? { isPartOf: { '@id': `${siteUrl}/#website` } } : {}),
+    ...(shouldIncludeWebSite(page) ? { isPartOf: { '@id': `${SITE_URL}/#website` } } : {}),
     inLanguage: 'en-US',
     dateModified: isoDate(today),
   });
 
-  const crumbs = breadcrumbItems(page, siteUrl);
+  const crumbs = breadcrumbItems(page);
   if (crumbs.length >= 2) {
     nodes.push({
       '@type': 'BreadcrumbList',
@@ -213,7 +144,7 @@ function buildSchemaNodes({ page, siteUrl, siteName, siteDescription, publisher,
       publisher: publisherRef,
       image: {
         '@type': 'ImageObject',
-        url: ogImage,
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
       },
@@ -239,9 +170,4 @@ function buildJsonLdScripts(context) {
   });
 }
 
-module.exports = {
-  buildJsonLdScripts,
-  canonicalFor,
-  breadcrumbItems,
-  isoDate,
-};
+module.exports = { buildJsonLdScripts, isoDate };

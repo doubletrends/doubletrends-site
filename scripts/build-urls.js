@@ -1,19 +1,18 @@
 /**
  * build-urls.js
  * Writes the two URL lists generated from the page registry: dist/sitemap.xml
- * and dist/_redirects. Both publish only canonical URLs (canonicalFor in
- * src/schema.js); tests/test-urls.js holds them to that. Called from build.js.
+ * and dist/_redirects. Both publish only canonical URLs (src/urls.js); tests/test-urls.js holds them to that. Called from build.js.
  */
 const fs = require('fs');
 const path = require('path');
-const { SITE_URL, pages } = require('../src/site.config');
-const { canonicalFor } = require('../src/schema');
+const { pages } = require('../src/site.config');
+const { canonicalPath, canonicalFor } = require('../src/urls');
 
 function writeSitemap(dist) {
   const urls = pages
     .filter((p) => p.sitemap !== false)
     .map((p) => `  <url>
-    <loc>${canonicalFor(SITE_URL, p.src)}</loc>
+    <loc>${canonicalFor(p.src)}</loc>
     <changefreq>${p.changefreq}</changefreq>
     <priority>${p.priority.toFixed(1)}</priority>
   </url>`)
@@ -63,7 +62,7 @@ const MOVED = [
 function writeRedirects(dist) {
   const canonicalForm = [
     ...pages.filter((p) => p.src !== '404.html')
-      .map((p) => [`/${p.src}`, canonicalFor(SITE_URL, p.src).slice(SITE_URL.length) || '/']),
+      .map((p) => [`/${p.src}`, canonicalPath(p.src)]),
     ...pages.filter((p) => /\/index\.html$/.test(p.src))
       .map((p) => { const dir = p.src.slice(0, -'/index.html'.length); return [`/${dir}`, `/${dir}/`]; }),
   ].sort(([a], [b]) => a.localeCompare(b));
