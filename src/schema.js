@@ -3,7 +3,7 @@
  * the page itself, its breadcrumb, and the service, product or article it
  * describes. URLs come from urls.js, site facts from site.config.js.
  */
-const { SITE_URL, SITE_NAME, SITE_DESCRIPTION, PUBLISHER, OG_IMAGE } = require('./site.config');
+const { SITE_URL, SITE_NAME, SITE_DESCRIPTION, PUBLISHER, OG_IMAGE, OG_IMAGE_SIZE } = require('./site.config');
 const { canonicalFor, breadcrumbItems } = require('./urls');
 const { jsonInScript } = require('./format');
 
@@ -145,8 +145,8 @@ function buildSchemaNodes({ page, today, formattedTitle }) {
       image: {
         '@type': 'ImageObject',
         url: OG_IMAGE,
-        width: 1200,
-        height: 630,
+        width: OG_IMAGE_SIZE.width,
+        height: OG_IMAGE_SIZE.height,
       },
       articleSection: page.section,
       about: schema.about,

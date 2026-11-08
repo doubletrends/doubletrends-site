@@ -6,7 +6,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { SITE_URL, SITE_NAME, SUBSCRIBE_URL, PORTAL_URL, PUBLISHER } = require('../src/site.config');
+const { SITE_URL, SITE_NAME, SUBSCRIBE_URL, PORTAL_URL, PUBLISHER, OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_SIZE } = require('../src/site.config');
 
 const SITE_VARS = {
   SITE_URL,
@@ -15,6 +15,10 @@ const SITE_VARS = {
   EMAIL: PUBLISHER.email,
   SUBSCRIBE_URL,
   PORTAL_URL,
+  OG_IMAGE,
+  OG_IMAGE_ALT,
+  OG_IMAGE_WIDTH: String(OG_IMAGE_SIZE.width),
+  OG_IMAGE_HEIGHT: String(OG_IMAGE_SIZE.height),
 };
 
 // A partial's text. Fragments placed inside a line drop the file's final

@@ -19,7 +19,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { SITE_URL, SITE_NAME, OG_IMAGE, OG_IMAGE_ALT } = require('../src/site.config');
+const { SITE_URL, SITE_NAME } = require('../src/site.config');
 const { extensionless, canonicalFor, breadcrumbItems } = require('../src/urls');
 const { buildJsonLdScripts, isoDate } = require('../src/schema');
 const { COLORS } = require('../src/brand.config');
@@ -192,8 +192,6 @@ function renderPage(page, { dist, exhibits, today }) {
     CANONICAL: canonicalFor(page.src),
     THEME_COLOR: COLORS.primary,
     OG_TYPE: page.kind === 'article' ? 'article' : 'website',
-    OG_IMAGE,
-    OG_IMAGE_ALT,
     SOCIAL_EXTRA: socialExtraFor(page, today),
     ROBOTS: page.robots,
     JSONLD_SCRIPTS: buildJsonLdScripts({ page, today, formattedTitle: formatTitle(page) }),

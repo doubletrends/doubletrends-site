@@ -20,6 +20,7 @@ const path = require('path');
 const opentype = require('opentype.js');
 const sharp = require('sharp');
 const { COLORS, REGIME_COLORS } = require('../src/brand.config');
+const { OG_IMAGE_SIZE, PUBLISHER } = require('../src/site.config');
 const { regimeEpisodes } = require('../src/measures');
 
 const NAVY = COLORS.primary;
@@ -175,12 +176,17 @@ async function writeBrand(OUT, rows) {
   const wm = wordmarkSvg();
   const wmDark = wordmarkSvg({ dark: true });
   write('wordmark.svg', wm.svg);
-  await png(wm.svg, 'wordmark-light.png', { width: 1024 });
-  await png(wmDark.svg, 'wordmark-dark.png', { width: 1024 });
+  await png(wm.svg, 'wordmark-light.png', { width: PUBLISHER.logo.width });
+  await png(wmDark.svg, 'wordmark-dark.png', { width: PUBLISHER.logo.width });
+  // JSON-LD declares the wordmark's size (PUBLISHER.logo); it must be true.
+  const { width, height } = await sharp(path.join(OUT, 'wordmark-light.png')).metadata();
+  if (width !== PUBLISHER.logo.width || height !== PUBLISHER.logo.height) {
+    throw new Error(`wordmark-light.png is ${width}×${height}; site.config.js PUBLISHER.logo declares ${PUBLISHER.logo.width}×${PUBLISHER.logo.height}`);
+  }
 
-  const og = cardSvg(rows, 1200, 630);
+  const og = cardSvg(rows, OG_IMAGE_SIZE.width, OG_IMAGE_SIZE.height);
   write('og-image.svg', og);
-  await png(og, 'og-image.png', { width: 1200 });
+  await png(og, 'og-image.png', { width: OG_IMAGE_SIZE.width });
   const banner = cardSvg(rows, 1500, 500, { scale: 0.9 });
   write('banner.svg', banner);
   await png(banner, 'banner.png', { width: 1500 });
