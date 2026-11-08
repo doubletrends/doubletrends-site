@@ -4,7 +4,7 @@
 // exhibits). This test fails the suite if the two copies drift.
 const fs   = require('fs');
 const path = require('path');
-const { COLORS, REGIMES } = require('../src/brand.config');
+const { COLORS, REGIMES, RETURNS } = require('../src/brand.config');
 const { ROOT, report } = require('./test-utils');
 
 // brand.config key → CSS custom property in colors.css.
@@ -40,6 +40,9 @@ function main() {
   }
   for (const [regime, { hex }] of Object.entries(REGIMES)) {
     expect(`--regime-${regime}`, hex, `REGIMES.${regime}`);
+  }
+  for (const [kind, { hex }] of Object.entries(RETURNS)) {
+    expect(`--${kind}`, hex, `RETURNS.${kind}`);
   }
 
   if (!checked) errors.push('nothing checked');

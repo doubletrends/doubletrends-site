@@ -9,7 +9,8 @@
  * House style ("index provider") in the brand's two colors: navy ink for
  * text and chrome, rust for highlights (labels, active states, accent rules,
  * the "Double" of the wordmark, signal markers). The regime palette encodes
- * regimes only and is kept clear of rust (panic is magenta, not red).
+ * regimes only: calm green, correction yellow, panic crimson, bear purple.
+ * Panic is a cool crimson so it reads apart from the orange-leaning rust.
  *
  *   COLORS   Tailwind palette. `primary` (navy) and `accent` (rust) are the
  *            two brand colors of the original wordmark. `dark`, `light`,
@@ -17,10 +18,10 @@
  *   FONTS    Source Serif 4 (display + reading) and Source Sans 3 (interface +
  *            data). `noto` / `open` / `mono` are the historical class keys.
  *   REGIMES  Validated categorical palette (dataviz validate_palette.js,
- *            light mode on #FFFFFF, all pairs: CVD ΔE ≥ 8.4, normal ≥ 18.1;
- *            every regime ≥ 16.4 from rust under normal vision). The
- *            correction ochre is below 3:1 against white, so regimes are
- *            always labelled in text and every chart has a table view.
+ *            light mode on paper #FBFAF7 and tint #F3F1EC, all pairs:
+ *            CVD ΔE ≥ 11.9, normal ≥ 19.4). The correction yellow is below
+ *            3:1 against the page, so regimes are always labelled in text
+ *            and every chart has a table view.
  */
 
 const COLORS = {
@@ -42,10 +43,17 @@ const FONTS = {
 };
 
 const REGIMES = {
-  calm:       { hex: '#2F7F49' },
-  correction: { hex: '#D0A535' },
-  panic:      { hex: '#B23B8C' },
-  bear:       { hex: '#4A8CC0' },
+  calm:       { hex: '#3B9A5C' },
+  correction: { hex: '#DDAA22' },
+  panic:      { hex: '#A8223F' },
+  bear:       { hex: '#5E4596' },
 };
 
-module.exports = { COLORS, FONTS, REGIMES };
+// Signed figures in performance tables: gains green, losses red. Text colors,
+// so both clear 4.5:1 on paper and tint; the loss red is the panic crimson.
+const RETURNS = {
+  gain: { hex: '#1B7340' },
+  loss: { hex: '#A8223F' },
+};
+
+module.exports = { COLORS, FONTS, REGIMES, RETURNS };

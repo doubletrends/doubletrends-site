@@ -15,19 +15,28 @@
   --tint:        #F3F1EC;
   --focus:       #2F6FB0;
 
-  /* Shadows: navy-tinted and short, like paper lifted off paper, never a
-     floating card. xs for hairline objects (buttons, inputs), sm for boxes
+  /* Shadows: navy-tinted, like paper lifted off paper, never a floating card.
+     Each level layers a tight contact shadow, a mid shadow and (from sm up) a
+     wide ambient one. xs for hairline objects (buttons, inputs), sm for boxes
      in the reading flow, md for the few objects that sit above the page
      (the offer, the latest reading), lg for overlays (tooltips, the gate). */
-  --shadow-xs: 0 1px 1px rgba(42, 51, 64, 0.06), 0 1px 2px rgba(42, 51, 64, 0.04);
-  --shadow-sm: 0 1px 2px rgba(42, 51, 64, 0.06), 0 3px 8px -2px rgba(42, 51, 64, 0.08);
-  --shadow-md: 0 1px 2px rgba(42, 51, 64, 0.06), 0 6px 14px -4px rgba(42, 51, 64, 0.12), 0 16px 32px -14px rgba(42, 51, 64, 0.14);
-  --shadow-lg: 0 2px 4px rgba(42, 51, 64, 0.08), 0 12px 28px -6px rgba(42, 51, 64, 0.18);
+  --shadow-xs: 0 1px 1px rgba(42, 51, 64, 0.08), 0 1px 3px rgba(42, 51, 64, 0.06);
+  --shadow-sm: 0 1px 2px rgba(42, 51, 64, 0.08), 0 3px 6px -2px rgba(42, 51, 64, 0.10), 0 10px 18px -10px rgba(42, 51, 64, 0.14);
+  --shadow-md: 0 1px 2px rgba(42, 51, 64, 0.08), 0 4px 8px -2px rgba(42, 51, 64, 0.10), 0 12px 24px -8px rgba(42, 51, 64, 0.16), 0 30px 50px -22px rgba(42, 51, 64, 0.22);
+  --shadow-lg: 0 2px 4px rgba(42, 51, 64, 0.10), 0 8px 16px -4px rgba(42, 51, 64, 0.14), 0 24px 48px -12px rgba(42, 51, 64, 0.24);
 
-  --regime-calm:       #2F7F49;
-  --regime-correction: #D0A535;
-  --regime-panic:      #B23B8C;
-  --regime-bear:       #4A8CC0;
+  --regime-calm:       #3B9A5C;
+  --regime-correction: #DDAA22;
+  --regime-panic:      #A8223F;
+  --regime-bear:       #5E4596;
+
+  /* Signed figures in performance tables (brand.config RETURNS). */
+  --gain: #1B7340;
+  --loss: #A8223F;
+
+  /* Signal markers on the exhibits: a brighter rust that clears both the
+     page (3:1) and the navy price line it sits against. */
+  --signal: #E8590C;
 
   --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-sans:  "Source Sans 3", "Helvetica Neue", Arial, sans-serif;

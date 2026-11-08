@@ -197,7 +197,7 @@ const pages = [
   }),
   companyPage('careers', {
     title: 'Careers',
-    desc:  'Careers at DoubleTrends: how the firm hires, the roles it expects to add, and how to send a speculative application.',
+    desc:  'Careers at DoubleTrends: all positions are currently filled. How the firm hires, and how to send an open application.',
   }),
   companyPage('contact', {
     priority: 0.6,

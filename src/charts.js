@@ -100,7 +100,9 @@ function regimeHistoryChart({ rows, indicator }) {
 
   // Signals: ringed markers on the line.
   const closeOn = new Map(rows.map((r) => [r.date, r.close]));
-  const markers = indicator.signals.map((s) => `<circle cx="${r1(X(s.date))}" cy="${r1(Y(closeOn.get(s.date)))}" r="4.5" class="ex-signal"><title>Signal ${fmtDateShort(s.date)}</title></circle>`).join('');
+  // Signals: an upward arrow just below the close, pointing up at it.
+  const arrow = (x, y) => `M${x} ${r1(y + 3)}l7.5 10h-4.5v9h-6v-9h-4.5z`;
+  const markers = indicator.signals.map((s) => `<path d="${arrow(r1(X(s.date)), Y(closeOn.get(s.date)))}" class="ex-signal"><title>Signal ${fmtDateShort(s.date)}</title></path>`).join('');
 
   // Endpoint direct label.
   const lastRow = rows[rows.length - 1];
@@ -342,12 +344,15 @@ ${ticks.join('')}
 function signalTable(indicator, { limit } = {}) {
   const list = [...indicator.signals].reverse();
   const rowsHtml = (limit ? list.slice(0, limit) : list).map((s) => {
-    const cell = (v) => (v === null ? '<td class="num pending">Pending</td>' : `<td class="num ${v < 0 ? 'neg' : ''}">${fmtPct(v)}</td>`);
+    // Forward returns: gains green, losses red (--gain / --loss); zero stays
+    // ink. "From 1-yr high" is a distance, not a return, and stays uncolored.
+    const sign = (v) => (v > 0 ? ' gain' : v < 0 ? ' loss' : '');
+    const cell = (v) => (v === null ? '<td class="num pending">Pending</td>' : `<td class="num${sign(v)}">${fmtPct(v)}</td>`);
     return `<tr>
 <td class="date">${s.date}</td>
 <td class="regime"><span class="regime-key regime-key-${s.regime}"></span>${REGIME_LABEL[s.regime]}</td>
 <td class="num">${fmtNum(s.close)}</td>
-<td class="num ${s.drawdown_pct < 0 ? '' : ''}">${fmtPct(s.drawdown_pct)}</td>
+<td class="num">${fmtPct(s.drawdown_pct)}</td>
 ${cell(s.r3m_pct)}${cell(s.r1y_pct)}${cell(s.r2y_pct)}
 <td class="basis">${s.basis === 'live' ? 'Live' : 'Back-tested'}</td>
 </tr>`;
@@ -399,7 +404,7 @@ ${rowsHtml}
 function legend({ signal = true, bear = true } = {}) {
   const items = REGIME_ORDER.map((g) => `<li><span class="regime-key regime-key-${g}"></span>${REGIME_LABEL[g]}</li>`);
   if (bear) items.push('<li><span class="legend-wash"></span>Bear episode</li>');
-  if (signal) items.push('<li><span class="legend-signal"></span>Signal</li>');
+  if (signal) items.push('<li><svg class="legend-signal" viewBox="-9 -2 18 23" aria-hidden="true"><path d="M0 0l7.5 10h-4.5v9h-6v-9h-4.5z"/></svg>Signal</li>');
   return `<ul class="exhibit-legend" aria-label="Legend">${items.join('')}</ul>`;
 }
 
