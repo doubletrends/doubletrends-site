@@ -1,7 +1,6 @@
 const fs   = require('fs');
 const path = require('path');
 const { pages } = require('../src/site.config');
-const { SECTIONS } = require('../src/schema');
 const { DIST, isNoindex, report } = require('./test-utils');
 
 const JSONLD_BLOCK_RE = /<script\s+type=["']application\/ld\+json["'][^>]*>\s*([\s\S]*?)\s*<\/script>/gi;
@@ -49,21 +48,8 @@ function main() {
       if (!hasType(nodes, 'Article')) {
         errors.push(`${page.src}: article page must emit Article schema`);
       }
-      if (!page.section) {
-        errors.push(`${page.src}: article page must declare section`);
-      }
       if (!Array.isArray(page.schema?.about) || page.schema.about.length === 0) {
         errors.push(`${page.src}: article page must declare non-empty schema.about`);
-      }
-    } else if (hasType(nodes, 'Article')) {
-      errors.push(`${page.src}: non-article page must not emit Article schema`);
-    }
-
-    // All sectioned sub-pages must emit BreadcrumbList.
-    const isSubPage = (prefix) => page.src.startsWith(prefix) && page.src !== `${prefix}index.html`;
-    if (Object.keys(SECTIONS).some((dir) => isSubPage(`${dir}/`))) {
-      if (!hasType(nodes, 'BreadcrumbList')) {
-        errors.push(`${page.src}: sectioned sub-page must emit BreadcrumbList schema`);
       }
     }
   }

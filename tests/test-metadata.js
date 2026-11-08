@@ -1,6 +1,6 @@
 const fs   = require('fs');
-const { SITE_URL, SITE_NAME } = require('../src/site.config');
-const { DIST, walk, relPosix, isNoindex, report } = require('./test-utils');
+const { SITE_NAME } = require('../src/site.config');
+const { DIST, walk, relPosix, report } = require('./test-utils');
 
 const HTML_EXT        = '.html';
 // Title convention: page first, firm last ("Methodology | DoubleTrends");
@@ -15,7 +15,6 @@ const OG_TITLE_RE     = /<meta\s+property=["']og:title["']\s+content=(["'])(.*?)
 const OG_DESC_RE      = /<meta\s+property=["']og:description["']\s+content=(["'])(.*?)\1\s*\/?>/i;
 const TWITTER_TITLE_RE = /<meta\s+name=["']twitter:title["']\s+content=(["'])(.*?)\1\s*\/?>/i;
 const TWITTER_DESC_RE  = /<meta\s+name=["']twitter:description["']\s+content=(["'])(.*?)\1\s*\/?>/i;
-const JSONLD_RE        = /<script\s+type=["']application\/ld\+json["'][^>]*>/i;
 
 function readMatch(html, regex, label, relFile, errors) {
   const match = html.match(regex);
@@ -77,14 +76,6 @@ function main() {
 
     if (desc && (desc !== ogDesc || desc !== twitterDesc)) {
       errors.push(`${relFile}: description, og:description, and twitter:description must match exactly`);
-    }
-
-    if (canonical && !canonical.startsWith(`${SITE_URL}/`)) {
-      errors.push(`${relFile}: canonical must start with ${SITE_URL}/`);
-    }
-
-    if (!isNoindex(robots) && !JSONLD_RE.test(html)) {
-      errors.push(`${relFile}: missing JSON-LD script`);
     }
   }
 

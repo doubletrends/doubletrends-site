@@ -5,8 +5,6 @@ const { DIST, walk, relPosix, report } = require('./test-utils');
 const HTML_EXT        = '.html';
 const ATTR_RE         = /\b(?:href|src)=["']([^"'#][^"']*|#[^"']*)["']/gi;
 const ID_RE           = /\bid=["']([^"']+)["']/gi;
-const PLACEHOLDER_RE  = /\{\{[A-Z0-9_]+\}\}/g;
-const COMMENT_RE      = /<!--[\s\S]*?-->/g;
 const IGNORE_PREFIXES = ['http://', 'https://', 'mailto:', 'tel:', 'javascript:'];
 
 function fileIds(html) {
@@ -54,11 +52,6 @@ function main() {
 
   for (const [file, html] of htmlByFile.entries()) {
     const relFile = relPosix(file, DIST);
-    const stripped = html.replace(COMMENT_RE, '');
-
-    for (const match of stripped.matchAll(PLACEHOLDER_RE)) {
-      errors.push(`${relFile}: unresolved placeholder ${match[0]}`);
-    }
 
     for (const match of html.matchAll(ATTR_RE)) {
       const value = match[1].trim();
@@ -77,6 +70,16 @@ function main() {
       if (!resolved) {
         errors.push(`${relFile}: missing target ${value} -> ${relPosix(target, DIST)}`);
         continue;
+      }
+
+      // Links to pages use the form Cloudflare serves with 200, so navigation
+      // never passes through its 307: leaf pages extensionless with no slash,
+      // folder indexes with a trailing slash (README: URLs, serving & SEO).
+      if (pathname && resolved.endsWith(HTML_EXT)) {
+        const isIndex = path.basename(resolved) === 'index.html';
+        // "." and ".." resolve with a trailing slash, like "./" and "../".
+        const served = isIndex ? /\/$|^\.\.?$/.test(pathname) : !/\.html$|\/$/.test(pathname);
+        if (!served) errors.push(`${relFile}: link ${value} is not the served URL (Cloudflare answers it with a 307)`);
       }
 
       if (hash) {

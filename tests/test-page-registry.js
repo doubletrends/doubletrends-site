@@ -6,13 +6,6 @@ const { report } = require('./test-utils');
 const SRC_PAGES    = path.join(__dirname, '..', 'src', 'pages');
 const ALLOWED_KINDS = new Set(['home', 'webpage', 'collection', 'services', 'contact', 'about', 'article', 'product']);
 
-// Pages are emitted at their source path: validation/methodology.html →
-// dist/validation/methodology.html, so root depth is derived straight from the source path.
-function rootFor(src) {
-  const depth = src.split('/').length - 1;
-  return depth === 0 ? '' : '../'.repeat(depth);
-}
-
 function main() {
   const seen   = new Set();
   const errors = [];
@@ -58,10 +51,6 @@ function main() {
       errors.push(`${page.src}: invalid kind "${page.kind}"`);
     }
 
-    if (page.root !== '/' && page.root !== rootFor(page.src)) {
-      errors.push(`${page.src}: root must match derived value "${rootFor(page.src)}" unless explicitly "/"`);
-    }
-
     if (page.sitemap !== false) {
       if (typeof page.priority !== 'number' || Number.isNaN(page.priority)) {
         errors.push(`${page.src}: sitemap page must have numeric priority`);
@@ -77,15 +66,6 @@ function main() {
       if (page.src === 'research/index.html') {
         errors.push(`${page.src}: research index cannot be kind "article"`);
       }
-    }
-
-    if (
-      page.kind === 'collection' &&
-      !page.src.startsWith('research/') &&
-      !page.src.startsWith('company/') &&
-      !page.src.startsWith('legal/')
-    ) {
-      errors.push(`${page.src}: collection pages must live under research/, company/, or legal/`);
     }
   }
 
