@@ -71,7 +71,8 @@ function stripeSections(html) {
   });
 }
 
-// Mark the current primary-nav item (page.nav names it).
+// Mark the current header item, primary nav or utility bar (page.nav names it;
+// tests/test-nav.js requires one on every page but the 404).
 function markCurrentNav(html, page) {
   if (!page.nav) return html;
   return html.replace(`data-nav="${page.nav}"`, `data-nav="${page.nav}" aria-current="page"`);

@@ -42,6 +42,10 @@ Link targets are resolved the way Cloudflare's auto-trailing-slash asset handlin
 - Every "DoubleTrends" in a built text file (pages, `llms.txt`, sitemap, data) and in `LISTING.md` is either "DoubleTrends L.L.C." (the company) or "DoubleTrends™" (the mark), including titles, metadata, JSON-LD, alt text and aria-labels.
 - The only exception is the wordmark and logo (split text in the header and footer, images under `public/brand/`), which never contain the string.
 
+### Current header item (`nav`)
+
+Every page marks exactly one header item (primary nav or utility bar) with `aria-current="page"`, which draws its underline; `page.nav` in `src/site.config.js` names it. The 404 marks none: it belongs to no section.
+
 ### Metadata completeness (`metadata`)
 
 Each built page has `<title>`, meta description, robots, canonical, `og:title`, `og:description`, `twitter:title`, `twitter:description`, and (unless `noindex`) a JSON-LD block. The three titles match and follow the convention `{Page} | DoubleTrends™`, or `DoubleTrends™ — {title}` on the homepage; the three descriptions match. Where the canonical points is `urls`'s rule; JSON-LD presence is `schema`'s.

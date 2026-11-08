@@ -101,11 +101,11 @@ function article(slug, { published, ...overrides }) {
 }
 
 function companyPage(slug, overrides = {}) {
-  return page(`company/${slug}.html`, { priority: 0.5, ...overrides });
+  return page(`company/${slug}.html`, { priority: 0.5, nav: 'company', ...overrides });
 }
 
 function legalPage(slug, overrides = {}) {
-  return page(`legal/${slug}.html`, { priority: 0.3, ...overrides });
+  return page(`legal/${slug}.html`, { priority: 0.3, nav: 'legal', ...overrides });
 }
 
 const pages = [
@@ -204,6 +204,7 @@ const pages = [
     headImage: 'wallst1834',
     priority: 0.6,
     kind: 'collection',
+    nav: 'company',
     title: 'About the Firm',
     crumb: 'The Firm',
     desc:  'About DoubleTrends L.L.C.: what the firm publishes, the principles behind the indicator, research services, careers and contact.',
@@ -212,6 +213,7 @@ const pages = [
     headImage: 'justice',
     priority: 0.4,
     kind: 'collection',
+    nav: 'legal',
     title: 'Legal',
     crumb: 'Legal',
     desc:  'The documents that govern the DoubleTrends L.L.C. website and the DoubleTrends™ subscription: Terms of Service, Privacy Policy, Refund Policy and Disclaimer.',
