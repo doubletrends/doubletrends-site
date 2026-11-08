@@ -3,7 +3,7 @@
  *
  * Inputs come from src/data/ (see build-indicator-data.js). Output is plain
  * markup injected into pages via {{EXHIBIT_*}} placeholders, so every chart
- * renders without JavaScript and prints cleanly. public/js/exhibits.js layers
+ * renders without JavaScript and prints cleanly. public/scripts/exhibits.js layers
  * the interactive parts on top (crosshair + tooltip, keyboard stepping).
  *
  * House style (validated palette, see styles/tokens/colors.css):

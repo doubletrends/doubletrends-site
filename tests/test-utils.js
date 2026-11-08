@@ -4,13 +4,6 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 
-// Sections whose sub-pages follow the strict label convention: kicker
-// "Section · Category" where Category is the article section or the H1.
-const SECTIONS = { research: 'Research', company: 'About', legal: 'Legal' };
-// Sections whose sub-pages only need a kicker that starts with "Section · "
-// (their H1s are descriptive headlines, not category names).
-const LOOSE_SECTIONS = { alphaverify: 'AlphaVerify' };
-
 // Handles both file and directory targets.
 function walk(target) {
   const stat = fs.statSync(target);
@@ -56,4 +49,4 @@ function report(errors, label) {
   console.log(`  ${green}✓ PASS${reset}  ${label}`);
 }
 
-module.exports = { ROOT, DIST, SECTIONS, LOOSE_SECTIONS, walk, relPosix, decode, isNoindex, report };
+module.exports = { ROOT, DIST, walk, relPosix, decode, isNoindex, report };

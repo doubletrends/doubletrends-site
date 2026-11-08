@@ -1,6 +1,6 @@
 # DoubleTrends Site
 
-Public site of DoubleTrends, served at `doubletrends.com`. The site presents an independent research firm: research notes, the DoubleTrends Regime Indicator as public research (overview, methodology, historical data, subscriber access), research services, and the firm pages. Navigation: Research · Indicator · Methodology · Data · Services · About. The firm does not sell trading signals; the subscription is described as covering the infrastructure that produces the daily reading, and pricing appears only on the subscriber-access page.
+Public site of DoubleTrends, served at `doubletrends.com`. The site presents a quantitative research firm: research notes, the DoubleTrends Regime Indicator as public research (overview, methodology, historical data, subscriber access), research services, and the firm pages. Navigation: Research · Indicator · Methodology · Data · Services · About. The firm does not sell trading signals; the subscription is described as covering the infrastructure that produces the daily reading, and pricing appears only on the subscriber-access page.
 
 Static HTML/CSS/JS — no framework. A single Node.js build (`build.js`) assembles pages, renders the data exhibits, derives all metadata, compiles the stylesheet and optimizes images; `dist/` is deployed as a Cloudflare Worker (Static Assets).
 
@@ -78,7 +78,7 @@ Readings on the site are as of the last build (the date is printed beside them).
 `build.js` runs top to bottom:
 
 1. Computes figures and exhibits once from `src/data/` (`src/charts.js`).
-2. Compiles `src/styles/` into one minified `dist/public/css/site.css` (Tailwind CLI; utilities remain available to older page markup).
+2. Compiles `src/styles/` into one minified `dist/public/scripts/site.css` (Tailwind CLI; utilities remain available to older page markup).
 3. For each registry entry: wraps the page body in `layout.html` with head/header/footer/checkout-gate, resolves every placeholder, marks the current nav item (`aria-current`), and — for research notes — inserts the breadcrumb and dateline and replaces the note's closing promo block with a generated further-reading block.
 4. **Fails the build on any unresolved placeholder.**
 5. Rewrites internal `.html` links to the extensionless URLs Cloudflare serves with 200.
@@ -127,7 +127,7 @@ The site is designed to read like an index provider's publication, not a product
 
 Constants at the top of the script: `LIVE_SINCE` (first live publication date; earlier readings are labelled back-tested) and `SIGNAL_RECORD_START` (the published record includes every signal from this date).
 
-`src/charts.js` renders the exhibits to static SVG at build time (they work without JavaScript and print cleanly); `public/js/exhibits.js` adds the crosshair and tooltips, with keyboard stepping and a live region for screen readers.
+`src/charts.js` renders the exhibits to static SVG at build time (they work without JavaScript and print cleanly); `public/scripts/exhibits.js` adds the crosshair and tooltips, with keyboard stepping and a live region for screen readers.
 
 ## URLs, serving & SEO
 
@@ -138,7 +138,7 @@ Every page has three distinct identities. Keep them separate:
 | Identity | Example (for "method") | Where it lives |
 | --- | --- | --- |
 | **Source of truth** (file) | `dist/indicator/methodology.html` | build output only — never linked or published |
-| **Canonical URL** (served 200) | `/method` | canonical tag, sitemap, llms.txt, JSON-LD, Open Graph, internal links |
+| **Canonical URL** (served 200) | `/indicator/methodology` | canonical tag, sitemap, llms.txt, JSON-LD, Open Graph, internal links |
 | **Alternate spellings** | `/indicator/methodology.html`, `/indicator/methodology/` | only as `_redirects` sources → redirect to the canonical |
 
 ### Source of truth

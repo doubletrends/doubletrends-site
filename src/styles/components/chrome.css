@@ -52,11 +52,13 @@
 }
 
 /* ── Breadcrumb ──────────────────────────────────────────────────────────── */
-.breadcrumb { font-size: 0.8125rem; color: var(--muted); }
-.breadcrumb ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.breadcrumb li + li::before { content: "/"; margin-right: 0.4rem; color: var(--faint); }
-.breadcrumb a { color: var(--muted); text-decoration: none; }
-.breadcrumb a:hover { color: var(--ink); text-decoration: underline; }
+/* The breadcrumb is the hero's one location line, set in the kicker's type:
+   HOME · RESEARCH · VIX PERCENTILE. */
+.breadcrumb { font-family: var(--font-sans); font-weight: 600; font-size: 0.75rem; line-height: 1.2; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); }
+.breadcrumb ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 0.5em; }
+.breadcrumb li + li::before { content: "\00B7"; margin-right: 0.5em; }
+.breadcrumb a { color: inherit; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 .site-footer {
@@ -66,18 +68,30 @@
 }
 .site-footer a { color: #fff; text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
-.site-footer-top { display: grid; grid-template-columns: 1.3fr repeat(5, 1fr); column-gap: 2rem; gap: 2.5rem; padding-block: 3.5rem 2.5rem; }
+.site-footer-top { display: grid; grid-template-columns: repeat(5, 1fr); column-gap: 2rem; gap: 2.5rem; padding-block: 3.5rem 2.5rem; }
+/* The brand is its own row: logo beside the firm statement, then the five
+   link columns share the row below. */
+.site-footer-brand { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.14); }
 .site-footer .brand { color: #fff; }
 .site-footer .brand-name small { color: #9FAABA; }
-.site-footer-about { max-width: 22rem; margin-top: 1rem; color: #AEB8C7; line-height: 1.55; }
+.site-footer-about { flex: 1 1 18rem; min-width: 0; max-width: 40rem; margin: 0; color: #AEB8C7; line-height: 1.55; }
 .site-footer h2 { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.09em; text-transform: uppercase; color: #fff; margin-bottom: 0.9rem; }
 .site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+/* Footer research list: the notes past the first few open from a toggle that
+   sits at the bottom of the list (build.js footerNotes). */
+.footer-more-toggle { font: inherit; background: none; border: 0; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4em; color: #9FAABA; }
+.footer-more-toggle::after { content: ""; width: 0.4em; height: 0.4em; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-0.15em) rotate(45deg); transition: transform 0.15s ease; }
+.footer-more-toggle[aria-expanded="true"]::after { transform: translateY(0.1em) rotate(-135deg); }
+.footer-more-toggle:hover { color: #fff; }
+.footer-more-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.footer-more-open, .footer-more-toggle[aria-expanded="true"] .footer-more-closed { display: none; }
+.footer-more-toggle[aria-expanded="true"] .footer-more-open { display: inline; }
+.site-footer li[hidden] { display: none; }
 .site-footer-legal { border-top: 1px solid rgba(255, 255, 255, 0.14); padding-block: 1.75rem 2.5rem; display: grid; gap: 0.85rem; font-size: 0.78125rem; line-height: 1.6; color: #9FAABA; }
 .site-footer-legal p { max-width: 70rem; }
 .site-footer-legal .entity { color: #DDE3EC; }
 @media (max-width: 960px) {
   .site-footer-top { grid-template-columns: 1fr 1fr; }
-  .site-footer-brand { grid-column: 1 / -1; }
 }
 @media (max-width: 520px) { .site-footer-top { grid-template-columns: 1fr; } }
 

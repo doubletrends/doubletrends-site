@@ -85,7 +85,7 @@ const stylesDir   = path.join(__dirname, 'src', 'styles');
 const entryCSS    = fs.readFileSync(path.join(stylesDir, 'entry.css'), 'utf8');
 const customCSS   = CSS_SEGMENTS.map((s) => fs.readFileSync(path.join(stylesDir, `${s}.css`), 'utf8')).join('\n');
 const cssInputTmp = path.join(stylesDir, '.build-input.css');
-const cssOut      = path.join(DIST, 'public', 'css', 'site.css');
+const cssOut      = path.join(DIST, 'public', 'scripts', 'site.css');
 fs.mkdirSync(path.dirname(cssOut), { recursive: true });
 fs.writeFileSync(cssInputTmp, entryCSS + '\n' + customCSS, 'utf8');
 try {
@@ -97,7 +97,7 @@ try {
 } finally {
   fs.unlinkSync(cssInputTmp);
 }
-console.log('✓  public/css/site.css generated');
+console.log('✓  public/scripts/site.css generated');
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 // Function replacer: values are inserted literally ("$&", "$1" in generated
@@ -125,6 +125,20 @@ function extensionlessLinks(html) {
 }
 
 // Mark the current primary-nav item (page.nav names it).
+// Content sections alternate plain and tinted, site-wide: the first section
+// after the hero (or page head) is plain, the second tinted, and so on. Pages
+// never set section-tint themselves; the build assigns it here.
+function stripeSections(html) {
+  return html.replace(/<main\b[\s\S]*?<\/main>/, (main) => {
+    let n = 0;
+    return main.replace(/<section class="section((?: [^"]*)?)"/g, (_m, rest) => {
+      n += 1;
+      const others = rest.replace(/ section-tint\b/g, '');
+      return `<section class="section${n % 2 === 0 ? ' section-tint' : ''}${others}"`;
+    });
+  });
+}
+
 function markCurrentNav(html, page) {
   if (!page.nav) return html;
   return html.replace(`data-nav="${page.nav}"`, `data-nav="${page.nav}" aria-current="page"`);
@@ -144,11 +158,13 @@ function breadcrumbHtml(page) {
   return `<nav class="breadcrumb" aria-label="Breadcrumb"><ol>${li}</ol></nav>`;
 }
 
-// Research notes: breadcrumb above the title, dateline below the standfirst.
+// Research notes: breadcrumb above the title, dateline
+// below the standfirst. The breadcrumb is the hero's one rust label; the
+// dateline carries the series and topic, as the research library lists them.
 function decorateArticle(html, page) {
   if (page.kind !== 'article') return html;
   const published = page.schema?.datePublished;
-  const meta = `<p class="article-meta"><span><strong>Research note</strong> &middot; ${page.section}</span>`
+  const meta = `<p class="article-meta"><span><strong>${page.series}</strong> &middot; ${page.section}</span>`
     + (published ? `<span>Published ${fmtDateLong(published)}</span>` : '')
     + '<span>DoubleTrends Research</span></p>';
   // The notes' original closing promo blocks are replaced by one standard
@@ -159,10 +175,10 @@ function decorateArticle(html, page) {
 <span class="tag-overline">Further reading</span>
 <ul class="further-list">
 ${related.map((a) => `<li><a href="${page.root}${a.src}">${escAmp(a.title)}</a><span>${a.series} &middot; ${fmtDateLong(a.schema.datePublished)}</span></li>`).join('\n')}
-<li><a href="${page.root}method.html">Methodology</a><span>How the regime classification and the signal are constructed</span></li>
-<li><a href="${page.root}data.html">Historical data</a><span>Every signal since ${EXHIBITS.SIG_FIRST}, with what followed</span></li>
+<li><a href="${page.root}indicator/methodology.html">Methodology</a><span>How the regime classification and the signal are constructed</span></li>
+<li><a href="${page.root}indicator/performance.html">Performance</a><span>Every signal since ${EXHIBITS.SIG_FIRST}, with what followed</span></li>
 </ul>
-<p class="fine-print">DoubleTrends research is published alongside the <a href="${page.root}indicator.html">DoubleTrends Regime Indicator</a>.</p>
+<p class="fine-print">DoubleTrends research is published alongside the <a href="${page.root}indicator/index.html">DoubleTrends Regime Indicator</a>.</p>
 </section>`;
   html = html.replace(/<section class="cta-panel article-cta">[\s\S]*?<\/section>/, () => further);
 
@@ -193,6 +209,25 @@ function entryHtml(a, root) {
 <span class="entry-series">${a.series} &middot; ${a.section}</span>
 </li>`;
 }
+// Footer Research column: every research note, in library order (series,
+// then registry order), under its page name. The first FOOTER_NOTES_SHOWN are
+// always visible; a toggle at the bottom of the list reveals the rest. Without
+// JavaScript every note shows and the toggle stays hidden.
+const FOOTER_NOTES_SHOWN = 5;
+const FOOTER_MORE_JS = "(function(){var b=document.querySelector('.footer-more-toggle');if(!b)return;var r=document.querySelectorAll('.footer-more-item');function s(o){for(var i=0;i<r.length;i++)r[i].hidden=!o;b.setAttribute('aria-expanded',String(o))}s(false);b.parentNode.hidden=false;b.addEventListener('click',function(){s(b.getAttribute('aria-expanded')!=='true')})})()";
+function footerNotes(root) {
+  const item = (a, cls = '') => `<li${cls}><a href="${root}${a.src}">${escAmp(a.crumb || a.title)}</a></li>`;
+  const notes = SERIES_ORDER.flatMap((series) => pages.filter((p) => p.kind === 'article' && p.series === series));
+  const shown = notes.slice(0, FOOTER_NOTES_SHOWN).map((a) => `          ${item(a)}`);
+  const rest = notes.slice(FOOTER_NOTES_SHOWN);
+  if (!rest.length) return shown.join('\n');
+  return [
+    ...shown,
+    ...rest.map((a) => `          ${item(a, ' class="footer-more-item"')}`),
+    `          <li hidden><button type="button" class="footer-more-toggle" aria-expanded="true"><span class="footer-more-closed">${rest.length} more notes</span><span class="footer-more-open">Fewer notes</span></button></li>`,
+    `          <script>${FOOTER_MORE_JS}</script>`,
+  ].join('\n');
+}
 function researchRecent(root, n = 3) {
   return `<ul class="entries">${ARTICLES.slice(0, n).map((a) => entryHtml(a, root)).join('\n')}</ul>`;
 }
@@ -222,7 +257,7 @@ function applyHeadImage(html, page) {
   const img = ARCHIVE[page.headImage];
   if (!img) throw new Error(`${page.src}: unknown headImage "${page.headImage}"`);
   // Root-absolute: a relative url() inside a custom property resolves against
-  // the stylesheet that reads it (public/css/), not against this page.
+  // the stylesheet that reads it (public/scripts/), not against this page.
   const url = (r) => `/public/img/archive/${page.headImage}-${r}.jpg`;
   // The link test does not follow style attributes, so check the files here.
   for (const r of ['hero', 'band']) {
@@ -254,7 +289,7 @@ function socialExtraFor(page) {
 
 // Pages that carry exhibits load the interaction layer.
 function scriptsFor(html, root) {
-  return /data-exhibit=/.test(html) ? `<script src="${root}public/js/exhibits.js" defer></script>\n</body>` : '</body>';
+  return /data-exhibit=/.test(html) ? `<script src="${root}public/scripts/exhibits.js" defer></script>\n</body>` : '</body>';
 }
 
 function renderPage(page) {
@@ -277,6 +312,7 @@ function renderPage(page) {
     BREADCRUMB: breadcrumbHtml(page),
     RESEARCH_RECENT: researchRecent(page.root),
     RESEARCH_LIBRARY: researchLibrary(page.root),
+    FOOTER_NOTES: footerNotes(page.root),
     ROOT: page.root,
     TITLE: formatTitle(page),
     DESC: page.desc,
@@ -305,6 +341,7 @@ function renderPage(page) {
   html = decorateArticle(html, page);
   html = applyHeadImage(html, page);
   html = markCurrentNav(html, page);
+  html = stripeSections(html);
   html = html.replace('</body>', scriptsFor(html, page.root));
 
   const leftover = html.match(/\{\{[A-Z0-9_]+\}\}/);
@@ -328,7 +365,7 @@ const urls = pages
   .filter((p) => p.sitemap !== false)
   .map((p) => `  <url>
     <loc>${canonicalFor(p.src)}</loc>
-    <changefreq>${p.kind === 'home' || p.src === 'data.html' ? 'weekly' : 'monthly'}</changefreq>
+    <changefreq>${p.kind === 'home' || p.src === 'indicator/performance.html' ? 'weekly' : 'monthly'}</changefreq>
     <priority>${(p.priority ?? 0.7).toFixed(1)}</priority>
   </url>`)
   .join('\n\n');
@@ -357,27 +394,52 @@ const LEGACY = [
     const slug = p.src.slice('research/'.length, -'.html'.length);
     return [[`/academy/${slug}`, `/research/${slug}`], [`/academy/${slug}.html`, `/research/${slug}`]];
   }),
-  ['/alphaverify', '/alphaverify/'],
-  ['/alphaverify.html', '/alphaverify/'],
-  ['/public/academy/*', '/public/research/:splat'],
+  // AlphaVerify's pages moved to validation/ (November 2026).
+  ['/alphaverify', '/validation/'],
+  ['/alphaverify/', '/validation/'],
+  ['/alphaverify/index.html', '/validation/'],
+  ['/alphaverify/method', '/validation/methodology'],
+  ['/alphaverify/method.html', '/validation/methodology'],
+  ['/alphaverify/findings', '/validation/findings'],
+  ['/alphaverify/findings.html', '/validation/findings'],
+  ['/alphaverify/workspaces', '/validation/workspaces'],
+  ['/alphaverify/workspaces.html', '/validation/workspaces'],
+  ['/validation', '/validation/'],
+  // The indicator pages moved under indicator/ (November 2026).
+  ['/indicator', '/indicator/'],
+  ['/indicator.html', '/indicator/'],
+  ['/method', '/indicator/methodology'],
+  ['/method.html', '/indicator/methodology'],
+  ['/data', '/indicator/performance'],
+  ['/data.html', '/indicator/performance'],
+  ['/product', '/indicator/subscription'],
+  ['/product.html', '/indicator/subscription'],
+  ['/success', '/indicator/success'],
+  ['/success.html', '/indicator/success'],
+  ['/alphaverify.html', '/validation/'],
+  ['/public/academy/*', '/public/img/research/:splat'],
+  // Asset folders reorganised (November 2026).
+  ['/public/research/*', '/public/img/research/:splat'],
+  ['/public/alphaverify/*', '/public/img/validation/:splat'],
 ];
 const legacyLines = LEGACY.map(([from, to]) => `${from} ${to} 301`);
 fs.writeFileSync(path.join(DIST, '_redirects'), [...legacyLines, ...redirectLines].join('\n') + '\n', 'utf8');
 console.log('✓  _redirects generated');
 
 // ─── llms.txt ────────────────────────────────────────────────────────────────
-// Sections mirror the breadcrumb model: top-level pages, then Research /
-// About / Legal children.
+// Sections mirror the breadcrumb model: top-level pages, then each section's
+// children under the section's name.
 const LLMS_SECTIONS = [
   { key: 'main',    heading: 'Primary Pages' },
+  { key: 'indicator', heading: 'DoubleTrends' },
   { key: 'research', heading: 'Research' },
-  { key: 'alphaverify', heading: 'AlphaVerify' },
-  { key: 'company', heading: 'About' },
+  { key: 'validation', heading: 'Validation' },
+  { key: 'company', heading: 'The Firm' },
   { key: 'legal',   heading: 'Legal' },
 ];
 function llmsSectionKey(src) {
   const prefix = src.split('/')[0];
-  return ['research', 'alphaverify', 'company', 'legal'].includes(prefix) && !src.endsWith('index.html') ? prefix : 'main';
+  return ['indicator', 'research', 'validation', 'company', 'legal'].includes(prefix) && !src.endsWith('index.html') ? prefix : 'main';
 }
 const llmsSections = LLMS_SECTIONS.map(({ key, heading }) => {
   const entries = pages
@@ -389,7 +451,7 @@ const llmsSections = LLMS_SECTIONS.map(({ key, heading }) => {
 
 fs.writeFileSync(path.join(DIST, 'llms.txt'), `# DoubleTrends
 
-DoubleTrends is an independent quantitative research firm. It publishes research on market regimes, drawdowns and investor behavior, and the DoubleTrends Regime Indicator: a rules-based daily classification of U.S. equity market stress (calm, correction, panic, bear) for the S&P 500, with a reversal signal that is eligible to fire only in panic and bear regimes. It does not sell trading signals; a subscription to the daily reading covers the infrastructure that produces it. It accepts no payments from brokers or exchanges and also offers research and data engineering services. History is a point-in-time reconstruction from ${EXHIBITS.IND_FIRST_YEAR}; live publication began ${EXHIBITS.IND_LIVE_SINCE}. The site also publishes research notes on drawdowns, investor behavior, and the indicator's inputs.
+DoubleTrends is a quantitative research firm. It publishes research on market regimes, drawdowns and investor behavior, and the DoubleTrends Regime Indicator: a rules-based daily classification of U.S. equity market stress (calm, correction, panic, bear) for the S&P 500, with a reversal signal that is eligible to fire only in panic and bear regimes. It does not sell trading signals; a subscription to the daily reading covers the infrastructure that produces it. It accepts no payments from brokers or exchanges and also offers research and data engineering services. History is a point-in-time reconstruction from ${EXHIBITS.IND_FIRST_YEAR}; live publication began ${EXHIBITS.IND_LIVE_SINCE}. The site also publishes research notes on drawdowns, investor behavior, and the indicator's inputs.
 
 Important: the content is educational market information only. It is not financial, investment, trading, tax, or legal advice, and it is not a recommendation to buy, sell, or hold any security. Readings before ${EXHIBITS.IND_LIVE_SINCE} are back-tested.
 

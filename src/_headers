@@ -16,5 +16,5 @@
 # site.css is unhashed, so fresh HTML can reference stale CSS for up to
 # max-age after a deploy. Five minutes caps that mismatch window while
 # covering same-session navigation.
-/public/css/site.css
+/public/scripts/site.css
   Cache-Control: public, max-age=300

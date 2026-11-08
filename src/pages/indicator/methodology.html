@@ -4,7 +4,6 @@
   <div class="wrap">
     <div class="hero-text">
       {{BREADCRUMB}}
-      <span class="kicker">Indicator &middot; Methodology</span>
       <h1 class="display">How the DoubleTrends Regime Indicator is constructed</h1>
       <p class="dek">The indicator classifies the S&amp;P 500 into one of four regimes each trading day, and fires a reversal signal only when an oversold turn coincides with acute or persistent stress. This document sets out the inputs, the classification, the signal rules, publication timing, and how the history was built.</p>
       <p class="page-head-meta"><span><strong>Coverage</strong> S&amp;P 500 index</span><span><strong>Frequency</strong> Daily, after the U.S. close</span><span><strong>History</strong> From {{IND_FIRST_DATE}}</span><span><strong>Live since</strong> {{IND_LIVE_SINCE}}</span></p>
@@ -61,7 +60,7 @@
         <div class="prose">
           <h3>3.1 Dual-horizon momentum</h3>
           <p>Williams&nbsp;%R &mdash; a 1970s momentum oscillator that locates the latest close within its recent high&ndash;low range &mdash; is computed over a short and a long lookback, and each is smoothed. A single horizon is either too noisy (short) or too slow (long); requiring both to agree removes most false readings. A market is <strong>oversold</strong> when both smoothed readings sit deep in the bottom of their ranges, and a <strong>reversal candidate</strong> occurs on the session in which that condition ends.</p>
-          <p>A momentum reading on its own is not treated as an edge. DoubleTrends&rsquo; open-source <a href="alphaverify/index.html">AlphaVerify</a> framework tests single market conditions against synthetic markets that contain no signal, and widely followed ones &mdash; the golden cross, price above its 200-day average &mdash; do not clear that test on the NASDAQ. This is why a reversal candidate is only considered inside a stress regime (sections 4 and 5).</p>
+          <p>A momentum reading on its own is not treated as an edge. DoubleTrends&rsquo; open-source <a href="../validation/index.html">AlphaVerify</a> framework tests single market conditions against synthetic markets that contain no signal, and widely followed ones &mdash; the golden cross, price above its 200-day average &mdash; do not clear that test on the NASDAQ. This is why a reversal candidate is only considered inside a stress regime (sections 4 and 5).</p>
           <h3>3.2 The shape of a decline</h3>
           <p>Four measures describe what a decline is doing, not only where it has reached: <strong>depth</strong> (distance below the trailing one-year closing high), <strong>duration</strong> (sessions since that high), <strong>sharpness</strong> (the worst ten-session move within the trailing month) and a <strong>reference high</strong> (the recent ceiling the rest is measured against). Together they distinguish a 3% drift over six weeks from a 15% fall in four.</p>
           <h3>3.3 Volatility and macro context</h3>
@@ -117,7 +116,7 @@
         <h2 class="h2"><span class="section-no">7</span>Historical reconstruction</h2>
         <div class="prose">
           <p>Readings and signals before {{IND_LIVE_SINCE}} are <strong>back-tested</strong>: they were produced after the fact by applying the method to history, not published at the time. For prices and volatility the reconstruction is point-in-time &mdash; on each historical date the method sees only closes on or before that date.</p>
-          <p>Before history is published it is computed twice, independently: once over the full series and once by replaying each date separately with only the trailing window available on that date. The two must agree field by field on a random sample of dates and produce byte-identical output; otherwise nothing is published.</p>
+          <p>Before history is published it is computed twice, separately: once over the full series and once by replaying each date separately with only the trailing window available on that date. The two must agree field by field on a random sample of dates and produce byte-identical output; otherwise nothing is published.</p>
           <p><strong>Macroeconomic timing.</strong> Monthly series are aligned to the month they describe, so in the back-tested history a month&rsquo;s value is applied from the first day of that month &mdash; between one and six weeks before it was actually released. Live readings use only values already published. These series enter only the bear overlay (section 4.2), so the effect is limited to the timing of bear-regime episodes.</p>
           <p><strong>Data vintage.</strong> Macroeconomic series are revised after first release. The reconstruction uses the series as currently published, which can differ from the values available at the time. Price and volatility inputs are not revised.</p>
         </div>
@@ -127,7 +126,7 @@
         <h2 class="h2"><span class="section-no">8</span>Limitations</h2>
         <div class="prose">
           <ul>
-            <li><strong>Signals can be early.</strong> In long declines the market can keep falling after a signal. The October 2000, September 2001 and January 2008 signals were each followed by lower prices a year later; the full record is on the <a href="data.html">historical data</a> page.</li>
+            <li><strong>Signals can be early.</strong> In long declines the market can keep falling after a signal. The October 2000, September 2001 and January 2008 signals were each followed by lower prices a year later; the full record is on the <a href="performance.html">historical data</a> page.</li>
             <li><strong>Rarity.</strong> Several years contain no signal. The indicator is not a source of regular trading activity.</li>
             <li><strong>Scope.</strong> The method is calibrated to the S&amp;P 500 only. Returns quoted on this site are index price returns, excluding dividends, costs and taxes; the index cannot be invested in directly.</li>
             <li><strong>Not advice.</strong> The indicator describes market conditions. It does not account for any investor&rsquo;s circumstances and is not a recommendation to buy or sell any security.</li>

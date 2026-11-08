@@ -2,7 +2,6 @@
 <div class="wrap">
   <header class="page-head">
     {{BREADCRUMB}}
-    <span class="kicker">About &middot; Research services</span>
     <h1 class="h1">Research services</h1>
     <p class="dek">Quantitative research and data engineering, built to the standard of the firm&rsquo;s own indicator: reliable data pipelines, statistical studies and forecasts, and predictive models with their limits documented.</p>
   </header>
@@ -34,7 +33,7 @@
       <div>
         <span class="kicker">Case study &middot; The firm&rsquo;s own work</span>
         <h2 class="h2">Building a point-in-time market regime classifier</h2>
-        <p>The <a class="link" href="../indicator.html">DoubleTrends Regime Indicator</a> is the firm&rsquo;s own system, and the clearest example of how engagements are built: the question, the data, the validation and the operations are all documented in public.</p>
+        <p>The <a class="link" href="../indicator/index.html">DoubleTrends Regime Indicator</a> is the firm&rsquo;s own system, and the clearest example of how engagements are built: the question, the data, the validation and the operations are all documented in public.</p>
       </div>
     </div>
     <dl class="facts">
@@ -43,13 +42,13 @@
       <dt>Data</dt>
       <dd>Daily index prices, the VIX and three Federal Reserve series. Macroeconomic downloads are validated before use and retried on failure; if the source stays unavailable, the last validated copy (at most a week old) is used and the run is flagged.</dd>
       <dt>Method</dt>
-      <dd>Measures of the depth, duration and sharpness of a decline, dual-horizon momentum and volatility percentiles feed a four-state classification and a signal state machine. The structure of every rule is <a class="link" href="../method.html">published</a>.</dd>
+      <dd>Measures of the depth, duration and sharpness of a decline, dual-horizon momentum and volatility percentiles feed a four-state classification and a signal state machine. The structure of every rule is <a class="link" href="../indicator/methodology.html">published</a>.</dd>
       <dt>Validation</dt>
-      <dd>Thirty years of history are computed twice, independently &mdash; over the full series and date by date with only the data each date allowed. Both must agree before anything is published. A known limitation in the timing of macroeconomic inputs is disclosed rather than hidden.</dd>
+      <dd>Thirty years of history are computed twice, separately &mdash; over the full series and date by date with only the data each date allowed. Both must agree before anything is published. A known limitation in the timing of macroeconomic inputs is disclosed rather than hidden.</dd>
       <dt>Operations</dt>
-      <dd>Computation scheduled to the NYSE calendar, including early closes; retried dispatch and a backup end-of-day run; a monitoring view that flags missing or late readings; and a public <a class="link" href="../data.html#revisions">revisions log</a>.</dd>
+      <dd>Computation scheduled to the NYSE calendar, including early closes; retried dispatch and a backup end-of-day run; a monitoring view that flags missing or late readings; and a public <a class="link" href="../indicator/performance.html#revisions">revisions log</a>.</dd>
       <dt>Outputs</dt>
-      <dd>A methodology document, a complete <a class="link" href="../data.html">signal record</a> with a CSV download, and a daily reading delivered to subscribers.</dd>
+      <dd>A methodology document, a complete <a class="link" href="../indicator/performance.html">signal record</a> with a CSV download, and a daily reading delivered to subscribers.</dd>
     </dl>
   </div>
 </section>
@@ -60,7 +59,7 @@
       <div>
         <span class="kicker">Case study &middot; The firm&rsquo;s own work</span>
         <h2 class="h2">An open-source validation framework, specified in full</h2>
-        <p><a class="link" href="../alphaverify/index.html">AlphaVerify</a> tests whether a trading signal&rsquo;s edge survives comparison with markets that contain no signal &mdash; the kind of question research engagements exist to answer honestly.</p>
+        <p><a class="link" href="../validation/index.html">AlphaVerify</a> tests whether a trading signal&rsquo;s edge survives comparison with markets that contain no signal &mdash; the kind of question research engagements exist to answer honestly.</p>
       </div>
     </div>
     <dl class="facts">

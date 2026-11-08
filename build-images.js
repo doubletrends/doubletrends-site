@@ -21,14 +21,14 @@ const sharp = require('sharp');
 // ~740px reading column; charts and screenshots keep text crisp (80–82),
 // flat diagrams use lossless WebP.
 const IMAGES = [
-  { src: 'research/dtep-1.png',           maxWidth: 1468, quality: 82 },
-  { src: 'research/dtep-2.png',           maxWidth: 1151, quality: 82 },
-  { src: 'research/dtep-3.png',           maxWidth: 1143, quality: 82 },
+  { src: 'img/research/dtep-1.png',           maxWidth: 1468, quality: 82 },
+  { src: 'img/research/dtep-2.png',           maxWidth: 1151, quality: 82 },
+  { src: 'img/research/dtep-3.png',           maxWidth: 1143, quality: 82 },
   // AlphaVerify figures (CC0, from github.com/doubletrends/alpha-verify docs/).
-  { src: 'alphaverify/ma_cross_50_200__bin_09.png', maxWidth: 1800, quality: 84 },
-  { src: 'alphaverify/ma_ratio_200__bin_04.png',    maxWidth: 1800, quality: 84 },
-  { src: 'alphaverify/tnx_level__bin_01.png',       maxWidth: 1800, quality: 84 },
-  { src: 'alphaverify/tnx_level__bin_06.png',       maxWidth: 1800, quality: 84 },
+  { src: 'img/validation/ma_cross_50_200__bin_09.png', maxWidth: 1800, quality: 84 },
+  { src: 'img/validation/ma_ratio_200__bin_04.png',    maxWidth: 1800, quality: 84 },
+  { src: 'img/validation/tnx_level__bin_01.png',       maxWidth: 1800, quality: 84 },
+  { src: 'img/validation/tnx_level__bin_06.png',       maxWidth: 1800, quality: 84 },
 ];
 
 const webpName = (rel) => rel.replace(/\.(png|jpe?g|webp)$/i, '.webp');
