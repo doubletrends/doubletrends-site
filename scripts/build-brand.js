@@ -166,14 +166,17 @@ function cardSvg(W, H, { scale: s = 1, photoFrom = 0.42, left = 96 * s, address 
   const wm = wordmarkSvg({ dark: true });
   const wmInner = wm.svg.replace(/^<svg[^>]*>|<\/svg>$/g, '');
 
-  // Wordmark, rule, line: wm.H + 84 units from the wordmark's top to the
-  // line's baseline. Below them, the statement: its baselines 62 and 106
-  // units further down, its descenders 8 more. The whole is centred in the
-  // height. Beside them, the statement is centred on its own, after a hairline.
+  // Wordmark, rule, line: the rule `toRule` units below the wordmark's foot,
+  // the line's baseline `toLine` below the rule. Below them, the statement:
+  // its baselines 62 and 106 units further down, its descenders 8 more. The
+  // whole is centred in the height. Beside them (a shallow cover), the left
+  // block sits tighter and the statement is centred on its own, after a
+  // hairline.
   const below = statement === 'below';
-  const wmY = (H - (wm.H + 84 + (below ? 114 : 0)) * s) / 2;
-  const ruleY = wmY + (wm.H + 40) * s;
-  const lineY = ruleY + 47 * s;
+  const [toRule, toLine] = below ? [40, 47] : [2, 30];
+  const wmY = (H - (wm.H + toRule + toLine + (below ? 114 : 0)) * s) / 2;
+  const ruleY = wmY + (wm.H + toRule) * s;
+  const lineY = ruleY + toLine * s;
   const line = outline(SANS, 'MARKET REGIME RESEARCH', 18 * s, x, lineY, 3.2 * s);
   const stX = below ? x : x + (wm.W + 72) * s;
   const stY = below ? lineY + 62 * s : H / 2 - 11 * s;
