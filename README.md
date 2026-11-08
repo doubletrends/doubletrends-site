@@ -103,7 +103,7 @@ Readings on the site are as of the last build (the date is printed beside them).
 
 `scripts/placeholders.js` holds the `{{NAME}}` mechanism every step shares. `scripts/indicator-data.js` and `scripts/archive-images.js` are not build steps: they are run by hand (`npm run indicator-data`, `npm run archive-images`) and write committed files.
 
-Placeholder families: `ROOT`, `TITLE`, `DESC`, `CANONICAL` … (page metadata), `BREADCRUMB`, `RESEARCH_RECENT` / `RESEARCH_LIBRARY`, `IND_*` (latest reading, history span), `SIG_*` (signal record), `MDD_*` (drawdown study), `EXHIBIT_*` and `TABLE_*` (SVG exhibits, data tables), each written in double braces in page markup. The full list is the return value of `buildExhibits()` in `src/exhibits/index.js`.
+Placeholder families: `ROOT`, `TITLE`, `DESC`, `CANONICAL` … (page metadata), `SITE_NAME`, `LEGAL_NAME`, `EMAIL`, `SUBSCRIBE_URL` … (site facts, `SITE_VARS` in `scripts/placeholders.js`, also in `llms.txt`), `BREADCRUMB`, `RESEARCH_RECENT` / `RESEARCH_LIBRARY`, `IND_*` (latest reading, history span), `SIG_*` (signal record), `MDD_*` (drawdown study), `EXHIBIT_*` and `TABLE_*` (SVG exhibits, data tables), each written in double braces in page markup. The full list is the return value of `buildExhibits()` in `src/exhibits/index.js`.
 
 ### Partials vs. templates
 

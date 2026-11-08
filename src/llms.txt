@@ -13,9 +13,9 @@ Important: the content is educational market information only. It is not financi
 
 ## Entity Summary
 
-- Brand: DoubleTrends (a trademark of DoubleTrends L.L.C.)
-- Operator: DoubleTrends L.L.C.
+- Brand: {{SITE_NAME}} (a trademark of {{LEGAL_NAME}})
+- Operator: {{LEGAL_NAME}}
 - Coverage: S&P 500 index (DoubleTrends is not affiliated with S&P Dow Jones Indices)
 - Publication: daily regime reading after the U.S. close; signals delivered same day to subscribers
 - Signal history: {{SIG_COUNT}} signals since {{SIG_FIRST}}, all back-tested unless marked live
-- Contact: info@doubletrends.com
+- Contact: {{EMAIL}}

@@ -5,9 +5,9 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { SITE_URL, SECTIONS, pages } = require('../src/site.config');
+const { SECTIONS, pages } = require('../src/site.config');
 const { canonicalFor } = require('../src/urls');
-const { replace, assertResolved } = require('./placeholders');
+const { SITE_VARS, replace, assertResolved } = require('./placeholders');
 
 const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
 
@@ -31,7 +31,7 @@ function writeLlms(dist, exhibits) {
       .join('\n');
     return `## ${heading}\n\n${entries}`;
   }).join('\n\n');
-  const vars = { ...exhibits, SITE_URL, LLMS_SECTIONS: sections };
+  const vars = { ...SITE_VARS, ...exhibits, LLMS_SECTIONS: sections };
   const template = fs.readFileSync(path.join(ROOT, 'src', 'llms.txt'), 'utf8');
   fs.writeFileSync(path.join(dist, 'llms.txt'), assertResolved(replace(template, vars), 'src/llms.txt'), 'utf8');
 }

@@ -27,7 +27,7 @@ function shouldEmitJsonLd(page) {
 }
 
 function shouldIncludeOrganization(page) {
-  return page.src === 'index.html' || page.src === 'company/index.html';
+  return Boolean(page.schema && page.schema.organization);
 }
 
 function shouldIncludeWebSite(page) {

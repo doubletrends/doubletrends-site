@@ -7,22 +7,24 @@
  *
  * Placeholders resolved in every page and partial:
  *   {{ROOT}} {{TITLE}} {{DESC}} {{CANONICAL}} …   page metadata (see renderPage)
+ *   {{SITE_NAME}} {{LEGAL_NAME}} {{EMAIL}} …      site facts (SITE_VARS, placeholders.js)
  *   {{HEAD}} {{HEADER}} {{CONTENT}} {{FOOTER}} {{CHECKOUT_GATE}}   layout slots
  *   {{BREADCRUMB}}                                 visible breadcrumb (same items as JSON-LD)
  *   {{IND_*}} {{SIG_*}} {{MDD_*}}                  figures from src/data/indicator.json
  *   {{EXHIBIT_*}} {{TABLE_*}}                      SVG exhibits and data tables (src/exhibits/)
  *
  * Page fields (src/site.config.js): src, root, title, desc, kind, nav (which
- * primary-nav item is current), crumb, schema, priority, sitemap, robots.
+ * primary-nav item is current), crumb, schema, priority, sitemap, robots,
+ * headImage, readingLink.
  */
 const fs = require('fs');
 const path = require('path');
-const { SITE_URL, SITE_NAME, SUBSCRIBE_URL, PORTAL_URL, OG_IMAGE, OG_IMAGE_ALT } = require('../src/site.config');
+const { SITE_URL, SITE_NAME, OG_IMAGE, OG_IMAGE_ALT } = require('../src/site.config');
 const { extensionless, canonicalFor, breadcrumbItems } = require('../src/urls');
 const { buildJsonLdScripts, isoDate } = require('../src/schema');
 const { COLORS } = require('../src/brand.config');
 const { fmtDateLong, escAmp } = require('../src/format');
-const { replace, assertResolved } = require('./placeholders');
+const { SITE_VARS, replace, assertResolved } = require('./placeholders');
 const { footerNotes, researchRecent, researchLibrary, furtherReading } = require('./build-listings');
 const ARCHIVE = require('../src/data/archive-images.json').images;
 
@@ -176,25 +178,23 @@ function renderPage(page, { dist, exhibits, today }) {
     READING_CARD: readingCard,
   });
   let html = replace(assembled, {
+    ...SITE_VARS,
     ...exhibits,
     BREADCRUMB: breadcrumbHtml(page),
     RESEARCH_RECENT: researchRecent(page.root),
     RESEARCH_LIBRARY: researchLibrary(page.root),
     FOOTER_NOTES: footerNotes(page.root),
-    // The card links to the indicator from everywhere but the indicator itself.
-    READING_LINK: page.src === 'indicator/index.html' ? '' : ` <a class="link" href="${page.root}indicator/index.html">About the indicator</a>`,
+    READING_LINK: page.readingLink === false ? '' : ` <a class="link" href="${page.root}indicator/index.html">About the indicator</a>`,
     ROOT: page.root,
     TITLE: formatTitle(page),
     DESC: page.desc,
     CANONICAL: canonicalFor(page.src),
     THEME_COLOR: COLORS.primary,
-    SUBSCRIBE_URL,
-    PORTAL_URL,
     OG_TYPE: page.kind === 'article' ? 'article' : 'website',
     OG_IMAGE,
     OG_IMAGE_ALT,
     SOCIAL_EXTRA: socialExtraFor(page, today),
-    ROBOTS: page.robots ?? 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
+    ROBOTS: page.robots,
     JSONLD_SCRIPTS: buildJsonLdScripts({ page, today, formattedTitle: formatTitle(page) }),
   });
   html = decorateArticle(html, page, exhibits);

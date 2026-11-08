@@ -49,8 +49,16 @@ function rootFor(src) {
   return depth === 0 ? '' : '../'.repeat(depth);
 }
 
+// Optional fields a page may set beyond the defaults below:
+//   readingLink: false        the latest-reading card omits its link to the
+//                             indicator (the indicator page itself)
+//   redirect: false           no canonical-form rule in _redirects (404.html:
+//                             it stays a control showing Cloudflare's own 307)
+//   schema.organization: true the JSON-LD carries the full Organization node
+const DEFAULT_ROBOTS = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1';
+
 function page(src, overrides = {}) {
-  return { src, root: rootFor(src), priority: 0.7, changefreq: 'monthly', kind: 'webpage', ...overrides };
+  return { src, root: rootFor(src), priority: 0.7, changefreq: 'monthly', kind: 'webpage', robots: DEFAULT_ROBOTS, ...overrides };
 }
 
 // Top-level folders that are site sections, with the label the breadcrumb,
@@ -93,6 +101,7 @@ function legalPage(slug, overrides = {}) {
 
 const pages = [
   page('index.html', {
+    schema: { organization: true },
     headImage: 'facade1908',
     priority: 1.0,
     changefreq: 'weekly',
@@ -102,6 +111,7 @@ const pages = [
     desc:  'DoubleTrends is a quantitative research firm studying market regimes, drawdowns and investor behavior. It publishes its research and the DoubleTrends Regime Indicator openly, and offers research and data engineering services.',
   }),
   page('indicator/index.html', {
+    readingLink: false,
     headImage: 'westernunion',
     priority: 0.9,
     nav: 'indicator',
@@ -181,6 +191,7 @@ const pages = [
     desc:  'DoubleTrends research notes: studies of S&P 500 drawdowns and investor behavior, primers on the measures behind the indicator, and one note per macro input (VIX, Fed funds, unemployment, CPI).',
   }),
   page('company/index.html', {
+    schema: { organization: true },
     headImage: 'wallst1834',
     priority: 0.6,
     kind: 'collection',
@@ -242,6 +253,7 @@ const pages = [
 
   // ── utility pages ────────────────────────────────────────────────────────
   page('404.html', {
+    redirect: false,
     root: '/',
     sitemap: false,
     robots: 'noindex,follow',

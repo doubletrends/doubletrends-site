@@ -1,8 +1,18 @@
 /**
  * placeholders.js
  * The {{NAME}} placeholder mechanism shared by every generated file: pages,
- * and llms.txt.
+ * and llms.txt, and the site facts every one of them can use.
  */
+const { SITE_URL, SITE_NAME, SUBSCRIBE_URL, PORTAL_URL, PUBLISHER } = require('../src/site.config');
+
+const SITE_VARS = {
+  SITE_URL,
+  SITE_NAME,
+  LEGAL_NAME: PUBLISHER.legalName,
+  EMAIL: PUBLISHER.email,
+  SUBSCRIBE_URL,
+  PORTAL_URL,
+};
 
 // Function replacer: values are inserted literally ("$&", "$1" in generated
 // markup must not be read as replacement patterns).
@@ -17,4 +27,4 @@ function assertResolved(text, where) {
   return text;
 }
 
-module.exports = { replace, assertResolved };
+module.exports = { SITE_VARS, replace, assertResolved };

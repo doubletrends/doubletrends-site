@@ -61,7 +61,7 @@ const MOVED = [
 
 function writeRedirects(dist) {
   const canonicalForm = [
-    ...pages.filter((p) => p.src !== '404.html')
+    ...pages.filter((p) => p.redirect !== false)
       .map((p) => [`/${p.src}`, canonicalPath(p.src)]),
     ...pages.filter((p) => /\/index\.html$/.test(p.src))
       .map((p) => { const dir = p.src.slice(0, -'/index.html'.length); return [`/${dir}`, `/${dir}/`]; }),
