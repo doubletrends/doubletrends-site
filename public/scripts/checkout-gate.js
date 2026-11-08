@@ -5,14 +5,16 @@
   const continueBtn = document.getElementById('checkout-gate-continue');
   const cancelBtn = document.getElementById('checkout-gate-cancel');
   const backdrop = document.getElementById('checkout-gate-backdrop');
+  // The checkout's host, from SUBSCRIBE_URL in src/site.config.js.
+  const checkoutHost = gate.getAttribute('data-checkout-host');
   let lastFocus = null;
 
-  if (!continueBtn || !cancelBtn || !backdrop) return;
+  if (!continueBtn || !cancelBtn || !backdrop || !checkoutHost) return;
 
   function isCheckoutLink(link) {
     if (!link || !link.href) return false;
     try {
-      return new URL(link.href).host === 'buy.stripe.com';
+      return new URL(link.href).host === checkoutHost;
     } catch (_err) {
       return false;
     }

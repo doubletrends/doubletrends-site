@@ -1,7 +1,8 @@
 <!-- Notice shown before Stripe checkout. Body-level overlay injected into every
      page through the layout's checkout-gate slot; public/scripts/checkout-gate.js intercepts clicks on
-     any buy.stripe.com link and shows it first. IDs are the script's contract. -->
-<div id="checkout-gate" class="checkout-gate fixed inset-0 z-50 hidden items-center justify-center px-5"
+     any link to the checkout host (data-checkout-host, the host of SUBSCRIBE_URL) and shows it first.
+     IDs are the script's contract. -->
+<div id="checkout-gate" data-checkout-host="{{CHECKOUT_HOST}}" class="checkout-gate fixed inset-0 z-50 hidden items-center justify-center px-5"
      role="dialog" aria-modal="true" aria-labelledby="checkout-gate-title" aria-hidden="true">
   <div id="checkout-gate-backdrop" class="gate-backdrop absolute inset-0"></div>
   <div class="gate-panel relative w-full max-w-lg bg-white">
