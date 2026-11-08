@@ -1,10 +1,12 @@
 // Brand tokens are defined in src/brand.config.js (read by Tailwind and
 // build-brand.js) and hand-mirrored as CSS custom properties in
 // src/styles/tokens/colors.css (read by every stylesheet and the SVG
-// exhibits). This test fails the suite if the two copies drift.
+// exhibits). This test fails the suite if the two copies drift, or if the
+// regimes with a color (REGIME_COLORS) differ from src/regimes.js.
 const fs   = require('fs');
 const path = require('path');
-const { COLORS, REGIMES, RETURNS } = require('../src/brand.config');
+const { COLORS, REGIME_COLORS, RETURNS } = require('../src/brand.config');
+const { REGIME_ORDER } = require('../src/regimes');
 const { ROOT, report } = require('./utils');
 
 // brand.config key → CSS custom property in colors.css.
@@ -38,8 +40,11 @@ function main() {
   for (const key of Object.keys(COLORS)) {
     if (!(key in COLOR_MIRROR)) errors.push(`brand.config COLORS.${key} has no mirror defined in this test`);
   }
-  for (const [regime, { hex }] of Object.entries(REGIMES)) {
-    expect(`--regime-${regime}`, hex, `REGIMES.${regime}`);
+  for (const [regime, { hex }] of Object.entries(REGIME_COLORS)) {
+    expect(`--regime-${regime}`, hex, `REGIME_COLORS.${regime}`);
+  }
+  if (Object.keys(REGIME_COLORS).join() !== REGIME_ORDER.join()) {
+    errors.push(`REGIME_COLORS (${Object.keys(REGIME_COLORS).join(', ')}) ≠ src/regimes.js (${REGIME_ORDER.join(', ')})`);
   }
   for (const [kind, { hex }] of Object.entries(RETURNS)) {
     expect(`--${kind}`, hex, `RETURNS.${kind}`);

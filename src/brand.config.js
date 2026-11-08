@@ -17,11 +17,12 @@
  *            `muted` are the historical utility names used in page markup.
  *   FONTS    Source Serif 4 (display + reading) and Source Sans 3 (interface +
  *            data). `noto` / `open` / `mono` are the historical class keys.
- *   REGIMES  Validated categorical palette (dataviz validate_palette.js,
- *            light mode on paper #FBFAF7 and tint #F3F1EC, all pairs:
- *            CVD ΔE ≥ 11.9, normal ≥ 19.4). The correction yellow is below
- *            3:1 against the page, so regimes are always labelled in text
- *            and every chart has a table view.
+ *   REGIME_COLORS  One color per regime (the regimes themselves are in
+ *            src/regimes.js). Validated categorical palette (dataviz
+ *            validate_palette.js, light mode on paper #FBFAF7 and tint #F3F1EC,
+ *            all pairs: CVD ΔE ≥ 11.9, normal ≥ 19.4). The correction yellow is
+ *            below 3:1 against the page, so regimes are always labelled in
+ *            text and every chart has a table view.
  */
 
 const COLORS = {
@@ -42,13 +43,11 @@ const FONTS = {
   mono:  ['"Source Sans 3"', '"Helvetica Neue"', 'Arial', 'sans-serif'], // historical: data — tabular figures via CSS
 };
 
-// The four regimes, in order of rising stress: the one list every exhibit,
-// legend, table and tooltip reads (order, label, color).
-const REGIMES = {
-  calm:       { label: 'Calm',       hex: '#3B9A5C' },
-  correction: { label: 'Correction', hex: '#DDAA22' },
-  panic:      { label: 'Panic',      hex: '#A8223F' },
-  bear:       { label: 'Bear',       hex: '#5E4596' },
+const REGIME_COLORS = {
+  calm:       { hex: '#3B9A5C' },
+  correction: { hex: '#DDAA22' },
+  panic:      { hex: '#A8223F' },
+  bear:       { hex: '#5E4596' },
 };
 
 // Signed figures in performance tables: gains green, losses red. Text colors,
@@ -58,4 +57,4 @@ const RETURNS = {
   loss: { hex: '#A8223F' },
 };
 
-module.exports = { COLORS, FONTS, REGIMES, RETURNS };
+module.exports = { COLORS, FONTS, REGIME_COLORS, RETURNS };

@@ -19,7 +19,7 @@ flowchart LR
         css["styles/**.css — house style"]
     end
     data --> build
-    SRC --> build["<b>build.js</b><br/>layout + partials · placeholders<br/>charts.js → SVG exhibits + figures<br/>breadcrumbs, datelines, research lists<br/>CSS · sitemap · _redirects · llms.txt · WebP"]
+    SRC --> build["<b>build.js</b><br/>layout + partials · placeholders<br/>exhibits/ → SVG exhibits + figures<br/>breadcrumbs, datelines, research lists<br/>CSS · sitemap · _redirects · llms.txt · WebP"]
     build --> dist[("dist/ — disposable")]
     dist --> cf(["Cloudflare Worker · Static Assets"])
 ```
@@ -57,7 +57,7 @@ npm run archive-images   # public/img/archive/ from src/data/archive-images.json
 | Change a page's title, description, URL or nav item | `src/site.config.js`                                                |
 | Change a page's content                             | `src/pages/<path>.html`                                             |
 | Add a research note                                 | copy `src/templates/article.html`, register it with `article(...)`  |
-| Change a figure, table or exhibit                   | `src/charts.js` (fed by `src/data/`)                                |
+| Change a figure, table or exhibit                   | `src/exhibits/` (fed by `src/data/`)                               |
 | Change the header, footer or head                   | `src/partials/`                                                     |
 | Change styling                                      | `src/styles/` (tokens → base → components → layouts → legacy)       |
 
@@ -94,7 +94,7 @@ Readings on the site are as of the last build (the date is printed beside them).
 
 | Step | File | Does |
 | --- | --- | --- |
-| 1 | `src/charts.js` | computes figures and exhibits once from `src/data/` |
+| 1 | `src/exhibits/` | computes figures and exhibits once from `src/data/` |
 | 2 | `build-css.js` | compiles `src/styles/` into one minified `dist/public/styles/site.css` (Tailwind CLI; utilities remain available to older page markup) |
 | 3 | `build-pages.js` | for each registry entry: wraps the body from `src/pages/` in `layout.html` with the partials, resolves every placeholder (**fails the build on any left over**), marks the current nav item, decorates research notes (breadcrumb, dateline, further reading from `build-listings.js`), stripes sections, and rewrites internal `.html` links to the extensionless URLs Cloudflare serves with 200 |
 | 4 | `build-urls.js` | `sitemap.xml` and `_redirects` from the registry |
@@ -103,7 +103,7 @@ Readings on the site are as of the last build (the date is printed beside them).
 
 `scripts/placeholders.js` holds the `{{NAME}}` mechanism every step shares. `scripts/indicator-data.js` and `scripts/archive-images.js` are not build steps: they are run by hand (`npm run indicator-data`, `npm run archive-images`) and write committed files.
 
-Placeholder families: `ROOT`, `TITLE`, `DESC`, `CANONICAL` … (page metadata), `BREADCRUMB`, `RESEARCH_RECENT` / `RESEARCH_LIBRARY`, `IND_*` (latest reading, history span), `SIG_*` (signal record), `MDD_*` (drawdown study), `EXHIBIT_*` and `TABLE_*` (SVG exhibits, data tables), each written in double braces in page markup. The full list is the return value of `buildExhibits()` in `src/charts.js`.
+Placeholder families: `ROOT`, `TITLE`, `DESC`, `CANONICAL` … (page metadata), `BREADCRUMB`, `RESEARCH_RECENT` / `RESEARCH_LIBRARY`, `IND_*` (latest reading, history span), `SIG_*` (signal record), `MDD_*` (drawdown study), `EXHIBIT_*` and `TABLE_*` (SVG exhibits, data tables), each written in double braces in page markup. The full list is the return value of `buildExhibits()` in `src/exhibits/index.js`.
 
 ### Partials vs. templates
 
@@ -146,7 +146,7 @@ The site is designed to read like an index provider's publication, not a product
 
 Constants at the top of the script: `LIVE_SINCE` (first live publication date; earlier readings are labelled back-tested) and `SIGNAL_RECORD_START` (the published record includes every signal from this date).
 
-`src/charts.js` renders the exhibits to static SVG at build time (they work without JavaScript and print cleanly); `public/scripts/exhibits.js` adds the crosshair and tooltips, with keyboard stepping and a live region for screen readers.
+`src/exhibits/` renders the exhibits to static SVG at build time (they work without JavaScript and print cleanly); `public/scripts/exhibits.js` adds the crosshair and tooltips, with keyboard stepping and a live region for screen readers.
 
 ## URLs, serving & SEO
 
@@ -234,8 +234,8 @@ Research notes also set `section` (topic, shown as "Research · {section}") and 
 ## Reading map
 
 - Page registry: `src/site.config.js` · structured data and canonical URLs: `src/schema.js`
-- Figures and exhibits: `src/charts.js` · data generator: `scripts/indicator-data.js`
+- Figures and exhibits: `src/exhibits/` · calculations (drawdowns, declines, regime episodes): `src/measures.js` · data generator: `scripts/indicator-data.js`
 - Brand tokens: `src/brand.config.js` · brand generator: `scripts/build-brand.js`
 - Build: `scripts/build.js` (steps in `scripts/build-*.js`) · placeholders: `scripts/placeholders.js`
-- Formatting of dates and numbers: `src/format.js` · regimes (order, label, color): `REGIMES` in `src/brand.config.js`
+- Formatting of dates and numbers: `src/format.js` · regimes (order, code, label, definition, signal eligibility): `src/regimes.js`; their colors: `REGIME_COLORS` in `src/brand.config.js`
 - Site sections and research series: `SECTIONS`, `SERIES` in `src/site.config.js`

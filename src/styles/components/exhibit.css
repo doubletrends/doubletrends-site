@@ -22,7 +22,7 @@
 .legend-signal { display: inline-block; width: 0.85rem; height: 1.1rem; vertical-align: -0.25em; margin-inline: 0.15rem; overflow: visible; }
 .legend-signal path { fill: var(--signal); stroke: var(--paper); stroke-width: 1.75; stroke-linejoin: round; }
 
-/* SVG marks (classes emitted by src/charts.js). */
+/* SVG marks (classes emitted by src/exhibits/). */
 .exhibit-svg text { font-family: var(--font-sans); }
 .ex-grid { stroke: #E6E8EC; stroke-width: 1; shape-rendering: crispEdges; }
 .ex-axis { stroke: #9AA1AC; stroke-width: 1; shape-rendering: crispEdges; }

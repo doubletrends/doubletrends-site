@@ -6,7 +6,8 @@
 const fs   = require('fs');
 const path = require('path');
 const { pages } = require('../src/site.config');
-const { buildExhibits } = require('../src/charts');
+const { dailyRows } = require('../src/regimes');
+const { buildExhibits } = require('../src/exhibits');
 const { compileCss } = require('./build-css');
 const { renderPage } = require('./build-pages');
 const { writeSitemap, writeRedirects } = require('./build-urls');
@@ -38,11 +39,10 @@ function cleanDist() {
 }
 
 async function main() {
-  // Figures and exhibits, computed once from src/data/ (indicator-data.js).
-  const exhibits = buildExhibits({
-    daily: require('../src/data/regimes-daily.json'),
-    indicator: require('../src/data/indicator.json'),
-  });
+  // The data (written by indicator-data.js), read once; figures and exhibits
+  // are computed from it once.
+  const rows = dailyRows(require('../src/data/regimes-daily.json'));
+  const exhibits = buildExhibits({ rows, indicator: require('../src/data/indicator.json') });
   const today = todayInTimeZone('America/New_York');
 
   cleanDist();
@@ -69,7 +69,7 @@ async function main() {
   console.log(`✓  public/ copied + ${count} images → WebP`);
   const guilloches = writeGuilloches(path.join(DIST, 'public', 'brand'));
   console.log(`✓  ${guilloches.length} guilloche patterns generated`);
-  await writeBrand(path.join(DIST, 'public', 'brand'));
+  await writeBrand(path.join(DIST, 'public', 'brand'), rows);
   console.log('✓  brand assets generated (logo, favicons, wordmarks, og-image, banner)');
 }
 

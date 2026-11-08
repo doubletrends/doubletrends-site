@@ -38,9 +38,11 @@ const LIVE_SINCE = '2026-06-15';
 // shown, including the early misses — a provider publishes its whole history.
 const SIGNAL_RECORD_START = '1996-01-01';
 
-// One-letter codes for regimes-daily.json; the file carries this key as `codes`.
-const REGIME_CODE = { calm: 'c', correction: 'k', panic: 'p', bear: 'b' };
-const REGIMES = Object.keys(require('../src/brand.config').REGIMES);
+// One-letter codes for regimes-daily.json (src/regimes.js); the file carries
+// this key as `codes`.
+const { REGIMES, REGIME_ORDER } = require('../src/regimes');
+const { median, trailingDrawdown, regimeEpisodes } = require('../src/measures');
+const REGIME_CODE = Object.fromEntries(REGIME_ORDER.map((g) => [g, REGIMES[g].code]));
 
 // ─── Load ───────────────────────────────────────────────────────────────────
 if (!fs.existsSync(BACKEND_CSV)) {
@@ -70,12 +72,6 @@ for (const r of rows) {
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 const round = (x, d = 1) => (x === null ? null : Math.round(x * 10 ** d) / 10 ** d);
-const median = (xs) => {
-  const a = xs.filter((x) => x !== null).sort((p, q) => p - q);
-  if (!a.length) return null;
-  const m = a.length >> 1;
-  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
-};
 const addDays = (iso, n) => {
   const t = new Date(`${iso}T00:00:00Z`);
   t.setUTCDate(t.getUTCDate() + n);
@@ -92,21 +88,12 @@ const firstOnOrAfter = (() => {
 })();
 const index = new Map(rows.map((r, i) => [r.date, i]));
 
-// Drawdown from the trailing 252-session closing high (inclusive of today).
-const drawdown = rows.map((r, i) => {
-  let hi = -Infinity;
-  for (let j = Math.max(0, i - 251); j <= i; j++) hi = Math.max(hi, rows[j].close);
-  return (r.close / hi - 1) * 100;
-});
+const drawdown = trailingDrawdown(rows);
 
 // ─── Regime episodes and shares ─────────────────────────────────────────────
-const episodes = [];
-for (const r of rows) {
-  const last = episodes[episodes.length - 1];
-  if (last && last.regime === r.regime) { last.end = r.date; last.days++; }
-  else episodes.push({ regime: r.regime, start: r.date, end: r.date, days: 1 });
-}
-const regimeStats = Object.fromEntries(REGIMES.map((g) => {
+const episodes = regimeEpisodes(rows)
+  .map((e) => ({ regime: e.regime, start: rows[e.start].date, end: rows[e.end].date, days: e.end - e.start + 1 }));
+const regimeStats = Object.fromEntries(REGIME_ORDER.map((g) => {
   const eps = episodes.filter((e) => e.regime === g);
   const days = eps.reduce((s, e) => s + e.days, 0);
   return [g, {

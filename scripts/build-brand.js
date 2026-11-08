@@ -8,8 +8,8 @@
  * "Trends" navy), set in Source Serif 4 Semibold and
  * converted to outlines (opentype.js), so the SVGs render identically
  * everywhere with no font dependency. The OG
- * image carries the real regime ribbon (1996 → latest), drawn from
- * src/data/regimes-daily.json — the house exhibit, not decoration.
+ * image carries the real regime ribbon (first session → latest), drawn from
+ * the daily rows build.js passes in — the house exhibit, not decoration.
  *
  * Outputs keep every historical filename so external links never break:
  *   logo.svg · logo-on-dark.svg · logo-{light,dark}.png · favicon-{32,180}.png
@@ -17,10 +17,10 @@
  */
 const fs = require('fs');
 const path = require('path');
-const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
 const opentype = require('opentype.js');
 const sharp = require('sharp');
-const { COLORS, REGIMES } = require('../src/brand.config');
+const { COLORS, REGIME_COLORS } = require('../src/brand.config');
+const { regimeEpisodes } = require('../src/measures');
 
 const NAVY = COLORS.primary;
 const RUST = COLORS.accent;
@@ -113,25 +113,18 @@ ${inner}
 }
 
 // ─── Regime ribbon from data ────────────────────────────────────────────────
-function ribbon(x, y, w, h) {
-  const daily = JSON.parse(fs.readFileSync(path.join(ROOT, 'src', 'data', 'regimes-daily.json'), 'utf8'));
-  const color = Object.fromEntries(Object.entries(daily.codes).map(([g, c]) => [c, REGIMES[g].hex]));
-  const rows = daily.rows;
+// One band per regime episode, each session the same width.
+function ribbon(rows, x, y, w, h) {
   const n = rows.length;
-  const out = [];
-  let start = 0;
-  for (let i = 1; i <= n; i++) {
-    if (i === n || rows[i][2] !== rows[start][2]) {
-      const x0 = x + (start / n) * w, x1 = x + (i / n) * w;
-      out.push(`<rect x="${x0.toFixed(2)}" y="${y}" width="${Math.max(0.5, x1 - x0).toFixed(2)}" height="${h}" fill="${color[rows[start][2]]}"/>`);
-      start = i;
-    }
-  }
-  return { svg: out.join(''), first: rows[0][0].slice(0, 4), last: rows[n - 1][0].slice(0, 4) };
+  const out = regimeEpisodes(rows).map((e) => {
+    const x0 = x + (e.start / n) * w, x1 = x + ((e.end + 1) / n) * w;
+    return `<rect x="${x0.toFixed(2)}" y="${y}" width="${Math.max(0.5, x1 - x0).toFixed(2)}" height="${h}" fill="${REGIME_COLORS[e.regime].hex}"/>`;
+  });
+  return { svg: out.join(''), first: rows[0].date.slice(0, 4), last: rows[n - 1].date.slice(0, 4) };
 }
 
 // ─── OG image / banner ──────────────────────────────────────────────────────
-function cardSvg(W, H, { scale = 1 } = {}) {
+function cardSvg(rows, W, H, { scale = 1 } = {}) {
   const pad = 80 * scale;
   const wm = wordmarkSvg();
   const wmScale = (0.62 * scale);
@@ -139,7 +132,7 @@ function cardSvg(W, H, { scale = 1 } = {}) {
   const sub = outline(SANS, 'MARKET REGIME RESEARCH', 20 * scale, pad, pad + wm.H * wmScale + 46 * scale, 2.4 * scale);
   const line1 = outline(SERIF, 'The DoubleTrends Regime Indicator', 46 * scale, pad, H * 0.58);
   const line2 = outline(SANS, 'S&P 500 · calm · correction · panic · bear', 24 * scale, pad, H * 0.58 + 48 * scale);
-  const rb = ribbon(pad, H - pad - 26 * scale, W - 2 * pad, 26 * scale);
+  const rb = ribbon(rows, pad, H - pad - 26 * scale, W - 2 * pad, 26 * scale);
   const yrs = outline(SANS, `${rb.first}`, 17 * scale, pad, H - pad + 26 * scale);
   const yre = outline(SANS, `${rb.last}`, 17 * scale, 0, 0);
   const yre2 = outline(SANS, `${rb.last}`, 17 * scale, W - pad - yre.width, H - pad + 26 * scale);
@@ -158,7 +151,9 @@ ${rb.svg}
 }
 
 // ─── Write ──────────────────────────────────────────────────────────────────
-async function writeBrand(OUT) {
+// `rows` are the daily rows (dailyRows in src/regimes.js) the OG image and
+// banner draw their regime ribbon from.
+async function writeBrand(OUT, rows) {
   fs.mkdirSync(OUT, { recursive: true });
   const write = (name, s) => fs.writeFileSync(path.join(OUT, name), s);
   const png = (svg, name, opts = {}) => {
@@ -183,10 +178,10 @@ async function writeBrand(OUT) {
   await png(wm.svg, 'wordmark-light.png', { width: 1024 });
   await png(wmDark.svg, 'wordmark-dark.png', { width: 1024 });
 
-  const og = cardSvg(1200, 630);
+  const og = cardSvg(rows, 1200, 630);
   write('og-image.svg', og);
   await png(og, 'og-image.png', { width: 1200 });
-  const banner = cardSvg(1500, 500, { scale: 0.9 });
+  const banner = cardSvg(rows, 1500, 500, { scale: 0.9 });
   write('banner.svg', banner);
   await png(banner, 'banner.png', { width: 1500 });
 

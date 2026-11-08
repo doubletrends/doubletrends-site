@@ -6,13 +6,12 @@
  * further-reading block that closes each note. Used by build-pages.js.
  */
 const { SERIES, pages } = require('../src/site.config');
-const { fmtDateLong } = require('../src/format');
+const { fmtDateLong, escAmp } = require('../src/format');
 
 const SERIES_ORDER = Object.keys(SERIES);
 const byDate = (a, b) => (b.schema.datePublished.localeCompare(a.schema.datePublished)) || a.title.localeCompare(b.title);
 // The library lists research notes only; AlphaVerify is its own section.
 const ARTICLES = pages.filter((p) => p.kind === 'article').sort(byDate);
-const escAmp = (s) => s.replace(/&(?![a-z]+;|#[0-9]+;)/gi, "&amp;");
 
 function entryHtml(a, root) {
   return `<li class="entry">
@@ -73,4 +72,4 @@ ${related.map((a) => `<li><a href="${page.root}${a.src}">${escAmp(a.title)}</a><
 </section>`;
 }
 
-module.exports = { escAmp, footerNotes, researchRecent, researchLibrary, furtherReading };
+module.exports = { footerNotes, researchRecent, researchLibrary, furtherReading };

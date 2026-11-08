@@ -10,7 +10,7 @@
  *   {{HEAD}} {{HEADER}} {{CONTENT}} {{FOOTER}} {{CHECKOUT_GATE}}   layout slots
  *   {{BREADCRUMB}}                                 visible breadcrumb (same items as JSON-LD)
  *   {{IND_*}} {{SIG_*}} {{MDD_*}}                  figures from src/data/indicator.json
- *   {{EXHIBIT_*}} {{TABLE_*}}                      SVG exhibits and data tables (src/charts.js)
+ *   {{EXHIBIT_*}} {{TABLE_*}}                      SVG exhibits and data tables (src/exhibits/)
  *
  * Page fields (src/site.config.js): src, root, title, desc, kind, nav (which
  * primary-nav item is current), crumb, schema, priority, sitemap, robots.
@@ -29,9 +29,9 @@ const {
 } = require('../src/site.config');
 const { buildJsonLdScripts, canonicalFor, breadcrumbItems, isoDate } = require('../src/schema');
 const { COLORS } = require('../src/brand.config');
-const { fmtDateLong } = require('../src/format');
+const { fmtDateLong, escAmp } = require('../src/format');
 const { replace, assertResolved } = require('./placeholders');
-const { escAmp, footerNotes, researchRecent, researchLibrary, furtherReading } = require('./build-listings');
+const { footerNotes, researchRecent, researchLibrary, furtherReading } = require('./build-listings');
 const ARCHIVE = require('../src/data/archive-images.json').images;
 
 const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
@@ -166,7 +166,7 @@ function scriptsFor(html, root) {
 }
 
 // Renders `page` into `dist`. `exhibits` holds the figures and exhibits
-// (src/charts.js); `today` (YYYY-MM-DD, New York) dates article modification.
+// (src/exhibits/); `today` (YYYY-MM-DD, New York) dates article modification.
 // Returns false, with a warning, when the page's source file is missing.
 function renderPage(page, { dist, exhibits, today }) {
   const srcPath = path.join(ROOT, 'src', 'pages', page.src);

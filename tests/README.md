@@ -63,7 +63,7 @@ Unique `src` values, valid `.html` output paths, source files present under `src
 
 ### Brand tokens (`brand-tokens`)
 
-`src/brand.config.js` is read by Tailwind and `scripts/build-brand.js`; `src/styles/tokens/colors.css` is read by every stylesheet and the SVG exhibits. The test maps each `COLORS` key and each `REGIMES` entry to its CSS custom property and fails on any missing or differing value — and on any `COLORS` key without a defined mirror.
+`src/brand.config.js` is read by Tailwind and `scripts/build-brand.js`; `src/styles/tokens/colors.css` is read by every stylesheet and the SVG exhibits. The test maps each `COLORS` key and each `REGIME_COLORS` entry to its CSS custom property and fails on any missing or differing value — on any `COLORS` key without a defined mirror, and when the regimes in `REGIME_COLORS` differ from `src/regimes.js`.
 
 ### Data (`data`)
 
