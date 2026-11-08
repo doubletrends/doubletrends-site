@@ -15,7 +15,7 @@ flowchart LR
         direction TB
         cfg["site.config.js — page registry"]
         pages["pages/*.html — page bodies"]
-        parts["_partials/*.html — shell"]
+        parts["partials/*.html — shell"]
         css["styles/**.css — house style"]
     end
     data --> build
@@ -47,19 +47,34 @@ Regenerate inputs only when they change:
 
 ```bash
 npm run indicator-data   # src/data/ + public/data/ from ../doubletrends-backend (after a backend backfill)
-npm run brand            # public/brand/ (logo, favicons, wordmarks, OG image with the regime ribbon)
+npm run archive-images   # public/img/archive/ from src/data/archive-images.json (needs the network)
 ```
 
 ### Where to look first
 
-| You want to… | Start here |
-| --- | --- |
-| Change a page's title, description, URL or nav item | `src/site.config.js` |
-| Change a page's content | `src/pages/<path>.html` |
-| Add a research note | copy `src/_templates/article.html`, register it with `article(...)` |
-| Change a figure, table or exhibit | `src/charts.js` (fed by `src/data/`) |
-| Change the header, footer or head | `src/_partials/` |
-| Change styling | `src/styles/` (tokens → base → components → layouts → legacy) |
+| You want to…                                        | Start here                                                          |
+| --------------------------------------------------- | ------------------------------------------------------------------- |
+| Change a page's title, description, URL or nav item | `src/site.config.js`                                                |
+| Change a page's content                             | `src/pages/<path>.html`                                             |
+| Add a research note                                 | copy `src/templates/article.html`, register it with `article(...)`  |
+| Change a figure, table or exhibit                   | `src/charts.js` (fed by `src/data/`)                                |
+| Change the header, footer or head                   | `src/partials/`                                                     |
+| Change styling                                      | `src/styles/` (tokens → base → components → layouts → legacy)       |
+
+---
+
+## Layout
+
+| Folder | Holds | Tracked |
+| --- | --- | --- |
+| `src/` | page bodies (`pages/`, one `.html` per URL), page registry, schema, exhibits, partials, templates, styles, `data/` the build reads | yes |
+| `public/` | files served as-is under `/public/` (fonts, scripts, images, the signal CSV) | yes |
+| `scripts/` | the build and the generators run by hand | yes |
+| `tests/` | the validation suite | yes |
+| `build/` | downloads and temp files on the way to `dist/` | no |
+| `dist/` | the deployed site | no |
+
+Generated files that can't be built in CI (they need the backend or the network) are committed and listed in `.gitattributes` with their generator: `src/data/*` except `archive-images.json`, `public/data/`, `public/img/archive/`.
 
 ---
 
@@ -78,18 +93,18 @@ Readings on the site are as of the last build (the date is printed beside them).
 `scripts/build.js` runs top to bottom:
 
 1. Computes figures and exhibits once from `src/data/` (`src/charts.js`).
-2. Compiles `src/styles/` into one minified `dist/public/scripts/site.css` (Tailwind CLI; utilities remain available to older page markup).
+2. Compiles `src/styles/` into one minified `dist/public/styles/site.css` (Tailwind CLI; utilities remain available to older page markup).
 3. For each registry entry: wraps the page body in `layout.html` with head/header/footer/checkout-gate, resolves every placeholder, marks the current nav item (`aria-current`), and — for research notes — inserts the breadcrumb and dateline and replaces the note's closing promo block with a generated further-reading block.
 4. **Fails the build on any unresolved placeholder.**
 5. Rewrites internal `.html` links to the extensionless URLs Cloudflare serves with 200.
-6. Writes `sitemap.xml`, `_redirects` and `llms.txt`; copies `public/`, re-encoding managed images to WebP.
+6. Writes `sitemap.xml`, `_redirects` and `llms.txt`; copies `public/`, re-encoding managed images to WebP; generates the guilloche patterns and brand assets into `dist/public/brand/`.
 
 Placeholder families: `ROOT`, `TITLE`, `DESC`, `CANONICAL` … (page metadata), `BREADCRUMB`, `RESEARCH_RECENT` / `RESEARCH_LIBRARY`, `IND_*` (latest reading, history span), `SIG_*` (signal record), `MDD_*` (drawdown study), `EXHIBIT_*` and `TABLE_*` (SVG exhibits, data tables), each written in double braces in page markup. The full list is the return value of `buildExhibits()` in `src/charts.js`.
 
 ### Partials vs. templates
 
-- **`src/_partials/`** — injected into every page: `layout`, `head`, `header` (utility bar with the latest reading + primary nav), `footer` (disclosures, trademark notice), `checkout-gate` (notice shown before Stripe checkout).
-- **`src/_templates/`** — copy-to-create scaffolds (`article`, `legal`), not read by the build.
+- **`src/partials/`** — injected into every page: `layout`, `head`, `header` (utility bar with the latest reading + primary nav), `footer` (disclosures, trademark notice), `checkout-gate` (notice shown before Stripe checkout).
+- **`src/templates/`** — copy-to-create scaffolds (`article`, `legal`), not read by the build.
 
 ---
 
@@ -204,7 +219,7 @@ Research notes also set `section` (topic, shown as "Research · {section}") and 
 
 ## Brand assets
 
-`scripts/build-brand.js` generates `public/brand/`: the DT monogram (navy plate, rust bar) and the two-tone wordmark ("Double" rust, "Trends" navy) set in Source Serif 4 and converted to outlines (no font dependency), favicons, and an OG image carrying the real regime ribbon from `src/data/`. Every historical filename is still produced so external links keep working. Do not hand-edit generated files; run `npm run brand`.
+`scripts/build-brand.js`, called by the build, generates `dist/public/brand/`: the DT monogram (navy plate, rust bar) and the two-tone wordmark ("Double" rust, "Trends" navy) set in Source Serif 4 and converted to outlines (no font dependency), favicons, and an OG image carrying the real regime ribbon from `src/data/`. Every historical filename is still produced so external links keep working. Nothing in it is committed.
 
 ---
 

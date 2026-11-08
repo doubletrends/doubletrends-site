@@ -8,7 +8,7 @@
  * Linux), which honours HTTPS_PROXY; Node's fetch does not without an opt-in.
  *
  * For each image: download a 2400px rendition from Wikimedia Commons into
- * .cache/archive/ (skipped if cached; the licence is re-checked and must be
+ * build/archive/ (skipped if cached; the licence is re-checked and must be
  * public domain or CC0), crop to the picture area, and render the requested
  * renditions as a navy-to-paper duotone:
  *
@@ -22,7 +22,7 @@ const { execFileSync } = require('child_process');
 const sharp = require('sharp');
 
 const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
-const CACHE = path.join(ROOT, '.cache', 'archive');
+const CACHE = path.join(ROOT, 'build', 'archive');
 const OUT = path.join(ROOT, 'public', 'img', 'archive');
 const { images } = require('../src/data/archive-images.json');
 const UA = 'DoubleTrendsSiteDesign/1.0 (https://doubletrends.com)';

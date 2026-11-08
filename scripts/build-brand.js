@@ -1,5 +1,6 @@
 /**
- * build-brand.js — `npm run brand` — generates public/brand/.
+ * build-brand.js — generates the brand assets into dist/public/brand/.
+ * Called from build.js; nothing here is committed.
  *
  * Identity in the brand's two colors: the portico (the original [_] mark
  * redrawn as two pilasters with a rust threshold) on a navy tile, and the
@@ -21,7 +22,6 @@ const opentype = require('opentype.js');
 const sharp = require('sharp');
 const { COLORS, REGIMES } = require('../src/brand.config');
 
-const OUT = path.join(ROOT, 'public', 'brand');
 const NAVY = COLORS.primary;
 const RUST = COLORS.accent;
 const MUTED = COLORS.muted;
@@ -158,7 +158,7 @@ ${rb.svg}
 }
 
 // ─── Write ──────────────────────────────────────────────────────────────────
-async function main() {
+async function writeBrand(OUT) {
   fs.mkdirSync(OUT, { recursive: true });
   const write = (name, s) => fs.writeFileSync(path.join(OUT, name), s);
   const png = (svg, name, opts = {}) => {
@@ -190,6 +190,6 @@ async function main() {
   write('banner.svg', banner);
   await png(banner, 'banner.png', { width: 1500 });
 
-  console.log('✓  public/brand regenerated (logo, favicons, wordmarks, og-image, banner)');
 }
-main().catch((e) => { console.error(e); process.exit(1); });
+
+module.exports = { writeBrand };

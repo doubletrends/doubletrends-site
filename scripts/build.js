@@ -35,6 +35,7 @@ const { COLORS } = require('../src/brand.config');
 const { buildExhibits, fmtDateLong } = require('../src/charts');
 const { optimizeImages } = require('./build-images');
 const { writeGuilloches } = require('./build-guilloche');
+const { writeBrand } = require('./build-brand');
 const ARCHIVE = require('../src/data/archive-images.json').images;
 const DAILY = require('../src/data/regimes-daily.json');
 const INDICATOR = require('../src/data/indicator.json');
@@ -64,7 +65,7 @@ try {
 fs.mkdirSync(DIST, { recursive: true });
 
 // ─── Read partials ────────────────────────────────────────────────────────────
-const partialsDir = path.join(ROOT, 'src', '_partials');
+const partialsDir = path.join(ROOT, 'src', 'partials');
 const read = (name) => fs.readFileSync(path.join(partialsDir, name), 'utf8');
 const layout       = read('layout.html');
 const head         = read('head.html');
@@ -88,9 +89,10 @@ const CSS_SEGMENTS = [
 const stylesDir   = path.join(ROOT, 'src', 'styles');
 const entryCSS    = fs.readFileSync(path.join(stylesDir, 'entry.css'), 'utf8');
 const customCSS   = CSS_SEGMENTS.map((s) => fs.readFileSync(path.join(stylesDir, `${s}.css`), 'utf8')).join('\n');
-const cssInputTmp = path.join(stylesDir, '.build-input.css');
-const cssOut      = path.join(DIST, 'public', 'scripts', 'site.css');
+const cssInputTmp = path.join(ROOT, 'build', 'site-input.css');
+const cssOut      = path.join(DIST, 'public', 'styles', 'site.css');
 fs.mkdirSync(path.dirname(cssOut), { recursive: true });
+fs.mkdirSync(path.dirname(cssInputTmp), { recursive: true });
 fs.writeFileSync(cssInputTmp, entryCSS + '\n' + customCSS, 'utf8');
 // The CLI through the package's declared entry (its `bin`), not a path into it.
 const tailwindPkg = require.resolve('tailwindcss/package.json');
@@ -104,7 +106,7 @@ try {
 } finally {
   fs.unlinkSync(cssInputTmp);
 }
-console.log('✓  public/scripts/site.css generated');
+console.log('✓  public/styles/site.css generated');
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 // Function replacer: values are inserted literally ("$&", "$1" in generated
@@ -263,7 +265,7 @@ function applyHeadImage(html, page) {
   const img = ARCHIVE[page.headImage];
   if (!img) throw new Error(`${page.src}: unknown headImage "${page.headImage}"`);
   // Root-absolute: a relative url() inside a custom property resolves against
-  // the stylesheet that reads it (public/scripts/), not against this page.
+  // the stylesheet that reads it (public/styles/), not against this page.
   const url = (r) => `/public/img/archive/${page.headImage}-${r}.jpg`;
   // The link test does not follow style attributes, so check the files here.
   for (const r of ['hero', 'band']) {
@@ -501,14 +503,17 @@ fs.copyFileSync(path.join(ROOT, 'src', '_headers'), path.join(DIST, '_headers'))
 console.log('✓  robots.txt, _headers copied');
 
 // public/ is copied verbatim EXCEPT the managed rasters, which are re-encoded to
-// resized WebP — see build-images.js. Awaited last; fails the build on error.
+// resized WebP — see build-images.js; then the generated brand/ files are
+// written beside them. Awaited last; fails the build on error.
 (async () => {
   const { count } = await optimizeImages(path.join(ROOT, 'public'), path.join(DIST, 'public'));
   console.log(`✓  public/ copied + ${count} images → WebP`);
   const guilloches = writeGuilloches(path.join(DIST, 'public', 'brand'));
   console.log(`✓  ${guilloches.length} guilloche patterns generated`);
+  await writeBrand(path.join(DIST, 'public', 'brand'));
+  console.log('✓  brand assets generated (logo, favicons, wordmarks, og-image, banner)');
 })().catch((err) => {
-  console.error('✗  image optimization failed');
+  console.error('✗  static assets failed');
   console.error(err);
   process.exit(1);
 });

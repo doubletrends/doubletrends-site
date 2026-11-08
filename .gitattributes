@@ -13,3 +13,14 @@
 *.otf   binary
 *.eot   binary
 *.pdf   binary
+
+# Derived files committed because the build can't make them. Never hand-edit:
+# change the source and rerun the generator named above each group.
+
+# scripts/build-indicator-data.js (npm run indicator-data) — needs ../doubletrends-backend
+src/data/indicator.json      linguist-generated
+src/data/regimes-daily.json  linguist-generated
+public/data/*.csv            linguist-generated
+
+# scripts/build-archive-images.js (npm run archive-images) — needs the network
+public/img/archive/*         linguist-generated

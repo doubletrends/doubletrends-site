@@ -1,10 +1,10 @@
-.claude/
+# Derived: build/ is everything on the way (downloads, temp files), dist/ what ships.
+build/
 dist/
+# Fetched and tool state
 node_modules/
 .wrangler/
-__pycache__/
-*.pyc
 .claude/
+# Local secrets for wrangler dev
 .dev.vars
 .dev.vars.*
-.cache/

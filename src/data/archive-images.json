@@ -1,5 +1,5 @@
 {
-  "_about": "Archival background images. Every entry is public domain or CC0 on Wikimedia Commons; `page` is the source record. Processed renditions in public/img/archive/ are produced by build-archive-images.js (originals are downloaded to .cache/, not committed). `crop.box` is the picture area as [left, top, right, bottom] fractions; `crop.focus` is the vertical centre of wide crops (0 top, 1 bottom). `credit` is the line printed on the page.",
+  "_about": "Archival background images. Every entry is public domain or CC0 on Wikimedia Commons; `page` is the source record. Processed renditions in public/img/archive/ are produced by build-archive-images.js (originals are downloaded to build/archive/, not committed). `crop.box` is the picture area as [left, top, right, bottom] fractions; `crop.focus` is the vertical centre of wide crops (0 top, 1 bottom). `credit` is the line printed on the page.",
   "images": {
     "facade1908": {
       "title": "New York Stock Exchange, Broad Street LCCN00650325.tif",

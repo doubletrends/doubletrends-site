@@ -7,7 +7,6 @@
   },
   "scripts": {
     "build": "node scripts/build.js",
-    "brand": "node scripts/build-brand.js",
     "indicator-data": "node scripts/build-indicator-data.js",
     "test": "node scripts/build.js && node tests/test-links.js && node tests/test-urls.js && node tests/test-trademark.js && node tests/test-metadata.js && node tests/test-page-registry.js && node tests/test-schema.js && node tests/test-labels.js && node tests/test-brand-tokens.js && node tests/test-data.js",
     "test:links": "node scripts/build.js && node tests/test-links.js",
