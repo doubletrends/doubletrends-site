@@ -14,7 +14,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { COLORS } = require('./src/brand.config');
+const { COLORS } = require('../src/brand.config');
 
 const TAU = Math.PI * 2;
 const f = (n) => (Math.round(n * 100) / 100).toString();

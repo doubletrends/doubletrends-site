@@ -21,10 +21,10 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 const sharp = require('sharp');
 
-const ROOT = __dirname;
+const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
 const CACHE = path.join(ROOT, '.cache', 'archive');
 const OUT = path.join(ROOT, 'public', 'img', 'archive');
-const { images } = require('./src/data/archive-images.json');
+const { images } = require('../src/data/archive-images.json');
 const UA = 'DoubleTrendsSiteDesign/1.0 (https://doubletrends.com)';
 
 const NAVY = [0x2A, 0x33, 0x40];

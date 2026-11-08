@@ -2,7 +2,7 @@
 
 Public site of DoubleTrends, served at `doubletrends.com`. The site presents a quantitative research firm: research notes, the DoubleTrends Regime Indicator as public research (overview, methodology, historical data, subscriber access), research services, and the firm pages. Navigation: Research · Indicator · Methodology · Data · Services · About. The rules and record are public; the subscription pays for timely delivery and is described as priced close to its running cost. The founder acts on the signal with their own capital.
 
-Static HTML/CSS/JS — no framework. A single Node.js build (`build.js`) assembles pages, renders the data exhibits, derives all metadata, compiles the stylesheet and optimizes images; `dist/` is deployed as a Cloudflare Worker (Static Assets).
+Static HTML/CSS/JS — no framework. A single Node.js build (`scripts/build.js`) assembles pages, renders the data exhibits, derives all metadata, compiles the stylesheet and optimizes images; `dist/` is deployed as a Cloudflare Worker (Static Assets).
 
 ---
 
@@ -26,8 +26,8 @@ flowchart LR
 
 Load-bearing ideas:
 
-1. **`build.js` is the whole system.** Everything else is an input to it or an output of it.
-2. **No number is typed by hand.** Every figure on the site — the latest reading, signal counts, returns, regime shares, the exhibits — comes from `src/data/`, generated from the backend's validated backfill by `build-indicator-data.js`. Change the data, rebuild, and every page agrees.
+1. **`scripts/build.js` is the whole system.** Everything else is an input to it or an output of it.
+2. **No number is typed by hand.** Every figure on the site — the latest reading, signal counts, returns, regime shares, the exhibits — comes from `src/data/`, generated from the backend's validated backfill by `scripts/build-indicator-data.js`. Change the data, rebuild, and every page agrees.
 3. **The page registry (`src/site.config.js`) is the single source of truth** for each page's URL, title, description, nav item, breadcrumb, JSON-LD and — for research notes — section, series and publication date. The research library and "further reading" blocks are generated from it.
 4. **URLs and metadata are derived once** (`canonicalFor` in `src/schema.js`) and feed the canonical tag, sitemap, `_redirects`, JSON-LD and Open Graph. See [URLs, serving & SEO](#urls-serving--seo).
 5. **`dist/` is disposable.** Never edit it.
@@ -75,7 +75,7 @@ Readings on the site are as of the last build (the date is printed beside them).
 
 ## How the build works
 
-`build.js` runs top to bottom:
+`scripts/build.js` runs top to bottom:
 
 1. Computes figures and exhibits once from `src/data/` (`src/charts.js`).
 2. Compiles `src/styles/` into one minified `dist/public/scripts/site.css` (Tailwind CLI; utilities remain available to older page markup).
@@ -119,7 +119,7 @@ The site is designed to read like an index provider's publication, not a product
 
 ## Data and exhibits
 
-`build-indicator-data.js` reads `../doubletrends-backend/signal/backfill/fast/backfill_fast.csv` — the point-in-time history produced and parity-checked by the backend's `python -m backfill.prod` — and writes:
+`scripts/build-indicator-data.js` reads `../doubletrends-backend/signal/backfill/fast/backfill_fast.csv` — the point-in-time history produced and parity-checked by the backend's `python -m backfill.prod` — and writes:
 
 - `src/data/indicator.json` — latest reading, regime statistics, bear episodes, every signal with 3-month / 1-year / 2-year S&P 500 price returns, and the summary figures. Build input.
 - `src/data/regimes-daily.json` — `[date, close, regime]` for every classified trading day. Build input; not shipped.
@@ -164,7 +164,7 @@ This is the platform default (`auto-trailing-slash` HTML handling), not somethin
 
 ### `_redirects` — a 307 → 301 upgrade, not a router
 
-`build.js` generates `dist/_redirects` mapping every legacy `.html` (and `index.html`) URL to its canonical form with a **301**. This does not *create* the redirect — Cloudflare already redirects `.html` natively — it **upgrades** it from 307 (temporary) to 301 (permanent), so Google drops the `.html` URL and consolidates ranking signals. `404.html` is deliberately excluded (it's `noindex`, so permanence is irrelevant, and it stays a clean control still showing the native 307).
+`scripts/build.js` generates `dist/_redirects` mapping every legacy `.html` (and `index.html`) URL to its canonical form with a **301**. This does not *create* the redirect — Cloudflare already redirects `.html` natively — it **upgrades** it from 307 (temporary) to 301 (permanent), so Google drops the `.html` URL and consolidates ranking signals. `404.html` is deliberately excluded (it's `noindex`, so permanence is irrelevant, and it stays a clean control still showing the native 307).
 
 ### What each URL form does
 
@@ -198,13 +198,13 @@ Research notes also set `section` (topic, shown as "Research · {section}") and 
 
 ## Image pipeline
 
-`build-images.js` copies `public/` unchanged except a manifest of research-note figures, which it re-encodes to resized WebP (≈2× their on-screen width; lossless for flat diagrams). Reference images by their `.webp` name; `tests/test-links.js` verifies every referenced asset exists. Brand assets stay PNG/SVG.
+`scripts/build-images.js` copies `public/` unchanged except a manifest of research-note figures, which it re-encodes to resized WebP (≈2× their on-screen width; lossless for flat diagrams). Reference images by their `.webp` name; `tests/test-links.js` verifies every referenced asset exists. Brand assets stay PNG/SVG.
 
 ---
 
 ## Brand assets
 
-`build-brand.js` generates `public/brand/`: the DT monogram (navy plate, rust bar) and the two-tone wordmark ("Double" rust, "Trends" navy) set in Source Serif 4 and converted to outlines (no font dependency), favicons, and an OG image carrying the real regime ribbon from `src/data/`. Every historical filename is still produced so external links keep working. Do not hand-edit generated files; run `npm run brand`.
+`scripts/build-brand.js` generates `public/brand/`: the DT monogram (navy plate, rust bar) and the two-tone wordmark ("Double" rust, "Trends" navy) set in Source Serif 4 and converted to outlines (no font dependency), favicons, and an OG image carrying the real regime ribbon from `src/data/`. Every historical filename is still produced so external links keep working. Do not hand-edit generated files; run `npm run brand`.
 
 ---
 
@@ -215,6 +215,6 @@ Research notes also set `section` (topic, shown as "Research · {section}") and 
 ## Reading map
 
 - Page registry: `src/site.config.js` · structured data and canonical URLs: `src/schema.js`
-- Figures and exhibits: `src/charts.js` · data generator: `build-indicator-data.js`
-- Brand tokens: `src/brand.config.js` · brand generator: `build-brand.js`
-- Build: `build.js` · images: `build-images.js`
+- Figures and exhibits: `src/charts.js` · data generator: `scripts/build-indicator-data.js`
+- Brand tokens: `src/brand.config.js` · brand generator: `scripts/build-brand.js`
+- Build: `scripts/build.js` · images: `scripts/build-images.js`

@@ -16,11 +16,12 @@
  */
 const fs = require('fs');
 const path = require('path');
+const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
 const opentype = require('opentype.js');
 const sharp = require('sharp');
-const { COLORS, REGIMES } = require('./src/brand.config');
+const { COLORS, REGIMES } = require('../src/brand.config');
 
-const OUT = path.join(__dirname, 'public', 'brand');
+const OUT = path.join(ROOT, 'public', 'brand');
 const NAVY = COLORS.primary;
 const RUST = COLORS.accent;
 const MUTED = COLORS.muted;
@@ -113,7 +114,7 @@ ${inner}
 
 // ─── Regime ribbon from data ────────────────────────────────────────────────
 function ribbon(x, y, w, h) {
-  const daily = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'regimes-daily.json'), 'utf8'));
+  const daily = JSON.parse(fs.readFileSync(path.join(ROOT, 'src', 'data', 'regimes-daily.json'), 'utf8'));
   const color = { c: REGIMES.calm.hex, k: REGIMES.correction.hex, p: REGIMES.panic.hex, b: REGIMES.bear.hex };
   const rows = daily.rows;
   const n = rows.length;

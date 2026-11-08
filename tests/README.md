@@ -57,8 +57,8 @@ Unique `src` values, valid `.html` output paths, source files present under `src
 
 ### Brand tokens (`test:brand-tokens`)
 
-`src/brand.config.js` is read by Tailwind and `build-brand.js`; `src/styles/tokens/colors.css` is read by every stylesheet and the SVG exhibits. The test maps each `COLORS` key and each `REGIMES` entry to its CSS custom property and fails on any missing or differing value — and on any `COLORS` key without a defined mirror.
+`src/brand.config.js` is read by Tailwind and `scripts/build-brand.js`; `src/styles/tokens/colors.css` is read by every stylesheet and the SVG exhibits. The test maps each `COLORS` key and each `REGIMES` entry to its CSS custom property and fails on any missing or differing value — and on any `COLORS` key without a defined mirror.
 
 ### Data (`test:data`)
 
-`build-indicator-data.js` writes `src/data/indicator.json`, `src/data/regimes-daily.json` and `public/data/doubletrends-signals.csv` from one backfill; they are committed together. The test fails when they disagree: each signal's date, regime and close match the daily history; forward returns match the closes 91 / 365 / 730 calendar days on (±0.1 pt); signals are labelled live exactly from `live_since`; the headline signal figures recompute from the signal list; regime days add up to the trading days and the latest reading is the last daily row; and the CSV carries the same signals row for row.
+`scripts/build-indicator-data.js` writes `src/data/indicator.json`, `src/data/regimes-daily.json` and `public/data/doubletrends-signals.csv` from one backfill; they are committed together. The test fails when they disagree: each signal's date, regime and close match the daily history; forward returns match the closes 91 / 365 / 730 calendar days on (±0.1 pt); signals are labelled live exactly from `live_since`; the headline signal figures recompute from the signal list; regime days add up to the trading days and the latest reading is the last daily row; and the CSV carries the same signals row for row.

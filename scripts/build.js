@@ -17,6 +17,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
 const { execFileSync } = require('child_process');
 const {
   SITE_URL,
@@ -28,15 +29,15 @@ const {
   OG_IMAGE_ALT,
   PUBLISHER,
   pages,
-} = require('./src/site.config');
-const { buildJsonLdScripts, canonicalFor: canonicalForRaw, breadcrumbItems, isoDate } = require('./src/schema');
-const { COLORS } = require('./src/brand.config');
-const { buildExhibits, fmtDateLong } = require('./src/charts');
+} = require('../src/site.config');
+const { buildJsonLdScripts, canonicalFor: canonicalForRaw, breadcrumbItems, isoDate } = require('../src/schema');
+const { COLORS } = require('../src/brand.config');
+const { buildExhibits, fmtDateLong } = require('../src/charts');
 const { optimizeImages } = require('./build-images');
 const { writeGuilloches } = require('./build-guilloche');
-const ARCHIVE = require('./src/data/archive-images.json').images;
-const DAILY = require('./src/data/regimes-daily.json');
-const INDICATOR = require('./src/data/indicator.json');
+const ARCHIVE = require('../src/data/archive-images.json').images;
+const DAILY = require('../src/data/regimes-daily.json');
+const INDICATOR = require('../src/data/indicator.json');
 const canonicalFor = (src) => canonicalForRaw(SITE_URL, src);
 
 function todayInTimeZone(timeZone) {
@@ -50,7 +51,7 @@ const TODAY = todayInTimeZone('America/New_York');
 const EXHIBITS = buildExhibits({ daily: DAILY, indicator: INDICATOR });
 
 // ─── Prepare output directory ────────────────────────────────────────────────
-const DIST = path.join(__dirname, 'dist');
+const DIST = path.join(ROOT, 'dist');
 try {
   fs.rmSync(DIST, { recursive: true, force: true });
 } catch (error) {
@@ -63,7 +64,7 @@ try {
 fs.mkdirSync(DIST, { recursive: true });
 
 // ─── Read partials ────────────────────────────────────────────────────────────
-const partialsDir = path.join(__dirname, 'src', '_partials');
+const partialsDir = path.join(ROOT, 'src', '_partials');
 const read = (name) => fs.readFileSync(path.join(partialsDir, name), 'utf8');
 const layout       = read('layout.html');
 const head         = read('head.html');
@@ -84,7 +85,7 @@ const CSS_SEGMENTS = [
   'components/legacy',
   'components/texture',
 ];
-const stylesDir   = path.join(__dirname, 'src', 'styles');
+const stylesDir   = path.join(ROOT, 'src', 'styles');
 const entryCSS    = fs.readFileSync(path.join(stylesDir, 'entry.css'), 'utf8');
 const customCSS   = CSS_SEGMENTS.map((s) => fs.readFileSync(path.join(stylesDir, `${s}.css`), 'utf8')).join('\n');
 const cssInputTmp = path.join(stylesDir, '.build-input.css');
@@ -266,7 +267,7 @@ function applyHeadImage(html, page) {
   const url = (r) => `/public/img/archive/${page.headImage}-${r}.jpg`;
   // The link test does not follow style attributes, so check the files here.
   for (const r of ['hero', 'band']) {
-    if (!fs.existsSync(path.join(__dirname, url(r)))) throw new Error(`${page.src}: missing ${url(r)} (run npm run archive-images)`);
+    if (!fs.existsSync(path.join(ROOT, url(r)))) throw new Error(`${page.src}: missing ${url(r)} (run npm run archive-images)`);
   }
   const re = /<section class="hero">([\s\S]*?)<\/section>/;
   if (!re.test(html)) throw new Error(`${page.src}: headImage set but no hero found`);
@@ -297,7 +298,7 @@ function scriptsFor(html, root) {
 }
 
 function renderPage(page) {
-  const srcPath = path.join(__dirname, 'src', 'pages', page.src);
+  const srcPath = path.join(ROOT, 'src', 'pages', page.src);
   const outPath = path.join(DIST, page.src);
   if (!fs.existsSync(srcPath)) {
     console.warn(`⚠  Missing source: ${page.src}`);
@@ -495,14 +496,14 @@ ${llmsSections}
 console.log('✓  llms.txt generated');
 
 // ─── Static assets ───────────────────────────────────────────────────────────
-fs.copyFileSync(path.join(__dirname, 'src', 'robots.txt'), path.join(DIST, 'robots.txt'));
-fs.copyFileSync(path.join(__dirname, 'src', '_headers'), path.join(DIST, '_headers'));
+fs.copyFileSync(path.join(ROOT, 'src', 'robots.txt'), path.join(DIST, 'robots.txt'));
+fs.copyFileSync(path.join(ROOT, 'src', '_headers'), path.join(DIST, '_headers'));
 console.log('✓  robots.txt, _headers copied');
 
 // public/ is copied verbatim EXCEPT the managed rasters, which are re-encoded to
 // resized WebP — see build-images.js. Awaited last; fails the build on error.
 (async () => {
-  const { count } = await optimizeImages(path.join(__dirname, 'public'), path.join(DIST, 'public'));
+  const { count } = await optimizeImages(path.join(ROOT, 'public'), path.join(DIST, 'public'));
   console.log(`✓  public/ copied + ${count} images → WebP`);
   const guilloches = writeGuilloches(path.join(DIST, 'public', 'brand'));
   console.log(`✓  ${guilloches.length} guilloche patterns generated`);

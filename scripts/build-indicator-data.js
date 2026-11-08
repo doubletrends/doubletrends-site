@@ -23,10 +23,11 @@
  */
 const fs = require('fs');
 const path = require('path');
+const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
 
-const BACKEND_CSV = path.resolve(__dirname, '..', 'doubletrends-backend', 'signal', 'backfill', 'fast', 'backfill_fast.csv');
-const SRC_DATA = path.join(__dirname, 'src', 'data');
-const PUBLIC_DATA = path.join(__dirname, 'public', 'data');
+const BACKEND_CSV = path.resolve(ROOT, '..', 'doubletrends-backend', 'signal', 'backfill', 'fast', 'backfill_fast.csv');
+const SRC_DATA = path.join(ROOT, 'src', 'data');
+const PUBLIC_DATA = path.join(ROOT, 'public', 'data');
 
 // First trading day the live pipeline wrote brief_history (first D1 row with a
 // live, non-backfill timestamp). Everything before it is a point-in-time
