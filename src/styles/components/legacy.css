@@ -43,7 +43,7 @@
   color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; text-decoration-color: rgba(194, 65, 12, 0.55);
 }
 
-/* Panels → ruled boxes (no radius, no shadow, no lift) */
+/* Panels → ruled boxes (no radius, no lift; shadows in texture.css) */
 .terminal-shell, .product-panel, .cta-panel, .article-cta, .metric-tile {
   background: var(--paper); border: 1px solid var(--rule); border-radius: 0; box-shadow: none;
 }

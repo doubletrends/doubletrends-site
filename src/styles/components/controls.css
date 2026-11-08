@@ -1,4 +1,5 @@
-/* Buttons: square-ish, sentence case, no gradients, no lift. Primary = navy
+/* Buttons: square-ish, sentence case, no gradients, no lift (shadow in
+   texture.css). Primary = navy
    fill; secondary = navy outline. The legacy class names used across page
    markup map onto the same two styles. */
 .btn, .button-rust, .button-dark, .button-hero, .button-light, .btn-primary {

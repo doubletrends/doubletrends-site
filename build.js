@@ -79,6 +79,7 @@ const CSS_SEGMENTS = [
   'components/chrome', 'components/controls', 'components/exhibit',
   'layouts/document',
   'components/legacy',
+  'components/texture',
 ];
 const stylesDir   = path.join(__dirname, 'src', 'styles');
 const entryCSS    = fs.readFileSync(path.join(stylesDir, 'entry.css'), 'utf8');
@@ -206,6 +207,12 @@ function researchLibrary(root) {
   }).join('\n');
 }
 
+// The splash (hero + band) ends exactly at the bottom of the first screen:
+// CSS sizes it to the viewport less --chrome-h (utility bar + masthead). The
+// stylesheet carries the desktop value; this measures the real one, which
+// differs on narrow screens where the masthead wraps.
+const SPLASH_FIT = "(function(){var r=document.documentElement,m=document.getElementById('main');function f(){r.style.setProperty('--chrome-h',m.offsetTop+'px')}f();addEventListener('resize',f)})()";
+
 // Archival image splash (src/data/archive-images.json), the same on the
 // homepage and every section index: the soft-toned rendition behind the page's
 // hero, then the full-tone rendition as a band directly beneath it. The image
@@ -224,10 +231,13 @@ function applyHeadImage(html, page) {
   const re = /<section class="hero">([\s\S]*?)<\/section>/;
   if (!re.test(html)) throw new Error(`${page.src}: headImage set but no hero found`);
   return html.replace(re, (_m, body) =>
-    `<section class="hero has-image" style="--head-image: url('${url('hero')}')">${body}</section>
+    `<div class="splash">
+<section class="hero has-image" style="--head-image: url('${url('hero')}')">${body}</section>
 <figure class="image-band" style="--band-image: url('${url('band')}')">
   <figcaption class="image-credit">Image: ${escAmp(img.credit)}</figcaption>
-</figure>`);
+</figure>
+</div>
+<script>${SPLASH_FIT}</script>`);
 }
 
 function formatTitle(page) {

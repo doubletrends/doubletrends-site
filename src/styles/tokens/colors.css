@@ -15,6 +15,15 @@
   --tint:        #F3F1EC;
   --focus:       #2F6FB0;
 
+  /* Shadows: navy-tinted and short, like paper lifted off paper, never a
+     floating card. xs for hairline objects (buttons, inputs), sm for boxes
+     in the reading flow, md for the few objects that sit above the page
+     (the offer, the latest reading), lg for overlays (tooltips, the gate). */
+  --shadow-xs: 0 1px 1px rgba(42, 51, 64, 0.06), 0 1px 2px rgba(42, 51, 64, 0.04);
+  --shadow-sm: 0 1px 2px rgba(42, 51, 64, 0.06), 0 3px 8px -2px rgba(42, 51, 64, 0.08);
+  --shadow-md: 0 1px 2px rgba(42, 51, 64, 0.06), 0 6px 14px -4px rgba(42, 51, 64, 0.12), 0 16px 32px -14px rgba(42, 51, 64, 0.14);
+  --shadow-lg: 0 2px 4px rgba(42, 51, 64, 0.08), 0 12px 28px -6px rgba(42, 51, 64, 0.18);
+
   --regime-calm:       #2F7F49;
   --regime-correction: #D0A535;
   --regime-panic:      #B23B8C;

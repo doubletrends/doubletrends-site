@@ -1,0 +1,49 @@
+/* Texture pass: depth layered over the house style.
+   Loaded last (build.js CSS_SEGMENTS) so it reads as one reviewable layer.
+   Shadows come from the --shadow-* scale in tokens/colors.css. */
+
+/* ── Chrome ──────────────────────────────────────────────────────────────── */
+.utility-bar { box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.18); }
+.site-header { position: relative; z-index: 2; box-shadow: 0 1px 0 rgba(42, 51, 64, 0.03), 0 4px 12px -8px rgba(42, 51, 64, 0.22); }
+.nav-toggle summary { box-shadow: var(--shadow-xs); }
+.site-footer { box-shadow: inset 0 6px 14px -8px rgba(0, 0, 0, 0.35); }
+
+/* ── Type ────────────────────────────────────────────────────────────────── */
+.code-block { box-shadow: var(--shadow-xs); }
+
+/* ── Controls ────────────────────────────────────────────────────────────── */
+/* All buttons sit 1px off the page; hover deepens the shadow. */
+.btn, .button-rust, .button-dark, .button-hero, .button-light, .btn-primary {
+  box-shadow: var(--shadow-xs);
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:hover, .button-rust:hover, .button-dark:hover, .button-hero:hover, .btn-primary:hover,
+.btn-secondary:hover, .button-light:hover { box-shadow: var(--shadow-sm); }
+.btn:active, .button-rust:active, .button-dark:active, .button-hero:active { box-shadow: none; }
+.btn-on-dark { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); }
+
+/* ── Boxes ───────────────────────────────────────────────────────────────── */
+.reading { box-shadow: var(--shadow-md); background-color: color-mix(in srgb, var(--tint) 92%, #fff); }
+.offer { box-shadow: var(--shadow-md); background: var(--paper); }
+.offer-foot { background: var(--tint); }
+.note, .article-cta, .cta-panel { box-shadow: var(--shadow-sm); }
+.disclosure { background: var(--paper); box-shadow: var(--shadow-xs); }
+.terminal-shell, .product-panel, .metric-tile { box-shadow: var(--shadow-sm); }
+.media-frame, .exhibit-body img { box-shadow: var(--shadow-sm); }
+.checkout-gate .gate-panel { box-shadow: var(--shadow-lg); }
+.ex-tooltip { box-shadow: var(--shadow-lg); }
+
+/* Archival image band: a faint inner shade so the photograph reads as set
+   into the page. */
+.image-band { box-shadow: inset 0 8px 16px -10px rgba(42, 51, 64, 0.45), inset 0 -8px 16px -12px rgba(42, 51, 64, 0.35); }
+
+/* Tinted sections sit slightly recessed. */
+.section-tint { box-shadow: inset 0 1px 0 var(--rule), inset 0 -1px 0 var(--rule), inset 0 10px 18px -16px rgba(42, 51, 64, 0.35); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .button-rust, .button-dark, .button-hero, .button-light, .btn-primary { transition: none; }
+}
+
+@media print {
+  .reading, .offer, .note, .article-cta, .cta-panel, .disclosure, .terminal-shell, .product-panel, .metric-tile, .media-frame, .exhibit-body img, .site-header, .section-tint { box-shadow: none !important; }
+}
