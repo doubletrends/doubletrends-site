@@ -3,8 +3,8 @@ const { SITE_NAME } = require('../src/site.config');
 const { DIST, walk, relPosix, report } = require('./utils');
 
 const HTML_EXT        = '.html';
-// Title convention: page first, firm last ("Methodology | DoubleTrends L.L.C.");
-// the homepage leads with the firm ("DoubleTrends L.L.C. — Market Regime Research").
+// Title convention: page first, firm last ("Methodology | DoubleTrends™");
+// the homepage leads with the firm ("DoubleTrends™ — Market Regime Research").
 const PAGE_SUFFIX = ` | ${SITE_NAME}`;
 const HOME_PREFIX = `${SITE_NAME} — `;
 const TITLE_RE        = /<title>([^<]+)<\/title>/i;

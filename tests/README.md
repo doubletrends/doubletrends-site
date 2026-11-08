@@ -44,7 +44,7 @@ Link targets are resolved the way Cloudflare's auto-trailing-slash asset handlin
 
 ### Metadata completeness (`metadata`)
 
-Each built page has `<title>`, meta description, robots, canonical, `og:title`, `og:description`, `twitter:title`, `twitter:description`, and (unless `noindex`) a JSON-LD block. The three titles match and follow the convention `{Page} | DoubleTrends L.L.C.`, or `DoubleTrends L.L.C. — {title}` on the homepage; the three descriptions match. Where the canonical points is `urls`'s rule; JSON-LD presence is `schema`'s.
+Each built page has `<title>`, meta description, robots, canonical, `og:title`, `og:description`, `twitter:title`, `twitter:description`, and (unless `noindex`) a JSON-LD block. The three titles match and follow the convention `{Page} | DoubleTrends™`, or `DoubleTrends™ — {title}` on the homepage; the three descriptions match. Where the canonical points is `urls`'s rule; JSON-LD presence is `schema`'s.
 
 ### Page registry integrity (`page-registry`)
 

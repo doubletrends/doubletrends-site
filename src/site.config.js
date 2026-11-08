@@ -378,7 +378,8 @@ const pages = [
   }),
 ];
 
-const SITE_NAME = 'DoubleTrends L.L.C.';
+// The site's name: title suffix, og:site_name, application-name, WebSite.
+const SITE_NAME = 'DoubleTrends™';
 const SITE_DESCRIPTION = 'DoubleTrends L.L.C. is a quantitative research firm: research on market regimes and drawdowns, the DoubleTrends™ Regime Indicator, and research services.';
 
 module.exports = {

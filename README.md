@@ -211,7 +211,7 @@ A slash means "collection," no slash means "document." That split is correct, no
 | `companyPage(slug, o)` | `company/${slug}.html` | `nav: 'about'`, priority 0.5 |
 | `legalPage(slug, o)` | `legal/${slug}.html` | priority 0.3 |
 
-Research notes also set `section` (topic, shown as "Research · {section}") and `series` (`Studies`, `Primers`, `Macro inputs`), which group the library. Titles render as `{page.title} | DoubleTrends L.L.C.`; the homepage as `DoubleTrends L.L.C. — {title}`.
+Research notes also set `section` (topic, shown as "Research · {section}") and `series` (`Studies`, `Primers`, `Macro inputs`), which group the library. Titles render as `{page.title} | DoubleTrends™`; the homepage as `DoubleTrends™ — {title}`.
 
 ---
 
