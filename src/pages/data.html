@@ -1,14 +1,16 @@
 <!-- Historical data: the full signal record, regime statistics, the regime mix
      by year, and downloads. Generated from src/data/ at build time. -->
-<div class="wrap">
-  <header class="page-head">
-    {{BREADCRUMB}}
-    <span class="kicker">Indicator &middot; Historical data</span>
-    <h1 class="h1">Regimes and signals since {{IND_FIRST_MONTH}}</h1>
-    <p class="dek">The complete record: every signal with what followed it, the regime of every trading day, and how often each regime has occurred. Nothing is omitted, including the signals that were early.</p>
-    <p class="page-head-meta"><span><strong>Data through</strong> {{IND_AS_OF}}</span><span><strong>Trading days</strong> {{IND_TRADING_DAYS}}</span><span><strong>Signals</strong> {{SIG_COUNT}}</span><span><a class="link" href="public/data/doubletrends-signals.csv" download>Download signal history (CSV)</a></span></p>
-  </header>
-</div>
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      {{BREADCRUMB}}
+      <span class="kicker">Indicator &middot; Historical data</span>
+      <h1 class="display">Regimes and signals since {{IND_FIRST_MONTH}}</h1>
+      <p class="dek">The complete record: every signal with what followed it, the regime of every trading day, and how often each regime has occurred. Nothing is omitted, including the signals that were early.</p>
+      <p class="page-head-meta"><span><strong>Data through</strong> {{IND_AS_OF}}</span><span><strong>Trading days</strong> {{IND_TRADING_DAYS}}</span><span><strong>Signals</strong> {{SIG_COUNT}}</span><span><a class="link" href="public/data/doubletrends-signals.csv" download>Download signal history (CSV)</a></span></p>
+    </div>
+  </div>
+</section>
 
 <section class="section" id="signals">
   <div class="wrap">

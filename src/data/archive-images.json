@@ -35,7 +35,8 @@
         "focus": 0.55
       },
       "renditions": [
-        "head"
+        "hero",
+        "band"
       ]
     },
     "assay1861": {
@@ -53,7 +54,8 @@
         "focus": 0.45
       },
       "renditions": [
-        "head"
+        "hero",
+        "band"
       ]
     },
     "drafting1870": {
@@ -71,7 +73,8 @@
         "focus": 0.45
       },
       "renditions": [
-        "head"
+        "hero",
+        "band"
       ]
     },
     "ticker1922": {
@@ -89,7 +92,8 @@
         "focus": 0.55
       },
       "renditions": [
-        "head"
+        "hero",
+        "band"
       ]
     },
     "weather1900": {
@@ -107,7 +111,8 @@
         "focus": 0.41
       },
       "renditions": [
-        "head"
+        "hero",
+        "band"
       ]
     },
     "wallst1834": {
@@ -125,7 +130,8 @@
         "focus": 0.55
       },
       "renditions": [
-        "head"
+        "hero",
+        "band"
       ]
     },
     "justice": {
@@ -143,7 +149,8 @@
         "focus": 0.69
       },
       "renditions": [
-        "head"
+        "hero",
+        "band"
       ]
     },
     "progress1876": {
@@ -161,7 +168,8 @@
         "focus": 0.45
       },
       "renditions": [
-        "head"
+        "hero",
+        "band"
       ]
     }
   }
