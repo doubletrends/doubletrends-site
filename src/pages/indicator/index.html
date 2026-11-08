@@ -8,7 +8,7 @@
     <div>
       {{BREADCRUMB}}
       <h1 class="display">The DoubleTrends Regime Indicator</h1>
-      <p class="dek">A rules-based classification of U.S. equity market stress. Each trading day, the S&amp;P 500 is assigned one of four regimes &mdash; calm, correction, panic or bear. A reversal signal is eligible to fire only under stress. DoubleTrends publishes the indicator, its methodology and its complete record as research.</p>
+      <p class="dek">A rules-based classification of U.S. equity market stress. Each trading day, the S&amp;P 500 is assigned one of four regimes &mdash; calm, correction, panic or bear. A reversal signal can only fire when the market is under stress. DoubleTrends publishes the indicator, its methodology and its full record as research.</p>
       <div class="hero-actions">
         <a class="btn" href="methodology.html">Read the methodology</a>
         <a class="link-arrow" href="performance.html">Performance</a>
@@ -30,7 +30,7 @@
       <div class="key-figure">
         <div class="key-figure-value">4</div>
         <div class="key-figure-label">Regimes: calm, correction, panic, bear</div>
-        <div class="key-figure-note">One per session, after the close</div>
+        <div class="key-figure-note">One a session, after the close</div>
       </div>
       <div class="key-figure">
         <div class="key-figure-value">{{SIG_COUNT}}</div>
@@ -52,12 +52,12 @@
       <div>
         <span class="kicker">The four regimes</span>
         <h2 class="h2">Stress is classified before any signal is considered</h2>
-        <p>Most selling is routine. The indicator first decides what kind of market it is looking at; the reversal signal is only eligible when that market is under acute or persistent stress.</p>
+        <p>Most selling is routine. The indicator first works out what kind of market it&rsquo;s looking at, and the reversal signal only comes into play when that market is under acute or persistent stress.</p>
       </div>
       <a class="link-arrow" href="methodology.html#regimes">Classification rules</a>
     </div>
     <div class="table-scroll">{{TABLE_REGIMES}}</div>
-    <p class="table-foot">Share of sessions, episode counts and median episode length over {{IND_TRADING_DAYS}} trading days since {{IND_FIRST_DATE}}. An episode is an uninterrupted run of sessions in one regime.</p>
+    <p class="table-foot">Share of sessions, episode counts and median episode length over {{IND_TRADING_DAYS}} trading days since {{IND_FIRST_DATE}}. An episode is an unbroken run of sessions in the same regime.</p>
   </div>
 </section>
 
@@ -87,12 +87,12 @@
       <div>
         <span class="kicker">Signal record</span>
         <h2 class="h2">The most recent signals</h2>
-        <p>Every signal is published with what followed it, including the ones that were early. The full record since {{SIG_FIRST}} is on the historical data page.</p>
+        <p>Every signal is published with what happened after it, early ones included. The full record since {{SIG_FIRST}} is on the historical data page.</p>
       </div>
       <a class="link-arrow" href="performance.html#signals">All {{SIG_COUNT}} signals</a>
     </div>
     <div class="table-scroll">{{TABLE_SIGNALS_RECENT}}</div>
-    <p class="table-foot">S&amp;P 500 price return from the signal-day close to the first close on or after 3 months, 1 year and 2 years later. &ldquo;Pending&rdquo; returns have not yet matured.</p>
+    <p class="table-foot">S&amp;P 500 price return from the signal-day close to the first close on or after 3 months, 1 year and 2 years later. &ldquo;Pending&rdquo; means the return hasn&rsquo;t matured yet.</p>
   </div>
 </section>
 
@@ -103,8 +103,8 @@
       <h2 class="h2" style="margin-top: 0.6rem;">What the fee pays for</h2>
     </div>
     <div class="body-lg">
-      <p>The rules and the full record are public because the signal was never valuable as a secret. It fires about once a year, in panics and bear markets, when few investors are willing to buy. Knowing the rule is the easy part; acting on it is not. The firm&rsquo;s founder acts on it with their own capital.</p>
-      <p style="margin-top: 1rem;">Subscribers pay for timing: the reading shortly after each close, and any signal on the day it fires. Delivering that every trading day runs on infrastructure that costs real money to operate. USD 149 a year is what keeps it running.</p>
+      <p>The rules and the full record are public because the signal was never worth much as a secret. It fires about once a year, in panics and bear markets, when few investors want to buy anything. Knowing the rule is the easy part. Acting on it is the hard part. The firm&rsquo;s founder acts on it with their own capital.</p>
+      <p style="margin-top: 1rem;">What subscribers pay for is timing: the reading shortly after each close, and any signal on the day it fires. Delivering that every trading day runs on infrastructure that costs real money to operate, and USD 149 a year is what keeps it going.</p>
       <p style="margin-top: 1.25rem;"><a class="link-arrow" href="subscription.html">Subscription</a></p>
     </div>
   </div>

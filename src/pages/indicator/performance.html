@@ -5,7 +5,7 @@
     <div class="hero-text">
       {{BREADCRUMB}}
       <h1 class="display">Regimes and signals since {{IND_FIRST_MONTH}}</h1>
-      <p class="dek">The complete record: every signal with what followed it, the regime of every trading day, and how often each regime has occurred. Nothing is omitted, including the signals that were early.</p>
+      <p class="dek">The complete record: every signal and what came after it, the regime of every trading day, and how often each regime has shown up. Nothing is left out, the early signals included.</p>
       <p class="page-head-meta"><span><strong>Data through</strong> {{IND_AS_OF}}</span><span><strong>Trading days</strong> {{IND_TRADING_DAYS}}</span><span><strong>Signals</strong> {{SIG_COUNT}}</span><span><a class="link" href="../public/data/doubletrends-signals.csv" download>Download signal history (CSV)</a></span></p>
     </div>
   </div>
@@ -17,11 +17,11 @@
       <div>
         <span class="kicker">Signal record</span>
         <h2 class="h2">All {{SIG_COUNT}} signals, {{SIG_FIRST}} to date</h2>
-        <p>S&amp;P 500 price returns from the signal-day close. Of the signals with a full year of history, {{SIG_POSITIVE_1Y}} were followed by a higher index one year later. The median one-year return was {{SIG_MEDIAN_1Y}}; the weakest was {{SIG_WORST_1Y}}.</p>
+        <p>S&amp;P 500 price returns from the signal-day close. Of the signals with a full year behind them, {{SIG_POSITIVE_1Y}} saw a higher index one year on. The median one-year return was {{SIG_MEDIAN_1Y}}, the weakest {{SIG_WORST_1Y}}.</p>
       </div>
     </div>
     <div class="table-scroll">{{TABLE_SIGNALS_ALL}}</div>
-    <p class="table-foot">Return horizons are measured to the first close on or after 91, 365 and 730 calendar days. &ldquo;From 1-yr high&rdquo; is the close relative to the highest close of the preceding 252 sessions. Basis: back-tested signals were identified by the historical reconstruction described in the <a class="link" href="methodology.html#history">methodology</a>; live signals were published on the day. Medians across all signals: {{SIG_MEDIAN_3M}} at three months, {{SIG_MEDIAN_1Y}} at one year, {{SIG_MEDIAN_2Y}} at two years.</p>
+    <p class="table-foot">Return horizons are measured to the first close on or after 91, 365 and 730 calendar days. &ldquo;From 1-yr high&rdquo; is the close compared to the highest close of the previous 252 sessions. Basis: back-tested signals were identified by the historical reconstruction described in the <a class="link" href="methodology.html#history">methodology</a>; live signals were published on the day. Medians over all signals: {{SIG_MEDIAN_3M}} at three months, {{SIG_MEDIAN_1Y}} at one year, {{SIG_MEDIAN_2Y}} at two years.</p>
   </div>
 </section>
 
@@ -49,8 +49,8 @@
     <div class="section-head">
       <div>
         <span class="kicker">Regime statistics</span>
-        <h2 class="h2">How often each regime occurs</h2>
-        <p>Calm and correction account for roughly two-thirds of all sessions. Panic arrives in short bursts &mdash; its typical episode lasts two sessions &mdash; while bear episodes are rare and long.</p>
+        <h2 class="h2">How often each regime comes up</h2>
+        <p>Calm and correction make up roughly two thirds of all sessions. Panic comes in short bursts (a typical episode lasts two sessions), while bear episodes are rare and drag on.</p>
       </div>
       <a class="link-arrow" href="methodology.html#regimes">Classification rules</a>
     </div>
@@ -66,9 +66,9 @@
       <h2 class="h2" style="margin-top: 0.6rem;">Data files</h2>
       <dl class="facts" style="margin-top: 1.25rem;">
         <dt>Signal history</dt>
-        <dd><a class="link" href="../public/data/doubletrends-signals.csv" download>doubletrends-signals.csv</a><br /><span class="fine">One row per signal: date, regime, S&amp;P 500 close, distance from one-year high, 3-month, 1-year and 2-year returns, and basis (back-tested or live).</span></dd>
+        <dd><a class="link" href="../public/data/doubletrends-signals.csv" download>doubletrends-signals.csv</a><br /><span class="fine">One row for each signal: date, regime, S&amp;P 500 close, distance from the one-year high, 3-month, 1-year and 2-year returns and basis (back-tested or live).</span></dd>
         <dt>Daily readings</dt>
-        <dd>Delivered to subscribers in the portal. <a class="link" href="subscription.html">Subscription</a></dd>
+        <dd>Delivered to subscribers through the portal. <a class="link" href="subscription.html">Subscription</a></dd>
       </dl>
     </div>
     <div class="disclosure">

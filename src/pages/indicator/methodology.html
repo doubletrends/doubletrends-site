@@ -5,7 +5,7 @@
     <div class="hero-text">
       {{BREADCRUMB}}
       <h1 class="display">How the DoubleTrends Regime Indicator is constructed</h1>
-      <p class="dek">The indicator classifies the S&amp;P 500 into one of four regimes each trading day, and fires a reversal signal only when an oversold turn coincides with acute or persistent stress. This document sets out the inputs, the classification, the signal rules, publication timing, and how the history was built.</p>
+      <p class="dek">The indicator classifies the S&amp;P 500 into one of four regimes each trading day, and fires a reversal signal only when an oversold turn coincides with acute or persistent stress. This document goes through the inputs, the classification, the signal rules, publication timing and how the history was built.</p>
       <p class="page-head-meta"><span><strong>Coverage</strong> S&amp;P 500 index</span><span><strong>Frequency</strong> Daily, after the U.S. close</span><span><strong>History</strong> From {{IND_FIRST_DATE}}</span></p>
     </div>
   </div>
@@ -31,15 +31,15 @@
       <section id="overview">
         <h2 class="h2"><span class="section-no">1</span>Overview</h2>
         <div class="prose">
-          <p>Most declines in the S&amp;P 500 are routine: rebalancing, withdrawals and ordinary profit-taking that resolve without consequence. A small number are not. They are acute, disorderly selloffs or long, macro-driven bear markets &mdash; the periods in which buying a decline has historically been rewarded, and in which it is hardest to do.</p>
-          <p>The indicator separates the two. It first classifies the market&rsquo;s state from price, volatility and macroeconomic inputs, and only then considers whether an oversold reversal is meaningful. The question it answers is narrow by design: <em>is this a stressed market turning, or noise?</em></p>
+          <p>Most declines in the S&amp;P 500 are routine: rebalancing, withdrawals and ordinary profit-taking that pass without much consequence. A few are not. They are acute, disorderly selloffs or long, macro-driven bear markets &mdash; the stretches where buying a decline has historically paid off, and where it is hardest to actually do.</p>
+          <p>The indicator tells the two apart. It first classifies the market&rsquo;s state from price, volatility and macroeconomic inputs, and only then considers whether an oversold reversal is meaningful. The question it answers is narrow on purpose: <em>is this a stressed market turning, or noise?</em></p>
           <p>Two outputs are published each trading day: the <strong>regime</strong> (calm, correction, panic or bear) and the <strong>signal state</strong>. Signals are rare &mdash; {{SIG_COUNT}} since {{SIG_FIRST}}, about {{SIG_PER_DECADE}} per decade &mdash; and some years have none.</p>
         </div>
       </section>
 
       <section id="inputs">
         <h2 class="h2"><span class="section-no">2</span>Data inputs</h2>
-        <div class="prose"><p>The method uses five public series. No proprietary or survey data is involved.</p></div>
+        <div class="prose"><p>The method uses five public series. There&rsquo;s no proprietary or survey data involved.</p></div>
         <div class="table-scroll" style="margin-top: 1.25rem;">
           <table class="data-table">
             <thead><tr><th scope="col">Series</th><th scope="col">Source</th><th scope="col">Frequency</th><th scope="col">Used for</th></tr></thead>
@@ -59,12 +59,12 @@
         <h2 class="h2"><span class="section-no">3</span>Derived measures</h2>
         <div class="prose">
           <h3>3.1 Dual-horizon momentum</h3>
-          <p>Williams&nbsp;%R &mdash; a 1970s momentum oscillator that locates the latest close within its recent high&ndash;low range &mdash; is computed over a short and a long lookback, and each is smoothed. A single horizon is either too noisy (short) or too slow (long); requiring both to agree removes most false readings. A market is <strong>oversold</strong> when both smoothed readings sit deep in the bottom of their ranges, and a <strong>reversal candidate</strong> occurs on the session in which that condition ends.</p>
-          <p>A momentum reading on its own is not treated as an edge. DoubleTrends&rsquo; open-source <a href="../validation/index.html">AlphaVerify</a> framework tests single market conditions against synthetic markets that contain no signal, and widely followed ones &mdash; the golden cross, price above its 200-day average &mdash; do not clear that test on the NASDAQ. This is why a reversal candidate is only considered inside a stress regime (sections 4 and 5).</p>
+          <p>Williams&nbsp;%R &mdash; a 1970s momentum oscillator that locates the latest close within its recent high&ndash;low range &mdash; is computed over a short and a long lookback, and each is smoothed. A single horizon is either too noisy (short) or too slow (long); requiring both to agree weeds out most of the false readings. A market is <strong>oversold</strong> when both smoothed readings sit deep in the bottom of their ranges, and a <strong>reversal candidate</strong> occurs on the session in which that condition ends.</p>
+          <p>A momentum reading by itself isn&rsquo;t treated as an edge. DoubleTrends&rsquo; open-source <a href="../validation/index.html">AlphaVerify</a> framework tests single market conditions against synthetic markets that contain no signal, and widely followed ones &mdash; the golden cross, price above its 200-day average &mdash; do not clear that test on the NASDAQ. Which is why a reversal candidate only gets considered inside a stress regime (sections 4 and 5).</p>
           <h3>3.2 The shape of a decline</h3>
-          <p>Four measures describe what a decline is doing, not only where it has reached: <strong>depth</strong> (distance below the trailing one-year closing high), <strong>duration</strong> (sessions since that high), <strong>sharpness</strong> (the worst ten-session move within the trailing month) and a <strong>reference high</strong> (the recent ceiling the rest is measured against). Together they distinguish a 3% drift over six weeks from a 15% fall in four.</p>
+          <p>Four measures describe what a decline is doing, not just how far it has gone: <strong>depth</strong> (distance below the trailing one-year closing high), <strong>duration</strong> (sessions since that high), <strong>sharpness</strong> (the worst ten-session move within the trailing month) and a <strong>reference high</strong> (the recent ceiling the rest is measured against). Together they distinguish a 3% drift over six weeks from a 15% fall in four.</p>
           <h3>3.3 Volatility and macro context</h3>
-          <p>The VIX is used as a smoothed percentile of its own trailing year, so that &ldquo;high&rdquo; is judged against recent experience rather than a fixed level. The federal funds rate is read as its change over three and six months; unemployment as its six-month change and its position against its own trailing average; CPI as year-over-year inflation.</p>
+          <p>The VIX is used as a smoothed percentile of its own trailing year, so &ldquo;high&rdquo; is judged against what the VIX has done lately instead of a fixed level. The federal funds rate is read as its change over three and six months; unemployment as its six-month change and its position against its own trailing average; CPI as year-over-year inflation.</p>
         </div>
       </section>
 
@@ -95,7 +95,7 @@
         </ol>
         <div class="prose" style="margin-top: 1.75rem;">
           <h3>5.1 Clusters</h3>
-          <p>Reversals during one episode of stress are grouped into a cluster. Bear clusters persist until the decline has recovered, because bear markets produce many short-lived rallies before they end; this is why a bear-regime signal needs both depth of sequence and confirmation.</p>
+          <p>Reversals during one episode of stress are grouped into a cluster. Bear clusters stay open until the decline has recovered, because bear markets throw off plenty of short-lived rallies before they end. That&rsquo;s why a bear-regime signal needs both depth of sequence and confirmation.</p>
           <h3>5.2 Signal window</h3>
           <p>A signal remains active for five sessions after it fires, and the signal date is recorded with it. Separately, subscribers receive an <strong>oversold alert</strong> when a panic or bear market is oversold but no reversal has yet occurred.</p>
         </div>
@@ -116,7 +116,7 @@
         <h2 class="h2"><span class="section-no">7</span>Historical reconstruction</h2>
         <div class="prose">
           <p>Readings and signals are <strong>back-tested</strong> unless they were published on the day: they were produced after the fact by applying the method to history, not published at the time. For prices and volatility the reconstruction is point-in-time &mdash; on each historical date the method sees only closes on or before that date.</p>
-          <p>Before history is published it is computed twice, separately: once over the full series and once by replaying each date separately with only the trailing window available on that date. The two must agree field by field on a random sample of dates and produce byte-identical output; otherwise nothing is published.</p>
+          <p>Before any history goes out it is computed twice, separately: once over the full series and once by replaying each date separately with only the trailing window available on that date. The two must agree field by field on a random sample of dates and produce byte-identical output; otherwise nothing is published.</p>
           <p><strong>Macroeconomic timing.</strong> Monthly series are aligned to the month they describe, so in the back-tested history a month&rsquo;s value is applied from the first day of that month &mdash; between one and six weeks before it was actually released. Live readings use only values already published. These series enter only the bear overlay (section 4.2), so the effect is limited to the timing of bear-regime episodes.</p>
           <p><strong>Data vintage.</strong> Macroeconomic series are revised after first release. The reconstruction uses the series as currently published, which can differ from the values available at the time. Price and volatility inputs are not revised.</p>
         </div>

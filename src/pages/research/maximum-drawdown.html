@@ -4,15 +4,15 @@
 <!-- Header -->
 <header class="article-hero article-hero-frame">
 <h1 class="article-title"> Maximum drawdown </h1>
-<p class="lead"> Maximum drawdown measures how far the market has fallen below a recent high. In practice, that number becomes much more useful when you read it alongside <em>duration</em> and <em>sharpness</em>: the same 10% drop means something very different if it took two weeks instead of six months, or if the worst leg was sudden instead of gradual. </p>
+<p class="lead"> Maximum drawdown measures how far the market has fallen below a recent high. In practice the number gets a lot more useful when you read it next to <em>duration</em> and <em>sharpness</em>: the same 10% drop means something very different if it took two weeks instead of six months, or if the worst leg was sudden instead of gradual. </p>
 </header>
 
 <!-- What it is -->
 <section class="article-section">
 <span class="tag-overline">What drawdown actually is</span>
 <h2 class="article-h2"> Depth from a trailing high </h2>
-<p class="prose-p mb-4"> The drawdown on any given day is just one subtraction: today's close, expressed as a percentage below the highest close inside some lookback window. Pick a window, find the high, compare to today, report the percentage. </p>
-<p class="prose-p mb-6"> The crucial choice is the window. Drawdown from an <em>all-time</em> high tells you something about long-run market memory but reacts slowly; drawdown from a <em>10-day</em> high reacts instantly but is mostly noise. The DoubleTrends engine measures drawdown from a trailing one-year high. One year is long enough to ignore weekly chop and short enough that the &ldquo;recent peak&rdquo; is still relevant to today's market psychology. </p>
+<p class="prose-p mb-4"> The drawdown on a given day is just one subtraction: today's close, expressed as a percentage below the highest close inside some lookback window. Pick a window, find the high, compare to today, report the percentage. </p>
+<p class="prose-p mb-6"> The choice that matters is the window. Drawdown from an <em>all-time</em> high tells you something about long-run market memory but reacts slowly; drawdown from a <em>10-day</em> high reacts instantly but is mostly noise. The DoubleTrends engine measures drawdown from a trailing one-year high. A year is long enough to ignore the weekly chop, and short enough that the &ldquo;recent peak&rdquo; still matters to how people feel about the market today. </p>
 <figure class="exhibit note-exhibit">
 <figcaption class="exhibit-head"><div><span class="exhibit-no">Exhibit 1</span><span class="exhibit-title">S&amp;P 500 drawdown from its trailing one-year high</span></div></figcaption>
 <div class="exhibit-body">{{EXHIBIT_MDD_DEPTH}}</div>
@@ -28,14 +28,14 @@
 <div class="grid md:grid-cols-2 gap-4 mb-6">
 <div class="product-panel p-6">
 <h3 class="font-noto font-semibold text-lg mb-3" style="color: var(--color-rust);">Down 15% in three weeks</h3>
-<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> A sudden shock. Forced de-risking, vol spiking, headlines screaming. This is the panic pattern, where buying-the-dip has historically paid. </p>
+<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> A sudden shock. Forced de-risking, vol spiking, headlines screaming. This is the panic pattern, where buying the dip has historically paid. </p>
 </div>
 <div class="product-panel p-6">
 <h3 class="font-noto font-semibold text-lg mb-3" style="color: var(--color-rust);">Down 15% over seven months</h3>
 <p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> A grinding bleed. Earnings revisions, macro deterioration, structural selling. This is the bear pattern, where false bottoms are common. </p>
 </div>
 </div>
-<p class="prose-p mb-4"> The depth is identical. The market is structurally different. The discipline is to look at both axes at once &mdash; depth and duration &mdash; instead of letting the percentage speak alone. </p>
+<p class="prose-p mb-4"> Same depth, but a very different market underneath. The discipline is looking at both axes at once &mdash; depth and duration &mdash; instead of letting the percentage speak alone. </p>
 <p class="prose-p"> The engine tracks duration as the time elapsed since the trailing one-year high. Short duration with deep depth maps to panic. Long duration with deep depth is one of the inputs the bear overlay watches for. </p>
 <figure class="exhibit note-exhibit">
 <figcaption class="exhibit-head"><div><span class="exhibit-no">Exhibit 2</span><span class="exhibit-title">Depth and duration: every 10% decline since 1996</span></div></figcaption>
@@ -48,15 +48,15 @@
 <section class="article-section">
 <span class="tag-overline">The third axis</span>
 <h2 class="article-h2"> Sharpness: how brutal was the worst stretch </h2>
-<p class="prose-p mb-4"> Depth and duration describe the envelope of the selloff. Sharpness describes its texture. Two drawdowns can be the same depth and duration but feel very different if one was a steady glide down and the other was a single, vicious week. </p>
-<p class="prose-p"> The engine captures this by looking at the worst ten-day stretch within the trailing month. A market that has just absorbed a brutal ten-day leg down is being repriced by panic flow, even if the headline drawdown is modest. A market that drifted to the same depth over months has not. </p>
+<p class="prose-p mb-4"> Depth and duration give you the outline of a selloff. Sharpness tells you what it felt like. Two drawdowns can be the same depth and duration but feel very different if one was a slow slide and the other was one nasty week. </p>
+<p class="prose-p"> The engine gets at this by looking at the worst ten-day stretch inside the trailing month. A market that has just absorbed a brutal ten-day leg down is being repriced by panic flow, even if the headline drawdown is modest. A market that drifted to the same depth over months has not. </p>
 </section>
 
 <!-- The classifier -->
 <section class="article-section">
 <span class="tag-overline">How the engine uses these</span>
 <h2 class="article-h2"> Three numbers, one regime read </h2>
-<p class="prose-p mb-4"> Depth, duration, and sharpness are not the final answer. They are three of the inputs the regime classifier reads to decide whether a market is in calm, correction, panic, or bear. The shape of how they combine: </p>
+<p class="prose-p mb-4"> Depth, duration and sharpness aren't the final answer. They are three of the inputs the regime classifier reads to decide whether a market is in calm, correction, panic, or bear. Roughly how they fit together: </p>
 <div class="terminal-shell flex flex-col mb-6">
 <div class="px-5 py-4" style="border-bottom: 1px solid rgba(30,37,48,0.06);">
 <p class="font-mono text-sm mb-1" style="color: var(--color-dark);"> shallow depth, calm sharpness </p>

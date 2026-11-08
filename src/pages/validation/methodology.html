@@ -4,7 +4,7 @@
   <header class="page-head">
     {{BREADCRUMB}}
     <h1 class="h1">Methodology</h1>
-    <p class="dek">How AlphaVerify measures a market condition, scores it, and tests it against markets that contain no signal &mdash; in plain language. The <a class="link" href="https://github.com/doubletrends/alpha-verify/blob/master/mathematics.pdf" rel="noopener">mathematical specification</a> gives every definition with worked examples, and governs where the two differ.</p>
+    <p class="dek">How AlphaVerify measures a market condition, scores it, and tests it against markets that contain no signal &mdash; in plain language. The <a class="link" href="https://github.com/doubletrends/alpha-verify/blob/master/mathematics.pdf" rel="noopener">mathematical specification</a> gives every definition with worked examples, and it&rsquo;s the one that governs wherever the two differ.</p>
   </header>
 
   <div class="doc">
@@ -35,8 +35,8 @@
       <section id="bins">
         <h2 class="h2"><span class="section-no">2</span>Bins</h2>
         <div class="prose">
-          <p>Each condition &mdash; a moving-average ratio, an oscillator, a bond yield &mdash; is split into ranges by the quantiles of its own history. By default there are ten, each holding about a tenth of the dates. Dates without a value, such as an indicator&rsquo;s warm-up period, belong to no bin. Heavily tied values can merge edges and leave fewer bins than requested.</p>
-          <p>For each bin, AlphaVerify computes the share of its dates that reached each level within each horizon. Cells with fewer than 30 dates are left blank rather than estimated.</p>
+          <p>Each condition &mdash; a moving-average ratio, an oscillator, a bond yield &mdash; is split into ranges by the quantiles of its own history. By default there are ten, each holding about a tenth of the dates. Dates without a value, such as an indicator&rsquo;s warm-up period, belong to no bin. Lots of tied values can merge edges and leave fewer bins than you asked for.</p>
+          <p>For each bin, AlphaVerify computes the share of its dates that reached each level within each horizon. Cells with less than 30 dates are left blank, not estimated.</p>
         </div>
       </section>
 
@@ -50,7 +50,7 @@
       <section id="score">
         <h2 class="h2"><span class="section-no">4</span>The score</h2>
         <div class="prose">
-          <p>A condition that predicts direction should make one side more likely and the mirror side less likely. The score therefore compares each level with its mirror image at the same horizon &mdash; +4% with &minus;4% after 10 days, for example &mdash; and adds up the absolute differences across the grid. If both sides shift by the same amount, the pair contributes nothing.</p>
+          <p>A condition that predicts direction should make one side more likely and the mirror side less likely. The score therefore compares each level with its mirror image at the same horizon &mdash; +4% with &minus;4% after 10 days, for example &mdash; and adds up the absolute differences across the grid. If both sides shift by the same amount, the pair adds nothing.</p>
           <p>Each pair is weighted by its distance: a &plusmn;2% pair counts twice as much as a &plusmn;1% pair. A cell counts only where at least two bins of the same condition have enough data to compare, so a condition cannot score on cells where it does not split the dates.</p>
         </div>
       </section>
@@ -58,8 +58,8 @@
       <section id="null">
         <h2 class="h2"><span class="section-no">5</span>The synthetic markets</h2>
         <div class="prose">
-          <p>A synthetic market should look like the real one a day at a time, but have no memory. AlphaVerify describes each daily bar by four parts &mdash; the gap from the previous close, the body from open to close, and the upper and lower wicks &mdash; measured in log terms. It estimates their average and how they move together, then draws every synthetic day independently from that distribution and chains the days into prices. Each synthetic market is as long as the real history, and a fixed seed makes the ensemble reproducible.</p>
-          <p>Within a day, the four parts keep their observed relationships. Across days there are none: no autocorrelation, no volatility clustering, no regimes. In such a market no condition can predict the next day, so any score it earns is chance.</p>
+          <p>A synthetic market should look like the real one day by day, but without any memory. AlphaVerify describes each daily bar by four parts &mdash; the gap from the previous close, the body from open to close, and the upper and lower wicks &mdash; measured in log terms. It estimates their average and how they move together, then draws every synthetic day independently from that distribution and chains the days into prices. Each synthetic market is as long as the real history, and a fixed seed makes the ensemble reproducible.</p>
+          <p>Within a day, the four parts keep their observed relationships. Across days there are none: no autocorrelation, no volatility clustering, no regimes. In a market like that no condition can predict the next day, so whatever score it earns is down to chance.</p>
           <p>Conditions computed from prices, such as a moving average, are recomputed on every synthetic market, with that market&rsquo;s own bin edges. Conditions taken from outside data &mdash; bond yields, the VIX, the dollar index, the calendar &mdash; cannot be rebuilt from synthetic prices, so their observed values and edges are reused. Volume is copied from the real history.</p>
         </div>
       </section>
@@ -72,23 +72,23 @@
 <pre class="code-block"><code>p = (1 + number of synthetic scores &ge; the real score) / 1,001</code></pre>
         <div class="prose" style="margin-top: 1.25rem;">
           <p>The bin <strong>clears</strong> when p is below 0.05 &mdash; equivalently, when its score beats the synthetic 95th percentile. The real history counts as one of the draws, so p is never zero; the smallest possible value is 1/1,001. Ties count against the bin.</p>
-          <p>On some synthetic markets a bin may have too little data to score, and scores zero. Those runs stay in the count, which makes p somewhat smaller than if only scorable runs were used. The specification shows the alternative and when it would change a decision; every result records how many synthetic runs were scorable so the gap can be checked.</p>
+          <p>On some synthetic markets a bin may have too little data to score, and scores zero. Those runs stay in the count, which makes p a bit smaller than it would be with only the scorable runs. The specification shows the alternative and when it would change a decision; every result records how many synthetic runs were scorable so the gap can be checked.</p>
         </div>
       </section>
 
       <section id="selection">
         <h2 class="h2"><span class="section-no">7</span>Selection</h2>
         <div class="prose">
-          <p>Selection adds no new test. It keeps every bin that cleared and only those &mdash; no top-k cut, no quota per condition, no minimum effect size &mdash; ranked by p-value alone. The order is evidence against chance, not size of effect.</p>
-          <p>Two numbers put the selection in context without changing it: how many bins would clear by chance if none had any effect (5% of those tested), and a Benjamini&ndash;Hochberg <strong>q-value</strong> for each bin, roughly the share of bins at least this strong that would be false discoveries. With 400 bins tested, even the strongest possible single result (p = 1/1,001) has a q-value of about 0.40.</p>
+          <p>Selection doesn&rsquo;t add a new test. It keeps every bin that cleared and only those &mdash; no top-k cut, no quota per condition, no minimum effect size &mdash; ranked by p-value alone. The order is evidence against chance, not size of effect.</p>
+          <p>Two numbers give the selection some context without changing it: how many bins would clear by chance if none had any effect (5% of those tested), and a Benjamini&ndash;Hochberg <strong>q-value</strong> for each bin, roughly the share of bins at least this strong that would be false discoveries. With 400 bins tested, even the strongest possible single result (p = 1/1,001) has a q-value of about 0.40.</p>
         </div>
       </section>
 
       <section id="forecast">
         <h2 class="h2"><span class="section-no">8</span>Combining conditions</h2>
         <div class="prose">
-          <p>The final stage asks what the kept conditions imply together for the latest bar. A kept bin is <strong>active</strong> if the latest value falls inside it; from each family of related conditions (one indicator at several periods, say), only the best-ranked active bin is used.</p>
-          <p>The used conditions are combined by naive Bayes: each multiplies the baseline odds of reaching a level by how much it changes those odds on its own. Rates are lightly smoothed so that no odds are infinite. The combined estimate is then compared with the rate history actually shows on dates when all the used conditions held at once.</p>
+          <p>The last stage asks what the kept conditions say together about the latest bar. A kept bin is <strong>active</strong> if the latest value falls inside it; from each family of related conditions (one indicator at several periods, say), only the best-ranked active bin is used.</p>
+          <p>The used conditions are combined by naive Bayes: each multiplies the baseline odds of reaching a level by how much it changes those odds on its own. Rates get smoothed a little so no odds come out infinite. The combined estimate is then compared with the rate history actually shows on dates when all the used conditions held at once.</p>
           <p>Naive Bayes is exact only when conditions are independent given the outcome. Conditions that measure similar things count the same evidence more than once and push the estimate further from the baseline than the evidence supports; the one-per-family rule removes only the most obvious overlap.</p>
         </div>
       </section>
@@ -104,7 +104,7 @@
             <li><strong>Combination.</strong> The combined forecast assumes conditions are independent given the outcome; overlapping conditions overstate it.</li>
             <li><strong>Scope.</strong> Findings hold for the data and period of the workspace that produced them. AlphaVerify is research software, not investment advice.</li>
           </ul>
-          <p>A null with memory, such as a block bootstrap, would address the first limitation but could also preserve the very relationship under test. The specification sets out what any replacement would have to state: what it removes, what it keeps, and how its calibration is checked.</p>
+          <p>A null with memory, a block bootstrap for instance, would deal with the first limitation, but it could also keep the very relationship being tested. The specification sets out what any replacement would have to state: what it removes, what it keeps, and how its calibration is checked.</p>
         </div>
       </section>
     </div>

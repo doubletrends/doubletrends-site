@@ -4,7 +4,7 @@
 <!-- Header -->
 <header class="article-hero article-hero-frame">
 <h1 class="article-title"> VIX percentile </h1>
-<p class="lead"> VIX percentile asks a better question than the raw VIX level: is volatility high or low relative to its own recent history? A VIX of 25 can mean a quiet correction or genuine panic depending on what VIX has been doing in the months before, so the honest read is positional rather than absolute. </p>
+<p class="lead"> VIX percentile asks a better question than the raw VIX level: is volatility high or low relative to its own recent history? A VIX of 25 can mean a quiet correction or genuine panic depending on what VIX has been doing in the months before, so the reading that makes sense is positional rather than absolute. </p>
 </header>
 
 <!-- What it is -->
@@ -12,27 +12,27 @@
 <span class="tag-overline">What VIX actually measures</span>
 <h2 class="article-h2"> Implied volatility, annualized </h2>
 <p class="prose-p mb-4"> VIX is the market's consensus estimate of how much the S&amp;P 500 will move over the next thirty days, derived from the prices of S&amp;P 500 options. When option prices rise &mdash; because investors are buying protection &mdash; the implied volatility number that comes out of those prices rises with them. VIX is just that number, expressed as an annualized percentage. </p>
-<p class="prose-p"> It is not a forecast of direction. It is a real-time price tag on uncertainty. A VIX of 20 means options are priced as if the S&amp;P 500 will move roughly &plusmn;20% (annualized) over the next month &mdash; about 5.8% per month, or 1.3% per week. Higher VIX, higher implied move; lower VIX, lower implied move. </p>
+<p class="prose-p"> It doesn't forecast direction. Think of it as a live price tag on uncertainty. A VIX of 20 means options are priced as if the S&amp;P 500 will move roughly &plusmn;20% (annualized) over the next month &mdash; about 5.8% per month, or 1.3% per week. Higher VIX, higher implied move; lower VIX, lower implied move. </p>
 </section>
 
 <!-- The level trap -->
 <section class="article-section">
 <span class="tag-overline">The level trap</span>
 <h2 class="article-h2"> A number without a baseline is just a number </h2>
-<p class="prose-p mb-4"> The natural instinct is to memorize thresholds. People say things like &ldquo;above 20 is elevated&rdquo; or &ldquo;above 30 is panic.&rdquo; This worked roughly in the 2000s. It does not work cleanly now, and it never worked across cycles. </p>
-<p class="prose-p mb-4"> In the low-volatility regime of 2017, VIX averaged around 11. A spike to 16 felt like genuine fear; the market reacted. In 2022, VIX averaged around 26 for most of the year. A reading of 26 was the boring base case &mdash; it meant nothing. Same number, opposite meaning, because the structural baseline had moved. </p>
-<p class="prose-p"> The same gap shows up at the high end. Late 2008 saw VIX above 70 for sustained periods; March 2020 hit 82. These are obvious extremes. But a VIX of 35 during a low-vol year is a five-alarm event; during a high-vol year it is Tuesday. </p>
+<p class="prose-p mb-4"> The natural instinct is to memorise thresholds. People say things like &ldquo;above 20 is elevated&rdquo; or &ldquo;above 30 is panic.&rdquo; That more or less worked in the 2000s. It doesn't work cleanly now, and it never held up across cycles. </p>
+<p class="prose-p mb-4"> In the low-volatility regime of 2017, VIX averaged around 11. A spike to 16 felt like real fear and the market reacted. In 2022, VIX averaged around 26 for most of the year. A reading of 26 was the boring base case, it meant nothing. Same number, opposite meaning, because the structural baseline had moved. </p>
+<p class="prose-p"> The same gap shows up at the high end. Late 2008 saw VIX above 70 for sustained periods; March 2020 hit 82. These are obvious extremes. But a VIX of 35 during a low-vol year is a five-alarm event; during a high-vol year it's just a Tuesday. </p>
 </section>
 
 <!-- The percentile reframe -->
 <section class="article-section">
 <span class="tag-overline">The percentile reframe</span>
 <h2 class="article-h2"> Rank, not value </h2>
-<p class="prose-p mb-4"> The fix is to stop reading VIX as a level and start reading it as a position inside its own recent distribution. Rank today's VIX inside a trailing one-year window of past VIX values, and you get a single number between 0 and 100 that tells you something the raw value cannot: whether today is unusual on VIX's own terms. </p>
+<p class="prose-p mb-4"> The fix is to stop reading VIX as a level and read it as a position inside its own recent distribution instead. Rank today's VIX inside a trailing one-year window of past VIX values, and you get a single number between 0 and 100 that tells you something the raw value cannot: whether today is unusual on VIX's own terms. </p>
 <div class="terminal-shell flex flex-col mb-6">
 <div class="px-5 py-4" style="border-bottom: 1px solid rgba(30,37,48,0.06);">
 <p class="font-mono text-sm mb-1" style="color: var(--color-dark);"> low percentile </p>
-<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> Today's VIX sits below most of the last year's readings. The market is structurally quiet on its own clock &mdash; whatever the raw number is. </p>
+<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> Today's VIX sits below most of the last year's readings. The market is quiet by its own standards, whatever the raw number says. </p>
 </div>
 <div class="px-5 py-4" style="border-bottom: 1px solid rgba(30,37,48,0.06);">
 <p class="font-mono text-sm mb-1" style="color: var(--color-dark);"> mid percentile </p>
@@ -40,17 +40,17 @@
 </div>
 <div class="px-5 py-4">
 <p class="font-mono text-sm mb-1" style="color: var(--color-dark);"> high percentile </p>
-<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> Today's VIX is near the top of its year. Whatever the absolute level, the options market is paying significantly more for protection than its recent normal &mdash; the signature of acute stress. </p>
+<p class="font-open text-sm leading-relaxed" style="color: var(--color-muted);"> Today's VIX is near the top of its year. Whatever the absolute level, the options market is paying significantly more for protection than its recent normal &mdash; which is what acute stress looks like. </p>
 </div>
 </div>
-<p class="prose-p"> A VIX of 25 at a high percentile (it has been quiet, this is a spike) and a VIX of 25 at a low percentile (it has been loud, this is calming down) describe completely different markets. The percentile reading distinguishes them automatically. </p>
+<p class="prose-p"> A VIX of 25 at a high percentile (it has been quiet, this is a spike) and a VIX of 25 at a low percentile (it has been loud, this is calming down) describe completely different markets. The percentile reading tells them apart automatically. </p>
 </section>
 
 <!-- Smoothing -->
 <section class="article-section">
 <span class="tag-overline">Smoothing</span>
 <h2 class="article-h2"> A short moving average </h2>
-<p class="prose-p"> Raw percentile readings can shake a point or two per day even without real news, just from underlying VIX day-to-day chop. Smoothing the percentile with a short moving average before any decision logic reads it kills the noise without changing the shape. Spikes still register as spikes; small noise stops triggering threshold crossings. </p>
+<p class="prose-p"> Raw percentile readings can shake a point or two per day even without real news, just from underlying VIX day-to-day chop. Smoothing the percentile with a short moving average before any decision logic reads it takes out the noise without changing the shape. Spikes still register as spikes; small noise stops triggering threshold crossings. </p>
 </section>
 
 <!-- How the engine uses it -->
@@ -58,9 +58,9 @@
 <span class="tag-overline">How the engine uses it</span>
 <h2 class="article-h2"> Two roles in the regime classifier </h2>
 <p class="prose-p mb-4"> Inside the DoubleTrends engine, the smoothed VIX percentile plays two roles &mdash; one that keeps the rule quiet, and one that lets the rule fire. </p>
-<p class="prose-p mb-4"> When the percentile sits in the lower part of its range, the regime classifier reads <strong>calm</strong>. In a calm regime no reversal is allowed to fire, no matter what price is doing. Most of the calendar lives here. </p>
+<p class="prose-p mb-4"> When the percentile sits in the lower part of its range, the regime classifier reads <strong>calm</strong>. In a calm regime no reversal is allowed to fire, no matter what price is doing. Most of the calendar is spent here. </p>
 <p class="prose-p mb-4"> When the percentile climbs into the upper end of its range &mdash; combined with price action that has already left the recent ceiling and either a brutal recent leg down or a sustained vol spike &mdash; the regime classifier reads <strong>panic</strong>. Panic is one of the two states where a Williams %R reversal is allowed to fire. </p>
-<p class="prose-p"> The exact threshold percentiles, smoothing window, and combination weights are part of the production logic and are not published. What matters for the educational story is that VIX never appears as a raw level &mdash; both reads are positional, so the rule stays honest across structurally different volatility regimes. Whether VIX is averaging 12 or 26, the gates trip based on where it is sitting <em>now</em> relative to recent normal, not based on a number written down in 2008. </p>
+<p class="prose-p"> The exact threshold percentiles, smoothing window, and combination weights are part of the production logic and are not published. What matters for the educational story is that VIX never appears as a raw level &mdash; both reads are positional, so the rule holds up across very different volatility regimes. Whether VIX is averaging 12 or 26, the gates trip based on where it is sitting <em>now</em> relative to recent normal, not based on a number written down in 2008. </p>
 </section>
 
 <!-- One input of four -->

@@ -3,7 +3,7 @@
   <header class="page-head">
     {{BREADCRUMB}}
     <h1 class="h1">Research services</h1>
-    <p class="dek">Quantitative research and data engineering, built to the standard of the firm&rsquo;s own indicator: reliable data pipelines, statistical studies and forecasts, and predictive models with their limits documented.</p>
+    <p class="dek">Quantitative research and data engineering, held to the same standard as the firm&rsquo;s own indicator: data pipelines that don&rsquo;t break, statistical studies and forecasts, and predictive models with their limits written down.</p>
   </header>
 </div>
 
@@ -13,15 +13,15 @@
     <div class="cols-3">
       <div>
         <h3 class="h3">Data collection and pipelines</h3>
-        <p class="muted" style="margin-top: 0.6rem;">Automated collection from public web sources, APIs and documents, including JavaScript-rendered pages and PDF reports. Output is a validated dataset &mdash; schema-documented, typed and de-duplicated &mdash; as CSV, JSON or a direct database write. Ongoing collection includes scheduling, error logging and alerting. Work is limited to sources whose terms permit automated access.</p>
+        <p class="muted" style="margin-top: 0.6rem;">Automated collection from public web sources, APIs and documents, including JavaScript-rendered pages and PDF reports. What you get is a validated dataset (schema documented, typed, de-duplicated) as CSV, JSON or written straight to a database. Ongoing collection includes scheduling, error logging and alerting. Work is limited to sources whose terms permit automated access.</p>
       </div>
       <div>
         <h3 class="h3">Statistical analysis and forecasting</h3>
-        <p class="muted" style="margin-top: 0.6rem;">Exploratory analysis, hypothesis testing, regression, and time-series decomposition and forecasting in R or Python &mdash; including causal designs such as difference-in-differences and regression discontinuity, and the evaluation of experiments. Every result states its assumptions and what it can and cannot conclude.</p>
+        <p class="muted" style="margin-top: 0.6rem;">Exploratory analysis, hypothesis testing, regression, and time-series decomposition and forecasting in R or Python &mdash; including causal designs such as difference-in-differences and regression discontinuity, and the evaluation of experiments. Each result comes with its assumptions and a plain statement of what it can and can&rsquo;t conclude.</p>
       </div>
       <div>
         <h3 class="h3">Predictive models</h3>
-        <p class="muted" style="margin-top: 0.6rem;">Classification, regression, forecasting and anomaly detection on structured data: churn, demand, risk scoring, fraud and segmentation. Models are evaluated on held-out data and delivered with reproducible code and a model card covering performance by segment and known failure modes.</p>
+        <p class="muted" style="margin-top: 0.6rem;">Classification, regression, forecasting and anomaly detection on structured data: churn, demand, risk scoring, fraud and segmentation. Models are evaluated on held-out data, and handed over with reproducible code plus a model card that covers performance by segment and the known ways it fails.</p>
       </div>
     </div>
   </div>
@@ -33,18 +33,18 @@
       <div>
         <span class="kicker">Case study &middot; The firm&rsquo;s own work</span>
         <h2 class="h2">Building a point-in-time market regime classifier</h2>
-        <p>The <a class="link" href="../indicator/index.html">DoubleTrends Regime Indicator</a> is the firm&rsquo;s own system, and the clearest example of how engagements are built: the question, the data, the validation and the operations are all documented in public.</p>
+        <p>The <a class="link" href="../indicator/index.html">DoubleTrends Regime Indicator</a> is the firm&rsquo;s own system and the best example we have of how an engagement gets built: the question, the data, the validation and the operations are all documented in public.</p>
       </div>
     </div>
     <dl class="facts">
       <dt>The question</dt>
-      <dd>Classify S&amp;P 500 market stress every trading day from public data alone, with a back-tested history that avoids hindsight wherever the data allows, and a live system that publishes reliably after each close.</dd>
+      <dd>Classify S&amp;P 500 market stress every trading day from public data alone, with a back-tested history that avoids hindsight wherever the data allows, and a live system that reliably publishes after every close.</dd>
       <dt>Data</dt>
       <dd>Daily index prices, the VIX and three Federal Reserve series. Macroeconomic downloads are validated before use and retried on failure; if the source stays unavailable, the last validated copy (at most a week old) is used and the run is flagged.</dd>
       <dt>Method</dt>
       <dd>Measures of the depth, duration and sharpness of a decline, dual-horizon momentum and volatility percentiles feed a four-state classification and a signal state machine. The structure of every rule is <a class="link" href="../indicator/methodology.html">published</a>.</dd>
       <dt>Validation</dt>
-      <dd>Thirty years of history are computed twice, separately &mdash; over the full series and date by date with only the data each date allowed. Both must agree before anything is published. A known limitation in the timing of macroeconomic inputs is disclosed rather than hidden.</dd>
+      <dd>Thirty years of history are computed twice, separately &mdash; over the full series and date by date with only the data each date allowed. Both must agree before anything is published. There is a known limitation in the timing of macroeconomic inputs, and it&rsquo;s disclosed, not buried.</dd>
       <dt>Operations</dt>
       <dd>Computation scheduled to the NYSE calendar, including early closes; retried dispatch and a backup end-of-day run; and a monitoring view that flags missing or late readings.</dd>
       <dt>Outputs</dt>
@@ -59,7 +59,7 @@
       <div>
         <span class="kicker">Case study &middot; The firm&rsquo;s own work</span>
         <h2 class="h2">An open-source validation framework, specified in full</h2>
-        <p><a class="link" href="../validation/index.html">AlphaVerify</a> tests whether a trading signal&rsquo;s edge survives comparison with markets that contain no signal &mdash; the kind of question research engagements exist to answer honestly.</p>
+        <p><a class="link" href="../validation/index.html">AlphaVerify</a> tests whether a trading signal&rsquo;s edge survives comparison with markets that contain no signal &mdash; which is the kind of question a research engagement is there to answer straight.</p>
       </div>
     </div>
     <dl class="facts">
@@ -70,7 +70,7 @@
       <dt>Engineering</dt>
       <dd>A staged command-line pipeline in Python and PyTorch with GPU support, written artifacts at every stage, an architecture covered by tests, and reproducible workspaces for the NASDAQ and bitcoin.</dd>
       <dt>Distribution</dt>
-      <dd>Released on the <a class="link" href="https://pypi.org/project/alphaverify/" rel="noopener">Python Package Index</a> under a public-domain (CC0) license, with its limitations stated alongside its findings.</dd>
+      <dd>Released on the <a class="link" href="https://pypi.org/project/alphaverify/" rel="noopener">Python Package Index</a> under a public-domain (CC0) license, with its limitations stated right next to its findings.</dd>
     </dl>
   </div>
 </section>
@@ -79,9 +79,9 @@
   <div class="wrap">
     <div class="section-head"><div><span class="kicker">Engagements</span><h2 class="h2">How an engagement runs</h2></div></div>
     <ol class="steps">
-      <li><h3>Scope</h3><p>Agree the question, the available data, constraints, timeline and what a useful answer looks like.</p></li>
+      <li><h3>Scope</h3><p>Agree on the question, the data available, constraints, timeline and what a useful answer would look like.</p></li>
       <li><h3>Build</h3><p>Prepare the data, run the analysis or model, document assumptions, and review interim findings with you before delivery.</p></li>
-      <li><h3>Deliver</h3><p>Code, datasets, charts and methodology notes, with guidance on maintaining or extending the work.</p></li>
+      <li><h3>Deliver</h3><p>Code, datasets, charts and methodology notes, plus notes on how to maintain or extend the work.</p></li>
     </ol>
     <dl class="facts" style="margin-top: 2.5rem;">
       <dt>Typical duration</dt><dd>Three to eight weeks, depending on data readiness and complexity.</dd>

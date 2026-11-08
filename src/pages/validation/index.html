@@ -6,7 +6,7 @@
     <div class="hero-text">
       {{BREADCRUMB}}
       <h1 class="display">Open-source signal validation</h1>
-      <p class="dek">AlphaVerify is an open-source framework for one question every trading signal should face: does its apparent edge hold up against markets that contain no signal at all?</p>
+      <p class="dek">AlphaVerify is an open-source framework built around one question every trading signal ought to face: does its apparent edge hold up against markets with no signal in them at all?</p>
       <p class="page-head-meta">
         <span><strong>License</strong> CC0 1.0 (public domain)</span>
         <span><strong>Language</strong> Python 3.12, PyTorch</span>
@@ -25,8 +25,8 @@
     <div class="prose">
       <span class="kicker">The question</span>
       <h2 class="h2" style="margin-top: 0.6rem;">An edge, or something any market would produce?</h2>
-      <p>Market folklore is full of conditions said to change the odds: a golden cross, price above its 200-day average, unusually low bond yields. Measured on history, many of them do appear to shift the probability of a rise or a fall. The question is whether that shift is an edge or something any market would produce by chance.</p>
-      <p>AlphaVerify answers it by running the same measurement on a thousand synthetic markets built to have no memory &mdash; markets in which, by construction, nothing in the past can predict the next day. A condition counts only if its real score beats 95% of the scores those signal-free markets produce.</p>
+      <p>Market folklore is full of conditions that supposedly change the odds: a golden cross, price above its 200-day average, unusually low bond yields. Measured on history, a lot of them do seem to shift the probability of a rise or a fall. The question is whether the shift is an edge, or something any market would produce by chance.</p>
+      <p>AlphaVerify answers it by running the same measurement on a thousand synthetic markets built with no memory, so by construction nothing in the past can predict the next day. A condition only counts if its real score beats 95% of the scores from those signal-free markets.</p>
     </div>
     <figure class="exhibit">
       <figcaption class="exhibit-head"><div><span class="exhibit-no">Example</span><span class="exhibit-title">The golden cross against 1,000 signal-free markets</span></div></figcaption>
@@ -66,7 +66,7 @@
       <div>
         <span class="kicker">Methodology</span>
         <h2 class="h2">Five stages, each written to disk</h2>
-        <p>Each condition is split into ranges (&ldquo;bins&rdquo;), and each bin passes through five stages. Selection consumes only a current validation result, and the forecast only a current selection.</p>
+        <p>Each condition gets split into ranges (&ldquo;bins&rdquo;) and each bin goes through five stages. Selection consumes only a current validation result, and the forecast only a current selection.</p>
       </div>
       <a class="link-arrow" href="methodology.html">The methodology in full</a>
     </div>
@@ -92,9 +92,9 @@
       <h2 class="h2" style="margin-top: 0.6rem;">What clearing does and does not mean</h2>
       <dl class="facts" style="margin-top: 1.25rem;">
         <dt>A memoryless null</dt>
-        <dd>Synthetic days are drawn independently, so the null has no volatility clustering or regimes. Clearing means a condition beats a market without memory &mdash; a necessary test, not proof of a usable edge.</dd>
+        <dd>Synthetic days are drawn independently, so the null has no volatility clustering or regimes. Clearing means a condition beats a market without memory &mdash; a test it has to pass, not proof of an edge you can use.</dd>
         <dt>Many tests</dt>
-        <dd>A bin clears at a raw p-value below 0.05, without multiple-testing correction. Benjamini&ndash;Hochberg adjusted values are reported for context; with many bins tested, some will clear by chance.</dd>
+        <dd>A bin clears at a raw p-value below 0.05, without multiple-testing correction. Benjamini&ndash;Hochberg adjusted values are reported for context; when lots of bins are tested, some will clear by chance.</dd>
         <dt>Scope</dt>
         <dd>Findings hold for the data and period of the workspace that produced them. AlphaVerify is research software, not investment advice.</dd>
       </dl>
@@ -103,7 +103,7 @@
     <div>
       <span class="kicker">Using it</span>
       <h2 class="h2" style="margin-top: 0.6rem;">Install and run a workspace</h2>
-      <p style="margin-top: 1rem;">PyTorch is required; a CUDA-capable GPU is strongly recommended. Three <a class="link" href="workspaces.html">workspaces</a> ship with the package: NASDAQ daily, bitcoin daily and bitcoin hourly.</p>
+      <p style="margin-top: 1rem;">You&rsquo;ll need PyTorch, and a CUDA-capable GPU is strongly recommended. Three <a class="link" href="workspaces.html">workspaces</a> ship with the package: NASDAQ daily, bitcoin daily and bitcoin hourly.</p>
 <pre class="code-block"><code>python -m pip install alphaverify
 
 alphaverify init --workspace nasdaq_daily

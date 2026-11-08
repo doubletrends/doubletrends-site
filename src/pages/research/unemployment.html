@@ -4,33 +4,33 @@
 <!-- Header -->
 <header class="article-hero article-hero-frame">
 <h1 class="article-title"> Unemployment </h1>
-<p class="lead"> The unemployment rate is a lagging indicator, but it is one of the cleanest confirmation signals in macro data. When it turns higher in a sustained way, the economy has usually already weakened enough that the regime change is real rather than hypothetical. </p>
+<p class="lead"> The unemployment rate lags, but it's one of the cleaner confirmation signals in macro data. When it turns higher in a sustained way, the economy has usually already weakened enough that the regime change is real rather than hypothetical. </p>
 </header>
 
 <!-- What it is -->
 <section class="article-section">
 <span class="tag-overline">What it measures</span>
 <h2 class="article-h2"> The civilian unemployment rate </h2>
-<p class="prose-p mb-4"> The Bureau of Labor Statistics publishes the unemployment rate (UNRATE in FRED) on the first Friday of each month. It comes from the Current Population Survey of about 60,000 households. The math is simple: the number of unemployed people, divided by the labor force (employed plus actively seeking work), expressed as a percentage. </p>
-<p class="prose-p"> Anyone who has worked even one hour for pay in the survey reference week is &ldquo;employed.&rdquo; Anyone available for work and actively looking is &ldquo;unemployed.&rdquo; Anyone neither working nor looking (retired, in school, discouraged) is not in the labor force at all. The rate captures only the first two categories. </p>
+<p class="prose-p mb-4"> The Bureau of Labor Statistics publishes the unemployment rate (UNRATE in FRED) on the first Friday of each month. It comes from the Current Population Survey of about 60,000 households. The math is straightforward: the number of unemployed people, divided by the labor force (employed plus actively seeking work), expressed as a percentage. </p>
+<p class="prose-p"> Anyone who has worked even one hour for pay in the survey reference week is &ldquo;employed.&rdquo; Anyone available for work and actively looking is &ldquo;unemployed.&rdquo; Anyone neither working nor looking (retired, in school, discouraged) is not in the labor force at all. The rate only covers the first two groups. </p>
 </section>
 
 <!-- Lag, but honest -->
 <section class="article-section">
 <span class="tag-overline">Lag, but honest</span>
 <h2 class="article-h2"> It moves late, and that is the point </h2>
-<p class="prose-p mb-4"> Unemployment is a famously lagging indicator. The economy weakens, companies stop hiring, then hours get cut, then layoffs begin, then the unemployment rate finally ticks up. By the time the print actually moves, the deterioration has been in motion for weeks or months. </p>
-<p class="prose-p mb-4"> This is exactly what makes it useful. Leading indicators are forecasts &mdash; some of which are wrong. Coincident indicators are noisy &mdash; some weeks the print bounces around for survey reasons. Unemployment lags, but it does not give you false positives. When it actually turns higher, something has actually broken. The signal is rare, and when it fires it is real. </p>
-<p class="prose-p"> The famous Sahm Rule formalizes this. When the trailing three-month average of the unemployment rate rises 0.5 percentage points or more above its trailing twelve-month minimum, the US has historically been in recession every time since 1970. It is a backward-looking trigger, but it has zero false positives in the modern post-war record. </p>
+<p class="prose-p mb-4"> Unemployment is well known for lagging. The economy weakens, companies stop hiring, then hours get cut, then layoffs begin, then the unemployment rate finally ticks up. By the time the print moves, things have been getting worse for weeks or months. </p>
+<p class="prose-p mb-4"> That's what makes it useful. Leading indicators are forecasts &mdash; some of which are wrong. Coincident indicators are noisy &mdash; some weeks the print bounces around for survey reasons. Unemployment lags, but it rarely gives false positives. When it really turns higher, something has broken. The signal doesn't come often, and when it does it's real. </p>
+<p class="prose-p"> The well-known Sahm Rule puts this into a formula. When the trailing three-month average of the unemployment rate rises 0.5 percentage points or more above its trailing twelve-month minimum, the US has historically been in recession every time since 1970. It is a backward-looking trigger, but it has zero false positives in the modern post-war record. </p>
 </section>
 
 <!-- Change, not level -->
 <section class="article-section">
 <span class="tag-overline">Change, not level</span>
 <h2 class="article-h2"> Where the rate is going matters more than where it is </h2>
-<p class="prose-p mb-4"> A 4.5% unemployment rate, on its own, tells you almost nothing. The 1990s low was 3.8%. The 2009 high was 10%. The 2020 spike hit 14.7%. The structural baseline shifts across cycles, and the level is meaningless without context. </p>
-<p class="prose-p mb-4"> The honest read is the slope. A rate that has risen meaningfully over the past several months is a different macro environment from one that has been flat for two years &mdash; even though the current value might be identical. The engine therefore reads unemployment in two complementary ways: as recent change over a meaningful look-back, and as the current rate's position against its trailing one-year average. </p>
-<p class="prose-p"> The first captures speed of deterioration. The second captures the structural turn. Both are positional rather than absolute &mdash; they work whether the baseline rate is 3.5% or 5.5%. </p>
+<p class="prose-p mb-4"> A 4.5% unemployment rate on its own tells you next to nothing. The 1990s low was 3.8%. The 2009 high was 10%. The 2020 spike hit 14.7%. The structural baseline shifts across cycles, and the level is meaningless without context. </p>
+<p class="prose-p mb-4"> What you want to read is the slope. A rate that has risen meaningfully over the past several months is a different macro environment from one that has been flat for two years &mdash; even though the current value might be identical. The engine therefore reads unemployment in two complementary ways: as recent change over a meaningful look-back, and as the current rate's position against its trailing one-year average. </p>
+<p class="prose-p"> The first picks up how fast things are getting worse. The second picks up the turn itself. Both are positional rather than absolute &mdash; they work whether the baseline rate is 3.5% or 5.5%. </p>
 </section>
 
 <!-- How the engine uses it -->
@@ -38,7 +38,7 @@
 <span class="tag-overline">How the engine uses it</span>
 <h2 class="article-h2"> One source of pressure in the bear overlay </h2>
 <p class="prose-p mb-4"> Unemployment, like fed funds, is part of the bear overlay rather than the calm-vs-correction-vs-panic baseline. Bear regimes are slow, macro-driven, and persistent &mdash; exactly the environment where a deteriorating labor market provides supporting evidence. Inside the bear gate, the engine looks for at least one form of macro pressure, and labor-market deterioration is one source. </p>
-<p class="prose-p mb-4"> The conditions are intentionally modest. Labor data moves slowly; a small but real change in the trailing months is not dramatic in the popular sense, but historically it is the threshold where the trend has actually turned rather than wobbled. Waiting for a larger move means waiting until the bear is already obvious to everyone &mdash; which is too late for a regime classifier to do useful work. </p>
+<p class="prose-p mb-4"> The conditions are modest on purpose. Labor data moves slowly; a small but real change in the trailing months is not dramatic in the popular sense, but historically it is the threshold where the trend has actually turned rather than wobbled. Waiting for a larger move means waiting until the bear is already obvious to everyone &mdash; and by then it's too late for a regime classifier to be of much use. </p>
 <p class="prose-p"> The exact change values, look-back lengths, and crossover margins are part of the production rule and are not published. The educational point is the orientation: read the slope and the position against the moving average, not the level. </p>
 </section>
 
