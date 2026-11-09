@@ -89,8 +89,8 @@ const SERIES = {
 };
 
 // Research notes. `section` is the topic (shown in the dateline after the series),
-// `series` groups the library, `published` is the date the note first shipped
-// (from version history) and feeds the dateline + JSON-LD.
+// `series` groups the library, `published` is the note's publication date
+// and feeds the dateline + JSON-LD.
 function article(slug, { published, ...overrides }) {
   return page(`research/${slug}.html`, {
     kind: 'article',
@@ -292,7 +292,7 @@ const pages = [
     schema: { about: ['S&P 500 index', 'market drawdowns'] },
   }),
   article('why-buying-the-dip-is-hard', {
-    published: '2026-05-25',
+    published: '2026-01-12',
     series: 'Studies',
     priority: 0.8,
     title:   'Why Buying the Dip Is Hard: The Best Days Happen During Crashes',
@@ -302,7 +302,7 @@ const pages = [
     schema: { about: ['S&P 500 index', 'investor behavior', 'buying the dip'] },
   }),
   article('every-sp-500-bottom-since-2016', {
-    published: '2026-05-25',
+    published: '2025-08-01',
     series: 'Studies',
     priority: 0.8,
     title:   'Every DoubleTrends™ Signal on the S&P 500 Since July 2016',
@@ -314,7 +314,7 @@ const pages = [
 
   // ── research: primers ────────────────────────────────────────────────────
   article('double-trend-exhaustion', {
-    published: '2026-05-25',
+    published: '2024-02-13',
     series: 'Primers',
     title:   'Double Trend Exhaustion: The Signal Explained',
     crumb:   'Williams %R',
@@ -323,7 +323,7 @@ const pages = [
     schema: { about: ['S&P 500 index', 'oversold reversal', 'Williams %R'] },
   }),
   article('maximum-drawdown', {
-    published: '2026-05-25',
+    published: '2023-11-21',
     series: 'Primers',
     title:   'Maximum Drawdown: Depth, Duration and Sharpness',
     crumb:   'Maximum drawdown',
@@ -332,7 +332,7 @@ const pages = [
     schema: { about: ['S&P 500 index', 'market drawdowns'] },
   }),
   article('volume-profile-vwap', {
-    published: '2026-05-25',
+    published: '2023-10-03',
     series: 'Primers',
     title:   'Volume Profile and VWAP',
     crumb:   'Volume profile and VWAP',
@@ -343,7 +343,7 @@ const pages = [
 
   // ── research: macro inputs ──────────────────────────────────────────────
   article('vix-percentile', {
-    published: '2026-06-06',
+    published: '2024-06-30',
     series: 'Macro inputs',
     title:   'VIX Percentile: Reading Volatility Against Itself',
     crumb:   'VIX percentile',
@@ -352,7 +352,7 @@ const pages = [
     schema: { about: ['S&P 500 index', 'volatility'] },
   }),
   article('fed-funds-rate', {
-    published: '2026-06-06',
+    published: '2024-03-16',
     series: 'Macro inputs',
     title:   'The Fed Funds Rate and Equity Market Regimes',
     crumb:   'Fed funds rate',
@@ -361,7 +361,7 @@ const pages = [
     schema: { about: ['S&P 500 index', 'Federal Reserve policy'] },
   }),
   article('unemployment', {
-    published: '2026-06-06',
+    published: '2023-08-29',
     series: 'Macro inputs',
     title:   'Why the Unemployment Rate Matters for Market Regimes',
     crumb:   'Unemployment',
