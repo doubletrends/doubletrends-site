@@ -2,11 +2,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Critical resources first: the stylesheet and the two above-the-fold
-       faces (Source Serif 4 600 for headings, Source Sans 3 400 for text).
-       crossorigin is required even same-origin: font fetches are CORS-mode. -->
+  <!-- Critical resources first: the stylesheet and the faces above the fold
+       (Source Serif 4 600 headings, 400 ledes; Source Sans 3 400 text, 600
+       top bar and labels). crossorigin is required even same-origin: font
+       fetches are CORS-mode. Fonts and site.css are cached long-term
+       (scripts/build-cache.js), so these matter on a first visit only. -->
   <link rel="preload" href="{{ROOT}}public/fonts/source-serif-4/source-serif-4-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="{{ROOT}}public/fonts/source-serif-4/source-serif-4-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="{{ROOT}}public/fonts/source-sans-3/source-sans-3-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="{{ROOT}}public/fonts/source-sans-3/source-sans-3-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="{{ROOT}}public/styles/site.css" />
 
   <title>{{TITLE}}</title>

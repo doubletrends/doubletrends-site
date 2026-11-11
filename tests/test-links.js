@@ -17,10 +17,11 @@ function shouldIgnore(value) {
   return IGNORE_PREFIXES.some((prefix) => value.startsWith(prefix));
 }
 
+// A query string (site.css?v=<hash>, scripts/build-cache.js) names the same file.
 function splitTarget(value) {
   const hashIndex = value.indexOf('#');
-  if (hashIndex === -1) return { pathname: value, hash: '' };
-  return { pathname: value.slice(0, hashIndex), hash: value.slice(hashIndex + 1) };
+  const [pathname, hash] = hashIndex === -1 ? [value, ''] : [value.slice(0, hashIndex), value.slice(hashIndex + 1)];
+  return { pathname: pathname.split('?')[0], hash };
 }
 
 function resolvePath(fromFile, rawPath) {
