@@ -1,0 +1,26 @@
+/* Scroll reveal: blocks fade up as they enter the viewport; the first screen
+   cascades in when the page is shown. Tagging: scripts/build-reveal.js;
+   revealer: public/js/scroll-reveal.js; hidden start state: html.reveal-on,
+   set by the guard in src/partials/head.html before first paint.
+
+   The transition lives on the REVEAL, not the hide: applying reveal-on drops
+   content to the hidden state instantly (no fade-out), and only the 0 -> 1
+   entrance animates. With the transition on the hidden base, first-screen
+   blocks (revealed a frame after load) would never reach opacity 0 and would
+   snap in. Reduced motion: the guard never sets reveal-on; this media query
+   is the second lock. */
+@media (prefers-reduced-motion: no-preference) {
+  html.reveal-on [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: transform, opacity;
+  }
+  html.reveal-on [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 1.5s cubic-bezier(0.32, 0.72, 0, 1),
+      transform 1.5s cubic-bezier(0.32, 0.72, 0, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+}

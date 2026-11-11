@@ -27,6 +27,7 @@ const { COLORS } = require('../src/brand.config');
 const { fmtDateLong, escAmp } = require('../src/format');
 const { SITE_VARS, partial, replace, assertResolved } = require('./placeholders');
 const { footerNotes, researchRecent, researchLibrary, furtherReading } = require('./build-listings');
+const { applyReveal } = require('./build-reveal');
 const ARCHIVE = require('../src/data/archive-images.json').images;
 
 const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
@@ -154,9 +155,13 @@ function socialExtraFor(page, today) {
   <meta property="article:section" content="${page.section}" />`;
 }
 
-// Pages that carry exhibits load the interaction layer.
+// Pages that carry exhibits load the interaction layer; pages with tagged
+// blocks load the scroll reveal (scripts/build-reveal.js).
 function scriptsFor(html, root) {
-  return /data-exhibit=/.test(html) ? `<script src="${root}public/js/exhibits.js" defer></script>\n</body>` : '</body>';
+  const scripts = [];
+  if (/data-exhibit=/.test(html)) scripts.push(`<script src="${root}public/js/exhibits.js" defer></script>`);
+  if (/\bdata-reveal\b/.test(html)) scripts.push(`<script src="${root}public/js/scroll-reveal.js" defer></script>`);
+  return [...scripts, '</body>'].join('\n');
 }
 
 // Renders `page` into `dist`. `exhibits` holds the figures and exhibits
@@ -202,6 +207,7 @@ function renderPage(page, { dist, exhibits, today }) {
   html = applyHeadImage(html, page);
   html = markCurrentNav(html, page);
   html = stripeSections(html);
+  html = applyReveal(html);
   html = html.replace('</body>', scriptsFor(html, page.root));
 
   assertResolved(html, page.src);

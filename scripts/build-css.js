@@ -19,6 +19,7 @@ const CSS_SEGMENTS = [
   'layouts/document',
   'components/legacy',
   'components/texture',
+  'components/motion',
 ];
 
 function compileCss(dist) {

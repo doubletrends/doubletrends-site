@@ -13,12 +13,19 @@
   <link rel="preload" href="{{ROOT}}public/fonts/source-sans-3/source-sans-3-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="{{ROOT}}public/fonts/source-sans-3/source-sans-3-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="{{ROOT}}public/styles/site.css" />
-  <!-- First paint waits for the house faces, so text never shows in a
-       fallback face and then swaps (the flash on a first visit). Cached faces
-       resolve at once; on a slow first load the page shows after 1.2 s
-       whatever has arrived. Without JS or the Font Loading API nothing waits. -->
+  <!-- First paint, one guard, before anything renders:
+       - Font hold: the page stays hidden until the house faces are in, so text
+         never shows in a fallback face and then swaps. Cached faces resolve at
+         once; a slow first load shows after 1.2 s whatever has arrived.
+       - Scroll reveal: html.reveal-on gives [data-reveal] blocks their hidden
+         start state (motion.css) so they never flash in first; only when
+         motion is allowed and IntersectionObserver exists, the same gate as
+         public/js/scroll-reveal.js. If that script has not run 4 s after the
+         page shows, reveal-on is lifted so nothing stays hidden.
+       window.pageShown resolves when the page shows; the reveal cascade waits
+       for it. Without JS nothing waits and nothing hides. -->
   <style>.fonts-wait body { visibility: hidden; }</style>
-  <script>(function(d){var r=d.documentElement,f=d.fonts;if(!f||!f.load)return;r.classList.add('fonts-wait');function done(){r.classList.remove('fonts-wait')}Promise.all(['600 1em "Source Serif 4"','400 1em "Source Serif 4"','400 1em "Source Sans 3"','500 1em "Source Sans 3"','600 1em "Source Sans 3"'].map(function(s){return f.load(s)})).then(done,done);setTimeout(done,1200)})(document);</script>
+  <script>(function(d,w){var r=d.documentElement,f=d.fonts,show;w.pageShown=new Promise(function(res){show=res});if(w.matchMedia&&!w.matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in w){r.classList.add('reveal-on');w.pageShown.then(function(){setTimeout(function(){if(!r.hasAttribute('data-reveal-ready'))r.classList.remove('reveal-on')},4000)})}function done(){r.classList.remove('fonts-wait');show()}if(!f||!f.load)return done();r.classList.add('fonts-wait');Promise.all(['600 1em "Source Serif 4"','400 1em "Source Serif 4"','400 1em "Source Sans 3"','500 1em "Source Sans 3"','600 1em "Source Sans 3"'].map(function(s){return f.load(s)})).then(done,done);setTimeout(done,1200)})(document,window);</script>
 
   <title>{{TITLE}}</title>
   <meta name="description" content="{{DESC}}" />
