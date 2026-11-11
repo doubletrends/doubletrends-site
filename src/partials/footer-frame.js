@@ -31,7 +31,7 @@
     // Geometry at full size, scaled down on narrow footers.
     var W = footer.clientWidth, H = footer.clientHeight, s = Math.max(0.6, Math.min(1, W / 900));
     if (W < 200 || H < 200) { svg.innerHTML = ''; return; }
-    var INSET = 30 * s, RC = 42 * s, A = 13 * s, MK = 0.19 * s, HOLE = 236 * MK + 4 * s;
+    var INSET = 30 * s, RC = 42 * s, A = 18 * s, MK = 0.19 * s, HOLE = 236 * MK + 4 * s;
     var w = W - 2 * INSET - 2 * RC, h = H - 2 * INSET - 2 * RC, q = Math.PI / 2 * RC;
     var P = 2 * w + 2 * h + 4 * q;
     var x0 = INSET + RC, x1 = W - INSET - RC, y0 = INSET + RC, y1 = H - INSET - RC;
