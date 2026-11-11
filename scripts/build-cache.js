@@ -55,4 +55,27 @@ function stampStylesheet(dist) {
   return stamped;
 }
 
-module.exports = { writeHeaders, stampStylesheet };
+/**
+ * Replaces each <img src=".../brand/logo.svg"> with the SVG itself, so the mark
+ * paints with the page's first frame instead of a beat after the text (an
+ * image is fetched and decoded separately). The mark has no ids, so copies
+ * cannot collide. Returns the number of marks inlined.
+ */
+function inlineLogo(dist) {
+  const svg = fs.readFileSync(path.join(dist, 'public', 'brand', 'logo.svg'), 'utf8');
+  const [, attrs, inner] = svg.match(/<svg([^>]*)>([\s\S]*)<\/svg>/);
+  const viewBox = attrs.match(/viewBox="[^"]*"/)[0];
+  const img = /<img (class="[^"]*" )?src="[^"]*brand\/logo\.svg" alt="" width="(\d+)" height="(\d+)" \/>/g;
+  let count = 0;
+  for (const file of htmlFiles(dist)) {
+    const html = fs.readFileSync(file, 'utf8');
+    const out = html.replace(img, (_, cls = '', w, h) => {
+      count++;
+      return `<svg ${cls}xmlns="http://www.w3.org/2000/svg" ${viewBox} width="${w}" height="${h}" aria-hidden="true" focusable="false">${inner.trim()}</svg>`;
+    });
+    if (out !== html) fs.writeFileSync(file, out);
+  }
+  return count;
+}
+
+module.exports = { writeHeaders, stampStylesheet, inlineLogo };

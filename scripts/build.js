@@ -17,7 +17,7 @@ const { optimizeImages } = require('./build-images');
 const { writeGuilloches } = require('./build-guilloche');
 const { writeBrand } = require('./build-brand');
 const { writeScreenshots } = require('./build-screenshots');
-const { writeHeaders, stampStylesheet } = require('./build-cache');
+const { writeHeaders, stampStylesheet, inlineLogo } = require('./build-cache');
 
 const ROOT = path.join(__dirname, '..'); // scripts/ lives one level below the repo root
 const DIST = path.join(ROOT, 'dist');
@@ -72,6 +72,7 @@ async function main() {
   writeHeaders(DIST);
   console.log('✓  _headers generated');
   console.log(`✓  ${stampStylesheet(DIST)} pages link site.css by content hash`);
+  console.log(`✓  ${inlineLogo(DIST)} logo marks inlined`);
 
   // Last: the screenshots show the finished pages.
   const shots = await writeScreenshots(DIST);
