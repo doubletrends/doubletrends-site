@@ -42,6 +42,7 @@ const readingLink  = partial('reading-link.html', { inline: true });
 const articleMeta  = partial('article-meta.html', { inline: true });
 const splash       = partial('splash.html', { inline: true });
 const splashFitJs  = partial('splash-fit.js', { inline: true });
+const footerFrameJs = partial('footer-frame.js', { inline: true });
 
 // Rewrite internal .html hrefs to their served form (extensionless in
 // src/urls.js: method.html → method, research/index.html → research/), so
@@ -193,6 +194,7 @@ function renderPage(page, { dist, exhibits, today }) {
     RESEARCH_LIBRARY: researchLibrary(page.root),
     FOOTER_NOTES: footerNotes(page.root),
     READING_LINK: page.readingLink === false ? '' : readingLink,
+    FOOTER_FRAME_JS: footerFrameJs,
     ROOT: page.root,
     TITLE: formatTitle(page),
     DESC: page.desc,

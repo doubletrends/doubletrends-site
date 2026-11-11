@@ -63,9 +63,15 @@
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 .site-footer {
   color: #C6CFDB; margin-top: 5rem; font-size: 0.875rem; border-top: 3px solid var(--accent);
-  /* Guilloche rosette, navy on navy, anchored past the right edge. */
-  background: var(--ink) url("../brand/guilloche-footer.svg") right -17rem top -6rem / 46rem auto no-repeat;
+  background: var(--ink);
 }
+/* Banknote frame around the footer's content: drawn to its size by
+   src/partials/footer-frame.js, which adds .has-frame and sets --frame-s (its
+   scale on narrow footers). The padding clears the band at the sides and the
+   corner medallions above and below; without JavaScript neither applies. */
+.site-footer > .wrap { position: relative; }
+.site-footer > .wrap.has-frame { padding: calc(5.25rem * var(--frame-s, 1)) calc(4rem * var(--frame-s, 1)) calc(6rem * var(--frame-s, 1)); }
+.site-footer-frame { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: none; stroke: #fff; stroke-opacity: 0.2; stroke-width: 0.6; stroke-linejoin: round; stroke-linecap: round; }
 .site-footer a { color: #fff; text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .site-footer-top { display: grid; grid-template-columns: repeat(6, 1fr); row-gap: 1.75rem; column-gap: 2rem; padding-block: 2.5rem 1.75rem; }

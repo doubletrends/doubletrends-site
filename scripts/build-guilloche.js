@@ -5,7 +5,9 @@
  *
  *   guilloche-paper.svg   moiré beat: two woven strand families at different
  *                         frequencies, tiled in rows behind every page
- *   guilloche-footer.svg  a spirograph rosette, set navy-on-navy in the footer
+ *
+ * The footer's banknote frame is not an image: it is drawn to the footer's
+ * size in the browser (src/partials/footer-frame.js).
  *
  * Every curve is periodic in its tile, so tiled patterns join without seams.
  * The OG image and banner (build-brand.js) reuse the paper moiré.
@@ -30,11 +32,6 @@ function relPath(points) {
     d += `${i > 1 ? ' ' : ''}${r1(pts[i][0] - pts[i - 1][0])} ${r1(pts[i][1] - pts[i - 1][1])}`;
   }
   return d.replace(/ -/g, '-');
-}
-
-// Polyline path through sampled points.
-function pathFrom(points) {
-  return 'M' + points.map(([x, y]) => `${f(x)} ${f(y)}`).join('L');
 }
 
 function svg(width, height, paths, { stroke, opacity, strokeWidth }) {
@@ -79,46 +76,10 @@ function paperBeat() {
 }
 
 
-// Footer: rings of hypotrochoids (spirograph). Each keeps its pen inside the
-// rolling circle (d < R - r), so every layer is an annulus with an open
-// centre — the rosette of an engraved certificate. Each layer is drawn twice,
-// the copy turned by half a lobe, which interlaces the loops. Centred on
-// (cx, cy), outer radius 236 × k.
-function rosettePaths(cx, cy, k = 1) {
-  const paths = [];
-  const gcd = (a, b) => (b ? gcd(b, a % b) : a);
-  const layers = [
-    { R: 240, r: 66, d: 62 },   // outer ring: 40 lobes, radius 112..236
-    { R: 180, r: 50, d: 44 },   // middle ring: 18 lobes, radius 86..174
-    { R: 110, r: 30, d: 30 },   // inner ring: 11 lobes, radius 50..110
-  ];
-  for (const { R, r, d } of layers) {
-    const turns = r / gcd(R, r);
-    const lobes = R / gcd(R, r);
-    const steps = turns * 140;
-    for (const rot of [0, Math.PI / lobes]) {
-      const pts = [];
-      for (let i = 0; i <= steps; i++) {
-        const t = (i / steps) * turns * TAU;
-        const x = (R - r) * Math.cos(t) + d * Math.cos(((R - r) / r) * t);
-        const y = (R - r) * Math.sin(t) - d * Math.sin(((R - r) / r) * t);
-        pts.push([cx + k * (x * Math.cos(rot) - y * Math.sin(rot)), cy + k * (x * Math.sin(rot) + y * Math.cos(rot))]);
-      }
-      paths.push(pathFrom(pts) + 'Z');
-    }
-  }
-  return paths;
-}
-function footerRosette() {
-  const S = 640;
-  return svg(S, S, rosettePaths(S / 2, S / 2), { stroke: '#FFFFFF', opacity: 0.08, strokeWidth: 0.7 });
-}
-
 function writeGuilloches(brandDir) {
   fs.mkdirSync(brandDir, { recursive: true });
   const out = {
     'guilloche-paper.svg': paperBeat(),
-    'guilloche-footer.svg': footerRosette(),
   };
   for (const [name, body] of Object.entries(out)) fs.writeFileSync(path.join(brandDir, name), body, 'utf8');
   return Object.keys(out);
