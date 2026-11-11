@@ -65,12 +65,11 @@
   color: #C6CFDB; margin-top: 5rem; font-size: 0.875rem; border-top: 3px solid var(--accent);
   background: var(--ink);
 }
-/* Banknote frame around the footer's content: drawn to its size by
-   src/partials/footer-frame.js, which adds .has-frame and sets --frame-s (its
-   scale on narrow footers). The padding clears the band at the sides and the
-   corner medallions above and below; without JavaScript neither applies. */
+/* Banknote frame round the whole footer, drawn to its size by
+   src/partials/footer-frame.js. The footer's layout is unchanged; the content
+   is positioned only so it paints above the frame. */
+.site-footer { position: relative; }
 .site-footer > .wrap { position: relative; }
-.site-footer > .wrap.has-frame { padding: calc(5.25rem * var(--frame-s, 1)) calc(4rem * var(--frame-s, 1)) calc(6rem * var(--frame-s, 1)); }
 .site-footer-frame { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: none; stroke: #fff; stroke-opacity: 0.2; stroke-width: 0.6; stroke-linejoin: round; stroke-linecap: round; }
 .site-footer a { color: #fff; text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; text-underline-offset: 0.2em; }

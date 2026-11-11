@@ -1,21 +1,20 @@
-// Footer frame: a banknote border drawn around the footer's content, sized to
-// it. A lathe ribbon (18 strands that swell and pinch) with a lens chain woven
-// through it and a rule each side, runs along a rounded rectangle; a
-// spirograph medallion sits in each corner, with the band cut away around it.
-// Every wave count is a whole number around the loop, so the band closes on
-// itself with no seam at any size. Inlined after the footer by the build, so
-// it draws before the page is shown; redrawn when the footer resizes (the
-// footnotes toggle, a window resize). Without JavaScript the footer is plain:
-// the extra padding applies only once .has-frame is set.
+// Footer frame: a banknote border drawn round the whole footer, edge to edge,
+// sized to it. A lathe ribbon (18 strands that swell and pinch) with a lens
+// chain woven through it and a rule each side, runs along a rounded
+// rectangle; a spirograph medallion sits in each corner, with the band cut
+// away around it. Every wave count is a whole number around the loop, so the
+// band closes on itself with no seam at any size. The footer's own layout is
+// untouched: the frame is drawn into it, behind the content. Inlined after the
+// footer by the build, so it draws before the page is shown; redrawn when the
+// footer resizes (the footnotes toggle, a window resize).
 (function () {
-  var wrap = document.querySelector('.site-footer > .wrap');
-  if (!wrap || !window.SVGElement) return;
+  var footer = document.querySelector('.site-footer');
+  if (!footer || !window.SVGElement) return;
   var NS = 'http://www.w3.org/2000/svg', TAU = Math.PI * 2;
   var svg = document.createElementNS(NS, 'svg');
   svg.setAttribute('class', 'site-footer-frame');
   svg.setAttribute('aria-hidden', 'true');
-  wrap.insertBefore(svg, wrap.firstChild);
-  wrap.classList.add('has-frame');
+  footer.insertBefore(svg, footer.firstChild);
 
   function r1(v) { return Math.round(v * 10) / 10; }
   function rel(pts) {
@@ -29,11 +28,8 @@
   }
 
   function draw() {
-    // Geometry at full size, scaled down on narrow footers. The padding follows
-    // via --frame-s, so set it before measuring the height it changes.
-    var W = wrap.clientWidth, s = Math.max(0.6, Math.min(1, W / 900));
-    wrap.style.setProperty('--frame-s', s);
-    var H = wrap.clientHeight;
+    // Geometry at full size, scaled down on narrow footers.
+    var W = footer.clientWidth, H = footer.clientHeight, s = Math.max(0.6, Math.min(1, W / 900));
     if (W < 200 || H < 200) { svg.innerHTML = ''; return; }
     var INSET = 30 * s, RC = 42 * s, A = 13 * s, MK = 0.19 * s, HOLE = 236 * MK + 4 * s;
     var w = W - 2 * INSET - 2 * RC, h = H - 2 * INSET - 2 * RC, q = Math.PI / 2 * RC;
@@ -116,15 +112,15 @@
 
   draw();
   if (window.ResizeObserver) {
-    var size = [wrap.clientWidth, wrap.clientHeight], queued = false;
+    var size = [footer.clientWidth, footer.clientHeight], queued = false;
     new ResizeObserver(function () {
-      if (queued || (wrap.clientWidth === size[0] && wrap.clientHeight === size[1])) return;
+      if (queued || (footer.clientWidth === size[0] && footer.clientHeight === size[1])) return;
       queued = true;
       requestAnimationFrame(function () {
         queued = false;
-        size = [wrap.clientWidth, wrap.clientHeight];
+        size = [footer.clientWidth, footer.clientHeight];
         draw();
       });
-    }).observe(wrap);
+    }).observe(footer);
   }
 })();
