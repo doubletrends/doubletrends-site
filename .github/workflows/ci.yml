@@ -2,7 +2,7 @@ name: CI
 
 # `test` runs the build + validation suite on every PR and push. `deploy` runs
 # only on pushes to main and only after `test` passes, so the SEO-invariant
-# suite (see tests/README.md) is a hard gate on production: broken code cannot
+# suite (README: What the tests guard) is a hard gate on production: broken code cannot
 # reach doubletrends.com.
 #
 # Requires two repo secrets for the deploy job:

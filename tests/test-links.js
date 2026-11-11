@@ -75,7 +75,7 @@ function main() {
 
       // Links to pages use the form Cloudflare serves with 200, so navigation
       // never passes through its 307: leaf pages extensionless with no slash,
-      // folder indexes with a trailing slash (README: URLs, serving & SEO).
+      // folder indexes with a trailing slash (README: every page has exactly one public address).
       if (pathname && resolved.endsWith(HTML_EXT)) {
         const isIndex = path.basename(resolved) === 'index.html';
         // "." and ".." resolve with a trailing slash, like "./" and "../".

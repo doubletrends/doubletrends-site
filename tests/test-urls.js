@@ -1,4 +1,4 @@
-// Published URLs (README: "URLs, serving & SEO"). Every URL the site publishes
+// Published URLs (README: "every page has exactly one public address"). Every URL the site publishes
 // is the form Cloudflare serves with 200; getting this wrong brings back Search
 // Console "Page with redirect" and duplicate-page errors.
 //
