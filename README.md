@@ -94,13 +94,17 @@ sequenceDiagram
   participant A as api.doubletrends.com
 
   V->>S: open any page
-  S-->>V: page, with the reading from the last build
+  S-->>V: page, reading shown as "loading…"
   V->>A: latest reading?
-  A-->>V: regime, S&P 500 level, time,<br/>intraday or final (no signals)
-  V->>V: newer and well-formed?<br/>swap the words in place
+  alt a well-formed reading
+    A-->>V: regime, S&P 500 level, time,<br/>intraday or final (no signals)
+    V->>V: fill in the words and the regime colour
+  else an error, an outage or a malformed answer
+    V->>V: show "Reading unavailable"<br/>and log the cause to the console
+  end
 ```
 
-The reading refreshes hourly through the trading day and again after the close. If the request fails, the page simply keeps the reading it was built with, so visitors without JavaScript, search engines, and anyone hit by an outage still see a correct reading. Signals stay subscriber-only.
+The reading refreshes hourly through the trading day and again after the close. **There is deliberately no fallback:** pages carry no built-in reading, so a broken feed shows at once instead of hiding behind an old reading. Signals stay subscriber-only.
 
 ---
 
@@ -145,7 +149,7 @@ The brand lives here. The logo, wordmark, favicons, social images and engraved-p
 | Brand colours | the stylesheet's colours match the brand definition                                                          |
 | Profiles      | the firm's profiles elsewhere (LinkedIn and others, kept in `LISTING.md`) fit their forms and match the site |
 | Motion        | blocks reveal whole, the header and footer never move, and every page has the guard                          |
-| Live reading  | every page has the hooks, and the built page words a reading exactly as the live update would                |
+| Live reading  | every page has the hooks, no reading is built into a page, and a broken feed has its own "unavailable" words |
 
 The build itself also fails if any page is left with an unfilled `{{placeholder}}`.
 

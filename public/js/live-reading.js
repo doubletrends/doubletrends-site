@@ -1,18 +1,17 @@
-// Live reading: replaces the build-time reading in the top bar and the reading
-// card with the latest from the backend (GET /api/public/reading, worker
-// src/public.ts in doubletrends-backend), which updates hourly through the
-// session and again after the close.
+// Live reading: fills the top bar and the reading card with the latest
+// reading from the backend (GET /api/public/reading, worker src/public.ts in
+// doubletrends-backend), which updates hourly through the session and again
+// after the close.
 //
-// The page is built with a correct, possibly older reading (src/data/
-// indicator.json), so search engines, visitors without JavaScript and any
-// failed fetch still see one; this script only ever swaps the text of
-// [data-live] elements, and only for a reading that is well formed and not
-// older than the one the page was built with.
+// There is no fallback reading: pages are built with the LOADING words, and a
+// failed request, an error status or a malformed answer shows the ERROR words
+// (and logs to the console), so a broken feed is visible at once instead of
+// hidden behind an old reading. The script only ever sets the text of
+// [data-live] elements (and the swatch's regime class).
 //
-// The build formats that fallback with texts() below (src/exhibits/
-// figures.js requires this file), so the HTML and the swap word a reading
-// identically. The script tag carries the API address (data-api), the regime
-// labels (data-labels) and the build's own reading time (data-built).
+// The build writes the LOADING words with this same file (src/exhibits/
+// figures.js requires it), so the two never drift. The script tag carries the
+// API address (data-api) and the regime labels (data-labels).
 (function () {
   var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -50,38 +49,49 @@
       typeof r.final === 'boolean';
   }
 
+  // The words before the reading arrives, and when it can't be had.
+  var LOADING = { regime: '…', 'top-asof': 'loading the latest reading', 'card-asof': 'Loading the latest reading…', close: '…', updated: '…' };
+  var ERROR = { regime: 'Unavailable', 'top-asof': 'reading unavailable', 'card-asof': 'Reading unavailable · try again shortly', close: '—', updated: '—' };
+
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { texts: texts, valid: valid };
+    module.exports = { texts: texts, valid: valid, LOADING: LOADING, ERROR: ERROR };
     return;
   }
 
   var script = document.currentScript;
-  if (!script || !window.fetch) return;
+  if (!script) return;
   var api = script.getAttribute('data-api');
-  var built = Date.parse(script.getAttribute('data-built') || '');
-  var labels;
-  try { labels = JSON.parse(script.getAttribute('data-labels') || '{}'); } catch (e) { return; }
+  var labels = {};
+  try { labels = JSON.parse(script.getAttribute('data-labels') || '{}'); } catch (e) { /* every reading will fail validation */ }
 
-  function apply(r) {
-    var t = texts(r, labels);
+  // Set the [data-live] text from `t`; the swatch takes `regime`'s colour, or none.
+  function show(t, regime) {
     document.querySelectorAll('[data-live]').forEach(function (el) {
       var key = el.getAttribute('data-live');
       if (key === 'swatch') {
-        el.className = el.className.replace(/\bregime-key-[a-z]+\b/, 'regime-key-' + r.regime);
+        el.className = el.className.replace(/\s*\bregime-key-[a-z]+\b/g, '') + (regime ? ' regime-key-' + regime : '');
       } else if (Object.prototype.hasOwnProperty.call(t, key)) {
         el.textContent = t[key];
       }
     });
   }
 
+  function fail(why) {
+    console.error('Live reading unavailable:', why);
+    show(ERROR, null);
+  }
+
+  if (!window.fetch) return fail('this browser cannot fetch');
   var ctrl = window.AbortController ? new AbortController() : null;
   if (ctrl) setTimeout(function () { ctrl.abort(); }, 8000);
   fetch(api, { credentials: 'omit', signal: ctrl ? ctrl.signal : undefined })
-    .then(function (res) { return res.ok ? res.json() : null; })
-    .then(function (r) {
-      if (!valid(r, labels)) return;
-      if (!isNaN(built) && Date.parse(r.updated_at) < built) return; // never older than the page
-      apply(r);
+    .then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status + ' from ' + api);
+      return res.json();
     })
-    .catch(function () { /* keep the reading the page was built with */ });
+    .then(function (r) {
+      if (!valid(r, labels)) throw new Error('malformed reading ' + JSON.stringify(r));
+      show(texts(r, labels), r.regime);
+    })
+    .catch(fail);
 })();

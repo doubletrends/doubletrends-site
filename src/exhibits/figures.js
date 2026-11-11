@@ -4,8 +4,8 @@
  */
 const { REGIMES } = require('../regimes');
 const { median } = require('../measures');
-const { fmtDateLong, fmtDateShort, fmtMonthYear, fmtMonthYearLong, fmtNum, fmtPct } = require('../format');
-const { texts } = require('../../public/js/live-reading');
+const { fmtDateLong, fmtMonthYear, fmtMonthYearLong, fmtPct } = require('../format');
+const { LOADING } = require('../../public/js/live-reading');
 
 // Signal-record figures for a sub-period (research notes quote the record
 // since a given date); same definitions as the full-record figures.
@@ -19,34 +19,25 @@ function sinceFigures(signals, from, key) {
   };
 }
 
-// The live reading's words at build time (top bar, reading card), formatted by
-// the same code that swaps them in the browser (public/js/live-reading.js).
-// The page's own reading is a finished close.
+// The live reading (top bar, reading card) has no build-time value: pages carry
+// the LOADING words of public/js/live-reading.js, which then fills them in, or
+// says the reading is unavailable. The script tag gets the regime labels.
 const REGIME_LABELS = Object.fromEntries(Object.entries(REGIMES).map(([k, r]) => [k, r.label]));
-function liveFigures(L) {
-  const t = texts({ date: L.date, regime: L.regime, close: L.close, updated_at: L.updated_at, final: true }, REGIME_LABELS);
-  return {
-    LIVE_REGIME: t.regime,
-    LIVE_CLOSE: t.close,
-    LIVE_TOP_ASOF: t['top-asof'],
-    LIVE_CARD_ASOF: t['card-asof'],
-    LIVE_UPDATED: t.updated,
-    LIVE_BUILT: L.updated_at,
-    LIVE_LABELS: JSON.stringify(REGIME_LABELS),
-  };
-}
+const LIVE_FIGURES = {
+  LIVE_REGIME: LOADING.regime,
+  LIVE_CLOSE: LOADING.close,
+  LIVE_TOP_ASOF: LOADING['top-asof'],
+  LIVE_CARD_ASOF: LOADING['card-asof'],
+  LIVE_UPDATED: LOADING.updated,
+  LIVE_LABELS: JSON.stringify(REGIME_LABELS),
+};
 
 function indicatorFigures(indicator) {
   const L = indicator.latest, S = indicator.signal_stats;
   return {
-    ...liveFigures(L),
+    ...LIVE_FIGURES,
+    // The data's cut-off date, quoted by pages whose tables and charts end there.
     IND_AS_OF: fmtDateLong(L.date),
-    IND_REGIME: REGIMES[L.regime].label,
-    IND_REGIME_KEY: L.regime,
-    IND_REGIME_SINCE: fmtDateShort(L.regime_since),
-    IND_REGIME_SESSIONS: String(L.regime_days),
-    IND_CLOSE: fmtNum(L.close),
-    IND_DRAWDOWN: fmtPct(L.drawdown_pct),
 
     IND_FIRST_DATE: fmtDateLong(indicator.first_date),
     IND_FIRST_YEAR: indicator.first_date.slice(0, 4),

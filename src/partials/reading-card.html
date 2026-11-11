@@ -1,7 +1,8 @@
 <!-- Latest-reading card, shared by the homepage and the indicator page:
-     pages place it with the READING_CARD slot. Built with the reading in
-     src/data/; public/js/live-reading.js swaps the [data-live] text for the
-     latest from the backend (hourly in the session, then the close).
+     pages place it with the READING_CARD slot. Built empty (loading words);
+     public/js/live-reading.js fills the [data-live] text with the latest
+     reading from the backend (hourly in the session, then the close), or
+     says it is unavailable.
      No signal state here: signals are a subscriber feature. -->
 <aside class="reading" aria-labelledby="reading-title">
   <div class="reading-head">
@@ -11,7 +12,7 @@
   <p class="reading-desk">From the research desk</p>
   <p class="reading-subject">The DoubleTrends&trade; Regime Indicator &middot; S&amp;P 500</p>
   <div class="reading-regime">
-    <span class="swatch regime-key-{{IND_REGIME_KEY}}" data-live="swatch" aria-hidden="true"></span>
+    <span class="swatch" data-live="swatch" aria-hidden="true"></span>
     <div>
       <div class="reading-regime-value" data-live="regime">{{LIVE_REGIME}}</div>
     </div>

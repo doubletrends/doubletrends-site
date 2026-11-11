@@ -1,6 +1,6 @@
 const SITE_URL = 'https://doubletrends.com';
 const SUBSCRIBE_URL = 'https://buy.stripe.com/7sYeVdaq49141uQdJ9aAw0c';
-const PORTAL_URL = 'https://app.doubletrends.com/brief';
+const PORTAL_URL = 'https://app.doubletrends.com/login'; // a signed-in subscriber goes on to their start page
 // The live reading (public/js/live-reading.js): doubletrends-backend worker src/public.ts.
 const PUBLIC_READING_URL = 'https://api.doubletrends.com/api/public/reading';
 // Dates on the site are the market's: New York (src/dates.js).
