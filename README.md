@@ -147,7 +147,7 @@ The site is designed to read like an index provider's publication, not a product
 
 Constants at the top of the script: `LIVE_SINCE` (first live publication date; earlier readings are labelled back-tested) and `SIGNAL_RECORD_START` (the published record includes every signal from this date).
 
-`src/exhibits/` renders the exhibits to static SVG at build time (they work without JavaScript and print cleanly); `public/scripts/exhibits.js` adds the crosshair and tooltips, with keyboard stepping and a live region for screen readers.
+`src/exhibits/` renders the exhibits to static SVG at build time (they work without JavaScript and print cleanly); `public/js/exhibits.js` adds the crosshair and tooltips, with keyboard stepping and a live region for screen readers.
 
 ## URLs, serving & SEO
 

@@ -7,7 +7,7 @@
  * scripts/indicator-data.js), so nothing here touches the file system. Output
  * is plain markup injected into pages via {{EXHIBIT_*}}, {{TABLE_*}} and
  * figure placeholders, so every chart renders without JavaScript and prints
- * cleanly. public/scripts/exhibits.js layers the interactive parts on top
+ * cleanly. public/js/exhibits.js layers the interactive parts on top
  * (crosshair + tooltip, keyboard stepping).
  *
  * House style (validated palette, see styles/tokens/colors.css):

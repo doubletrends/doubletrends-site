@@ -1,7 +1,7 @@
 /**
  * regime-history.js — Exhibit 1: the S&P 500 with the regime ribbon, bear
  * episodes shaded and signals marked. Returns the SVG and the hover payload
- * public/scripts/exhibits.js reads.
+ * public/js/exhibits.js reads.
  */
 const { REGIMES } = require('../regimes');
 const { regimeEpisodes } = require('../measures');

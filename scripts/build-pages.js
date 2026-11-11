@@ -156,7 +156,7 @@ function socialExtraFor(page, today) {
 
 // Pages that carry exhibits load the interaction layer.
 function scriptsFor(html, root) {
-  return /data-exhibit=/.test(html) ? `<script src="${root}public/scripts/exhibits.js" defer></script>\n</body>` : '</body>';
+  return /data-exhibit=/.test(html) ? `<script src="${root}public/js/exhibits.js" defer></script>\n</body>` : '</body>';
 }
 
 // Renders `page` into `dist`. `exhibits` holds the figures and exhibits
