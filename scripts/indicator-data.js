@@ -57,6 +57,7 @@ const rows = lines.slice(1).map((line) => {
   header.forEach((h, i) => { o[h] = v[i]; });
   return {
     date: o.as_of_date,
+    updatedAt: o.updated_at,
     close: Number(o.close),
     regime: o.regime,
     watch: o.watch_active === 'True',
@@ -151,6 +152,7 @@ const last = rows[rows.length - 1];
 const lastEpisode = episodes[episodes.length - 1];
 const latest = {
   date: last.date,
+  updated_at: last.updatedAt, // the live reading's "Updated" line (public/js/live-reading.js)
   close: round(last.close, 2),
   regime: last.regime,
   regime_since: lastEpisode.start,

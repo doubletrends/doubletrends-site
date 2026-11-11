@@ -6,7 +6,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { SITE_URL, SITE_NAME, SUBSCRIBE_URL, PORTAL_URL, PUBLISHER, OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_SIZE } = require('../src/site.config');
+const { SITE_URL, SITE_NAME, SUBSCRIBE_URL, PORTAL_URL, PUBLIC_READING_URL, PUBLISHER, OG_IMAGE, OG_IMAGE_ALT, OG_IMAGE_SIZE } = require('../src/site.config');
 
 const SITE_VARS = {
   SITE_URL,
@@ -16,6 +16,7 @@ const SITE_VARS = {
   SUBSCRIBE_URL,
   CHECKOUT_HOST: new URL(SUBSCRIBE_URL).host,
   PORTAL_URL,
+  PUBLIC_READING_URL,
   OG_IMAGE,
   OG_IMAGE_ALT,
   OG_IMAGE_WIDTH: String(OG_IMAGE_SIZE.width),

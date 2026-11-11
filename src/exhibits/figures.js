@@ -5,6 +5,7 @@
 const { REGIMES } = require('../regimes');
 const { median } = require('../measures');
 const { fmtDateLong, fmtDateShort, fmtMonthYear, fmtMonthYearLong, fmtNum, fmtPct } = require('../format');
+const { texts } = require('../../public/js/live-reading');
 
 // Signal-record figures for a sub-period (research notes quote the record
 // since a given date); same definitions as the full-record figures.
@@ -18,9 +19,27 @@ function sinceFigures(signals, from, key) {
   };
 }
 
+// The live reading's words at build time (top bar, reading card), formatted by
+// the same code that swaps them in the browser (public/js/live-reading.js).
+// The page's own reading is a finished close.
+const REGIME_LABELS = Object.fromEntries(Object.entries(REGIMES).map(([k, r]) => [k, r.label]));
+function liveFigures(L) {
+  const t = texts({ date: L.date, regime: L.regime, close: L.close, updated_at: L.updated_at, final: true }, REGIME_LABELS);
+  return {
+    LIVE_REGIME: t.regime,
+    LIVE_CLOSE: t.close,
+    LIVE_TOP_ASOF: t['top-asof'],
+    LIVE_CARD_ASOF: t['card-asof'],
+    LIVE_UPDATED: t.updated,
+    LIVE_BUILT: L.updated_at,
+    LIVE_LABELS: JSON.stringify(REGIME_LABELS),
+  };
+}
+
 function indicatorFigures(indicator) {
   const L = indicator.latest, S = indicator.signal_stats;
   return {
+    ...liveFigures(L),
     IND_AS_OF: fmtDateLong(L.date),
     IND_REGIME: REGIMES[L.regime].label,
     IND_REGIME_KEY: L.regime,
