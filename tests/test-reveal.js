@@ -7,7 +7,9 @@
 //   - pictures stay put: section.hero and figure.image-band are never tagged
 //     (only the text inside the hero is);
 //   - scroll-reveal.js loads exactly on the pages that have tagged blocks;
-//   - the <head> guard that sets reveal-on is on every page.
+//   - the <head> guard that sets reveal-on is on every page;
+//   - the chrome never moves: no data-reveal outside <main> (top bar,
+//     header, footer).
 const fs = require('fs');
 const { DIST, walk, relPosix, report } = require('./utils');
 const { elementEnd } = require('../scripts/build-reveal');
@@ -44,6 +46,9 @@ function main() {
     if (spans.length && !loads) errors.push(`${rel}: has reveal blocks but does not load scroll-reveal.js`);
     if (!spans.length && loads) errors.push(`${rel}: loads scroll-reveal.js with no reveal blocks`);
     if (!/classList\.add\('reveal-on'\)/.test(html)) errors.push(`${rel}: <head> guard missing`);
+
+    const outside = html.replace(main, '').match(/<[a-zA-Z0-9]+\b[^>]*\bdata-reveal\b[^>]*>/g) || [];
+    for (const tag of outside) errors.push(`${rel}: reveal outside <main> (header/footer must not move) ${tag}`);
   }
 
   if (!pages.length) errors.push('no built pages found');
